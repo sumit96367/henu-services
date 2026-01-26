@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { GlowingCard } from '@/components/ui/glowing-card';
+import { ShaderBackground } from '@/components/ui/shader-background';
 
 // Contact Info
 const contactInfo = [
@@ -417,11 +418,12 @@ export default function ContactPage() {
                         className="relative overflow-hidden group"
                     >
                         <GlowingCard className="w-full aspect-[21/9]" innerClassName="p-0 overflow-hidden">
-                            <div className="w-full h-full bg-gray-900/50 flex items-center justify-center relative">
-                                <div className="absolute inset-0 opacity-20">
-                                    <div className="grid-background" />
-                                </div>
-                                <div className="text-center z-10 p-12">
+                            <div className="w-full h-full relative flex items-center justify-center">
+                                {/* Animated Shader Background */}
+                                <ShaderBackground className="opacity-60" />
+
+                                {/* Content Overlay */}
+                                <div className="text-center z-10 p-12 relative">
                                     <div className="w-24 h-24 mx-auto mb-8 rounded-[2rem] bg-gradient-to-br from-cyan-500 to-amber-500 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-700">
                                         <MapPin className="w-12 h-12 text-white" />
                                     </div>
