@@ -26,7 +26,7 @@ export function GlowingCard({
     inactiveZone = 0.01,
 }: GlowingCardProps) {
     return (
-        <div className={cn("relative h-full rounded-[1.25rem] border-[0.75px] border-white/10 p-2 md:rounded-[1.5rem]", className)}>
+        <div className={cn("relative h-full rounded-[1.5rem]", className)}>
             <GlowingEffect
                 spread={spread}
                 glow={true}
@@ -37,7 +37,7 @@ export function GlowingCard({
             />
             <div
                 className={cn(
-                    "relative flex h-full flex-col overflow-hidden rounded-xl border-[0.75px] border-white/10 bg-black/40 backdrop-blur-xl shadow-sm",
+                    "relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border-[1px] border-white/10 bg-black/60 shadow-lg",
                     innerClassName
                 )}
                 style={style}

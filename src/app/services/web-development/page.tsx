@@ -12,33 +12,33 @@ import {
 
 const features = [
     {
-        title: 'Custom Web Applications',
-        description: 'Tailored web solutions built from scratch to meet your specific business requirements and user needs.',
-        icon: <Globe size={28} />
-    },
-    {
-        title: 'High Performance',
-        description: 'Optimized code and architecture ensuring lightning-fast load times and smooth user experiences.',
-        icon: <Zap size={28} />
-    },
-    {
-        title: 'Security First',
-        description: 'Enterprise-grade security implementations protecting your data and users from threats.',
-        icon: <Shield size={28} />
-    },
-    {
-        title: 'Responsive Design',
-        description: 'Seamless experiences across all devices - desktop, tablet, and mobile.',
+        title: 'Responsive Web Design',
+        description: 'Seamless experiences across all devices with premium aesthetic and high-performance layouts.',
         icon: <Smartphone size={28} />
     },
     {
-        title: 'SEO Optimized',
-        description: 'Built-in search engine optimization to improve your visibility and organic traffic.',
+        title: 'Custom CMS Development',
+        description: 'Tailored content management solutions including WordPress and custom-built engines for ultimate control.',
+        icon: <Globe size={28} />
+    },
+    {
+        title: 'E-Commerce Platforms',
+        description: 'High-converting Shopify and WooCommerce stores optimized for sales and customer loyalty.',
+        icon: <Zap size={28} />
+    },
+    {
+        title: 'SEO-Optimized Builds',
+        description: 'Enhanced visibility with clean code, fast loading times, and search engine friendly architecture.',
         icon: <Search size={28} />
     },
     {
-        title: 'Modern UI/UX',
-        description: 'Beautiful, intuitive interfaces that engage users and drive conversions.',
+        title: 'API Integrations',
+        description: 'Seamlessly connect your website with third-party services and internal business systems.',
+        icon: <Shield size={28} />
+    },
+    {
+        title: 'Progressive Web Apps (PWAs)',
+        description: 'Mobile-first web applications that offer app-like experiences directly in the browser.',
         icon: <Palette size={28} />
     }
 ];
@@ -47,65 +47,60 @@ const process = [
     {
         step: 1,
         title: 'Discovery & Planning',
-        description: 'We analyze your requirements, target audience, and business goals to create a comprehensive project roadmap.'
+        description: 'We analyze your requirements, target audience, and business goals to create a comprehensive roadmap.'
     },
     {
         step: 2,
-        title: 'Design & Prototyping',
-        description: 'Our designers create wireframes and interactive prototypes for your approval before development begins.'
+        title: 'Wireframing & Design',
+        description: 'Visualizing the structure and aesthetic of your site to ensure a premium user experience.'
     },
     {
         step: 3,
-        title: 'Development',
-        description: 'Our developers build your application using cutting-edge technologies with clean, maintainable code.'
+        title: 'Front-End Development',
+        description: 'Crafting the user interface with modern frameworks like React and Next.js for extreme speed.'
     },
     {
         step: 4,
-        title: 'Testing & QA',
-        description: 'Rigorous testing across browsers and devices ensures your application is bug-free and performant.'
+        title: 'Back-End Integration',
+        description: 'Building robust server-side logic and database structures to power your applications features.'
     },
     {
         step: 5,
-        title: 'Deployment',
-        description: 'We deploy your application to production with proper CI/CD pipelines and monitoring.'
+        title: 'Testing & Optimization',
+        description: 'Rigorous performance checks and bug fixing across all platforms before going live.'
     },
     {
         step: 6,
-        title: 'Support & Maintenance',
-        description: 'Ongoing support, updates, and optimization to keep your application running smoothly.'
+        title: 'Launch & Maintenance',
+        description: 'Seamless deployment and ongoing support to keep your digital presence at its peak.'
     }
 ];
 
 const technologies = [
     { name: 'React' },
-    { name: 'Next.js' },
     { name: 'Vue.js' },
-    { name: 'Angular' },
-    { name: 'TypeScript' },
+    { name: 'Next.js' },
     { name: 'Node.js' },
-    { name: 'Python' },
-    { name: 'PostgreSQL' },
-    { name: 'MongoDB' },
-    { name: 'AWS' },
-    { name: 'Vercel' },
-    { name: 'Docker' },
+    { name: 'Python/Django' },
     { name: 'Tailwind CSS' },
-    { name: 'GraphQL' },
-    { name: 'Redis' }
+    { name: 'HENU OS AI' },
+    { name: 'Google Cloud' },
+    { name: 'AWS' }
 ];
 
 export default function WebDevelopmentPage() {
     return (
         <ServicePage
-            heroTitle="Professional"
-            heroHighlight="Web Development"
-            heroDescription="We build stunning, high-performance websites and web applications that drive business growth. From simple landing pages to complex enterprise solutions."
+            heroTitle="Innovative"
+            heroHighlight="Website Development"
+            heroDescription="Transform your vision into high-converting websites. We craft digital experiences that drive traffic, sales, and loyalty."
             heroAccentColor="cyan"
             features={features}
             process={process}
             technologies={technologies}
-            ctaTitle="Build Your Web Presence"
-            ctaDescription="Let's create a web experience that sets you apart from the competition."
+            ctaTitle="Build Your Site"
+            ctaDescription="Let's create a website that grows your business. Get started today!"
         />
     );
 }
+

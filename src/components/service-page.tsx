@@ -393,16 +393,16 @@ export const WhyChooseUs = () => {
                         viewport={{ once: true }}
                         className="relative space-y-6"
                     >
-                        <GlowingCard innerClassName="p-14 md:p-22">
-                            <div className="text-7xl font-bold gradient-text mb-6">200+</div>
-                            <div className="text-2xl text-white font-bold mb-3 tracking-tight">Projects Delivered</div>
-                            <div className="text-gray-400 text-lg leading-relaxed font-medium">Across web, mobile, AI, and enterprise solutions</div>
+                        <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
+                            <div className="text-4xl font-bold gradient-text mb-4">200+</div>
+                            <div className="text-xl text-white font-bold mb-3 tracking-tight">Projects Delivered</div>
+                            <div className="text-gray-400 text-base leading-relaxed font-medium">Across web, mobile, AI, and enterprise solutions</div>
                         </GlowingCard>
-                        <div className="ml-12">
-                            <GlowingCard innerClassName="p-14 md:p-22">
-                                <div className="text-7xl font-bold gradient-text mb-6">98%</div>
-                                <div className="text-2xl text-white font-bold mb-3 tracking-tight">Client Satisfaction</div>
-                                <div className="text-gray-400 text-lg leading-relaxed font-medium">Based on post-project surveys</div>
+                        <div className="ml-8 md:ml-12">
+                            <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
+                                <div className="text-4xl font-bold gradient-text mb-4">98%</div>
+                                <div className="text-xl text-white font-bold mb-3 tracking-tight">Client Satisfaction</div>
+                                <div className="text-gray-400 text-base leading-relaxed font-medium">Based on post-project surveys</div>
                             </GlowingCard>
                         </div>
                     </motion.div>

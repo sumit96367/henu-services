@@ -9,38 +9,39 @@ import {
     BarChart3,
     Zap,
     Globe,
-    Search
+    Search,
+    ArrowRight
 } from 'lucide-react';
 
 const features = [
     {
         title: 'Performance Advertising',
-        description: 'Expert management of Google Ads, Meta Ads, and LinkedIn Ads focused on ROI and conversions.',
+        description: 'Expert management of Google Ads, Meta Ads, and other high-ROI channels to drive targeted traffic.',
         icon: <Target size={28} />
     },
     {
         title: 'Social Media Strategy',
-        description: 'Building brand authority and community across major platforms through strategic organic content.',
+        description: 'Comprehensive brand positioning and engagement strategies across all major social platforms.',
         icon: <Megaphone size={28} />
     },
     {
         title: 'SEO & Organic Growth',
-        description: 'Comprehensive SEO strategies to dominate search results and drive high-quality organic traffic.',
-        icon: <TrendingUp size={28} />
+        description: 'Long-term visibility and search dominance through content optimization and technical SEO.',
+        icon: <Search size={28} />
     },
     {
-        title: 'Conversion Optimization',
-        description: 'Advanced A/B testing and landing page optimization to maximize the value of every visitor.',
+        title: 'Email Automation',
+        description: 'Nurture leads and drive repeat sales with automated, high-conversion email lifecycles.',
         icon: <Zap size={28} />
     },
     {
-        title: 'Analytics & Attribution',
-        description: 'Advanced tracking and reporting that connects marketing efforts to real business revenue.',
-        icon: <BarChart3 size={28} />
+        title: 'Video Content Creation',
+        description: 'Engaging video assets designed specifically for social media ads and brand storytelling.',
+        icon: <Globe size={28} />
     },
     {
-        title: 'Community Building',
-        description: 'Nurturing engaged audiences and brand advocates through consistent, high-value interaction.',
+        title: 'Influencer Partnerships',
+        description: 'Strategic collaborations with creators to amplify your reach and build authentic trust.',
         icon: <Users size={28} />
     }
 ];
@@ -48,61 +49,123 @@ const features = [
 const process = [
     {
         step: 1,
-        title: 'Audit & Analysis',
-        description: 'We analyze your current performance, competitors, and audience to find growth opportunities.'
+        title: 'Audience Research',
+        description: 'Identifying your ideal customers and their pain points to craft targeted messaging.'
     },
     {
         step: 2,
-        title: 'Strategic Roadmap',
-        description: 'We develop a multi-channel strategy aligned with your specific business objectives.'
+        title: 'Campaign Strategy',
+        description: 'Developing a comprehensive roadmap across paid and organic channels for maximum impact.'
     },
     {
         step: 3,
-        title: 'Content & Creative',
-        description: 'Designing high-converting ad creatives and compelling organic content for your brand.'
+        title: 'Creative Production',
+        description: 'Designing eye-catching ads and content that resonate with your target audience.'
     },
     {
         step: 4,
-        title: 'Campaign Launch',
-        description: 'Precision set-up of ad accounts, tracking, and content calendars across all channels.'
+        title: 'Launch & A/B Testing',
+        description: 'Deploying campaigns and testing variations to find the most efficient growth path.'
     },
     {
         step: 5,
-        title: 'Optimization',
-        description: 'Daily monitoring and data-driven adjustments to improve performance and efficiency.'
+        title: 'Analytics & Reporting',
+        description: 'Transparent tracking of results with detailed insights and actionable data.'
     },
     {
         step: 6,
-        title: 'Review & Scaling',
-        description: 'Regular performance reviews and scaling successful strategies for maximum impact.'
+        title: 'Scale & Refine',
+        description: 'Scaling winning campaigns and continuously refining strategies for long-term dominance.'
     }
 ];
 
 const technologies = [
     { name: 'Google Ads' },
-    { name: 'Meta Ads Manager' },
-    { name: 'LinkedIn Ads' },
-    { name: 'SEMrush' },
+    { name: 'Meta Business' },
     { name: 'Ahrefs' },
-    { name: 'Google Analytics 4' },
-    { name: 'TikTok Ads' },
-    { name: 'Mailchimp' },
+    { name: 'SEMrush' },
     { name: 'HubSpot' },
-    { name: 'Hotjar' }
+    { name: 'HENU Content AI' },
+    { name: 'YouTube Analytics' }
 ];
 
+
+import HeroSection from '@/components/ui/hero-section-9';
+import { ServiceFeatures, ServiceProcess, ServiceTechnologies, WhyChooseUs, ServiceCTA } from '@/components/service-page';
+
 export default function DigitalMarketingPage() {
+    const heroData = {
+        title: (
+            <>
+                Results-Driven <br /> <span className="gradient-text">Digital Marketing & Ads</span>
+            </>
+        ),
+        subtitle: 'Skyrocket your visibility and sales with data-backed campaigns across all channels.',
+        actions: [
+            {
+                text: 'Launch Your Campaign',
+                onClick: () => window.location.href = '/contact',
+                className: 'btn-primary',
+                icon: <ArrowRight size={18} />
+            },
+            {
+                text: 'Our Process',
+                onClick: () => {
+                    const element = document.getElementById('process');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                },
+                className: 'btn-secondary'
+            },
+        ],
+
+        stats: [
+            {
+                value: '500%',
+                label: 'Average ROAS',
+                icon: <Target className="h-5 w-5 text-cyan-400" />,
+            },
+            {
+                value: '₹1Cr+',
+                label: 'Monthly Managed Spend',
+                icon: <Zap className="h-5 w-5 text-amber-400" />,
+            },
+            {
+                value: '98%',
+                label: 'Client Retention',
+                icon: <Users className="h-5 w-5 text-cyan-400" />,
+            },
+        ],
+        images: [
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop',
+        ],
+    };
+
     return (
-        <ServicePage
-            heroTitle="Growth Focused"
-            heroHighlight="Digital Marketing & Ads"
-            heroDescription="A comprehensive approach to digital growth, combining high-performance advertising with strategic marketing to scale your brand."
-            heroAccentColor="cyan"
-            features={features}
-            process={process}
-            technologies={technologies}
-            ctaTitle="Accelerate Your Growth"
-            ctaDescription="Ready to scale your business with a data-driven marketing strategy? Let's talk."
-        />
+        <main className="relative">
+            {/* Hard spacer to force content down */}
+            <div className="h-[80px] md:h-[120px]" />
+            <div className="relative z-10">
+                <HeroSection
+                    className="border-b border-white/5"
+                    title={heroData.title}
+                    subtitle={heroData.subtitle}
+                    actions={heroData.actions}
+                    stats={heroData.stats}
+                    images={heroData.images}
+                />
+            </div>
+            <ServiceFeatures features={features} accentColor="cyan" />
+            <ServiceProcess process={process} accentColor="cyan" />
+            <ServiceTechnologies technologies={technologies} />
+            <WhyChooseUs />
+            <ServiceCTA
+                title="Dominate Digital"
+                description="Grow your audience today. Let's campaign!"
+                accentColor="cyan"
+            />
+        </main>
     );
 }
+

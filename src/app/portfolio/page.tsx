@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { GlowingCard } from '@/components/ui/glowing-card';
+import { AnimatedLetterText } from '@/components/ui/potfolio-text';
 
 // Project Categories
 const categories = [
@@ -239,8 +240,8 @@ export default function PortfolioPage() {
 
             {/* Hero Section */}
             <section
-                className="relative min-h-[70vh] flex flex-col items-center justify-center overflow-hidden"
-                style={{ background: '#050505', paddingTop: '100px' }}
+                className="relative z-10 min-h-[70vh] flex flex-col items-center justify-center overflow-hidden"
+                style={{ background: '#050505', paddingTop: '160px' }}
             >
                 <div className="absolute inset-0">
                     <div className="grid-background" />
@@ -261,10 +262,14 @@ export default function PortfolioPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="max-w-5xl w-full flex flex-col items-center text-center"
                     >
-                        <h1 className="text-6xl md:text-9xl font-bold text-white mb-8 leading-[1.0] tracking-tighter text-center">
-                            Our <span className="gradient-text">Portfolio</span>
-                        </h1>
-                        <p className="text-2xl md:text-3xl text-gray-400 max-w-3xl mb-16 leading-relaxed text-center">
+                        <div className="flex flex-col items-center">
+                            <AnimatedLetterText
+                                text="Portfolio"
+                                letterToReplace="o"
+                                className="text-7xl md:text-9xl text-white"
+                            />
+                        </div>
+                        <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mb-16 leading-relaxed text-center">
                             A curated selection of our most impactful work across technology, marketing, and strategy.
                         </p>
 

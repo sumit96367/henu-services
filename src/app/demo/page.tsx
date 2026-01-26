@@ -1,13 +1,15 @@
-'use client';
+import { AnimatedLetterText } from "@/components/ui/potfolio-text"
 
-import { TextReveal } from "@/components/ui/text-reveal-animation";
-
-export default function DemoOne() {
+export default function Home() {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#050505]">
-            <div className="max-w-md w-full p-8 border border-white/10 rounded-3xl bg-white/[0.02] backdrop-blur-xl">
-                <TextReveal word="Innovate" />
+        <main className="min-h-screen flex flex-col items-center justify-center gap-16 p-8 w-full bg-[#050505]">
+            <div className="flex flex-col items-center gap-8">
+                <AnimatedLetterText text="Portfolio" letterToReplace="o" className="text-7xl md:text-9xl text-white" />
+
+                <p className="text-gray-400 text-lg max-w-md text-center">
+                    An elegant text component where letters transform into animated visuals
+                </p>
             </div>
-        </div>
-    );
+        </main>
+    )
 }

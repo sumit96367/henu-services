@@ -20,22 +20,35 @@ export const MenuItem = ({
     item,
     children,
 }: {
-    setActive: (item: string) => void;
+    setActive: (item: string | null) => void;
     active: string | null;
     item: string;
     children?: React.ReactNode;
 }) => {
     return (
-        <div onMouseEnter={() => setActive(item)} className="relative flex-shrink-0">
-            <motion.span
-                transition={{ duration: 0.3 }}
-                className="text-white hover:text-cyan-400 transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap block"
+        <div
+            onMouseLeave={() => setActive(null)}
+            className="relative flex-shrink-0"
+        >
+            <div
+                onMouseEnter={() => setActive(item)}
+                className="cursor-pointer"
             >
-                {item}
-            </motion.span>
+                <motion.span
+                    transition={{ duration: 0.3 }}
+                    className="text-white hover:text-cyan-400 transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap block"
+                >
+                    {item}
+                </motion.span>
+            </div>
             <AnimatePresence>
                 {active === item && children && (
-                    <div className="absolute top-[calc(100%+1.2rem)] left-1/2 transform -translate-x-1/2">
+                    <motion.div
+                        initial={{ opacity: 0, pointerEvents: "none" }}
+                        animate={{ opacity: 1, pointerEvents: "auto" }}
+                        exit={{ opacity: 0, pointerEvents: "none" }}
+                        className="absolute top-[calc(100%)] left-1/2 transform -translate-x-1/2 pt-[1.2rem] z-50"
+                    >
                         <motion.div
                             initial={{ opacity: 0, scale: 0.85, y: 10 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -48,7 +61,7 @@ export const MenuItem = ({
                                 {children}
                             </div>
                         </motion.div>
-                    </div>
+                    </motion.div>
                 )}
             </AnimatePresence>
         </div>
@@ -64,10 +77,7 @@ export const Menu = ({
     children: React.ReactNode;
 }) => {
     return (
-        <nav
-            onMouseLeave={() => setActive(null)} // resets the state
-            className="relative flex items-center justify-center gap-8 lg:gap-12"
-        >
+        <nav className="relative flex items-center justify-center gap-8 lg:gap-12 py-2">
             {children}
         </nav>
     );

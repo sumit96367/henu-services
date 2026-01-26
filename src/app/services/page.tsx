@@ -23,72 +23,73 @@ import { GlowingCard } from '@/components/ui/glowing-card';
 
 const services = [
     {
-        category: 'Development',
+        category: 'Core Technology',
         color: 'cyan',
         items: [
             {
-                title: 'Web Development',
-                description: 'Custom websites and web applications built with modern technologies.',
+                title: 'Website Development',
+                description: 'Innovative web solutions powered by HENU OS AI for smarter performance and extreme scalability.',
                 icon: Globe,
                 href: '/services/web-development'
             },
             {
-                title: 'Mobile App Development',
-                description: 'Native and cross-platform mobile apps for iOS and Android.',
-                icon: Smartphone,
-                href: '/services/mobile-app-development'
-            },
-            {
                 title: 'Backend Development',
-                description: 'Scalable APIs, databases, and cloud infrastructure.',
+                description: 'Scalable backend infrastructure with real-time AI and seamless reliability built on HENU OS.',
                 icon: Server,
                 href: '/services/backend-development'
             },
             {
-                title: 'AI Agent Development',
-                description: 'Intelligent automation with custom AI agents and LLM integration.',
+                title: 'Mobile App Development',
+                description: 'Powerful native and cross-platform mobile experiences that users love and businesses rely on.',
+                icon: Smartphone,
+                href: '/services/mobile-app-development'
+            },
+            {
+                title: 'AI Automations',
+                description: 'Automate your workflows with custom HENU AI agents to save time, cut costs, and boost efficiency.',
                 icon: Bot,
-                href: '/services/ai-agent-development'
+                href: '/services/ai-automations'
             }
         ]
     },
     {
-        category: 'Growth',
+        category: 'Growth & Design',
         color: 'cyan',
         items: [
             {
+                title: 'Graphic Design',
+                description: 'Stunning visuals and brand identities infused with modern AI tools for precision and impact.',
+                icon: Target, // Or Palette if imported
+                href: '/services/graphic-design'
+            },
+            {
                 title: 'Digital Marketing & Ads',
-                description: 'Strategic digital marketing and performance-driven ad campaigns to grow your brand and reach.',
+                description: 'Data-backed campaigns across all channels to skyrocket your visibility and sales.',
                 icon: Megaphone,
                 href: '/services/digital-marketing'
             }
         ]
     },
     {
-        category: 'Legal & Finance',
+        category: 'Institutional & Financial',
         color: 'amber',
         items: [
             {
-                title: 'Legal Documentation',
-                description: 'Contracts, NDAs, and business legal documents.',
+                title: 'Legal Services',
+                description: 'Full-spectrum legal support and business compliance for startups and SMEs—India-focused expertise.',
                 icon: FileText,
-                href: '/services/legal-documentation'
+                href: '/services/legal-services'
             },
             {
-                title: 'Registration & Compliance',
-                description: 'Company registration, GST, and regulatory compliance.',
-                icon: Building,
-                href: '/services/registration-compliance'
-            },
-            {
-                title: 'Government Grants',
-                description: 'Access to government funding and startup benefits.',
+                title: 'Funding Solutions',
+                description: 'Strategic funding paths from government grants to investor pitches to fuel your growth.',
                 icon: Coins,
-                href: '/services/government-grants'
+                href: '/services/funding-solutions'
             }
         ]
     }
 ];
+
 
 
 

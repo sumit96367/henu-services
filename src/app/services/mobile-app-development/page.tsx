@@ -81,16 +81,10 @@ const technologies = [
     { name: 'Flutter' },
     { name: 'Swift' },
     { name: 'Kotlin' },
-    { name: 'iOS SDK' },
-    { name: 'Android SDK' },
     { name: 'Firebase' },
+    { name: 'HENU OS Voice AI' },
     { name: 'Expo' },
-    { name: 'Redux' },
-    { name: 'SQLite' },
-    { name: 'Realm' },
-    { name: 'Push Notifications' },
-    { name: 'In-App Payments' },
-    { name: 'Analytics' }
+    { name: 'Redux' }
 ];
 
 export default function MobileAppDevelopmentPage() {
@@ -108,3 +102,4 @@ export default function MobileAppDevelopmentPage() {
         />
     );
 }
+

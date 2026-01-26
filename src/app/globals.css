@@ -49,6 +49,17 @@
   --color-amber: var(--amber);
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --animate-diamond-rotate: diamond-rotate 8s linear infinite;
+
+  @keyframes diamond-rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 /* ============================================
@@ -92,9 +103,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Inter', system-ui, sans-serif;
-  line-height: 1.8;
+  line-height: 1.9;
   overflow-x: hidden;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.015em;
 }
 
 ::selection {
@@ -211,9 +222,9 @@ li {
    ============================================ */
 
 .container {
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 48px;
 }
 
 @media (max-width: 768px) {
@@ -223,7 +234,7 @@ li {
 }
 
 .section {
-  padding: 160px 0;
+  padding: 200px 0;
   position: relative;
 }
 
@@ -269,13 +280,13 @@ li {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px 32px;
+  gap: 12px;
+  padding: 18px 40px;
   background: #fff;
   color: #000;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.05rem;
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -292,13 +303,13 @@ li {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px 32px;
+  gap: 12px;
+  padding: 18px 40px;
   background: transparent;
   color: #fff;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.05rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 100px;
   cursor: pointer;

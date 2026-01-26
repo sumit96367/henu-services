@@ -6,23 +6,25 @@ import { TextHoverEffect } from '@/components/ui/hover-footer';
 
 const footerLinks = [
     {
-        title: "Development",
+        title: "Technology",
         links: [
-            { label: "Web Development", href: "/services/web-development" },
-            { label: "Mobile Apps", href: "/services/mobile-app-development" },
+            { label: "Website Development", href: "/services/web-development" },
             { label: "Backend Development", href: "/services/backend-development" },
-            { label: "AI Agents", href: "/services/ai-agent-development" },
+            { label: "Mobile Apps", href: "/services/mobile-app-development" },
+            { label: "AI Automations", href: "/services/ai-automations" },
         ],
     },
     {
         title: "Growth & Legal",
         links: [
+            { label: "Graphic Design", href: "/services/graphic-design" },
             { label: "Digital Marketing & Ads", href: "/services/digital-marketing" },
-            { label: "Legal Documentation", href: "/services/legal-documentation" },
-            { label: "Govt Grants", href: "/services/government-grants", pulse: true },
+            { label: "Legal Services", href: "/services/legal-services" },
+            { label: "Funding Solutions", href: "/services/funding-solutions", pulse: true },
         ],
     },
 ];
+
 
 const contactInfo = [
     {

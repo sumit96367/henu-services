@@ -5,6 +5,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import {
+  Globe,
+  Server,
+  Palette,
   Smartphone,
   Megaphone,
   Bot,
@@ -16,7 +19,11 @@ import {
   ArrowRight,
   ChevronRight,
   ExternalLink,
+  Zap,
+  ShieldCheck,
+  Users,
 } from 'lucide-react';
+
 import { SplineScene } from '@/components/ui/splite';
 import { Spotlight } from '@/components/ui/spotlight';
 import { GlowingCard } from '@/components/ui/glowing-card';
@@ -99,10 +106,9 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-2 leading-[1.1] tracking-tighter text-center">
-              <PremiumTextReveal text="Architecting Your" delay={0.3} className="block md:inline" />
-              <br className="hidden md:block" />
-              <PremiumTextReveal text="Digital Future." className="gradient-text block md:inline" delay={0.8} />
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-2 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start">
+              <PremiumTextReveal text="Architecting Your" delay={0.3} />
+              <PremiumTextReveal text="Digital Future." className="gradient-text" delay={0.8} />
             </h1>
 
             {/* Subheading */}
@@ -213,10 +219,10 @@ const StatsSection = () => {
               transition={{ delay: index * 0.1, duration: 0.6 }}
               className="h-full"
             >
-              <GlowingCard innerClassName="text-center p-16 md:p-24 h-full flex flex-col items-center justify-center">
-                <div className="stat-value gradient-text mb-4 text-5xl md:text-6xl font-extrabold">{stat.value}</div>
+              <GlowingCard innerClassName="text-center p-14 md:p-20 h-full flex flex-col items-center justify-center">
+                <div className="stat-value gradient-text mb-4 text-4xl md:text-5xl font-extrabold">{stat.value}</div>
                 <div className="text-white font-bold text-lg uppercase tracking-widest mb-3">{stat.label}</div>
-                <div className="text-gray-500 text-base max-w-[200px] mx-auto leading-relaxed">{stat.desc}</div>
+                <div className="text-gray-500 text-base leading-relaxed">{stat.desc}</div>
               </GlowingCard>
             </motion.div>
           ))}
@@ -231,18 +237,39 @@ const StatsSection = () => {
 // ============================================
 const services = [
   {
-    id: 'web-mobile',
-    title: 'Web & Mobile Engineering',
+    id: 'web-dev',
+    title: 'Website Development',
+    icon: Globe,
+    color: 'cyan',
+    visual: 'devices'
+  },
+  {
+    id: 'backend',
+    title: 'Backend Development',
+    icon: Server,
+    color: 'cyan',
+    visual: 'devices'
+  },
+  {
+    id: 'mobile-app',
+    title: 'Mobile App Development',
     icon: Smartphone,
     color: 'cyan',
     visual: 'devices'
   },
   {
-    id: 'ai-agent',
-    title: 'AI Agent Development',
+    id: 'ai-automation',
+    title: 'AI Automations',
     icon: Bot,
     color: 'cyan',
     visual: 'ai'
+  },
+  {
+    id: 'graphic-design',
+    title: 'Graphic Design',
+    icon: Palette,
+    color: 'cyan',
+    visual: 'marketing'
   },
   {
     id: 'digital-marketing',
@@ -253,19 +280,21 @@ const services = [
   },
   {
     id: 'legal',
-    title: 'Legal & Compliance',
+    title: 'Legal Services',
     icon: Scale,
     color: 'amber',
     visual: 'legal'
   },
   {
-    id: 'grants',
-    title: 'Govt. Grants & Funding',
+    id: 'funding',
+    title: 'Funding Solutions',
     icon: Coins,
     color: 'amber',
     visual: 'grants'
   },
 ];
+
+
 
 const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
   const renderVisual = () => {
@@ -567,141 +596,79 @@ const ServiceMatrixSection = () => {
 };
 
 // ============================================
-// INNOVATION SECTION (AI & DEV FOCUS)
+// WHY CHOOSE US SECTION
 // ============================================
-const InnovationSection = () => {
+const WhyChooseUsSection = () => {
+  const reasons = [
+    {
+      icon: <Bot className="w-8 h-8 text-cyan-400" />,
+      title: "AI-First Engineering",
+      desc: "We don't just build apps; we architect autonomous intelligence that evolves with your business needs.",
+      color: "cyan"
+    },
+    {
+      icon: <Zap className="w-8 h-8 text-amber-400" />,
+      title: "Rapid Execution",
+      desc: "Proprietary frameworks and agile methodology allow us to go from concept to production in record time.",
+      color: "amber"
+    },
+    {
+      icon: <ShieldCheck className="w-8 h-8 text-cyan-400" />,
+      title: "Integrated Strategy",
+      desc: "Unique fusion of technical excellence, legal compliance, and financial engineering for high-growth startups.",
+      color: "cyan"
+    },
+    {
+      icon: <Users className="w-8 h-8 text-amber-400" />,
+      title: "Expert Partnership",
+      desc: "Deep domain expertise across venture capital, government grants, and full-stack system architecture.",
+      color: "amber"
+    }
+  ];
+
   return (
-    <section className="section relative overflow-hidden bg-transparent">
-      {/* Background effect */}
-      <div className="absolute inset-0">
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px]"
-          style={{
-            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%)',
-          }}
-          animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-      </div>
+    <section className="section relative bg-transparent overflow-hidden">
+      {/* Background radial glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center text-center mb-20"
+        >
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 flex flex-col items-center sm:block">
+            <PremiumTextReveal text="Why Partners" />{" "}
+            <span className="gradient-text">
+              <PremiumTextReveal text="Choose Us" delay={0.3} />
+            </span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg text-center leading-relaxed">
+            We bridge the critical gap between technical innovation, legal certainty, and financial growth.
+          </p>
+        </motion.div>
 
-            className="space-y-6"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-white">
-              <PremiumTextReveal text="Next-Gen" /> <span className="gradient-text-tech"><PremiumTextReveal text="Intelligence." delay={0.2} /></span>
-            </h2>
-            <p className="text-xl text-gray-400 leading-relaxed">
-              We don&apos;t just write code; we deploy intelligent agents. From LLM integration
-              to custom backend architectures, we prepare your business for the autonomous future.
-            </p>
-            <div className="flex items-center gap-3 pt-4">
-              <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-cyan-400 font-medium">Powered by Henu OS Engineering</span>
-            </div>
-          </motion.div>
-
-          {/* Neural Network Constellation */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-
-            className="relative h-80 lg:h-[400px]"
-          >
-            <svg className="w-full h-full" viewBox="0 0 400 400">
-              {/* Neural connections */}
-              {/* Layer 1 to Layer 2 */}
-              {[0, 1, 2, 3].map((i) => (
-                [0, 1, 2, 3, 4].map((j) => (
-                  <motion.line
-                    key={`l1-${i}-${j}`}
-                    x1={80} y1={80 + i * 80}
-                    x2={200} y2={50 + j * 75}
-                    className="neural-connection"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 0.3 }}
-                    transition={{ delay: (i + j) * 0.05, duration: 0.5 }}
-                  />
-                ))
-              ))}
-              {/* Layer 2 to Layer 3 */}
-              {[0, 1, 2, 3, 4].map((i) => (
-                [0, 1, 2, 3].map((j) => (
-                  <motion.line
-                    key={`l2-${i}-${j}`}
-                    x1={200} y1={50 + i * 75}
-                    x2={320} y2={80 + j * 80}
-                    className="neural-connection"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 0.3 }}
-                    transition={{ delay: (i + j) * 0.05 + 0.3, duration: 0.5 }}
-                  />
-                ))
-              ))}
-
-              {/* Layer 1 nodes */}
-              {[0, 1, 2, 3].map((i) => (
-                <motion.circle
-                  key={`n1-${i}`}
-                  cx={80} cy={80 + i * 80}
-                  r={6}
-                  fill="#00D4FF"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: i * 0.1, duration: 0.3 }}
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(0, 212, 255, 0.8))' }}
-                />
-              ))}
-
-              {/* Layer 2 nodes */}
-              {[0, 1, 2, 3, 4].map((i) => (
-                <motion.circle
-                  key={`n2-${i}`}
-                  cx={200} cy={50 + i * 75}
-                  r={8}
-                  fill="#00D4FF"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: i * 0.1 + 0.2, duration: 0.3 }}
-                  style={{ filter: 'drop-shadow(0 0 10px rgba(0, 212, 255, 0.8))' }}
-                />
-              ))}
-
-              {/* Layer 3 nodes */}
-              {[0, 1, 2, 3].map((i) => (
-                <motion.circle
-                  key={`n3-${i}`}
-                  cx={320} cy={80 + i * 80}
-                  r={6}
-                  fill="#00D4FF"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: i * 0.1 + 0.4, duration: 0.3 }}
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(0, 212, 255, 0.8))' }}
-                />
-              ))}
-
-              {/* Pulsing effect on central nodes */}
-              {[0, 1, 2, 3, 4].map((i) => (
-                <motion.circle
-                  key={`pulse-${i}`}
-                  cx={200} cy={50 + i * 75}
-                  r={15}
-                  fill="none"
-                  stroke="#00D4FF"
-                  strokeWidth={1}
-                  initial={{ scale: 0.5, opacity: 0.8 }}
-                  animate={{ scale: 2, opacity: 0 }}
-                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 }}
-                />
-              ))}
-            </svg>
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {reasons.map((reason, index) => (
+            <motion.div
+              key={reason.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+            >
+              <GlowingCard className="h-full group" innerClassName="p-12 md:p-16 h-full flex flex-col items-center text-center">
+                <div className="mb-10 group-hover:scale-110 transition-transform duration-300">
+                  {reason.icon}
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  {reason.title}
+                </h3>
+                <p className="text-gray-400 text-base leading-relaxed max-w-[320px]">
+                  {reason.desc}
+                </p>
+              </GlowingCard>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -714,20 +681,21 @@ const InnovationSection = () => {
 const complianceCards = [
   {
     icon: FileText,
-    title: 'Legal Documentation',
-    desc: 'Contracts, NDAs, and incorporation.'
+    title: 'Legal Services',
+    desc: 'Business registration, tax filings, and annual compliance.'
   },
   {
     icon: Coins,
-    title: 'Govt. Grants',
-    desc: 'Identify and secure non-dilutive funding.'
+    title: 'Funding Solutions',
+    desc: 'Strategic paths to grants, private lending, and investor pitches.'
   },
   {
     icon: BadgeCheck,
-    title: 'Compliance',
-    desc: 'Taxation, audit, and regulatory adherence.'
+    title: 'Precision AI',
+    desc: 'AI-driven automation and efficiency for your core operations.'
   }
 ];
+
 
 const ComplianceSection = () => {
   return (
@@ -822,14 +790,14 @@ const ComplianceSection = () => {
               transition={{ delay: index * 0.1 }}
               className="h-full group"
             >
-              <GlowingCard className="h-full" innerClassName="p-14 md:p-22 h-full flex flex-col items-start bg-transparent">
-                <div className="flex items-center gap-5 mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center group-hover:bg-amber-500/15 group-hover:scale-110 transition-all duration-500 border border-amber-500/20 shadow-xl shrink-0">
-                    <card.icon className="w-7 h-7 text-amber-500" />
+              <GlowingCard className="h-full" innerClassName="p-12 h-full flex flex-col items-start bg-transparent">
+                <div className="flex flex-col items-start gap-6 mb-2">
+                  <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center group-hover:bg-amber-500/15 group-hover:scale-110 transition-all duration-500 border border-amber-500/20 shadow-xl shrink-0">
+                    <card.icon className="w-8 h-8 text-amber-500" />
                   </div>
                   <h4 className="text-2xl font-bold text-white group-hover:text-amber-500 transition-colors leading-tight">{card.title}</h4>
                 </div>
-                <p className="text-gray-400 text-xl leading-relaxed flex-1 font-medium">{card.desc}</p>
+                <p className="text-gray-400 text-lg leading-relaxed flex-1 font-medium">{card.desc}</p>
 
                 {/* Subtle hover accent */}
                 <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-500/0 via-amber-500/40 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -1031,7 +999,7 @@ export default function HomePage() {
       <HeroSection />
       <StatsSection />
       <ServiceMatrixSection />
-      <InnovationSection />
+      <WhyChooseUsSection />
       <ComplianceSection />
       <TestimonialsSection />
       <FAQSection />
