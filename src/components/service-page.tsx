@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { GlowingCard } from '@/components/ui/glowing-card';
+import { cn } from '@/lib/utils';
 
 // ============================================
 // TYPES
@@ -160,16 +161,9 @@ export const ServiceHero = ({
 // ============================================
 // FEATURES SECTION (with hover effects)
 // ============================================
-import { FeaturesSectionWithHoverEffects, FeatureItem } from '@/components/ui/feature-section-with-hover-effects';
+import { FeaturesSectionWithHoverEffects } from '@/components/ui/feature-section-with-hover-effects';
 
 export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFeature[]; accentColor: 'cyan' | 'amber' }) => {
-    // Transform ServiceFeature[] to FeatureItem[] for the hover effects component
-    const featureItems: FeatureItem[] = features.map(f => ({
-        title: f.title,
-        description: f.description,
-        icon: f.icon
-    }));
-
     return (
         <section className="section bg-transparent">
             <div className="container">
@@ -177,18 +171,18 @@ export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFe
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="flex flex-col items-center text-center mb-8"
+                    className="mb-12 space-y-4 text-center"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white">
                         What We <span className="gradient-text">Offer</span>
                     </h2>
-                    <p className="text-gray-400 max-w-2xl text-center">
+                    <p className="max-w-[52ch] text-gray-400 mx-auto">
                         Comprehensive solutions tailored to your business needs
                     </p>
                 </motion.div>
 
                 <FeaturesSectionWithHoverEffects
-                    features={featureItems}
+                    features={features}
                     accentColor={accentColor}
                 />
             </div>
@@ -259,7 +253,12 @@ export const ServiceProcess = ({ process, accentColor }: { process: ServiceProce
 // ============================================
 // TECHNOLOGIES SECTION
 // ============================================
+import { BrandScroller, BrandScrollerReverse } from '@/components/ui/brand-scroller';
+
 export const ServiceTechnologies = ({ technologies }: { technologies: ServiceTech[] }) => {
+    // Extract just the names from the technologies array
+    const techNames = technologies.map(tech => tech.name);
+
     return (
         <section className="section bg-transparent">
             <div className="container">
@@ -274,21 +273,9 @@ export const ServiceTechnologies = ({ technologies }: { technologies: ServiceTec
                     </h2>
                 </motion.div>
 
-                <div className="flex flex-wrap justify-center gap-6">
-                    {technologies.map((tech, index) => (
-                        <motion.div
-                            key={tech.name}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.05 }}
-                        >
-                            <GlowingCard innerClassName="px-12 py-8 md:px-16 md:py-10 flex items-center gap-6 hover:scale-105 transition-transform duration-300">
-                                {tech.icon && <div className="text-gray-400">{tech.icon}</div>}
-                                <span className="text-white font-medium">{tech.name}</span>
-                            </GlowingCard>
-                        </motion.div>
-                    ))}
+                <div className="flex flex-col gap-6">
+                    <BrandScroller technologies={techNames} />
+                    <BrandScrollerReverse technologies={techNames} />
                 </div>
             </div>
         </section>
