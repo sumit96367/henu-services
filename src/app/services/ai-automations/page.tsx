@@ -47,32 +47,38 @@ const process = [
     {
         step: 1,
         title: 'Automation Audit',
-        description: 'Identifying bottlenecks in your current processes that can be optimized with AI.'
+        description: 'Identifying bottlenecks in your current processes that can be optimized with AI.',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 2,
         title: 'Agent Design & Training',
-        description: 'Architecting custom AI agents and training them on your specific business data.'
+        description: 'Architecting custom AI agents and training them on your specific business data.',
+        image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 3,
         title: 'Integration Setup',
-        description: 'Seamlessly connecting AI agents with your existing CRM, ERP, and communication tools.'
+        description: 'Seamlessly connecting AI agents with your existing CRM, ERP, and communication tools.',
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 4,
         title: 'Testing & Refinement',
-        description: 'Rigorous testing to ensure accuracy, reliability, and human-like interaction.'
+        description: 'Rigorous testing to ensure accuracy, reliability, and human-like interaction.',
+        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 5,
         title: 'Go-Live & Monitoring',
-        description: 'Deploying your AI workforce and monitoring performance in real-world scenarios.'
+        description: 'Deploying your AI workforce and monitoring performance in real-world scenarios.',
+        image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 6,
         title: 'Continuous Optimization',
-        description: 'Ongoing updates and learning cycles to keep your AI agents at the cutting edge.'
+        description: 'Ongoing updates and learning cycles to keep your AI agents at the cutting edge.',
+        image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070&auto=format&fit=crop'
     }
 ];
 

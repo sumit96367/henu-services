@@ -24,6 +24,7 @@ interface ServiceProcess {
     step: number;
     title: string;
     description: string;
+    image?: string;
 }
 
 interface ServiceTech {
@@ -173,13 +174,16 @@ export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFe
                     viewport={{ once: true }}
                     className="mb-12 space-y-4 text-center"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-white">
+
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         What We <span className="gradient-text">Offer</span>
                     </h2>
-                    <p className="max-w-[52ch] text-gray-400 mx-auto">
+                    <p className="max-w-[52ch] text-gray-400 pb-8">
                         Comprehensive solutions tailored to your business needs
                     </p>
                 </motion.div>
+
+
 
                 <FeaturesSectionWithHoverEffects
                     features={features}
@@ -191,20 +195,56 @@ export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFe
 };
 
 // ============================================
-// PROCESS SECTION
+// PROCESS SECTION (Sticky Scroll)
 // ============================================
+import { StickyScroll } from '@/components/ui/sticky-scroll-reveal';
+
 export const ServiceProcess = ({ process, accentColor }: { process: ServiceProcess[]; accentColor: 'cyan' | 'amber' }) => {
-    const lineColor = accentColor === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500';
-    const stepBg = accentColor === 'cyan' ? 'from-cyan-500 to-cyan-600' : 'from-amber-500 to-amber-600';
+    // Transform process steps into StickyScroll content format
+    const stickyContent = process.map((step, index) => {
+        const gradients = accentColor === 'cyan'
+            ? [
+                "linear-gradient(to bottom right, rgb(6 182 212), rgb(16 185 129))",
+                "linear-gradient(to bottom right, rgb(34 211 238), rgb(59 130 246))",
+                "linear-gradient(to bottom right, rgb(56 189 248), rgb(99 102 241))"
+            ]
+            : [
+                "linear-gradient(to bottom right, rgb(251 146 60), rgb(234 179 8))",
+                "linear-gradient(to bottom right, rgb(249 115 22), rgb(239 68 68))",
+                "linear-gradient(to bottom right, rgb(245 158 11), rgb(217 119 6))"
+            ];
+
+        return {
+            title: `${step.step}. ${step.title}`,
+            description: step.description,
+            content: step.image ? (
+                <div className="h-full w-full relative">
+                    <img
+                        src={step.image}
+                        alt={step.title}
+                        className="h-full w-full object-cover"
+                    />
+                </div>
+            ) : (
+                <div
+                    className="h-full w-full flex items-center justify-center text-white text-4xl font-bold"
+                    style={{ background: gradients[index % gradients.length] }}
+                >
+                    {step.step}
+                </div>
+            ),
+        };
+    });
 
     return (
-        <section id="process" className="section bg-transparent">
+        <section id="process" className="section pt-8 bg-transparent">
             <div className="container">
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="flex flex-col items-center text-center mb-16"
+                    className="flex flex-col items-center text-center mb-8"
                 >
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         Our <span className="gradient-text">Process</span>
@@ -214,41 +254,13 @@ export const ServiceProcess = ({ process, accentColor }: { process: ServiceProce
                     </p>
                 </motion.div>
 
-                <div className="relative max-w-4xl mx-auto">
-                    {/* Vertical Line */}
-                    <div className={`absolute left-8 md:left-1/2 top-0 bottom-0 w-px ${lineColor} opacity-20`} />
-
-                    {process.map((step, index) => (
-                        <motion.div
-                            key={step.step}
-                            initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className={`relative flex items-start gap-8 mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                                }`}
-                        >
-                            {/* Step Number */}
-                            <div className="flex-shrink-0 relative z-10">
-                                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stepBg} flex items-center justify-center text-xl font-bold text-white shadow-lg`}>
-                                    {step.step}
-                                </div>
-                            </div>
-
-                            {/* Content */}
-                            <div className="flex-1">
-                                <GlowingCard innerClassName={`p-12 md:p-16 ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-                                    <h3 className="text-3xl font-bold text-white mb-4 leading-tight">{step.title}</h3>
-                                    <p className="text-gray-400 text-lg leading-relaxed font-medium">{step.description}</p>
-                                </GlowingCard>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                <StickyScroll content={stickyContent} />
             </div>
         </section>
     );
+
 };
+
 
 // ============================================
 // TECHNOLOGIES SECTION

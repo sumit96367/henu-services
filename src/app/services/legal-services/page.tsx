@@ -47,32 +47,38 @@ const process = [
     {
         step: 1,
         title: 'Free Consultation',
-        description: 'Initial discussion to understand your business structure and identify legal requirements.'
+        description: 'Initial discussion to understand your business structure and identify legal requirements.',
+        image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 2,
         title: 'Document Preparation',
-        description: 'Gathering and drafting all necessary documents to ensure legal accuracy and compliance.'
+        description: 'Gathering and drafting all necessary documents to ensure legal accuracy and compliance.',
+        image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=2121&auto=format&fit=crop'
     },
     {
         step: 3,
         title: 'Government Filing',
-        description: 'Submitting applications to the respective government portals with precision and speed.'
+        description: 'Submitting applications to the respective government portals with precision and speed.',
+        image: 'https://images.unsplash.com/photo-1554224155-1724d9f64861?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 4,
         title: 'Approval Tracking',
-        description: 'Proactively monitoring the status of filings and responding to any government queries.'
+        description: 'Proactively monitoring the status of filings and responding to any government queries.',
+        image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 5,
         title: 'Compliance Handover',
-        description: 'Securing final approvals and handing over documented proof of successful compliance.'
+        description: 'Securing final approvals and handing over documented proof of successful compliance.',
+        image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 6,
         title: 'Ongoing Advisory',
-        description: 'Providing monthly or quarterly legal health checks to maintain your business foundation.'
+        description: 'Providing monthly or quarterly legal health checks to maintain your business foundation.',
+        image: 'https://images.unsplash.com/photo-1575505586569-6d8b584d8ad6?q=80&w=2135&auto=format&fit=crop'
     }
 ];
 

@@ -47,32 +47,38 @@ const process = [
     {
         step: 1,
         title: 'Discovery & Planning',
-        description: 'We analyze your requirements, target audience, and business goals to create a comprehensive roadmap.'
+        description: 'We analyze your requirements, target audience, and business goals to create a comprehensive roadmap.',
+        image: 'https://images.unsplash.com/photo-1542621334-a254cf47733d?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 2,
         title: 'Wireframing & Design',
-        description: 'Visualizing the structure and aesthetic of your site to ensure a premium user experience.'
+        description: 'Visualizing the structure and aesthetic of your site to ensure a premium user experience.',
+        image: 'https://images.unsplash.com/photo-1586717791821-3f44a563dc4c?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 3,
         title: 'Front-End Development',
-        description: 'Crafting the user interface with modern frameworks like React and Next.js for extreme speed.'
+        description: 'Crafting the user interface with modern frameworks like React and Next.js for extreme speed.',
+        image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2031&auto=format&fit=crop'
     },
     {
         step: 4,
         title: 'Back-End Integration',
-        description: 'Building robust server-side logic and database structures to power your applications features.'
+        description: 'Building robust server-side logic and database structures to power your applications features.',
+        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 5,
         title: 'Testing & Optimization',
-        description: 'Rigorous performance checks and bug fixing across all platforms before going live.'
+        description: 'Rigorous performance checks and bug fixing across all platforms before going live.',
+        image: 'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?q=80&w=2076&auto=format&fit=crop'
     },
     {
         step: 6,
         title: 'Launch & Maintenance',
-        description: 'Seamless deployment and ongoing support to keep your digital presence at its peak.'
+        description: 'Seamless deployment and ongoing support to keep your digital presence at its peak.',
+        image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2069&auto=format&fit=crop'
     }
 ];
 

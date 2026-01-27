@@ -47,32 +47,38 @@ const process = [
     {
         step: 1,
         title: 'Concept Brainstorming',
-        description: 'Defining the creative direction and core visual concepts for your project.'
+        description: 'Defining the creative direction and core visual concepts for your project.',
+        image: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=2066&auto=format&fit=crop'
     },
     {
         step: 2,
         title: 'Mood Boards & Sketches',
-        description: 'Visualizing ideas through mood boards and initial hand-drawn or digital sketches.'
+        description: 'Visualizing ideas through mood boards and initial hand-drawn or digital sketches.',
+        image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop'
     },
     {
         step: 3,
         title: 'Design Iterations',
-        description: 'Developing multiple design options and refining them based on creative excellence.'
+        description: 'Developing multiple design options and refining them based on creative excellence.',
+        image: 'https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=2071&auto=format&fit=crop'
     },
     {
         step: 4,
         title: 'Client Feedback Rounds',
-        description: 'Collaborating closely with you to perfect every detail of the visual assets.'
+        description: 'Collaborating closely with you to perfect every detail of the visual assets.',
+        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 5,
         title: 'Final Polish & Delivery',
-        description: 'Adding the final touches and delivering high-resolution assets in all required formats.'
+        description: 'Adding the final touches and delivering high-resolution assets in all required formats.',
+        image: 'https://images.unsplash.com/photo-1542744095-2ad4870f79fc?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 6,
         title: 'Brand Guidelines',
-        description: 'Creating comprehensive documentation to ensure consistent brand usage across all channels.'
+        description: 'Creating comprehensive documentation to ensure consistent brand usage across all channels.',
+        image: 'https://images.unsplash.com/photo-1586717791821-3f44a563dc4c?q=80&w=2070&auto=format&fit=crop'
     }
 ];
 

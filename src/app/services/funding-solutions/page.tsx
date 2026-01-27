@@ -47,32 +47,38 @@ const process = [
     {
         step: 1,
         title: 'Funding Assessment',
-        description: 'Analyzing your current financial state and identifying the most suitable funding paths.'
+        description: 'Analyzing your current financial state and identifying the most suitable funding paths.',
+        image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 2,
         title: 'Strategy & Pitch Building',
-        description: 'Developing a bulletproof funding strategy and creating compelling investment materials.'
+        description: 'Developing a bulletproof funding strategy and creating compelling investment materials.',
+        image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 3,
         title: 'Application Preparation',
-        description: 'Gathering data and drafting applications for grants or preparing DD for investors.'
+        description: 'Gathering data and drafting applications for grants or preparing DD for investors.',
+        image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 4,
         title: 'Network Introductions',
-        description: 'Actively introducing your business to relevant grant bodies and investor networks.'
+        description: 'Actively introducing your business to relevant grant bodies and investor networks.',
+        image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop'
     },
     {
         step: 5,
         title: 'Negotiation Support',
-        description: 'Assisting in term sheet negotiations and deal structuring to protect your interests.'
+        description: 'Assisting in term sheet negotiations and deal structuring to protect your interests.',
+        image: 'https://images.unsplash.com/photo-1573164064543-de41459063eb?q=80&w=2069&auto=format&fit=crop'
     },
     {
         step: 6,
         title: 'Fund Utilization Planning',
-        description: 'Creating strategic spending plans to ensure capital is deployed for maximum growth.'
+        description: 'Creating strategic spending plans to ensure capital is deployed for maximum growth.',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop'
     }
 ];
 
