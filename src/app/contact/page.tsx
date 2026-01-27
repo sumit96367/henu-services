@@ -23,6 +23,8 @@ import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { ShaderBackground } from '@/components/ui/shader-background';
 
+import NeuralBackground from '@/components/ui/flow-field-background';
+
 // Contact Info
 const contactInfo = [
     {
@@ -112,24 +114,22 @@ export default function ContactPage() {
 
     return (
         <main className="relative z-10">
+            {/* Neural Background - Covers main content only */}
+            <div className="absolute inset-0 z-0">
+                <NeuralBackground
+                    color="#00d4ff"
+                    trailOpacity={0.12}
+                    particleCount={500}
+                    speed={0.6}
+                />
+            </div>
+
 
             {/* Hero Section */}
             <section
                 className="relative pb-24 overflow-hidden flex items-start"
-                style={{ background: '#050505', paddingTop: '140px' }}
+                style={{ paddingTop: '140px' }}
             >
-                <div className="absolute inset-0">
-                    <div className="grid-background" />
-                    <motion.div
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
-                        style={{
-                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%)',
-                            filter: 'blur(100px)'
-                        }}
-                        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-                        transition={{ duration: 10, repeat: Infinity }}
-                    />
-                </div>
                 <div className="container relative z-10 flex justify-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -207,9 +207,9 @@ export default function ContactPage() {
             </section>
 
             {/* Form Section */}
-            <section className="section bg-transparent" id="inquiry">
-                <div className="container">
-                    <div className="grid lg:grid-cols-2 gap-20 items-stretch">
+            <section className="section relative" id="inquiry">
+                <div className="container max-w-5xl mx-auto relative z-10">
+                    <div className="flex flex-col gap-12">
 
                         {/* Left - Why Contact Us */}
                         <motion.div
@@ -288,82 +288,82 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="p-12 md:p-16">
-                                            <form onSubmit={handleSubmit} className="space-y-8">
-                                                <div className="grid md:grid-cols-2 gap-8">
-                                                    <div className="space-y-3">
-                                                        <label className="block text-white text-sm font-extrabold uppercase tracking-widest opacity-60">Full Name *</label>
+                                        <GlowingCard className="h-full" innerClassName="p-14 md:p-20">
+                                            <form onSubmit={handleSubmit} className="space-y-10">
+                                                <div className="grid md:grid-cols-2 gap-10">
+                                                    <div className="space-y-4">
+                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Full Name *</label>
                                                         <input
                                                             type="text"
                                                             name="name"
                                                             value={formState.name}
                                                             onChange={handleChange}
                                                             required
-                                                            className="w-full px-6 py-5 bg-white/5 border border-white/10 rounded-3xl text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all font-semibold"
+                                                            className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-all font-semibold"
                                                             placeholder="John Doe"
                                                         />
                                                     </div>
-                                                    <div className="space-y-3">
-                                                        <label className="block text-white text-sm font-extrabold uppercase tracking-widest opacity-60">Email Address *</label>
+                                                    <div className="space-y-4">
+                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Email Address *</label>
                                                         <input
                                                             type="email"
                                                             name="email"
                                                             value={formState.email}
                                                             onChange={handleChange}
                                                             required
-                                                            className="w-full px-6 py-5 bg-white/5 border border-white/10 rounded-3xl text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all font-semibold"
+                                                            className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-all font-semibold"
                                                             placeholder="john@company.com"
                                                         />
                                                     </div>
                                                 </div>
 
-                                                <div className="grid md:grid-cols-2 gap-8">
-                                                    <div className="space-y-3">
-                                                        <label className="block text-white text-sm font-extrabold uppercase tracking-widest opacity-60">Service Aspect *</label>
+                                                <div className="grid md:grid-cols-2 gap-10">
+                                                    <div className="space-y-4">
+                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Service Aspect *</label>
                                                         <div className="relative">
                                                             <select
                                                                 name="service"
                                                                 value={formState.service}
                                                                 onChange={handleChange}
                                                                 required
-                                                                className="w-full px-6 py-5 bg-white/5 border border-white/10 rounded-3xl text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all font-semibold appearance-none cursor-pointer"
+                                                                className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg focus:outline-none focus:border-cyan-400 transition-all font-semibold appearance-none cursor-pointer"
                                                             >
                                                                 <option value="" className="bg-gray-900">Choose Service</option>
                                                                 {serviceOptions.map(option => (
                                                                     <option key={option} value={option} className="bg-gray-900">{option}</option>
                                                                 ))}
                                                             </select>
-                                                            <ChevronRight size={20} className="absolute right-6 top-1/2 -translate-y-1/2 rotate-90 text-gray-400 pointer-events-none" />
+                                                            <ChevronRight size={24} className="absolute right-7 top-1/2 -translate-y-1/2 rotate-90 text-gray-400 pointer-events-none" />
                                                         </div>
                                                     </div>
-                                                    <div className="space-y-3">
-                                                        <label className="block text-white text-sm font-extrabold uppercase tracking-widest opacity-60">Budget Range</label>
+                                                    <div className="space-y-4">
+                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Budget Range</label>
                                                         <div className="relative">
                                                             <select
                                                                 name="budget"
                                                                 value={formState.budget}
                                                                 onChange={handleChange}
-                                                                className="w-full px-6 py-5 bg-white/5 border border-white/10 rounded-3xl text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all font-semibold appearance-none cursor-pointer"
+                                                                className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg focus:outline-none focus:border-cyan-400 transition-all font-semibold appearance-none cursor-pointer"
                                                             >
                                                                 <option value="" className="bg-gray-900">Choose Range</option>
                                                                 {budgetOptions.map(option => (
                                                                     <option key={option} value={option} className="bg-gray-900">{option}</option>
                                                                 ))}
                                                             </select>
-                                                            <ChevronRight size={20} className="absolute right-6 top-1/2 -translate-y-1/2 rotate-90 text-gray-400 pointer-events-none" />
+                                                            <ChevronRight size={24} className="absolute right-7 top-1/2 -translate-y-1/2 rotate-90 text-gray-400 pointer-events-none" />
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div className="space-y-3">
-                                                    <label className="block text-white text-sm font-extrabold uppercase tracking-widest opacity-60">Project Brief *</label>
+                                                <div className="space-y-4">
+                                                    <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Project Brief *</label>
                                                     <textarea
                                                         name="message"
                                                         value={formState.message}
                                                         onChange={handleChange}
                                                         required
                                                         rows={6}
-                                                        className="w-full px-8 py-6 bg-white/5 border border-white/10 rounded-[2.5rem] text-white placeholder-gray-600 focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all font-semibold resize-none leading-relaxed"
+                                                        className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-all font-semibold resize-none leading-relaxed"
                                                         placeholder="Walk us through your vision, challenges, and timeline..."
                                                     />
                                                 </div>
@@ -371,7 +371,7 @@ export default function ContactPage() {
                                                 <button
                                                     type="submit"
                                                     disabled={isSubmitting}
-                                                    className="w-full btn-primary py-6 text-xl font-black uppercase tracking-[0.2em] rounded-full disabled:opacity-50 group hover:shadow-[0_0_50px_rgba(0,212,255,0.3)]"
+                                                    className="w-full btn-primary py-7 text-xl font-black uppercase tracking-[0.2em] rounded-full disabled:opacity-50 group hover:shadow-[0_0_50px_rgba(0,212,255,0.3)]"
                                                 >
                                                     {isSubmitting ? (
                                                         <span className="flex items-center justify-center gap-4">
@@ -399,50 +399,6 @@ export default function ContactPage() {
                 </div>
             </section>
 
-            {/* Location Section */}
-            <section className="py-24 bg-transparent">
-                <div className="container">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-5xl font-bold text-white mb-6"> Our <span className="gradient-text">Global Headquarters</span></h2>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="relative overflow-hidden group"
-                    >
-                        <GlowingCard className="w-full aspect-[21/9]" innerClassName="p-0 overflow-hidden">
-                            <div className="w-full h-full relative flex items-center justify-center">
-                                {/* Animated Shader Background */}
-                                <ShaderBackground className="opacity-60" />
-
-                                {/* Content Overlay */}
-                                <div className="text-center z-10 p-12 relative">
-                                    <div className="w-24 h-24 mx-auto mb-8 rounded-[2rem] bg-gradient-to-br from-cyan-500 to-amber-500 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-700">
-                                        <MapPin className="w-12 h-12 text-white" />
-                                    </div>
-                                    <h3 className="text-4xl font-bold text-white mb-4 italic tracking-tight">Henu OS Private Limited</h3>
-                                    <p className="text-gray-400 text-xl font-medium">Jodhpur, Rajasthan, India</p>
-                                    <Link
-                                        href="https://maps.google.com"
-                                        target="_blank"
-                                        className="inline-flex items-center gap-3 mt-10 text-cyan-400 font-bold uppercase tracking-widest text-sm hover:text-white transition-colors group/link"
-                                    >
-                                        Navigate via Google Maps
-                                        <ArrowRight size={20} className="group-hover/link:translate-x-2 transition-transform" />
-                                    </Link>
-                                </div>
-                            </div>
-                        </GlowingCard>
-                    </motion.div>
-                </div>
-            </section>
 
         </main>
     );
