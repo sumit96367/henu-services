@@ -94,19 +94,41 @@ const technologies = [
     { name: 'AWS' }
 ];
 
+import {
+    ServiceHero,
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    WhyChooseUs,
+    ServiceCTA
+} from '@/components/service-page';
+import StackFeatureSection from '@/components/ui/stack-feature-section';
+
 export default function WebDevelopmentPage() {
+    const heroTitle = "Innovative";
+    const heroHighlight = "Website Development";
+    const heroDescription = "Transform your vision into high-converting websites. We craft digital experiences that drive traffic, sales, and loyalty.";
+    const heroAccentColor = "cyan";
+
     return (
-        <ServicePage
-            heroTitle="Innovative"
-            heroHighlight="Website Development"
-            heroDescription="Transform your vision into high-converting websites. We craft digital experiences that drive traffic, sales, and loyalty."
-            heroAccentColor="cyan"
-            features={features}
-            process={process}
-            technologies={technologies}
-            ctaTitle="Build Your Site"
-            ctaDescription="Let's create a website that grows your business. Get started today!"
-        />
+        <main>
+            <StackFeatureSection
+                title={heroTitle}
+                highlight={heroHighlight}
+                description={heroDescription}
+            />
+
+            <ServiceFeatures features={features} accentColor={heroAccentColor} />
+            <ServiceProcess process={process} accentColor={heroAccentColor} />
+            <ServiceTechnologies technologies={technologies} />
+            <WhyChooseUs />
+
+            <ServiceCTA
+                title="Build Your Site"
+                description="Let's create a website that grows your business. Get started today!"
+                accentColor={heroAccentColor}
+            />
+        </main>
     );
 }
 

@@ -64,80 +64,99 @@ export const Navbar = () => {
                     {/* Desktop Menu - Center */}
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block">
                         <Menu setActive={setActive}>
-                            <MenuItem setActive={setActive} active={active} item="Services">
-                                <div className="w-[700px] lg:w-[800px] p-6">
-                                    <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                                        <ProductItem
-                                            title="Website Development"
-                                            href="/services/web-development"
-                                            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=400"
-                                            description="Innovative web solutions powered by HENU OS AI for smarter performance."
-                                        />
-                                        <ProductItem
-                                            title="Backend Development"
-                                            href="/services/backend-development"
-                                            src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=400"
-                                            description="Scalable backend infrastructure with real-time AI and seamless reliability."
-                                        />
-                                        <ProductItem
-                                            title="Mobile App Development"
-                                            href="/services/mobile-app-development"
-                                            src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=400"
-                                            description="Powerful native and cross-platform mobile experiences for high-growth businesses."
-                                        />
-                                        <ProductItem
-                                            title="AI Automations"
-                                            href="/services/ai-automations"
-                                            src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=400"
-                                            description="Automate your workflows with custom HENU AI agents and boost efficiency."
-                                        />
-                                        <ProductItem
-                                            title="Graphic Design"
-                                            href="/services/graphic-design"
-                                            src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=400"
-                                            description="Stunning visuals and brand identities infused with modern AI tools."
-                                        />
-                                        <ProductItem
-                                            title="Digital Marketing & Ads"
-                                            href="/services/digital-marketing"
-                                            src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80&w=400"
-                                            description="Data-backed campaigns to skyrocket your visibility and sales across all channels."
-                                        />
-                                        <ProductItem
-                                            title="Legal Services"
-                                            href="/services/legal-services"
-                                            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=400"
-                                            description="Full-spectrum legal support and business compliance for startups and SMEs."
-                                        />
-                                        <ProductItem
-                                            title="Funding Solutions"
-                                            href="/services/funding-solutions"
-                                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400"
-                                            description="Strategic funding paths from government grants to investor pitches."
-                                        />
-
-                                    </div>
-                                </div>
-                            </MenuItem>
+                            <div className="relative">
+                                <Link
+                                    href="/services"
+                                    onMouseEnter={() => setActive("Services")}
+                                    className={cn(
+                                        "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
+                                        pathname.startsWith("/services") ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                    )}
+                                >
+                                    <MenuItem setActive={setActive} active={active} item="Services">
+                                        <div className="w-[700px] lg:w-[800px] p-6 text-left">
+                                            <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                                                <ProductItem
+                                                    title="Website Development"
+                                                    href="/services/web-development"
+                                                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=400"
+                                                    description="Innovative web solutions powered by HENU OS AI for smarter performance."
+                                                />
+                                                <ProductItem
+                                                    title="Backend Development"
+                                                    href="/services/backend-development"
+                                                    src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=400"
+                                                    description="Scalable backend infrastructure with real-time AI and seamless reliability."
+                                                />
+                                                <ProductItem
+                                                    title="Mobile App Development"
+                                                    href="/services/mobile-app-development"
+                                                    src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=400"
+                                                    description="Powerful native and cross-platform mobile experiences for high-growth businesses."
+                                                />
+                                                <ProductItem
+                                                    title="AI Automations"
+                                                    href="/services/ai-automations"
+                                                    src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=400"
+                                                    description="Automate your workflows with custom HENU AI agents and boost efficiency."
+                                                />
+                                                <ProductItem
+                                                    title="Graphic Design"
+                                                    href="/services/graphic-design"
+                                                    src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=400"
+                                                    description="Stunning visuals and brand identities infused with modern AI tools."
+                                                />
+                                                <ProductItem
+                                                    title="Digital Marketing & Ads"
+                                                    href="/services/digital-marketing"
+                                                    src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80&w=400"
+                                                    description="Data-backed campaigns to skyrocket your visibility and sales across all channels."
+                                                />
+                                                <ProductItem
+                                                    title="Legal Services"
+                                                    href="/services/legal-services"
+                                                    src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=400"
+                                                    description="Full-spectrum legal support and business compliance for startups and SMEs."
+                                                />
+                                                <ProductItem
+                                                    title="Funding Solutions"
+                                                    href="/services/funding-solutions"
+                                                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400"
+                                                    description="Strategic funding paths from government grants to investor pitches."
+                                                />
+                                            </div>
+                                        </div>
+                                    </MenuItem>
+                                </Link>
+                            </div>
 
                             <Link
                                 href="/portfolio"
                                 onMouseEnter={() => setActive(null)}
-                                className="text-white hover:text-cyan-400 transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap"
+                                className={cn(
+                                    "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
+                                    pathname === "/portfolio" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                )}
                             >
                                 Portfolio
                             </Link>
                             <Link
                                 href="/about"
                                 onMouseEnter={() => setActive(null)}
-                                className="text-white hover:text-cyan-400 transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap"
+                                className={cn(
+                                    "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
+                                    pathname === "/about" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                )}
                             >
                                 About
                             </Link>
                             <Link
                                 href="/contact"
                                 onMouseEnter={() => setActive(null)}
-                                className="text-white hover:text-cyan-400 transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap"
+                                className={cn(
+                                    "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
+                                    pathname === "/contact" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                )}
                             >
                                 Contact
                             </Link>

@@ -22,6 +22,7 @@ import {
   Zap,
   ShieldCheck,
   Users,
+  Cpu,
 } from 'lucide-react';
 
 import { SplineScene } from '@/components/ui/splite';
@@ -29,6 +30,7 @@ import { Spotlight } from '@/components/ui/spotlight';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { cn } from "@/lib/utils";
+import { ReviewSection } from '@/components/review-section';
 
 // ============================================
 // HERO SECTION WITH 3D SPLINE
@@ -129,13 +131,13 @@ const HeroSection = () => {
               transition={{ delay: 0.7 }}
               className="flex flex-wrap justify-center lg:justify-start gap-4"
             >
-              <Link href="/contact" className="btn-primary">
+              <Link href="/services" className="btn-primary">
                 Start Your Project
                 <ArrowRight size={18} />
               </Link>
-              <button className="btn-secondary">
+              <Link href="/services" className="btn-secondary">
                 View Services
-              </button>
+              </Link>
             </motion.div>
           </motion.div>
 
@@ -226,6 +228,116 @@ const StatsSection = () => {
               </GlowingCard>
             </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ============================================
+// HENU OS INTRODUCTION SECTION
+// ============================================
+const HenuOSIntroductionSection = () => {
+  return (
+    <section className="section bg-transparent relative overflow-hidden">
+      {/* Background Light Effect */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6 font-mono text-cyan-400 text-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              SYSTEM OVERVIEW
+            </div>
+
+            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 leading-tight">
+              Powering the <br />
+              <span className="gradient-text">New Millennium.</span>
+            </h2>
+
+            <p className="text-xl text-gray-400 mb-10 leading-relaxed max-w-xl">
+              HENU OS is a revolutionary computing ecosystem designed for the next generation of business.
+              Integrated with autonomous AI agents, unbreakable security protocols, and
+              modular architecture, it serves as the ultimate foundation for digital excellence.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20 shadow-[0_0_20px_rgba(0,212,255,0.1)]">
+                  <Cpu className="w-7 h-7 text-cyan-400" />
+                </div>
+                <div className="pt-1">
+                  <h4 className="text-lg font-bold text-white mb-1">AI-Native</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed">Built-in neural networks for autonomous operations.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center shrink-0 border border-amber-500/20 shadow-[0_0_20px_rgba(255,149,0,0.1)]">
+                  <ShieldCheck className="w-7 h-7 text-amber-400" />
+                </div>
+                <div className="pt-1">
+                  <h4 className="text-lg font-bold text-white mb-1">Quantum-Ready</h4>
+                  <p className="text-sm text-gray-500 leading-relaxed">Future-proof encryption and security layers.</p>
+                </div>
+              </div>
+            </div>
+
+            <Link
+              href="https://henuos.netlify.app/"
+              target="_blank"
+              className="btn-primary group"
+            >
+              Explore HENU OS Ecosystem
+              <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, x: 50 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="relative"
+          >
+            <div className="absolute inset-0 bg-cyan-500/20 blur-[100px] rounded-full pointer-events-none" />
+            <GlowingCard className="relative z-10" innerClassName="p-0 overflow-hidden border-white/10 bg-black/40 backdrop-blur-xl">
+              <div className="aspect-video relative group">
+                <iframe
+                  src="https://www.youtube.com/embed/CTGvHiQyfwg?start=18&autoplay=0&mute=0&rel=0"
+                  title="HENU OS Introduction"
+                  className="w-full h-full border-0 opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+
+                {/* Overlay shadow for depth */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+
+                {/* Floating UI Elements Overlay */}
+                <div className="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-cyan-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,212,255,0.5)]">
+                      <Zap size={20} className="text-white fill-white" />
+                    </div>
+                    <div>
+                      <div className="text-white font-bold text-sm">SYSTEM ACTIVE</div>
+                      <div className="text-cyan-400 text-xs font-mono">LIVE FEED: ENCRYPTED</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </GlowingCard>
+
+            {/* Ambient secondary glow */}
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-500/20 blur-[60px] rounded-full" />
+          </motion.div>
         </div>
       </div>
     </section>
@@ -675,147 +787,14 @@ const WhyChooseUsSection = () => {
   );
 };
 
-// ============================================
-// COMPLIANCE & FUNDING SECTION
-// ============================================
-const complianceCards = [
-  {
-    icon: FileText,
-    title: 'Legal Services',
-    desc: 'Business registration, tax filings, and annual compliance.'
-  },
-  {
-    icon: Coins,
-    title: 'Funding Solutions',
-    desc: 'Strategic paths to grants, private lending, and investor pitches.'
-  },
-  {
-    icon: BadgeCheck,
-    title: 'Precision AI',
-    desc: 'AI-driven automation and efficiency for your core operations.'
-  }
-];
 
-
-const ComplianceSection = () => {
-  return (
-    <section className="section relative overflow-hidden bg-transparent">
-      {/* Background patterns */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px]" />
-      </div>
-
-      <div className="container relative z-10">
-        {/* Main Heading - Centered as per screenshot */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-            <PremiumTextReveal text="Navigating the" /> <span className="text-amber-500"><PremiumTextReveal text="Red Tape." delay={0.4} /></span>
-          </h2>
-        </motion.div>
-
-        {/* Split Content: Graphic Left, Text Right */}
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 mb-24">
-          {/* Rotating Circular Graphic (Shifted left in screenshot) */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-
-            className="relative w-72 h-72 lg:w-96 lg:h-96 flex-shrink-0"
-          >
-            {/* Center Icon Box */}
-            <div className="absolute inset-0 flex items-center justify-center z-20">
-              <div
-                className="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl flex items-center justify-center"
-                style={{
-                  background: 'rgba(255, 149, 0, 0.08)',
-                  border: '1px solid rgba(255, 149, 0, 0.2)',
-                  boxShadow: '0 0 50px rgba(255, 149, 0, 0.1)'
-                }}
-              >
-                <Scale className="w-8 h-8 lg:w-10 lg:h-10 text-amber-500" />
-              </div>
-            </div>
-
-            {/* Rotating Text Ring */}
-            <svg className="w-full h-full animate-rotate-text z-10" viewBox="0 0 256 256">
-              <defs>
-                <path
-                  id="compliancePath"
-                  d="M 128,128 m -100,0 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0"
-                />
-              </defs>
-              <text className="fill-amber-500/40 text-[12px] font-medium tracking-[0.25em] uppercase">
-                <textPath href="#compliancePath">
-                  Registration • Compliance • Grants • IP Protection •
-                </textPath>
-              </text>
-            </svg>
-
-            {/* Decorative concentric circles */}
-            <div className="absolute inset-4 border border-amber-500/10 rounded-full z-0" />
-            <div className="absolute inset-12 border border-amber-500/5 rounded-full z-0" />
-          </motion.div>
-
-          {/* Expert Guidance Text */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-
-            className="flex-1"
-          >
-            <h3 className="text-3xl md:text-4xl font-semibold text-white mb-8 leading-tight">
-              Expert guidance through complex regulatory landscapes.
-            </h3>
-            <p className="text-gray-400 text-xl leading-relaxed max-w-2xl">
-              We specialize in helping businesses secure government funding, maintain legal compliance, and protect their intellectual property. Our team of experts takes the complexity out of bureaucratic processes so you can focus on building your business.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Cards Row - Exactly as screenshot */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {complianceCards.map((card, index) => (
-            <motion.div
-              key={card.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-
-              transition={{ delay: index * 0.1 }}
-              className="h-full group"
-            >
-              <GlowingCard className="h-full" innerClassName="p-12 h-full flex flex-col items-start bg-transparent">
-                <div className="flex flex-col items-start gap-6 mb-2">
-                  <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center group-hover:bg-amber-500/15 group-hover:scale-110 transition-all duration-500 border border-amber-500/20 shadow-xl shrink-0">
-                    <card.icon className="w-8 h-8 text-amber-500" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-white group-hover:text-amber-500 transition-colors leading-tight">{card.title}</h4>
-                </div>
-                <p className="text-gray-400 text-lg leading-relaxed flex-1 font-medium">{card.desc}</p>
-
-                {/* Subtle hover accent */}
-                <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-amber-500/0 via-amber-500/40 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </GlowingCard>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 // ============================================
 // TESTIMONIALS SECTION
 // ============================================
 import { TestimonialsColumn } from '@/components/ui/testimonials-columns';
 
-const testimonials = [
+const initialTestimonials = [
   {
     text: "Henu OS didn't just build our app; they helped us secure a ₹50L government grant to fund it. A complete partner.",
     image: "https://randomuser.me/api/portraits/men/32.jpg",
@@ -872,11 +851,11 @@ const testimonials = [
   }
 ];
 
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
+const TestimonialsSection = ({ testimonials }: { testimonials: any[] }) => {
+  const firstColumn = testimonials.slice(0, Math.ceil(testimonials.length / 3));
+  const secondColumn = testimonials.slice(Math.ceil(testimonials.length / 3), Math.ceil(testimonials.length * 2 / 3));
+  const thirdColumn = testimonials.slice(Math.ceil(testimonials.length * 2 / 3));
 
-const TestimonialsSection = () => {
   return (
     <section className="section relative bg-transparent">
       <div className="container text-center">
@@ -884,7 +863,6 @@ const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-
           className="flex flex-col items-center text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
@@ -994,14 +972,29 @@ const FAQSection = () => {
 };
 
 export default function HomePage() {
+  const [allTestimonials, setAllTestimonials] = useState(initialTestimonials);
+
+  const handleReviewSubmitted = (review: any) => {
+    setAllTestimonials((prev) => [
+      {
+        text: review.text,
+        image: review.image,
+        name: review.name,
+        role: review.role,
+      },
+      ...prev,
+    ]);
+  };
+
   return (
     <main>
       <HeroSection />
       <StatsSection />
+      <HenuOSIntroductionSection />
       <ServiceMatrixSection />
       <WhyChooseUsSection />
-      <ComplianceSection />
-      <TestimonialsSection />
+      <TestimonialsSection testimonials={allTestimonials} />
+      <ReviewSection onReviewSubmitted={handleReviewSubmitted} />
       <FAQSection />
     </main>
   );

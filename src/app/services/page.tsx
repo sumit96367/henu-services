@@ -97,23 +97,39 @@ const services = [
 
 export default function ServicesPage() {
     return (
-        <main>
+        <main className="w-full flex flex-col items-center">
+            {/* Optimized spacer for navbar clearance */}
+            <div className="h-24 md:h-32 w-full" />
 
             {/* Hero Section */}
-            <section className="pt-32 pb-24 relative" style={{ background: '#050505' }}>
-                <div className="grid-background absolute inset-0" />
-                <div className="container relative z-10">
+            <section
+                className="relative overflow-hidden w-full flex min-h-screen items-center justify-center pt-24 pb-32"
+                style={{ background: '#050505' }}
+            >
+                <div
+                    className="grid-background absolute inset-0 opacity-20"
+                    style={{
+                        maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 100%)'
+                    }}
+                />
+                <div className="container relative z-10 mx-auto flex flex-col items-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-center max-w-4xl mx-auto"
+                        className="flex flex-col items-center justify-center text-center w-full max-w-7xl mx-auto"
                     >
-                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-2">
-                            <PremiumTextReveal text="Our" /> <span className="gradient-text"><PremiumTextReveal text="Services" delay={0.2} /></span>
-                        </h1>
-                        <p className="text-xl text-gray-400 max-w-2xl mx-auto text-center mb-8">
+                        <div className="flex justify-center mb-12 w-full">
+                            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white leading-tight tracking-tighter flex flex-wrap justify-center items-center gap-x-4 w-full">
+                                <span className="flex items-center"><PremiumTextReveal text="Our" /></span>
+                                <span className="gradient-text flex items-center">
+                                    <PremiumTextReveal text="Services" delay={0.2} />
+                                </span>
+                            </h1>
+                        </div>
+                        <p className="text-xl md:text-2xl text-gray-400 max-w-4xl mx-auto text-center mb-12 leading-relaxed font-medium">
                             Comprehensive solutions spanning technology, legal, and finance.
-                            Everything you need to build, grow, and protect your business.
+                            Everything you need to build, grow, and protect your business foundation.
                         </p>
                     </motion.div>
                 </div>

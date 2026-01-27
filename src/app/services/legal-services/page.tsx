@@ -91,18 +91,45 @@ const technologies = [
     { name: 'HENU Compliance Bots' }
 ];
 
+import {
+    ServiceHero,
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    WhyChooseUs,
+    ServiceCTA
+} from '@/components/service-page';
+import { ComplianceSection } from '@/components/legal-compliance-section';
+import { ArrowRight } from 'lucide-react';
+
 export default function LegalServicesPage() {
+    const heroAccentColor = 'amber';
+
     return (
-        <ServicePage
-            heroTitle="Comprehensive"
-            heroHighlight="Legal Services"
-            heroDescription="Navigate business compliance effortlessly. From registration to annual filings—India-focused expertise."
-            heroAccentColor="amber"
-            features={features}
-            process={process}
-            technologies={technologies}
-            ctaTitle="Legal Peace of Mind"
-            ctaDescription="Secure your business foundation today!"
-        />
+        <main>
+            <ServiceHero
+                title="Comprehensive"
+                highlight="Legal Services"
+                description="Navigate business compliance effortlessly. From registration to annual filings—India-focused expertise."
+                accentColor={heroAccentColor}
+            />
+
+            <ServiceFeatures features={features} accentColor={heroAccentColor} />
+
+            {/* Compliance Section moved specifically below "What We Offer" */}
+            <ComplianceSection />
+
+            <ServiceProcess process={process} accentColor={heroAccentColor} />
+
+            <ServiceTechnologies technologies={technologies} />
+
+            <WhyChooseUs />
+
+            <ServiceCTA
+                title="Legal Peace of Mind"
+                description="Secure your business foundation today!"
+                accentColor={heroAccentColor}
+            />
+        </main>
     );
 }

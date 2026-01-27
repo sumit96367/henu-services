@@ -93,19 +93,84 @@ const technologies = [
     { name: 'Redux' }
 ];
 
+import {
+    ServiceHero,
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    WhyChooseUs,
+    ServiceCTA
+} from '@/components/service-page';
+import { FloatingIconsHero } from '@/components/ui/floating-icons-hero-section';
+import {
+    FaAndroid,
+    FaApple,
+    FaGithub,
+    FaGooglePlay,
+    FaAppStoreIos
+} from 'react-icons/fa';
+import {
+    SiFlutter,
+    SiReact,
+    SiFirebase,
+    SiKotlin,
+    SiSwift,
+    SiDart,
+    SiExpo,
+    SiRedux,
+    SiTypescript,
+    SiJavascript,
+    SiVite,
+    SiFramer
+} from 'react-icons/si';
+
+const mobileIcons = [
+    { id: 1, icon: FaAndroid, color: "#3DDC84", className: 'top-[10%] left-[10%]' },
+    { id: 2, icon: FaApple, color: "#FFFFFF", className: 'top-[20%] right-[8%]' },
+    { id: 3, icon: SiFlutter, color: "#02569B", className: 'top-[80%] left-[12%]' },
+    { id: 4, icon: SiReact, color: "#61DAFB", className: 'bottom-[12%] right-[10%]' },
+    { id: 5, icon: SiFirebase, color: "#FFCA28", className: 'top-[5%] left-[30%]' },
+    { id: 6, icon: SiKotlin, color: "#7F52FF", className: 'top-[7%] right-[32%]' },
+    { id: 7, icon: SiSwift, color: "#F05138", className: 'bottom-[10%] left-[28%]' },
+    { id: 8, icon: SiDart, color: "#0175C2", className: 'top-[42%] left-[12%]' },
+    { id: 9, icon: SiExpo, color: "#FFFFFF", className: 'top-[78%] right-[22%]' },
+    { id: 10, icon: FaGooglePlay, color: "#34A853", className: 'top-[88%] left-[65%]' },
+    { id: 11, icon: FaAppStoreIos, color: "#007AFF", className: 'top-[48%] right-[6%]' },
+    { id: 12, icon: SiRedux, color: "#764ABC", className: 'top-[52%] left-[6%]' },
+    { id: 13, icon: SiTypescript, color: "#3178C6", className: 'top-[6%] left-[54%]' },
+    { id: 14, icon: SiJavascript, color: "#F7DF1E", className: 'bottom-[6%] right-[48%]' },
+    { id: 15, icon: SiVite, color: "#646CFF", className: 'top-[28%] right-[22%]' },
+    { id: 16, icon: SiFramer, color: "#0055FF", className: 'top-[62%] left-[32%]' },
+];
+
 export default function MobileAppDevelopmentPage() {
+    const heroTitle = "Innovative";
+    const heroHighlight = "Mobile App Development";
+    const heroDescription = "Transform your ideas into powerful mobile experiences. We build apps that users love and businesses rely on.";
+    const heroAccentColor = "cyan";
+
     return (
-        <ServicePage
-            heroTitle="Innovative"
-            heroHighlight="Mobile App Development"
-            heroDescription="Transform your ideas into powerful mobile experiences. We build apps that users love and businesses rely on."
-            heroAccentColor="cyan"
-            features={features}
-            process={process}
-            technologies={technologies}
-            ctaTitle="Launch Your App"
-            ctaDescription="Ready to take your business mobile? Let's build something amazing together."
-        />
+        <main>
+            <FloatingIconsHero
+                title={heroTitle}
+                highlight={heroHighlight}
+                subtitle={heroDescription}
+                ctaText="Launch Your App"
+                ctaHref="/contact"
+                icons={mobileIcons}
+            />
+
+            <ServiceFeatures features={features} accentColor={heroAccentColor} />
+            <ServiceProcess process={process} accentColor={heroAccentColor} />
+            <ServiceTechnologies technologies={technologies} />
+            <WhyChooseUs />
+
+            <ServiceCTA
+                title="Launch Your App"
+                description="Ready to take your business mobile? Let's build something amazing together."
+                accentColor={heroAccentColor}
+            />
+        </main>
     );
 }
 

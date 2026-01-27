@@ -84,13 +84,19 @@ export const ServiceHero = ({
     return (
         <section
             ref={containerRef}
-            className="relative min-h-[80vh] pt-48 pb-24 flex items-center overflow-hidden bg-transparent"
+            className="relative min-h-screen pt-48 pb-32 flex items-center overflow-hidden bg-transparent"
         >
             {/* Background Effects */}
             <div className="absolute inset-0">
-                <div className="grid-background" />
+                <div
+                    className="grid-background opacity-20"
+                    style={{
+                        maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 100%)'
+                    }}
+                />
                 <motion.div
-                    className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full"
+                    className="absolute top-1/2 left-1/4 w-[500px] h-[500px] rounded-full"
                     style={{
                         background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
                         filter: 'blur(80px)'
@@ -311,20 +317,20 @@ export const ServiceCTA = ({ title, description, accentColor }: { title: string;
                 }}
             />
 
-            <div className="container relative z-10 text-center">
+            <div className="container relative z-10 flex flex-col items-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="max-w-3xl mx-auto"
+                    className="max-w-4xl mx-auto flex flex-col items-center text-center w-full"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                         Ready to <span className={gradientClass}>{title}</span>?
                     </h2>
-                    <p className="text-xl text-gray-400 mb-10 mx-auto text-center">
+                    <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl">
                         {description}
                     </p>
-                    <div className="flex flex-wrap justify-center gap-4">
+                    <div className="flex flex-wrap justify-center items-center gap-6">
                         <Link href="/contact" className="btn-primary text-lg px-8 py-4">
                             Start Your Project
                             <ArrowRight size={20} />
