@@ -90,6 +90,25 @@ const technologies = [
     { name: 'CRM Tools' }
 ];
 
+const faqs = [
+    {
+        question: "How do you assist with Government Grants?",
+        answer: "We provide end-to-end support including grant identification (Startup India, MSME, STPI, etc.), eligibility assessment, application preparation, documentation, and follow-up with government agencies. We've successfully helped clients secure over ₹50 crores in grants."
+    },
+    {
+        question: "What is your success rate with grant applications?",
+        answer: "Our success rate is approximately 65-70% for government grants and 40-45% for investor pitches, significantly higher than industry averages. We carefully pre-qualify opportunities to maximize your chances of securing funding."
+    },
+    {
+        question: "Do you help with pitch deck preparation?",
+        answer: "Yes! We create investor-ready pitch decks covering problem-solution fit, market sizing, business model, traction, financial projections, and team. We also offer pitch practice sessions and guidance on presenting to investors."
+    },
+    {
+        question: "Can you connect us with investors?",
+        answer: "Absolutely! We have an extensive network of angel investors, VCs, and family offices across India. After preparing your materials, we facilitate warm introductions to investors aligned with your industry, stage, and funding requirements."
+    }
+];
+
 export default function FundingSolutionsPage() {
     return (
         <ServicePage
@@ -102,6 +121,7 @@ export default function FundingSolutionsPage() {
             technologies={technologies}
             ctaTitle="Secure Funding"
             ctaDescription="Turn potential into profit. Apply now!"
+            faqs={faqs}
         />
     );
 }

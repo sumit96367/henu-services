@@ -93,14 +93,24 @@ const technologies = [
     { name: 'Redux' }
 ];
 
-import {
-    ServiceHero,
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    WhyChooseUs,
-    ServiceCTA
-} from '@/components/service-page';
+const faqs = [
+    {
+        question: "Do you develop for both iOS and Android?",
+        answer: "Yes! We specialize in both native development (Swift for iOS, Kotlin for Android) and cross-platform solutions using React Native and Flutter. This gives you maximum flexibility based on your budget and timeline."
+    },
+    {
+        question: "What is the timeline for a full-stack mobile app?",
+        answer: "Typically, a full-featured mobile app takes 3-6 months from concept to launch. This includes design, development, testing, and app store submission. We follow an agile methodology with bi-weekly deliverables to keep you updated throughout the process."
+    },
+    {
+        question: "Do you handle app store submissions?",
+        answer: "Absolutely! We manage the entire submission process for both Apple App Store and Google Play Store, including developer account setup, app store optimization, compliance requirements, and addressing any reviewer feedback."
+    },
+    {
+        question: "Can you integrate my existing web platform with a mobile app?",
+        answer: "Yes! We can seamlessly integrate your mobile app with existing web platforms, databases, and APIs. We'll ensure user data, authentication, and features sync perfectly across all platforms."
+    }
+];
 import { FloatingIconsHero } from '@/components/ui/floating-icons-hero-section';
 import {
     FaAndroid,
@@ -144,33 +154,19 @@ const mobileIcons = [
 ];
 
 export default function MobileAppDevelopmentPage() {
-    const heroTitle = "Innovative";
-    const heroHighlight = "Mobile App Development";
-    const heroDescription = "Transform your ideas into powerful mobile experiences. We build apps that users love and businesses rely on.";
-    const heroAccentColor = "cyan";
-
     return (
-        <main>
-            <FloatingIconsHero
-                title={heroTitle}
-                highlight={heroHighlight}
-                subtitle={heroDescription}
-                ctaText="Launch Your App"
-                ctaHref="/contact"
-                icons={mobileIcons}
-            />
-
-            <ServiceFeatures features={features} accentColor={heroAccentColor} />
-            <ServiceProcess process={process} accentColor={heroAccentColor} />
-            <ServiceTechnologies technologies={technologies} />
-            <WhyChooseUs />
-
-            <ServiceCTA
-                title="Launch Your App"
-                description="Ready to take your business mobile? Let's build something amazing together."
-                accentColor={heroAccentColor}
-            />
-        </main>
+        <ServicePage
+            heroTitle="Innovative"
+            heroHighlight="Mobile App Development"
+            heroDescription="Transform your ideas into powerful mobile experiences. We build apps that users love and businesses rely on."
+            heroAccentColor="cyan"
+            features={features}
+            process={process}
+            technologies={technologies}
+            ctaTitle="Launch Your App"
+            ctaDescription="Ready to take your business mobile? Let's build something amazing together."
+            faqs={faqs}
+        />
     );
 }
 

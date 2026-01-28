@@ -92,6 +92,25 @@ const technologies = [
     { name: 'Voice Integration' }
 ];
 
+const faqs = [
+    {
+        question: "Do you build AI Agents for non-tech businesses?",
+        answer: "Absolutely! We specialize in making AI accessible to all industries. Whether you're in retail, healthcare, manufacturing, or professional services, we design custom AI agents that integrate seamlessly with your existing workflows without requiring technical expertise."
+    },
+    {
+        question: "What types of tasks can AI agents automate?",
+        answer: "AI agents can automate customer support, email responses, appointment scheduling, data entry, report generation, social media management, lead qualification, document analysis, content creation, and much more. We customize based on your specific needs."
+    },
+    {
+        question: "How long does it take to develop a custom AI agent?",
+        answer: "Simple chatbots can be ready in 1-2 weeks, while complex multi-functional AI agents typically take 4-8 weeks. This includes business analysis, agent design, training, integration, testing, and deployment with full documentation."
+    },
+    {
+        question: "Can AI agents integrate with our existing systems?",
+        answer: "Yes! Our AI agents can integrate with CRM systems (Salesforce, HubSpot), communication platforms (Slack, Teams), email services, databases, ERPs, and virtually any system with an API or webhook capability."
+    }
+];
+
 export default function AIAutomationsPage() {
     return (
         <ServicePage
@@ -104,6 +123,7 @@ export default function AIAutomationsPage() {
             technologies={technologies}
             ctaTitle="Automate Now"
             ctaDescription="Work smarter with AI. Transform today!"
+            faqs={faqs}
         />
     );
 }

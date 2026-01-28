@@ -94,41 +94,38 @@ const technologies = [
     { name: 'AWS' }
 ];
 
-import {
-    ServiceHero,
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    WhyChooseUs,
-    ServiceCTA
-} from '@/components/service-page';
-import StackFeatureSection from '@/components/ui/stack-feature-section';
+const faqs = [
+    {
+        question: "What technologies do you use for web development?",
+        answer: "We use modern frameworks like React, Next.js, and Vue.js for front-end development, paired with Node.js, Python/Django for backend. We also leverage cloud platforms like Google Cloud and AWS for hosting and scalability."
+    },
+    {
+        question: "Do you provide hosting and domain services?",
+        answer: "Yes! We offer comprehensive hosting solutions on AWS and Google Cloud, along with domain registration and SSL certificate management. We handle all technical aspects so you can focus on your business."
+    },
+    {
+        question: "How long does it take to build a website?",
+        answer: "A basic website typically takes 2-4 weeks, while complex e-commerce or custom platforms can take 8-12 weeks. We follow agile methodology with regular deliverables to keep you updated throughout the process."
+    },
+    {
+        question: "Do you offer website maintenance after launch?",
+        answer: "Absolutely! We provide 24/7 support and maintenance packages including security updates, performance optimization, content updates, and feature enhancements to keep your website running smoothly."
+    }
+];
 
 export default function WebDevelopmentPage() {
-    const heroTitle = "Innovative";
-    const heroHighlight = "Website Development";
-    const heroDescription = "Transform your vision into high-converting websites. We craft digital experiences that drive traffic, sales, and loyalty.";
-    const heroAccentColor = "cyan";
-
     return (
-        <main>
-            <StackFeatureSection
-                title={heroTitle}
-                highlight={heroHighlight}
-                description={heroDescription}
-            />
-
-            <ServiceFeatures features={features} accentColor={heroAccentColor} />
-            <ServiceProcess process={process} accentColor={heroAccentColor} />
-            <ServiceTechnologies technologies={technologies} />
-            <WhyChooseUs />
-
-            <ServiceCTA
-                title="Build Your Site"
-                description="Let's create a website that grows your business. Get started today!"
-                accentColor={heroAccentColor}
-            />
-        </main>
+        <ServicePage
+            heroTitle="Innovative"
+            heroHighlight="Website Development"
+            heroDescription="Transform your vision into high-converting websites. We craft digital experiences that drive traffic, sales, and loyalty."
+            heroAccentColor="cyan"
+            features={features}
+            process={process}
+            technologies={technologies}
+            ctaTitle="Build Your Site"
+            ctaDescription="Let's create a website that grows your business. Get started today!"
+            faqs={faqs}
+        />
     );
 }
-

@@ -52,7 +52,7 @@ const socialLinks = [
 
 export const Footer = () => {
     return (
-        <footer className="bg-[#0a0a0c] relative overflow-hidden rounded-3xl mx-6 sm:mx-16 lg:mx-24 mb-10 mt-32">
+        <footer className="bg-[#0a0a0c] relative overflow-hidden rounded-3xl mx-6 sm:mx-16 lg:mx-24 mb-10 mt-32 z-20">
             {/* Background glow effect */}
             <div
                 className="absolute inset-0 z-0"
