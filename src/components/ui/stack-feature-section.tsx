@@ -46,7 +46,7 @@ export default function FeatureSection({
     const iconsPerOrbit = Math.ceil(iconConfigs.length / orbitCount);
 
     return (
-        <section className="relative w-full min-h-screen flex items-center overflow-hidden bg-transparent pt-32 pb-32">
+        <section className="relative w-full min-h-screen flex flex-col md:flex-row items-start md:items-center overflow-hidden bg-transparent pt-24 md:pt-48 pb-20 md:pb-32">
             {/* Background Effects */}
             <div className="absolute inset-0 -z-10">
                 <div
@@ -60,6 +60,9 @@ export default function FeatureSection({
             </div>
 
             <div className="container relative z-10 px-4">
+                {/* Navbar Spacer for Mobile */}
+                <div className="h-[100px] md:hidden w-full" />
+
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-0">
                     {/* Left side: Heading and Text */}
                     <motion.div

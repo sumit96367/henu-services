@@ -37,7 +37,7 @@ export function GlowingCard({
             />
             <div
                 className={cn(
-                    "relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border-[1px] border-white/10 bg-black/60 shadow-lg",
+                    "relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border-[1px] border-white/10 bg-black shadow-lg",
                     innerClassName
                 )}
                 style={style}

@@ -4,10 +4,23 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { Menu, MenuItem, ProductItem } from '@/components/ui/navbar-menu';
+import { Menu, MenuItem, ProductItem, HoveredLink, ServiceSubItem } from '@/components/ui/navbar-menu';
 import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
-import { Menu as MenuIcon, X } from 'lucide-react';
+import {
+    Menu as MenuIcon,
+    X,
+    Globe,
+    Server,
+    Smartphone,
+    Bot,
+    Palette,
+    Megaphone,
+    Scale,
+    Coins,
+    ArrowRight,
+    ChevronDown
+} from 'lucide-react';
 
 export const Navbar = () => {
     const [active, setActive] = useState<string | null>(null);
@@ -74,56 +87,59 @@ export const Navbar = () => {
                                     )}
                                 >
                                     <MenuItem setActive={setActive} active={active} item="Services">
-                                        <div className="w-[700px] lg:w-[800px] p-6 text-left">
-                                            <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                                                <ProductItem
+                                        <div className="w-[600px] text-left">
+                                            <div className="grid grid-cols-2 gap-x-4 gap-y-2 p-6">
+                                                <ServiceSubItem
                                                     title="Website Development"
                                                     href="/services/web-development"
-                                                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=400"
-                                                    description="Innovative web solutions powered by HENU OS AI for smarter performance."
+                                                    icon={Globe}
                                                 />
-                                                <ProductItem
+                                                <ServiceSubItem
                                                     title="Backend Development"
                                                     href="/services/backend-development"
-                                                    src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=400"
-                                                    description="Scalable backend infrastructure with real-time AI and seamless reliability."
+                                                    icon={Server}
                                                 />
-                                                <ProductItem
+                                                <ServiceSubItem
                                                     title="Mobile App Development"
                                                     href="/services/mobile-app-development"
-                                                    src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=400"
-                                                    description="Powerful native and cross-platform mobile experiences for high-growth businesses."
+                                                    icon={Smartphone}
                                                 />
-                                                <ProductItem
+                                                <ServiceSubItem
                                                     title="AI Automations"
                                                     href="/services/ai-automations"
-                                                    src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=400"
-                                                    description="Automate your workflows with custom HENU AI agents and boost efficiency."
+                                                    icon={Bot}
                                                 />
-                                                <ProductItem
+                                                <ServiceSubItem
                                                     title="Graphic Design"
                                                     href="/services/graphic-design"
-                                                    src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=400"
-                                                    description="Stunning visuals and brand identities infused with modern AI tools."
+                                                    icon={Palette}
                                                 />
-                                                <ProductItem
-                                                    title="Digital Marketing & Ads"
+                                                <ServiceSubItem
+                                                    title="Digital & Ads"
                                                     href="/services/digital-marketing"
-                                                    src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&q=80&w=400"
-                                                    description="Data-backed campaigns to skyrocket your visibility and sales across all channels."
+                                                    icon={Megaphone}
                                                 />
-                                                <ProductItem
+                                                <ServiceSubItem
                                                     title="Legal Services"
                                                     href="/services/legal-services"
-                                                    src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=400"
-                                                    description="Full-spectrum legal support and business compliance for startups and SMEs."
+                                                    icon={Scale}
                                                 />
-                                                <ProductItem
+                                                <ServiceSubItem
                                                     title="Funding Solutions"
                                                     href="/services/funding-solutions"
-                                                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400"
-                                                    description="Strategic funding paths from government grants to investor pitches."
+                                                    icon={Coins}
                                                 />
+                                            </div>
+
+                                            {/* Submenu Footer */}
+                                            <div className="p-4 bg-white/[0.03] border-t border-white/10 group/footer">
+                                                <Link
+                                                    href="/contact"
+                                                    className="flex items-center justify-center gap-2 text-sm font-medium text-gray-400 group-hover/footer:text-cyan-400 transition-colors"
+                                                >
+                                                    Interested? <span className="font-bold text-white group-hover/footer:text-cyan-400 transition-colors">Start your project</span>
+                                                    <ArrowRight size={14} className="group-hover/footer:translate-x-1 transition-transform" />
+                                                </Link>
                                             </div>
                                         </div>
                                     </MenuItem>
@@ -177,18 +193,84 @@ export const Navbar = () => {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="fixed inset-0 z-[90] md:hidden pt-24 bg-black/95 backdrop-blur-xl"
+                        initial={{ opacity: 0, x: "100%" }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: "100%" }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed inset-0 z-[200] md:hidden bg-black/98 backdrop-blur-3xl flex flex-col overflow-y-auto"
                     >
-                        <nav className="flex flex-col items-center gap-8 p-12">
-                            {navLinks.map((link) => (
+                        {/* Mobile Header inside Overlay */}
+                        <div className="flex items-center justify-between p-6 border-b border-white/5 sticky top-0 bg-black/50 backdrop-blur-xl z-20">
+                            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
+                                <div className="relative w-8 h-8">
+                                    <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+                                </div>
+                                <span className="text-lg font-bold text-white tracking-tight">Henu OS</span>
+                            </Link>
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+                            >
+                                <X size={28} />
+                            </button>
+                        </div>
+
+                        <nav className="flex flex-col p-8 space-y-4">
+                            {/* Services Mobile Accordion */}
+                            <div className="flex flex-col">
+                                <button
+                                    onClick={() => setActive(active === 'Services' ? null : 'Services')}
+                                    className="flex items-center justify-between w-full text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5"
+                                >
+                                    Services
+                                    <ChevronDown
+                                        className={cn(
+                                            "transition-transform duration-300 text-cyan-400",
+                                            active === 'Services' ? "rotate-180" : ""
+                                        )}
+                                    />
+                                </button>
+
+                                <AnimatePresence>
+                                    {active === 'Services' && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            className="overflow-hidden bg-white/[0.02] rounded-2xl mt-2"
+                                        >
+                                            <div className="grid grid-cols-1 gap-2 p-4">
+                                                {[
+                                                    { title: "Website Development", href: "/services/web-development" },
+                                                    { title: "Backend Development", href: "/services/backend-development" },
+                                                    { title: "Mobile App Development", href: "/services/mobile-app-development" },
+                                                    { title: "AI Automations", href: "/services/ai-automations" },
+                                                    { title: "Graphic Design", href: "/services/graphic-design" },
+                                                    { title: "Digital & Ads", href: "/services/digital-marketing" },
+                                                    { title: "Legal Services", href: "/services/legal-services" },
+                                                    { title: "Funding Solutions", href: "/services/funding-solutions" },
+                                                ].map((subService) => (
+                                                    <Link
+                                                        key={subService.href}
+                                                        href={subService.href}
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                        className="text-lg text-gray-400 hover:text-cyan-400 py-3 px-4 rounded-xl hover:bg-white/5 transition-colors font-bold"
+                                                    >
+                                                        {subService.title}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
+                            {navLinks.filter(l => l.name !== 'Services').map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-2xl font-bold text-white uppercase tracking-widest hover:text-cyan-400 transition-colors"
+                                    className="text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5 hover:text-cyan-400 transition-colors"
                                 >
                                     {link.name}
                                 </Link>

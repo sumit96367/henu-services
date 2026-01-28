@@ -84,7 +84,7 @@ export const ServiceHero = ({
     return (
         <section
             ref={containerRef}
-            className="relative min-h-screen pt-48 pb-32 flex items-center overflow-hidden bg-transparent"
+            className="relative min-h-screen pt-24 md:pt-48 pb-32 flex flex-col md:flex-row items-start md:items-center overflow-hidden bg-transparent"
         >
             {/* Background Effects */}
             <div className="absolute inset-0">
@@ -113,6 +113,8 @@ export const ServiceHero = ({
                 style={{ y, opacity }}
                 className="container relative z-10"
             >
+                {/* Navbar Spacer for Mobile */}
+                <div className="h-[100px] md:hidden w-full" />
                 {/* Breadcrumb */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

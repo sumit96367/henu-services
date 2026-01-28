@@ -5,6 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { GlowingEffect } from "./glowing-effect";
 
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+
 const transition = {
     type: "spring",
     mass: 0.5,
@@ -36,9 +39,18 @@ export const MenuItem = ({
             >
                 <motion.span
                     transition={{ duration: 0.3 }}
-                    className="text-white hover:text-cyan-400 transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap block"
+                    className="text-white hover:text-cyan-400 transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap flex items-center gap-1.5"
                 >
                     {item}
+                    {children && (
+                        <ChevronDown
+                            size={14}
+                            className={cn(
+                                "transition-transform duration-300 opacity-50 group-hover:opacity-100",
+                                active === item ? "rotate-180" : "rotate-0"
+                            )}
+                        />
+                    )}
                 </motion.span>
             </div>
             <AnimatePresence>
@@ -112,6 +124,30 @@ export const ProductItem = ({
                     {description}
                 </p>
             </div>
+        </Link>
+    );
+};
+
+export const ServiceSubItem = ({
+    title,
+    href,
+    icon: Icon,
+}: {
+    title: string;
+    href: string;
+    icon: any;
+}) => {
+    return (
+        <Link
+            href={href}
+            className="flex items-center gap-4 p-3 rounded-2xl transition-all hover:bg-white/[0.03] group"
+        >
+            <div className="w-11 h-11 rounded-xl bg-white/[0.03] flex items-center justify-center border border-white/10 transition-all group-hover:border-cyan-500/50 group-hover:bg-cyan-500/5 shadow-lg">
+                <Icon size={22} className="text-gray-400 group-hover:text-cyan-400 transition-colors" />
+            </div>
+            <span className="font-bold text-[15px] text-gray-300 group-hover:text-white transition-colors tracking-tight">
+                {title}
+            </span>
         </Link>
     );
 };

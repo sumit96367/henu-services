@@ -26,65 +26,49 @@ export function SelectableCard({
         <motion.button
             type="button"
             onClick={onClick}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
             className={cn(
-                "relative p-5 rounded-xl border-2 transition-all duration-300 text-left",
-                "bg-white/5 hover:bg-white/10",
+                "relative p-5 rounded-2xl border-2 transition-all duration-500 text-left group",
+                "bg-black backdrop-blur-sm",
                 isSelected
-                    ? "border-cyan-400 shadow-[0_0_25px_rgba(0,212,255,0.5)]"
-                    : "border-white/20 hover:border-white/40 hover:shadow-[0_0_15px_rgba(0,212,255,0.2)]",
+                    ? "border-cyan-500/50 bg-cyan-500/5 shadow-[0_0_30px_rgba(0,212,255,0.15)] ring-1 ring-cyan-500/30"
+                    : "border-white/10 hover:border-white/30 hover:bg-white/[0.06]",
                 className
             )}
         >
             {/* Selection indicator */}
-            {isSelected && (
-                <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-2 -right-2 w-6 h-6 bg-cyan-400 rounded-full flex items-center justify-center"
-                >
-                    <svg
-                        className="w-4 h-4 text-black"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={3}
-                            d="M5 13l4 4L19 7"
-                        />
+            <div className={cn(
+                "absolute top-3 right-3 w-5 h-5 rounded-full border-2 transition-all duration-500 flex items-center justify-center",
+                isSelected ? "border-cyan-400 bg-cyan-400" : "border-white/10"
+            )}>
+                {isSelected && (
+                    <svg className="w-3 h-3 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" />
                     </svg>
-                </motion.div>
-            )}
+                )}
+            </div>
 
-            <div className="flex items-start gap-3">
+            <div className="flex flex-col gap-4">
                 <div
                     className={cn(
-                        "p-2 rounded-lg transition-colors",
-                        isSelected ? "bg-cyan-400/20" : "bg-white/10"
+                        "w-12 h-12 rounded-xl transition-all duration-500 flex items-center justify-center shadow-lg",
+                        isSelected ? "bg-cyan-500 text-black scale-110 shadow-cyan-500/20" : "bg-white/5 text-gray-400 group-hover:bg-white/10"
                     )}
                 >
-                    <Icon
-                        className={cn(
-                            "w-5 h-5 transition-colors",
-                            isSelected ? "text-cyan-400" : "text-gray-400"
-                        )}
-                    />
+                    <Icon size={22} className="transition-transform group-hover:rotate-6" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="space-y-1.5">
                     <h4
                         className={cn(
-                            "font-semibold text-sm mb-1 transition-colors",
-                            isSelected ? "text-cyan-400" : "text-white"
+                            "font-bold text-base transition-colors",
+                            isSelected ? "text-white" : "text-gray-300"
                         )}
                     >
                         {title}
                     </h4>
                     {description && (
-                        <p className="text-xs text-gray-400 leading-snug">
+                        <p className="text-xs text-gray-500 leading-relaxed font-medium">
                             {description}
                         </p>
                     )}

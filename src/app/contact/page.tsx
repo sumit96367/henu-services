@@ -28,7 +28,9 @@ import {
     Landmark,
     DollarSign,
     IndianRupee,
-    Wallet
+    Wallet,
+    User,
+    Briefcase
 } from 'lucide-react';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { GlowingCard } from '@/components/ui/glowing-card';
@@ -104,7 +106,7 @@ export default function ContactPage() {
         budget: '',
         message: ''
     });
-    const [selectedServiceId, setSelectedServiceId] = useState<string>('');
+    const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
     const [selectedBudgetId, setSelectedBudgetId] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -140,9 +142,17 @@ export default function ContactPage() {
     };
 
     const handleServiceSelect = (serviceId: string) => {
-        setSelectedServiceId(serviceId);
-        const service = serviceOptions.find(s => s.id === serviceId);
-        setFormState(prev => ({ ...prev, service: service?.title || '' }));
+        setSelectedServiceIds(prev => {
+            const next = prev.includes(serviceId)
+                ? prev.filter(id => id !== serviceId)
+                : [...prev, serviceId];
+
+            // Update formState.service with a comma-separated list for submission
+            const titles = next.map(id => serviceOptions.find(s => s.id === id)?.title).filter(Boolean);
+            setFormState(formPrev => ({ ...formPrev, service: titles.join(', ') }));
+
+            return next;
+        });
     };
 
     const handleBudgetSelect = (budgetId: string) => {
@@ -298,7 +308,7 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="p-16 text-center flex flex-col items-center justify-center">
+                                        <GlowingCard className="h-full" innerClassName="p-16 text-center flex flex-col items-center justify-center !bg-black">
                                             <motion.div
                                                 initial={{ scale: 0 }}
                                                 animate={{ scale: 1 }}
@@ -311,12 +321,14 @@ export default function ContactPage() {
                                             <p className="text-2xl text-gray-400 mb-12 max-w-sm leading-relaxed">
                                                 We've received your request. One of our experts will contact you shortly.
                                             </p>
-                                            <button
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
                                                 onClick={() => setIsSubmitted(false)}
-                                                className="btn-secondary px-10 py-5 text-xl font-bold"
+                                                className="btn-primary"
                                             >
                                                 Send Another Message
-                                            </button>
+                                            </motion.button>
                                         </GlowingCard>
                                     </motion.div>
                                 ) : (
@@ -327,7 +339,7 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="p-10 md:p-14">
+                                        <GlowingCard className="h-full" innerClassName="!p-10 !bg-black">
                                             {/* Step Indicator */}
                                             <StepIndicator currentStep={currentStep} totalSteps={2} className="mb-10" />
 
@@ -341,40 +353,61 @@ export default function ContactPage() {
                                                         transition={{ duration: 0.3 }}
                                                         className="space-y-12"
                                                     >
-                                                        <div>
-                                                            <h3 className="text-2xl font-bold text-white mb-2">
-                                                                Let's Start with <span className="text-cyan-400">Your Details</span>
-                                                            </h3>
-                                                            <p className="text-gray-400">Tell us who you are</p>
-                                                        </div>
+                                                        <div className="space-y-12">
+                                                            <div>
+                                                                <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">
+                                                                    Let's Start with <span className="gradient-text">Your Details</span>
+                                                                </h3>
+                                                                <p className="text-lg text-gray-400">Tell us who you are</p>
+                                                            </div>
 
-                                                        <div className="grid md:grid-cols-2 gap-8">
-                                                            <FloatingInput
-                                                                label="Full Name"
-                                                                value={formState.name}
-                                                                onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
-                                                                required
-                                                                placeholder="John Doe"
-                                                            />
-                                                            <FloatingInput
-                                                                label="Email Address"
-                                                                value={formState.email}
-                                                                onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                                                                type="email"
-                                                                required
-                                                                placeholder="john@company.com"
-                                                            />
-                                                        </div>
+                                                            <div className="grid md:grid-cols-2 gap-8">
+                                                                <div className="space-y-5">
+                                                                    <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Full Name</label>
+                                                                    <div className="relative group flex items-center">
+                                                                        <User className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                        <input
+                                                                            required
+                                                                            name="name"
+                                                                            type="text"
+                                                                            value={formState.name}
+                                                                            onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
+                                                                            placeholder="John Doe"
+                                                                            className="w-full bg-black border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium text-sm"
+                                                                        />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div className="flex justify-end">
-                                                            <FloatingPillButton
-                                                                type="button"
-                                                                onClick={handleContinue}
-                                                                variant="continue"
-                                                                disabled={!formState.name || !formState.email}
-                                                            >
-                                                                Continue
-                                                            </FloatingPillButton>
+                                                                <div className="space-y-5">
+                                                                    <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Email Address</label>
+                                                                    <div className="relative group flex items-center">
+                                                                        <Mail className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                        <input
+                                                                            required
+                                                                            name="email"
+                                                                            type="email"
+                                                                            value={formState.email}
+                                                                            onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                                                                            placeholder="john@company.com"
+                                                                            className="w-full bg-black border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium text-sm"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="flex justify-end pt-4">
+                                                                <motion.button
+                                                                    whileHover={{ scale: 1.05 }}
+                                                                    whileTap={{ scale: 0.95 }}
+                                                                    type="button"
+                                                                    onClick={handleContinue}
+                                                                    disabled={!formState.name || !formState.email}
+                                                                    className="btn-primary"
+                                                                >
+                                                                    Continue
+                                                                    <ArrowRight size={18} />
+                                                                </motion.button>
+                                                            </div>
                                                         </div>
                                                     </motion.div>
                                                 ) : (
@@ -385,18 +418,18 @@ export default function ContactPage() {
                                                         exit={{ opacity: 0, x: -20 }}
                                                         transition={{ duration: 0.3 }}
                                                         onSubmit={handleSubmit}
-                                                        className="space-y-12"
+                                                        className="space-y-16"
                                                     >
                                                         <div>
-                                                            <h3 className="text-2xl font-bold text-white mb-2">
-                                                                Now, <span className="text-cyan-400">Your Project</span>
+                                                            <h3 className="text-4xl font-bold text-white mb-3 tracking-tighter">
+                                                                Now, <span className="gradient-text">Your Project</span>
                                                             </h3>
-                                                            <p className="text-gray-400">What can we build for you?</p>
+                                                            <p className="text-xl text-gray-400">What can we build for you?</p>
                                                         </div>
 
                                                         {/* Service Selection */}
-                                                        <div className="space-y-4">
-                                                            <label className="block text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                                                        <div className="space-y-6 !mt-20">
+                                                            <label className="text-xl font-bold text-gray-300 block px-1 tracking-wider uppercase text-[14px]">
                                                                 Service Aspect *
                                                             </label>
                                                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -406,7 +439,7 @@ export default function ContactPage() {
                                                                         icon={service.icon}
                                                                         title={service.title}
                                                                         description={service.description}
-                                                                        isSelected={selectedServiceId === service.id}
+                                                                        isSelected={selectedServiceIds.includes(service.id)}
                                                                         onClick={() => handleServiceSelect(service.id)}
                                                                     />
                                                                 ))}
@@ -414,50 +447,78 @@ export default function ContactPage() {
                                                         </div>
 
                                                         {/* Budget Selection */}
-                                                        <div className="space-y-4">
-                                                            <label className="block text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                                                        <div className="space-y-6 !mt-16">
+                                                            <label className="text-xl font-bold text-gray-300 block px-1 tracking-wider uppercase text-[14px]">
                                                                 Budget Range
                                                             </label>
-                                                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                                                {budgetOptions.map((budget) => (
-                                                                    <SelectableCard
-                                                                        key={budget.id}
-                                                                        icon={budget.icon}
-                                                                        title={budget.title}
-                                                                        isSelected={selectedBudgetId === budget.id}
-                                                                        onClick={() => handleBudgetSelect(budget.id)}
-                                                                    />
-                                                                ))}
+                                                            <div className="relative group">
+                                                                <IndianRupee className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                <select
+                                                                    value={selectedBudgetId}
+                                                                    onChange={(e) => handleBudgetSelect(e.target.value)}
+                                                                    className="w-full bg-black border border-white/10 rounded-2xl py-5 !pl-16 !pr-10 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium appearance-none cursor-pointer text-base"
+                                                                >
+                                                                    <option value="" disabled className="bg-[#050505]">Select your budget range...</option>
+                                                                    {budgetOptions.map((budget) => (
+                                                                        <option key={budget.id} value={budget.id} className="bg-[#050505] py-4">
+                                                                            {budget.title}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
+                                                                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
+                                                                    <ChevronRight className="w-5 h-5 text-gray-400 rotate-90" />
+                                                                </div>
                                                             </div>
                                                         </div>
 
                                                         {/* Project Brief */}
-                                                        <ExpandableTextarea
-                                                            label="Project Brief"
-                                                            value={formState.message}
-                                                            onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
-                                                            required
-                                                            placeholder="Walk us through your vision, challenges, and timeline..."
-                                                        />
+                                                        <div className="space-y-6 !mt-16">
+                                                            <label className="text-xl font-bold text-gray-300 block px-1 tracking-wider uppercase text-[14px]">Project Brief</label>
+                                                            <div className="relative group">
+                                                                <MessageSquare className="absolute left-6 top-6 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                <textarea
+                                                                    required
+                                                                    name="message"
+                                                                    rows={5}
+                                                                    value={formState.message}
+                                                                    onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
+                                                                    placeholder="Walk us through your vision, challenges, and timeline..."
+                                                                    className="w-full bg-black border border-white/10 rounded-2xl !pt-6 !pl-16 !pr-6 !pb-6 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium resize-none text-base leading-relaxed"
+                                                                ></textarea>
+                                                            </div>
+                                                        </div>
 
                                                         {/* Action Buttons */}
-                                                        <div className="flex items-center justify-between gap-4">
-                                                            <button
+                                                        <div className="flex items-center justify-between gap-4 pt-8 border-t border-white/5">
+                                                            <motion.button
+                                                                whileHover={{ scale: 1.05 }}
+                                                                whileTap={{ scale: 0.95 }}
                                                                 type="button"
                                                                 onClick={handleBack}
-                                                                className="px-6 py-3 text-gray-400 hover:text-cyan-400 font-semibold transition-colors flex items-center gap-2"
+                                                                className="btn-secondary"
                                                             >
                                                                 <ArrowRight className="w-4 h-4 rotate-180" />
                                                                 Back
-                                                            </button>
-                                                            <FloatingPillButton
+                                                            </motion.button>
+                                                            <motion.button
+                                                                whileHover={{ scale: 1.05 }}
+                                                                whileTap={{ scale: 0.95 }}
                                                                 type="submit"
-                                                                variant="submit"
-                                                                isLoading={isSubmitting}
-                                                                disabled={!formState.service || !formState.message}
+                                                                disabled={isSubmitting || selectedServiceIds.length === 0 || !formState.message}
+                                                                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
                                                             >
-                                                                {isSubmitting ? 'Sending' : 'Send Message'}
-                                                            </FloatingPillButton>
+                                                                {isSubmitting ? (
+                                                                    <span className="flex items-center gap-2">
+                                                                        <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                                                                        Sending...
+                                                                    </span>
+                                                                ) : (
+                                                                    <>
+                                                                        Send Message
+                                                                        <Send className="w-4 h-4" />
+                                                                    </>
+                                                                )}
+                                                            </motion.button>
                                                         </div>
                                                     </motion.form>
                                                 )}
