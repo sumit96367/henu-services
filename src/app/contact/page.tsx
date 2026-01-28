@@ -17,11 +17,27 @@ import {
     Instagram,
     ArrowRight,
     ChevronRight,
-    Search
+    Search,
+    Code,
+    Smartphone,
+    Server,
+    Brain,
+    Megaphone,
+    FileText,
+    Building2,
+    Landmark,
+    DollarSign,
+    IndianRupee,
+    Wallet
 } from 'lucide-react';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { ShaderBackground } from '@/components/ui/shader-background';
+import { FloatingInput } from '@/components/ui/floating-input';
+import { SelectableCard } from '@/components/ui/selectable-card';
+import { StepIndicator } from '@/components/ui/step-indicator';
+import { FloatingPillButton } from '@/components/ui/floating-pill-button';
+import { ExpandableTextarea } from '@/components/ui/expandable-textarea';
 
 import NeuralBackground from '@/components/ui/flow-field-background';
 
@@ -57,42 +73,52 @@ const contactInfo = [
     }
 ];
 
-// Service Options
+// Service Options with Icons
 const serviceOptions = [
-    'Web Development',
-    'Mobile App Development',
-    'Backend Development',
-    'AI Agent Development',
-    'Digital Marketing',
-    'Advertisement',
-    'Legal Documentation',
-    'Company Registration',
-    'Government Grants',
-    'Other'
+    { id: 'web', icon: Code, title: 'Web Development', description: 'Modern web applications' },
+    { id: 'mobile', icon: Smartphone, title: 'Mobile App Development', description: 'iOS & Android apps' },
+    { id: 'backend', icon: Server, title: 'Backend Development', description: 'Scalable server solutions' },
+    { id: 'ai', icon: Brain, title: 'AI Agent Development', description: 'Intelligent automation' },
+    { id: 'marketing', icon: Megaphone, title: 'Digital Marketing', description: 'Growth strategies' },
+    { id: 'legal', icon: FileText, title: 'Legal Documentation', description: 'Compliance support' },
+    { id: 'company', icon: Building2, title: 'Company Registration', description: 'Business setup' },
+    { id: 'grants', icon: Landmark, title: 'Government Grants', description: 'Funding assistance' },
 ];
 
-// Budget Options
+// Budget Options with Icons
 const budgetOptions = [
-    'Less than ₹1 Lakh',
-    '₹1 Lakh - ₹5 Lakhs',
-    '₹5 Lakhs - ₹20 Lakhs',
-    '₹20 Lakhs - ₹50 Lakhs',
-    'More than ₹50 Lakhs',
-    'Not Sure'
+    { id: 'budget1', icon: Wallet, title: 'Less than ₹1 Lakh', value: 'Less than ₹1 Lakh' },
+    { id: 'budget2', icon: IndianRupee, title: '₹1L - ₹5L', value: '₹1 Lakh - ₹5 Lakhs' },
+    { id: 'budget3', icon: DollarSign, title: '₹5L - ₹20L', value: '₹5 Lakhs - ₹20 Lakhs' },
+    { id: 'budget4', icon: DollarSign, title: '₹20L - ₹50L', value: '₹20 Lakhs - ₹50 Lakhs' },
+    { id: 'budget5', icon: DollarSign, title: 'More than ₹50L', value: 'More than ₹50 Lakhs' },
+    { id: 'budget6', icon: Search, title: 'Not Sure', value: 'Not Sure' },
 ];
 
 export default function ContactPage() {
+    const [currentStep, setCurrentStep] = useState(1);
     const [formState, setFormState] = useState({
         name: '',
         email: '',
-        phone: '',
-        company: '',
         service: '',
         budget: '',
         message: ''
     });
+    const [selectedServiceId, setSelectedServiceId] = useState<string>('');
+    const [selectedBudgetId, setSelectedBudgetId] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const handleContinue = () => {
+        // Validate Step 1
+        if (formState.name && formState.email) {
+            setCurrentStep(2);
+        }
+    };
+
+    const handleBack = () => {
+        setCurrentStep(1);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -103,6 +129,7 @@ export default function ContactPage() {
 
         setIsSubmitting(false);
         setIsSubmitted(true);
+        setCurrentStep(1); // Reset to step 1
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -110,6 +137,18 @@ export default function ContactPage() {
             ...prev,
             [e.target.name]: e.target.value
         }));
+    };
+
+    const handleServiceSelect = (serviceId: string) => {
+        setSelectedServiceId(serviceId);
+        const service = serviceOptions.find(s => s.id === serviceId);
+        setFormState(prev => ({ ...prev, service: service?.title || '' }));
+    };
+
+    const handleBudgetSelect = (budgetId: string) => {
+        setSelectedBudgetId(budgetId);
+        const budget = budgetOptions.find(b => b.id === budgetId);
+        setFormState(prev => ({ ...prev, budget: budget?.value || '' }));
     };
 
     return (
@@ -288,108 +327,141 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="p-14 md:p-20">
-                                            <form onSubmit={handleSubmit} className="space-y-10">
-                                                <div className="grid md:grid-cols-2 gap-10">
-                                                    <div className="space-y-4">
-                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Full Name *</label>
-                                                        <input
-                                                            type="text"
-                                                            name="name"
-                                                            value={formState.name}
-                                                            onChange={handleChange}
-                                                            required
-                                                            className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-all font-semibold"
-                                                            placeholder="John Doe"
-                                                        />
-                                                    </div>
-                                                    <div className="space-y-4">
-                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Email Address *</label>
-                                                        <input
-                                                            type="email"
-                                                            name="email"
-                                                            value={formState.email}
-                                                            onChange={handleChange}
-                                                            required
-                                                            className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-all font-semibold"
-                                                            placeholder="john@company.com"
-                                                        />
-                                                    </div>
-                                                </div>
+                                        <GlowingCard className="h-full" innerClassName="p-10 md:p-14">
+                                            {/* Step Indicator */}
+                                            <StepIndicator currentStep={currentStep} totalSteps={2} className="mb-10" />
 
-                                                <div className="grid md:grid-cols-2 gap-10">
-                                                    <div className="space-y-4">
-                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Service Aspect *</label>
-                                                        <div className="relative">
-                                                            <select
-                                                                name="service"
-                                                                value={formState.service}
-                                                                onChange={handleChange}
+                                            <AnimatePresence mode="wait">
+                                                {currentStep === 1 ? (
+                                                    <motion.div
+                                                        key="step1"
+                                                        initial={{ opacity: 0, x: -20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        exit={{ opacity: 0, x: 20 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="space-y-12"
+                                                    >
+                                                        <div>
+                                                            <h3 className="text-2xl font-bold text-white mb-2">
+                                                                Let's Start with <span className="text-cyan-400">Your Details</span>
+                                                            </h3>
+                                                            <p className="text-gray-400">Tell us who you are</p>
+                                                        </div>
+
+                                                        <div className="grid md:grid-cols-2 gap-8">
+                                                            <FloatingInput
+                                                                label="Full Name"
+                                                                value={formState.name}
+                                                                onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
                                                                 required
-                                                                className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg focus:outline-none focus:border-cyan-400 transition-all font-semibold appearance-none cursor-pointer"
-                                                            >
-                                                                <option value="" className="bg-gray-900">Choose Service</option>
-                                                                {serviceOptions.map(option => (
-                                                                    <option key={option} value={option} className="bg-gray-900">{option}</option>
-                                                                ))}
-                                                            </select>
-                                                            <ChevronRight size={24} className="absolute right-7 top-1/2 -translate-y-1/2 rotate-90 text-gray-400 pointer-events-none" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="space-y-4">
-                                                        <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Budget Range</label>
-                                                        <div className="relative">
-                                                            <select
-                                                                name="budget"
-                                                                value={formState.budget}
-                                                                onChange={handleChange}
-                                                                className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg focus:outline-none focus:border-cyan-400 transition-all font-semibold appearance-none cursor-pointer"
-                                                            >
-                                                                <option value="" className="bg-gray-900">Choose Range</option>
-                                                                {budgetOptions.map(option => (
-                                                                    <option key={option} value={option} className="bg-gray-900">{option}</option>
-                                                                ))}
-                                                            </select>
-                                                            <ChevronRight size={24} className="absolute right-7 top-1/2 -translate-y-1/2 rotate-90 text-gray-400 pointer-events-none" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="space-y-4">
-                                                    <label className="block text-white text-base font-extrabold uppercase tracking-widest opacity-70">Project Brief *</label>
-                                                    <textarea
-                                                        name="message"
-                                                        value={formState.message}
-                                                        onChange={handleChange}
-                                                        required
-                                                        rows={6}
-                                                        className="w-full px-2 py-4 bg-transparent border-0 border-b border-white/20 text-white text-lg placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-all font-semibold resize-none leading-relaxed"
-                                                        placeholder="Walk us through your vision, challenges, and timeline..."
-                                                    />
-                                                </div>
-
-                                                <button
-                                                    type="submit"
-                                                    disabled={isSubmitting}
-                                                    className="w-full btn-primary py-7 text-xl font-black uppercase tracking-[0.2em] rounded-full disabled:opacity-50 group hover:shadow-[0_0_50px_rgba(0,212,255,0.3)]"
-                                                >
-                                                    {isSubmitting ? (
-                                                        <span className="flex items-center justify-center gap-4">
-                                                            <motion.div
-                                                                animate={{ rotate: 360 }}
-                                                                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                                                                className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full"
+                                                                placeholder="John Doe"
                                                             />
-                                                            Dispatching...
-                                                        </span>
-                                                    ) : (
-                                                        <span className="flex items-center justify-center gap-4">
-                                                            Send Message
-                                                            <Send size={24} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
-                                                        </span>
-                                                    )}
-                                                </button>
-                                            </form>
+                                                            <FloatingInput
+                                                                label="Email Address"
+                                                                value={formState.email}
+                                                                onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                                                                type="email"
+                                                                required
+                                                                placeholder="john@company.com"
+                                                            />
+                                                        </div>
+
+                                                        <div className="flex justify-end">
+                                                            <FloatingPillButton
+                                                                type="button"
+                                                                onClick={handleContinue}
+                                                                variant="continue"
+                                                                disabled={!formState.name || !formState.email}
+                                                            >
+                                                                Continue
+                                                            </FloatingPillButton>
+                                                        </div>
+                                                    </motion.div>
+                                                ) : (
+                                                    <motion.form
+                                                        key="step2"
+                                                        initial={{ opacity: 0, x: 20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        exit={{ opacity: 0, x: -20 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        onSubmit={handleSubmit}
+                                                        className="space-y-12"
+                                                    >
+                                                        <div>
+                                                            <h3 className="text-2xl font-bold text-white mb-2">
+                                                                Now, <span className="text-cyan-400">Your Project</span>
+                                                            </h3>
+                                                            <p className="text-gray-400">What can we build for you?</p>
+                                                        </div>
+
+                                                        {/* Service Selection */}
+                                                        <div className="space-y-4">
+                                                            <label className="block text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                                                                Service Aspect *
+                                                            </label>
+                                                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                                                {serviceOptions.map((service) => (
+                                                                    <SelectableCard
+                                                                        key={service.id}
+                                                                        icon={service.icon}
+                                                                        title={service.title}
+                                                                        description={service.description}
+                                                                        isSelected={selectedServiceId === service.id}
+                                                                        onClick={() => handleServiceSelect(service.id)}
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Budget Selection */}
+                                                        <div className="space-y-4">
+                                                            <label className="block text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                                                                Budget Range
+                                                            </label>
+                                                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                                                {budgetOptions.map((budget) => (
+                                                                    <SelectableCard
+                                                                        key={budget.id}
+                                                                        icon={budget.icon}
+                                                                        title={budget.title}
+                                                                        isSelected={selectedBudgetId === budget.id}
+                                                                        onClick={() => handleBudgetSelect(budget.id)}
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Project Brief */}
+                                                        <ExpandableTextarea
+                                                            label="Project Brief"
+                                                            value={formState.message}
+                                                            onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
+                                                            required
+                                                            placeholder="Walk us through your vision, challenges, and timeline..."
+                                                        />
+
+                                                        {/* Action Buttons */}
+                                                        <div className="flex items-center justify-between gap-4">
+                                                            <button
+                                                                type="button"
+                                                                onClick={handleBack}
+                                                                className="px-6 py-3 text-gray-400 hover:text-cyan-400 font-semibold transition-colors flex items-center gap-2"
+                                                            >
+                                                                <ArrowRight className="w-4 h-4 rotate-180" />
+                                                                Back
+                                                            </button>
+                                                            <FloatingPillButton
+                                                                type="submit"
+                                                                variant="submit"
+                                                                isLoading={isSubmitting}
+                                                                disabled={!formState.service || !formState.message}
+                                                            >
+                                                                {isSubmitting ? 'Sending' : 'Send Message'}
+                                                            </FloatingPillButton>
+                                                        </div>
+                                                    </motion.form>
+                                                )}
+                                            </AnimatePresence>
                                         </GlowingCard>
                                     </motion.div>
                                 )}
@@ -397,9 +469,9 @@ export default function ContactPage() {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
 
-        </main>
+        </main >
     );
 }
