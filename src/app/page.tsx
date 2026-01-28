@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   Users,
   Cpu,
+  Check,
 } from 'lucide-react';
 
 import { SplineScene } from '@/components/ui/splite';
@@ -711,76 +712,75 @@ const ServiceMatrixSection = () => {
 // WHY CHOOSE US SECTION
 // ============================================
 const WhyChooseUsSection = () => {
-  const reasons = [
-    {
-      icon: <Bot className="w-8 h-8 text-cyan-400" />,
-      title: "AI-First Engineering",
-      desc: "We don't just build apps; we architect autonomous intelligence that evolves with your business needs.",
-      color: "cyan"
-    },
-    {
-      icon: <Zap className="w-8 h-8 text-amber-400" />,
-      title: "Rapid Execution",
-      desc: "Proprietary frameworks and agile methodology allow us to go from concept to production in record time.",
-      color: "amber"
-    },
-    {
-      icon: <ShieldCheck className="w-8 h-8 text-cyan-400" />,
-      title: "Integrated Strategy",
-      desc: "Unique fusion of technical excellence, legal compliance, and financial engineering for high-growth startups.",
-      color: "cyan"
-    },
-    {
-      icon: <Users className="w-8 h-8 text-amber-400" />,
-      title: "Expert Partnership",
-      desc: "Deep domain expertise across venture capital, government grants, and full-stack system architecture.",
-      color: "amber"
-    }
+  const whyChooseUs = [
+    "10+ years of industry experience",
+    "100% transparency in development process",
+    "Dedicated project manager for each project",
+    "24/7 support and maintenance",
+    "Agile development methodology",
+    "Competitive pricing"
   ];
 
   return (
-    <section className="section relative bg-transparent overflow-hidden">
-      {/* Background radial glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+    <section className="section bg-transparent">
+      <div className="container">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Why Choose <span className="text-green-400">Henu</span>{" "}
+              <span className="text-amber-400">OS</span>?
+            </h2>
+            <p className="text-gray-400 text-lg mb-8">
+              We combine technical excellence with business acumen to deliver solutions that drive real results.
+            </p>
+            <ul className="space-y-4">
+              {whyChooseUs.map((item, index) => (
+                <motion.li
+                  key={item}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center gap-4"
+                >
+                  <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-4 h-4 text-green-400" />
+                  </div>
+                  <span className="text-gray-300">{item}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
 
-      <div className="container relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center text-center mb-20"
-        >
-          <h2 className="text-4xl md:text-6xl font-black text-white mb-6 flex flex-col items-center sm:block">
-            <PremiumTextReveal text="Why Partners" />{" "}
-            <span className="gradient-text">
-              <PremiumTextReveal text="Choose Us" delay={0.3} />
-            </span>
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg text-center leading-relaxed">
-            We bridge the critical gap between technical innovation, legal certainty, and financial growth.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {reasons.map((reason, index) => (
-            <motion.div
-              key={reason.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-            >
-              <GlowingCard className="h-full group" innerClassName="p-12 md:p-16 h-full flex flex-col items-center text-center">
-                <div className="mb-10 group-hover:scale-110 transition-transform duration-300">
-                  {reason.icon}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative space-y-6"
+          >
+            <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
+              <div className="text-4xl font-bold mb-4">
+                <span className="text-green-400">200</span>
+                <span className="text-amber-400">+</span>
+              </div>
+              <div className="text-xl text-white font-bold mb-3 tracking-tight">Projects Delivered</div>
+              <div className="text-gray-400 text-base leading-relaxed font-medium">Across web, mobile, AI, and enterprise solutions</div>
+            </GlowingCard>
+            <div className="ml-8 md:ml-12">
+              <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
+                <div className="text-4xl font-bold mb-4">
+                  <span className="text-green-400">98</span>
+                  <span className="text-amber-400">%</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-6">
-                  {reason.title}
-                </h3>
-                <p className="text-gray-400 text-base leading-relaxed max-w-[320px]">
-                  {reason.desc}
-                </p>
+                <div className="text-xl text-white font-bold mb-3 tracking-tight">Client Satisfaction</div>
+                <div className="text-gray-400 text-base leading-relaxed font-medium">Based on post-project surveys</div>
               </GlowingCard>
-            </motion.div>
-          ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -887,89 +887,7 @@ const TestimonialsSection = ({ testimonials }: { testimonials: any[] }) => {
   );
 };
 
-// ============================================
-// FAQ SECTION
-// ============================================
-const faqs = [
-  {
-    question: "How do you assist with Government Grants?",
-    answer: "We provide end-to-end support including grant identification, application preparation, documentation, and follow-up with government agencies. Our team has successfully secured over $50M in funding for our clients."
-  },
-  {
-    question: "Do you build AI Agents for non-tech businesses?",
-    answer: "Absolutely! We specialize in making AI accessible. Whether you're in retail, healthcare, or manufacturing, we design custom AI agents that integrate seamlessly with your existing workflows."
-  },
-  {
-    question: "What is the timeline for a full-stack mobile app?",
-    answer: "Typically, a full-featured mobile app takes 3-6 months from concept to launch. This includes design, development, testing, and deployment. We follow an agile methodology with bi-weekly deliverables."
-  },
-  {
-    question: "Can you handle company registration and trademarking?",
-    answer: "Yes, we offer comprehensive legal services including company registration, trademark filing, IP protection, and ongoing compliance management. Our legal team ensures all formalities are handled efficiently."
-  }
-];
 
-const FAQSection = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  return (
-    <section className="section bg-transparent">
-      <div className="container max-w-3xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            <PremiumTextReveal text="Got" /> <span className="gradient-text"><PremiumTextReveal text="Questions?" delay={0.1} /></span>
-          </h2>
-        </motion.div>
-
-        <div className="space-y-2">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-
-              transition={{ delay: index * 0.1 }}
-              className="accordion-item"
-            >
-              <button
-                className="accordion-trigger"
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              >
-                <span>{faq.question}</span>
-                <motion.div
-                  animate={{ rotate: openIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ChevronDown className="w-5 h-5" />
-                </motion.div>
-              </button>
-              <AnimatePresence>
-                {openIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="accordion-content">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 export default function HomePage() {
   const [allTestimonials, setAllTestimonials] = useState(initialTestimonials);
@@ -995,7 +913,6 @@ export default function HomePage() {
       <WhyChooseUsSection />
       <TestimonialsSection testimonials={allTestimonials} />
       <ReviewSection onReviewSubmitted={handleReviewSubmitted} />
-      <FAQSection />
     </main>
   );
 }
