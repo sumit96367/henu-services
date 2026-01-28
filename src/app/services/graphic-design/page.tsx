@@ -111,19 +111,34 @@ const faqs = [
     }
 ];
 
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
+import GraphicDesignHero from '@/components/ui/graphic-design-hero';
+
 export default function GraphicDesignPage() {
     return (
-        <ServicePage
-            heroTitle="Stunning"
-            heroHighlight="Graphic Design"
-            heroDescription="Elevate your brand with visuals that captivate and convert. From logos to full branding suites."
-            heroAccentColor="cyan"
-            features={features}
-            process={process}
-            technologies={technologies}
-            ctaTitle="Standout Designs"
-            ctaDescription="Make your brand unforgettable. Let's design!"
-            faqs={faqs}
-        />
+        <main className="relative">
+            <GraphicDesignHero />
+
+            <ServiceFeatures features={features} accentColor="cyan" />
+            <ServiceProcess process={process} accentColor="cyan" />
+
+            {technologies && technologies.length > 0 && (
+                <ServiceTechnologies technologies={technologies} />
+            )}
+
+            <ServiceFAQSection faqs={faqs} />
+
+            <ServiceCTA
+                title="Standout Designs"
+                description="Make your brand unforgettable. Let's design!"
+                accentColor="cyan"
+            />
+        </main>
     );
 }

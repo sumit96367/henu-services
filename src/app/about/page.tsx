@@ -3,7 +3,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { GlowingCard } from '@/components/ui/glowing-card';
-import ASMRStaticBackground from '@/components/ui/asmr-background';
+import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
+import { Spotlight } from '@/components/ui/spotlight';
 import {
     Cpu,
     Layers,
@@ -25,63 +26,102 @@ export default function AboutPage() {
         target: heroRef,
         offset: ['start start', 'end start']
     });
-    const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
+
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     return (
         <main className="relative">
-            {/* ASMR Particle Background */}
-            <ASMRStaticBackground />
-
-            {/* Hero Section - Bold, No Buttons */}
+            {/* Hero Section */}
             <section
                 ref={heroRef}
-                className="relative min-h-[85vh] pb-24 flex items-center overflow-hidden"
-                style={{ paddingTop: '140px' }}
+                className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
+                style={{ background: '#050505' }}
             >
-                <div className="absolute inset-0">
-                    <div className="grid-background" />
+                <Spotlight
+                    className="-top-40 left-0 md:left-60 md:-top-20"
+                    fill="white"
+                />
+
+                {/* Aesthetic Background Elements */}
+                <div className="absolute inset-0 z-0">
+                    <div className="horizon-grid" />
+                    <div className="grid-background opacity-20" />
+
+                    {/* Ambient Glow */}
                     <motion.div
-                        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] rounded-full"
+                        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%)',
-                            filter: 'blur(120px)'
+                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                            filter: 'blur(60px)'
                         }}
                         animate={{
                             scale: [1, 1.2, 1],
-                            opacity: [0.3, 0.5, 0.3],
-                            x: [-10, 10, -10]
+                            opacity: [0.3, 0.6, 0.3]
                         }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                        transition={{ duration: 8, repeat: Infinity }}
+                    />
+                    <motion.div
+                        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
+                        style={{
+                            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                            filter: 'blur(60px)'
+                        }}
+                        animate={{
+                            scale: [1.2, 1, 1.2],
+                            opacity: [0.3, 0.5, 0.3]
+                        }}
+                        transition={{ duration: 10, repeat: Infinity }}
                     />
                 </div>
 
-                <motion.div style={{ y, opacity }} className="container relative z-10">
-                    <div className="max-w-5xl">
-                        <motion.h1
-                            initial={{ opacity: 0, y: 40 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="text-6xl md:text-8xl font-bold text-white mb-8 leading-[1.05] tracking-tight"
-                        >
-                            We Build Systems<br />That <span className="text-cyan-400">Matter</span>
-                        </motion.h1>
+                <motion.div
+                    style={{ y, opacity }}
+                    className="relative z-10 w-full flex flex-col items-center justify-center px-6"
+                >
+                    <div className="max-w-5xl w-full mx-auto flex flex-col items-center text-center">
+                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full">
+                            <PremiumTextReveal text="We Build Systems" className="w-full justify-center" />
+                            <span className="gradient-text block w-full text-center">
+                                <PremiumTextReveal text="That Matter" delay={0.2} className="w-full justify-center" />
+                            </span>
+                        </h1>
 
                         <motion.p
                             initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3, duration: 0.8 }}
-                            className="text-2xl text-gray-400 max-w-3xl leading-relaxed"
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5, duration: 0.8 }}
+                            className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed text-center font-medium w-full"
                         >
                             Engineering-led product studio focused on clarity, performance, and long-term thinking.
                         </motion.p>
                     </div>
                 </motion.div>
+
+                {/* Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 hidden md:block"
+                >
+                    <div className="flex flex-col items-center gap-2">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Scroll to Explore</span>
+                        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/50 to-transparent relative overflow-hidden">
+                            <motion.div
+                                animate={{ y: ["-100%", "100%"] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 bg-white w-full h-1/2"
+                            />
+                        </div>
+                    </div>
+                </motion.div>
             </section>
 
             {/* How We Think */}
-            <section className="section bg-transparent">
-                <div className="container">
+            <section className="section bg-transparent px-6">
+                <div className="container mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -165,8 +205,8 @@ export default function AboutPage() {
             </section>
 
             {/* What We're Built To Do */}
-            <section className="section bg-transparent">
-                <div className="container">
+            <section className="section bg-transparent px-6">
+                <div className="container mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -246,8 +286,8 @@ export default function AboutPage() {
             </section>
 
             {/* What We Don't Do */}
-            <section className="section bg-transparent">
-                <div className="container">
+            <section className="section bg-transparent px-6">
+                <div className="container mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -292,8 +332,8 @@ export default function AboutPage() {
             </section>
 
             {/* Who We're Best For */}
-            <section className="section bg-transparent">
-                <div className="container">
+            <section className="section bg-transparent px-6">
+                <div className="container mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -355,8 +395,8 @@ export default function AboutPage() {
             </section>
 
             {/* Our Role in Your Journey */}
-            <section className="section bg-transparent">
-                <div className="container">
+            <section className="section bg-transparent px-6">
+                <div className="container mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -419,8 +459,8 @@ export default function AboutPage() {
             </section>
 
             {/* CTA - Keep it subtle */}
-            <section className="section relative overflow-hidden bg-transparent pb-32">
-                <div className="container relative z-10 text-center">
+            <section className="section relative overflow-hidden bg-transparent pb-32 px-6">
+                <div className="container mx-auto relative z-10 text-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}

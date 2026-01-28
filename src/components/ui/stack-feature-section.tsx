@@ -46,7 +46,7 @@ export default function FeatureSection({
     const iconsPerOrbit = Math.ceil(iconConfigs.length / orbitCount);
 
     return (
-        <section className="relative w-full min-h-screen flex flex-col md:flex-row items-start md:items-center overflow-hidden bg-transparent pt-24 md:pt-48 pb-20 md:pb-32">
+        <section className="relative w-full min-h-screen flex flex-col md:flex-row items-center overflow-hidden bg-transparent pt-24 md:pt-48 pb-20 md:pb-32">
             {/* Background Effects */}
             <div className="absolute inset-0 -z-10">
                 <div

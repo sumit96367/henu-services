@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import {
     Mail,
@@ -40,8 +40,7 @@ import { SelectableCard } from '@/components/ui/selectable-card';
 import { StepIndicator } from '@/components/ui/step-indicator';
 import { FloatingPillButton } from '@/components/ui/floating-pill-button';
 import { ExpandableTextarea } from '@/components/ui/expandable-textarea';
-
-import NeuralBackground from '@/components/ui/flow-field-background';
+import { Spotlight } from '@/components/ui/spotlight';
 
 // Contact Info
 const contactInfo = [
@@ -111,6 +110,15 @@ export default function ContactPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end start"],
+    });
+
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
     const handleContinue = () => {
         // Validate Step 1
         if (formState.name && formState.email) {
@@ -163,48 +171,91 @@ export default function ContactPage() {
 
     return (
         <main className="relative z-10">
-            {/* Neural Background - Covers main content only */}
-            <div className="absolute inset-0 z-0">
-                <NeuralBackground
-                    color="#00d4ff"
-                    trailOpacity={0.12}
-                    particleCount={500}
-                    speed={0.6}
-                />
-            </div>
-
-
             {/* Hero Section */}
             <section
-                className="relative pb-24 overflow-hidden flex items-start"
-                style={{ paddingTop: '140px' }}
+                ref={containerRef}
+                className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
+                style={{ background: '#050505' }}
             >
-                <div className="container relative z-10 flex justify-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="max-w-5xl w-full flex flex-col items-center text-center"
-                    >
+                <Spotlight
+                    className="-top-40 left-0 md:left-60 md:-top-20"
+                    fill="white"
+                />
 
-                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-2 leading-[1.0] tracking-tighter text-center">
-                            <PremiumTextReveal text="Ready to" className="justify-center" />
-                            <br />
-                            <span className="gradient-text block">
-                                <PremiumTextReveal text="Build Something" delay={0.2} className="justify-center" />
+                {/* Aesthetic Background Elements */}
+                <div className="absolute inset-0 z-0">
+                    <div className="horizon-grid" />
+                    <div className="grid-background opacity-20" />
+
+                    {/* Ambient Glow */}
+                    <motion.div
+                        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+                        style={{
+                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                            filter: 'blur(60px)'
+                        }}
+                        animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.3, 0.6, 0.3]
+                        }}
+                        transition={{ duration: 8, repeat: Infinity }}
+                    />
+                    <motion.div
+                        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
+                        style={{
+                            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                            filter: 'blur(60px)'
+                        }}
+                        animate={{
+                            scale: [1.2, 1, 1.2],
+                            opacity: [0.3, 0.5, 0.3]
+                        }}
+                        transition={{ duration: 10, repeat: Infinity }}
+                    />
+                </div>
+
+                <motion.div
+                    style={{ y, opacity }}
+                    className="relative z-10 w-full flex flex-col items-center justify-center px-6"
+                >
+                    <div className="max-w-5xl w-full mx-auto flex flex-col items-center text-center">
+                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full">
+                            <PremiumTextReveal text="Ready to" className="w-full justify-center" />
+                            <span className="gradient-text block w-full text-center">
+                                <PremiumTextReveal text="Build Something" delay={0.2} className="w-full justify-center" />
                             </span>
-                            <PremiumTextReveal text="Extraordinary?" delay={0.4} className="justify-center" />
+                            <PremiumTextReveal text="Extraordinary?" delay={0.4} className="w-full justify-center" />
                         </h1>
 
-                        <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed text-center">
+                        <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed text-center mt-6">
                             Have a vision? We have the expertise. Let's discuss how Henu OS can accelerate your growth.
                         </p>
-                    </motion.div>
-                </div>
+                    </div>
+                </motion.div>
+
+                {/* Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 hidden md:block"
+                >
+                    <div className="flex flex-col items-center gap-2">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Scroll to Explore</span>
+                        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/50 to-transparent relative overflow-hidden">
+                            <motion.div
+                                animate={{ y: ["-100%", "100%"] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 bg-white w-full h-1/2"
+                            />
+                        </div>
+                    </div>
+                </motion.div>
             </section>
 
             {/* Contact Grid Section */}
-            <section className="py-12 bg-transparent">
-                <div className="container">
+            <section className="py-12 bg-transparent px-6">
+                <div className="container mx-auto">
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {contactInfo.map((info, index) => (
                             <motion.div
@@ -256,7 +307,7 @@ export default function ContactPage() {
             </section>
 
             {/* Form Section */}
-            <section className="section relative" id="inquiry">
+            <section className="section relative px-6" id="inquiry">
                 <div className="container max-w-5xl mx-auto relative z-10">
                     <div className="flex flex-col gap-12">
 

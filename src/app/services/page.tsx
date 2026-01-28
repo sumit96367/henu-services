@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import {
     Globe,
@@ -20,6 +21,8 @@ import {
 } from 'lucide-react';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { GlowingCard } from '@/components/ui/glowing-card';
+import GalleryHoverGrid from '@/components/ui/gallery-hover-grid';
+import { Spotlight } from '@/components/ui/spotlight';
 
 const services = [
     {
@@ -90,40 +93,75 @@ const services = [
     }
 ];
 
-
-
-
-
-
 export default function ServicesPage() {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end start"],
+    });
+
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
     return (
         <main className="w-full flex flex-col items-center">
-            {/* Optimized spacer for navbar clearance */}
-            <div className="h-24 md:h-32 w-full" />
-
             {/* Hero Section */}
             <section
-                className="relative overflow-hidden w-full flex min-h-screen items-center justify-center pt-24 pb-32"
+                ref={containerRef}
+                className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
                 style={{ background: '#050505' }}
             >
-                <div
-                    className="grid-background absolute inset-0 opacity-20"
-                    style={{
-                        maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 100%)'
-                    }}
+                <Spotlight
+                    className="-top-40 left-0 md:left-60 md:-top-20"
+                    fill="white"
                 />
-                <div className="container relative z-10 mx-auto flex flex-col items-center">
+
+                {/* Aesthetic Background Elements */}
+                <div className="absolute inset-0 z-0">
+                    <div className="horizon-grid" />
+                    <div className="grid-background opacity-20" />
+
+                    {/* Ambient Glow */}
+                    <motion.div
+                        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
+                        style={{
+                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                            filter: 'blur(60px)'
+                        }}
+                        animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.3, 0.6, 0.3]
+                        }}
+                        transition={{ duration: 8, repeat: Infinity }}
+                    />
+                    <motion.div
+                        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
+                        style={{
+                            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                            filter: 'blur(60px)'
+                        }}
+                        animate={{
+                            scale: [1.2, 1, 1.2],
+                            opacity: [0.3, 0.5, 0.3]
+                        }}
+                        transition={{ duration: 10, repeat: Infinity }}
+                    />
+                </div>
+
+                <motion.div
+                    style={{ y, opacity }}
+                    className="relative z-10 w-full flex flex-col items-center justify-center px-6"
+                >
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="flex flex-col items-center justify-center text-center w-full max-w-7xl mx-auto"
                     >
-                        <div className="flex justify-center mb-12 w-full">
-                            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white leading-tight tracking-tighter flex flex-wrap justify-center items-center gap-x-4 w-full">
-                                <span className="flex items-center"><PremiumTextReveal text="Our" /></span>
-                                <span className="gradient-text flex items-center">
-                                    <PremiumTextReveal text="Services" delay={0.2} />
+                        <div className="flex flex-col items-center justify-center mb-12 w-full">
+                            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white leading-tight tracking-tighter text-center flex flex-col items-center w-full">
+                                <PremiumTextReveal text="Our" className="justify-center" />
+                                <span className="gradient-text block">
+                                    <PremiumTextReveal text="Services" delay={0.2} className="justify-center" />
                                 </span>
                             </h1>
                         </div>
@@ -132,82 +170,78 @@ export default function ServicesPage() {
                             Everything you need to build, grow, and protect your business foundation.
                         </p>
                     </motion.div>
-                </div>
-            </section>
+                </motion.div>
 
-            {/* Services Grid */}
-            {services.map((category, categoryIndex) => (
-                <section
-                    key={category.category}
-                    className="section"
-                    style={{ background: categoryIndex % 2 === 0 ? '#0A0A0A' : '#050505' }}
+                {/* Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 hidden md:block"
                 >
-                    <div className="container">
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-
-                            className="mb-12"
-                        >
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                                {category.category}
-                            </h2>
-                            <div
-                                className="w-20 h-1 rounded"
-                                style={{
-                                    background: category.color === 'cyan'
-                                        ? 'linear-gradient(90deg, #00D4FF, #007AFF)'
-                                        : 'linear-gradient(90deg, #FF9500, #FFB340)'
-                                }}
+                    <div className="flex flex-col items-center gap-2">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Scroll to Explore</span>
+                        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/50 to-transparent relative overflow-hidden">
+                            <motion.div
+                                animate={{ y: ["-100%", "100%"] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                className="absolute inset-0 bg-white w-full h-1/2"
                             />
-                        </motion.div>
-
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {category.items.map((service, index) => (
-                                <motion.div
-                                    key={service.title}
-                                    initial={{ opacity: 0, y: 40 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-
-                                    transition={{ delay: index * 0.1 }}
-                                >
-                                    <Link href={service.href}>
-                                        <GlowingCard innerClassName="p-14 md:p-20 group cursor-pointer h-full flex flex-col items-start text-left">
-                                            <div className="flex items-center gap-6 mb-6">
-                                                <div
-                                                    className="w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-lg shrink-0"
-                                                    style={{
-                                                        background: category.color === 'cyan'
-                                                            ? 'rgba(0, 212, 255, 0.12)'
-                                                            : 'rgba(255, 149, 0, 0.12)',
-                                                        border: `1px solid ${category.color === 'cyan' ? 'rgba(0, 212, 255, 0.2)' : 'rgba(255, 149, 0, 0.2)'}`
-                                                    }}
-                                                >
-                                                    <service.icon
-                                                        size={24}
-                                                        className={category.color === 'cyan' ? 'text-cyan-400' : 'text-amber-400'}
-                                                    />
-                                                </div>
-                                                <h3 className="text-3xl font-bold text-white group-hover:text-cyan-400 transition-colors leading-tight">
-                                                    {service.title}
-                                                </h3>
-                                            </div>
-                                            <p className="text-gray-400 text-lg leading-relaxed mb-auto">
-                                                {service.description}
-                                            </p>
-                                            <div className={`mt-10 flex items-center gap-2 font-bold text-sm uppercase tracking-widest ${category.color === 'cyan' ? 'text-cyan-400' : 'text-amber-400'
-                                                } group-hover:gap-4 transition-all opacity-80 group-hover:opacity-100`}>
-                                                Explore Service
-                                                <ArrowRight size={18} />
-                                            </div>
-                                        </GlowingCard>
-                                    </Link>
-                                </motion.div>
-                            ))}
                         </div>
                     </div>
-                </section>
-            ))}
+                </motion.div>
+            </section>
+
+            {/* Services Showcase Grid */}
+            <div className="w-full pb-32">
+                <GalleryHoverGrid
+                    heading="Our Expertise"
+                    items={[
+                        {
+                            id: 'web-dev',
+                            title: 'Website Development',
+                            summary: 'Innovative web solutions powered by HENU OS AI for smarter performance and extreme scalability.',
+                            url: '/services/web-development',
+                            image: 'https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?q=80&w=2070&auto=format&fit=crop'
+                        },
+                        {
+                            id: 'ai-auto',
+                            title: 'AI Automations',
+                            summary: 'Automate your workflows with custom HENU AI agents to save time, cut costs, and boost efficiency.',
+                            url: '/services/ai-automations',
+                            image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop'
+                        },
+                        {
+                            id: 'marketing',
+                            title: 'Digital Marketing & Ads',
+                            summary: 'Data-backed campaigns across all channels to skyrocket your visibility and sales.',
+                            url: '/services/digital-marketing',
+                            image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop'
+                        },
+                        {
+                            id: 'graphic',
+                            title: 'Graphic Design',
+                            summary: 'Stunning visuals and brand identities infused with modern AI tools for precision and impact.',
+                            url: '/services/graphic-design',
+                            image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=1964&auto=format&fit=crop'
+                        },
+                        {
+                            id: 'legal',
+                            title: 'Legal Services',
+                            summary: 'Full-spectrum legal support and business compliance for startups and SMEs—India-focused expertise.',
+                            url: '/services/legal-services',
+                            image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop'
+                        },
+                        {
+                            id: 'funding',
+                            title: 'Funding Solutions',
+                            summary: 'Strategic funding paths from government grants to investor pitches to fuel your growth.',
+                            url: '/services/funding-solutions',
+                            image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2072&auto=format&fit=crop'
+                        }
+                    ]}
+                />
+            </div>
 
             {/* CTA Section */}
             <section className="section relative overflow-hidden" style={{ background: '#050505' }}>

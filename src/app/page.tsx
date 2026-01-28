@@ -90,7 +90,7 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content - Split Layout */}
-      <div className="container relative z-10">
+      <div className="container relative z-10 mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center min-h-[calc(100vh-100px)] gap-8 lg:gap-0">
           {/* Left Content */}
           <motion.div
