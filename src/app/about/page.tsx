@@ -230,52 +230,6 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* What We Don't Do */}
-            <section className="section bg-transparent">
-                <div className="container">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="max-w-3xl mb-16"
-                    >
-                        <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">
-                            What We <span className="text-red-400">Don't Do</span>
-                        </h2>
-                        <p className="text-xl text-gray-400">
-                            Honesty over opportunity. These are the lines we draw.
-                        </p>
-                    </motion.div>
-
-                    <div className="grid md:grid-cols-3 gap-6">
-                        {[
-                            { title: "Chase Trends", desc: "We don't rebuild your app because a new framework launched. Technology serves the product—not the other way around." },
-                            { title: "Ship Rushed Work", desc: "Fast doesn't mean reckless. We optimize for speed without compromising quality, testing, or long-term maintainability." },
-                            { title: "Build Bloated Interfaces", desc: "If a feature doesn't serve a clear purpose, it doesn't ship. Clean systems beat feature lists." },
-                            { title: "Sell You What You Don't Need", desc: "We'll tell you when a simple solution beats a complex one. Honest guidance over maximizing billable hours." },
-                            { title: "Work Without Strategy", desc: "Code without context is just noise. Every build aligns with your business goals and product vision." },
-                            { title: "Ignore Performance", desc: "Slow products lose users. We don't ship anything that compromises speed, responsiveness, or reliability." }
-                        ].map((item, index) => (
-                            <motion.div
-                                key={item.title}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                            >
-                                <div className="p-8 border border-white/10 rounded-xl hover:border-red-400/30 transition-colors bg-white/[0.02]">
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <XCircle className="w-5 h-5 text-red-400 shrink-0" />
-                                        <h3 className="text-xl font-bold text-white">{item.title}</h3>
-                                    </div>
-                                    <p className="text-gray-400 leading-relaxed">{item.desc}</p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* Who We're Best For */}
             <section className="section bg-transparent">
                 <div className="container">
@@ -283,57 +237,113 @@ export default function AboutPage() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="max-w-4xl mx-auto"
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="max-w-3xl mb-20"
                     >
-                        <h2 className="text-5xl md:text-6xl font-bold text-white mb-8 text-center">
+                        <h2 className="text-5xl md:text-6xl font-bold text-white mb-4">
                             Who We're <span className="text-cyan-400">Best For</span>
                         </h2>
-                        <p className="text-xl text-gray-400 mb-12 text-center">
-                            We work best with founders and teams who think long-term.
-                        </p>
+                    </motion.div>
 
-                        <GlowingCard innerClassName="p-12 md:p-16">
-                            <div className="space-y-8">
-                                <div className="flex gap-6">
-                                    <Users className="w-8 h-8 text-cyan-400 shrink-0 mt-1" />
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-white mb-3">Technical Founders</h3>
-                                        <p className="text-gray-400 text-lg leading-relaxed">
-                                            You understand the importance of engineering decisions and want a partner who
-                                            speaks your language—not someone who just executes tickets.
-                                        </p>
-                                    </div>
-                                </div>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                        className="text-xl text-gray-400 max-w-3xl mb-16"
+                    >
+                        Not everyone. We work best with people who value craft, think long-term, and understand
+                        that great products require both vision and discipline.
+                    </motion.p>
 
-                                <div className="flex gap-6">
-                                    <Lightbulb className="w-8 h-8 text-cyan-400 shrink-0 mt-1" />
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-white mb-3">Product-Driven Teams</h3>
-                                        <p className="text-gray-400 text-lg leading-relaxed">
-                                            You care about craft, performance, and building something that lasts. You're not
-                                            looking for shortcuts—you're building a competitive advantage.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-6">
-                                    <TrendingUp className="w-8 h-8 text-cyan-400 shrink-0 mt-1" />
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-white mb-3">Growth-Stage Companies</h3>
-                                        <p className="text-gray-400 text-lg leading-relaxed">
-                                            You've proven the concept. Now you need systems that scale, technical debt resolved,
-                                            and infrastructure that supports rapid expansion.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="pt-6 border-t border-white/10">
-                                    <p className="text-gray-500 italic">
-                                        <strong className="text-white">Not a fit?</strong> If you're chasing trends, need work yesterday
-                                        without planning, or prioritize optics over outcomes—we're probably not the right partner.
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.4 }}
+                    >
+                        <GlowingCard innerClassName="p-12 space-y-10">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.5, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                                whileHover={{ scale: 1.02, x: 8 }}
+                                className="flex gap-6 group cursor-default"
+                            >
+                                <Users className="w-8 h-8 text-cyan-400 shrink-0 mt-1 transition-all duration-300 group-hover:scale-110 group-hover:text-cyan-300" />
+                                <div>
+                                    <motion.h3
+                                        className="text-2xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-cyan-400"
+                                        whileHover={{ x: 4 }}
+                                    >
+                                        Technical Founders
+                                    </motion.h3>
+                                    <p className="text-gray-400 text-lg leading-relaxed transition-colors duration-300 group-hover:text-gray-300">
+                                        You understand the importance of engineering decisions and want a partner who
+                                        speaks your language—not someone who just executes tickets.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.5, delay: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
+                                whileHover={{ scale: 1.02, x: 8 }}
+                                className="flex gap-6 group cursor-default"
+                            >
+                                <Lightbulb className="w-8 h-8 text-cyan-400 shrink-0 mt-1 transition-all duration-300 group-hover:scale-110 group-hover:text-cyan-300" />
+                                <div>
+                                    <motion.h3
+                                        className="text-2xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-cyan-400"
+                                        whileHover={{ x: 4 }}
+                                    >
+                                        Product-Driven Teams
+                                    </motion.h3>
+                                    <p className="text-gray-400 text-lg leading-relaxed transition-colors duration-300 group-hover:text-gray-300">
+                                        You care about craft, performance, and building something that lasts. You're not
+                                        looking for shortcuts—you're building a competitive advantage.
+                                    </p>
+                                </div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.5, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                                whileHover={{ scale: 1.02, x: 8 }}
+                                className="flex gap-6 group cursor-default"
+                            >
+                                <TrendingUp className="w-8 h-8 text-cyan-400 shrink-0 mt-1 transition-all duration-300 group-hover:scale-110 group-hover:text-cyan-300" />
+                                <div>
+                                    <motion.h3
+                                        className="text-2xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-cyan-400"
+                                        whileHover={{ x: 4 }}
+                                    >
+                                        Growth-Stage Companies
+                                    </motion.h3>
+                                    <p className="text-gray-400 text-lg leading-relaxed transition-colors duration-300 group-hover:text-gray-300">
+                                        You've proven the concept. Now you need systems that scale, technical debt resolved,
+                                        and infrastructure that supports rapid expansion.
+                                    </p>
+                                </div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.95 }}
+                                className="pt-6 border-t border-white/10"
+                            >
+                                <p className="text-gray-500 italic">
+                                    <strong className="text-white">Not a fit?</strong> If you're chasing trends, need work yesterday
+                                    without planning, or prioritize optics over outcomes—we're probably not the right partner.
+                                </p>
+                            </motion.div>
                         </GlowingCard>
                     </motion.div>
                 </div>
@@ -342,64 +352,99 @@ export default function AboutPage() {
             {/* Our Role in Your Journey */}
             <section className="section bg-transparent">
                 <div className="container">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="max-w-4xl mx-auto text-center"
-                    >
-                        <h2 className="text-5xl md:text-6xl font-bold text-white mb-8">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                            className="text-5xl md:text-6xl font-bold text-white mb-8"
+                        >
                             From <span className="text-cyan-400">Idea</span> to <span className="text-amber-400">System</span>
-                        </h2>
-                        <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+                        </motion.h2>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                            className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed"
+                        >
                             We don't just build products—we help you establish technical foundations that evolve with your vision.
                             Whether you're at concept stage or scaling fast, we meet you where you are and architect what comes next.
-                        </p>
+                        </motion.p>
 
                         <div className="grid md:grid-cols-3 gap-8 text-left mt-16">
                             <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1 }}
+                                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                                whileHover={{ scale: 1.05, y: -8 }}
+                                className="group cursor-default"
                             >
-                                <div className="text-4xl font-bold text-cyan-400/40 mb-4">01</div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Discovery & Strategy</h3>
-                                <p className="text-gray-400 leading-relaxed">
+                                <motion.div
+                                    className="text-4xl font-bold text-cyan-400/40 mb-4 transition-all duration-300 group-hover:text-cyan-400/70"
+                                    whileHover={{ scale: 1.15, x: 4 }}
+                                >
+                                    01
+                                </motion.div>
+                                <h3 className="text-2xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-cyan-400">
+                                    Discovery & Strategy
+                                </h3>
+                                <p className="text-gray-400 leading-relaxed transition-colors duration-300 group-hover:text-gray-300">
                                     We map your vision to technical reality. Requirements definition, architecture planning,
                                     and strategic roadmapping.
                                 </p>
                             </motion.div>
 
                             <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.2 }}
+                                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                                whileHover={{ scale: 1.05, y: -8 }}
+                                className="group cursor-default"
                             >
-                                <div className="text-4xl font-bold text-cyan-400/40 mb-4">02</div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Build & Iterate</h3>
-                                <p className="text-gray-400 leading-relaxed">
+                                <motion.div
+                                    className="text-4xl font-bold text-cyan-400/40 mb-4 transition-all duration-300 group-hover:text-cyan-400/70"
+                                    whileHover={{ scale: 1.15, x: 4 }}
+                                >
+                                    02
+                                </motion.div>
+                                <h3 className="text-2xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-cyan-400">
+                                    Build & Iterate
+                                </h3>
+                                <p className="text-gray-400 leading-relaxed transition-colors duration-300 group-hover:text-gray-300">
                                     Disciplined execution with continuous feedback. We ship incrementally, test rigorously,
                                     and refine based on real usage.
                                 </p>
                             </motion.div>
 
                             <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.3 }}
+                                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+                                whileHover={{ scale: 1.05, y: -8 }}
+                                className="group cursor-default"
                             >
-                                <div className="text-4xl font-bold text-cyan-400/40 mb-4">03</div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Scale & Evolve</h3>
-                                <p className="text-gray-400 leading-relaxed">
+                                <motion.div
+                                    className="text-4xl font-bold text-cyan-400/40 mb-4 transition-all duration-300 group-hover:text-cyan-400/70"
+                                    whileHover={{ scale: 1.15, x: 4 }}
+                                >
+                                    03
+                                </motion.div>
+                                <h3 className="text-2xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-cyan-400">
+                                    Scale & Evolve
+                                </h3>
+                                <p className="text-gray-400 leading-relaxed transition-colors duration-300 group-hover:text-gray-300">
                                     Performance optimization, infrastructure scaling, and continuous system improvement as
                                     your product grows.
                                 </p>
                             </motion.div>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </section>
 
