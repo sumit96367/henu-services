@@ -22,6 +22,7 @@ import {
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { AnimatedLetterText } from '@/components/ui/potfolio-text';
+import { MouseTrailComponent } from '@/components/ui/mouse-trail';
 
 // Project Categories
 const categories = [
@@ -237,6 +238,9 @@ export default function PortfolioPage() {
 
     return (
         <main className="relative z-10">
+            {/* Mouse Trail Effect */}
+            <MouseTrailComponent />
+
 
             {/* Hero Section */}
             <section
@@ -294,7 +298,7 @@ export default function PortfolioPage() {
             </section>
 
             {/* Projects Grid */}
-            <section className="section bg-transparent pt-0">
+            <section className="section bg-transparent pt-0 relative z-20">
                 <div className="container">
                     <AnimatePresence mode="wait">
                         <motion.div
@@ -320,7 +324,7 @@ export default function PortfolioPage() {
             </section>
 
             {/* Stats Section */}
-            <section className="py-20" style={{ background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 149, 0, 0.05) 100%)' }}>
+            <section className="py-20 relative z-20" style={{ background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 149, 0, 0.05) 100%)' }}>
                 <div className="container">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                         <motion.div
@@ -363,7 +367,7 @@ export default function PortfolioPage() {
             </section>
 
             {/* CTA Section */}
-            <section className="section relative overflow-hidden" style={{ background: '#050505' }}>
+            <section className="section relative overflow-hidden z-20" style={{ background: '#050505' }}>
                 <div
                     className="absolute inset-0"
                     style={{

@@ -29,31 +29,16 @@ export default function AboutPage() {
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     return (
-        <main className="relative">
-            {/* ASMR Particle Background */}
-            <ASMRStaticBackground />
-
+        <main className="relative bg-black">
             {/* Hero Section - Bold, No Buttons */}
             <section
                 ref={heroRef}
                 className="relative min-h-[85vh] pb-24 flex items-center overflow-hidden"
                 style={{ paddingTop: '140px' }}
             >
+                {/* ASMR Particle Background - Hero Only */}
                 <div className="absolute inset-0">
-                    <div className="grid-background" />
-                    <motion.div
-                        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] rounded-full"
-                        style={{
-                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%)',
-                            filter: 'blur(120px)'
-                        }}
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.3, 0.5, 0.3],
-                            x: [-10, 10, -10]
-                        }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                    />
+                    <ASMRStaticBackground />
                 </div>
 
                 <motion.div style={{ y, opacity }} className="container relative z-10">
