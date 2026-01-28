@@ -1,11 +1,12 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, ReactNode } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useRef, ReactNode, useState } from 'react';
 import {
     ArrowRight,
     Check,
     ChevronRight,
+    ChevronDown,
 } from 'lucide-react';
 import Link from 'next/link';
 import { GlowingCard } from '@/components/ui/glowing-card';
@@ -51,6 +52,9 @@ interface ServicePageProps {
     // CTA
     ctaTitle: string;
     ctaDescription: string;
+
+    // FAQs
+    faqs: ServiceFAQ[];
 }
 
 
@@ -347,72 +351,87 @@ export const ServiceCTA = ({ title, description, accentColor }: { title: string;
     );
 };
 
-// ============================================
-// WHY CHOOSE US SECTION
-// ============================================
-const whyChooseUs = [
-    "10+ years of industry experience",
-    "100% transparency in development process",
-    "Dedicated project manager for each project",
-    "24/7 support and maintenance",
-    "Agile development methodology",
-    "Competitive pricing"
-];
 
-export const WhyChooseUs = () => {
+// ============================================
+// SERVICE FAQ SECTION
+// ============================================
+export interface ServiceFAQ {
+    question: string;
+    answer: string;
+}
+
+export const ServiceFAQSection = ({ faqs }: { faqs: ServiceFAQ[] }) => {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+
     return (
-        <section className="section bg-transparent">
-            <div className="container">
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
-                    <motion.div
-                        initial={{ opacity: 0, x: -40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            Why Choose <span className="gradient-text">Henu OS</span>?
-                        </h2>
-                        <p className="text-gray-400 text-lg mb-8">
-                            We combine technical excellence with business acumen to deliver solutions that drive real results.
-                        </p>
-                        <ul className="space-y-4">
-                            {whyChooseUs.map((item, index) => (
-                                <motion.li
-                                    key={item}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
-                                    className="flex items-center gap-4"
-                                >
-                                    <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                                        <Check className="w-4 h-4 text-green-400" />
-                                    </div>
-                                    <span className="text-gray-300">{item}</span>
-                                </motion.li>
-                            ))}
-                        </ul>
-                    </motion.div>
+        <section className="section bg-transparent py-32">
+            <div className="container max-w-5xl">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-24"
+                >
+                    <h2 className="text-5xl md:text-6xl font-light text-white tracking-wide">
+                        Got <span className="text-cyan-400 font-normal">Questions</span><span className="text-amber-400">?</span>
+                    </h2>
+                </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0, x: 40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="relative space-y-6"
-                    >
-                        <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
-                            <div className="text-4xl font-bold gradient-text mb-4">200+</div>
-                            <div className="text-xl text-white font-bold mb-3 tracking-tight">Projects Delivered</div>
-                            <div className="text-gray-400 text-base leading-relaxed font-medium">Across web, mobile, AI, and enterprise solutions</div>
-                        </GlowingCard>
-                        <div className="ml-8 md:ml-12">
-                            <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
-                                <div className="text-4xl font-bold gradient-text mb-4">98%</div>
-                                <div className="text-xl text-white font-bold mb-3 tracking-tight">Client Satisfaction</div>
-                                <div className="text-gray-400 text-base leading-relaxed font-medium">Based on post-project surveys</div>
-                            </GlowingCard>
-                        </div>
-                    </motion.div>
+                <div className="space-y-0">
+                    {faqs.map((faq, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.08 }}
+                            className="border-b border-white/[0.06] last:border-0"
+                        >
+                            <button
+                                className="w-full py-10 flex items-center justify-between text-left group transition-all duration-300"
+                                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                            >
+                                <span className={cn(
+                                    "text-xl md:text-2xl font-normal tracking-wide pr-8 transition-colors duration-300",
+                                    openIndex === index
+                                        ? "text-cyan-400"
+                                        : index === 0
+                                            ? "text-cyan-400 group-hover:text-cyan-300"
+                                            : "text-white/90 group-hover:text-white"
+                                )}>
+                                    {faq.question}
+                                </span>
+                                <motion.div
+                                    animate={{
+                                        rotate: openIndex === index ? 180 : 0,
+                                        scale: openIndex === index ? 1.1 : 1
+                                    }}
+                                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                                    className="flex-shrink-0"
+                                >
+                                    <ChevronDown className={cn(
+                                        "w-6 h-6 transition-colors duration-300",
+                                        openIndex === index ? "text-cyan-400" : "text-gray-500 group-hover:text-cyan-400"
+                                    )} />
+                                </motion.div>
+                            </button>
+                            <AnimatePresence>
+                                {openIndex === index && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="pb-12 pt-2 text-gray-400 text-lg leading-relaxed max-w-4xl">
+                                            {faq.answer}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </section>
@@ -421,7 +440,6 @@ export const WhyChooseUs = () => {
 
 
 
-// ============================================
 // FULL SERVICE PAGE COMPONENT
 // ============================================
 export const ServicePage = ({
@@ -434,6 +452,7 @@ export const ServicePage = ({
     technologies,
     ctaTitle,
     ctaDescription,
+    faqs,
 }: ServicePageProps) => {
     return (
         <main>
@@ -448,7 +467,7 @@ export const ServicePage = ({
             {technologies && technologies.length > 0 && (
                 <ServiceTechnologies technologies={technologies} />
             )}
-            <WhyChooseUs />
+            <ServiceFAQSection faqs={faqs} />
             <ServiceCTA
                 title={ctaTitle}
                 description={ctaDescription}

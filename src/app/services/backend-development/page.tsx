@@ -94,6 +94,25 @@ const technologies = [
     { name: 'Serverless (AWS Lambda)' }
 ];
 
+const faqs = [
+    {
+        question: "What backend frameworks do you specialize in?",
+        answer: "We specialize in Node.js with Express/Nest.js, Python with Django/FastAPI, and modern serverless architectures. Our team selects the best framework based on your specific requirements for performance, scalability, and maintainability."
+    },
+    {
+        question: "Do you provide API documentation?",
+        answer: "Yes! We provide comprehensive API documentation using tools like Swagger/OpenAPI, Postman collections, and detailed README files. This ensures your team or third-party developers can easily integrate with your backend."
+    },
+    {
+        question: "How do you ensure backend scalability?",
+        answer: "We use microservices architecture, containerization with Docker/Kubernetes, cloud-native solutions, database sharding, caching layers (Redis), and load balancing to ensure your backend can scale seamlessly with growing user demands."
+    },
+    {
+        question: "Can you migrate my existing backend infrastructure?",
+        answer: "Absolutely! We specialize in backend migrations from legacy systems to modern cloud-native architectures. We ensure zero downtime, data integrity, and a smooth transition with comprehensive testing at every stage."
+    }
+];
+
 export default function BackendDevelopmentPage() {
     return (
         <ServicePage
@@ -106,6 +125,7 @@ export default function BackendDevelopmentPage() {
             technologies={technologies}
             ctaTitle="Scale Your Backend"
             ctaDescription="Unlock speed and reliability. Contact us now!"
+            faqs={faqs}
         />
     );
 }

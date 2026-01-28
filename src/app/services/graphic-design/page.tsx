@@ -92,6 +92,25 @@ const technologies = [
     { name: 'After Effects' }
 ];
 
+const faqs = [
+    {
+        question: "What design deliverables do you provide?",
+        answer: "We deliver high-resolution files in multiple formats (PNG, JPG, SVG, PDF, AI, PSD) suitable for both print and digital use. You'll also receive brand guidelines documenting colors, fonts, and usage rules for consistent brand application."
+    },
+    {
+        question: "Do you offer unlimited revisions?",
+        answer: "We include up to 3 revision rounds in our standard packages to ensure you're completely satisfied. Each round allows comprehensive feedback. Additional revisions can be accommodated at a nominal fee if needed."
+    },
+    {
+        question: "How long does a typical design project take?",
+        answer: "Logo design takes 1-2 weeks, full brand identity 3-4 weeks, and marketing collateral 5-7 business days. Motion graphics projects vary from 2-4 weeks depending on complexity. Rush delivery options are available."
+    },
+    {
+        question: "Can you create designs for both print and digital?",
+        answer: "Absolutely! We create designs optimized for both mediums - print-ready files with proper bleed, CMYK colors, and high resolution, plus web-optimized files with RGB colors and appropriate file sizes for fast loading."
+    }
+];
+
 export default function GraphicDesignPage() {
     return (
         <ServicePage
@@ -104,6 +123,7 @@ export default function GraphicDesignPage() {
             technologies={technologies}
             ctaTitle="Standout Designs"
             ctaDescription="Make your brand unforgettable. Let's design!"
+            faqs={faqs}
         />
     );
 }

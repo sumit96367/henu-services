@@ -91,45 +91,38 @@ const technologies = [
     { name: 'HENU Compliance Bots' }
 ];
 
-import {
-    ServiceHero,
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    WhyChooseUs,
-    ServiceCTA
-} from '@/components/service-page';
-import { ComplianceSection } from '@/components/legal-compliance-section';
-import { ArrowRight } from 'lucide-react';
+const faqs = [
+    {
+        question: "Can you handle company registration and trademarking?",
+        answer: "Yes! We offer comprehensive services including Private Limited, LLP, One Person Company registration, trademark filing, copyright registration, and patent applications. Our team handles all paperwork, government filings, and follow-ups for a hassle-free experience."
+    },
+    {
+        question: "What legal documents do you prepare?",
+        answer: "We draft NDAs, employment contracts, vendor agreements, partnership deeds, shareholder agreements, service agreements, MoUs, and more. All documents are tailored to your specific business needs and comply with Indian legal standards."
+    },
+    {
+        question: "Do you provide ongoing compliance support?",
+        answer: "Absolutely! We offer monthly/quarterly compliance packages covering GST filing, TDS returns, annual ROC filings, board resolutions, and regulatory updates. Our HENU Compliance Bots send automated reminders for all deadlines."
+    },
+    {
+        question: "How long does company registration typically take?",
+        answer: "Private Limited company registration takes 12-15 working days, LLP registration 10-12 days, and trademark registration 18-24 months (with initial filing in 2-3 days). We expedite wherever possible and keep you updated at every stage."
+    }
+];
 
 export default function LegalServicesPage() {
-    const heroAccentColor = 'amber';
-
     return (
-        <main>
-            <ServiceHero
-                title="Comprehensive"
-                highlight="Legal Services"
-                description="Navigate business compliance effortlessly. From registration to annual filings—India-focused expertise."
-                accentColor={heroAccentColor}
-            />
-
-            <ServiceFeatures features={features} accentColor={heroAccentColor} />
-
-            {/* Compliance Section moved specifically below "What We Offer" */}
-            <ComplianceSection />
-
-            <ServiceProcess process={process} accentColor={heroAccentColor} />
-
-            <ServiceTechnologies technologies={technologies} />
-
-            <WhyChooseUs />
-
-            <ServiceCTA
-                title="Legal Peace of Mind"
-                description="Secure your business foundation today!"
-                accentColor={heroAccentColor}
-            />
-        </main>
+        <ServicePage
+            heroTitle="Comprehensive"
+            heroHighlight="Legal Services"
+            heroDescription="Navigate business compliance effortlessly. From registration to annual filings—India-focused expertise."
+            heroAccentColor="amber"
+            features={features}
+            process={process}
+            technologies={technologies}
+            ctaTitle="Legal Peace of Mind"
+            ctaDescription="Secure your business foundation today!"
+            faqs={faqs}
+        />
     );
 }

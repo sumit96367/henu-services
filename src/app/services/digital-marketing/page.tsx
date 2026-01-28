@@ -95,83 +95,39 @@ const technologies = [
     { name: 'YouTube Analytics' }
 ];
 
-
-import HeroSection from '@/components/ui/hero-section-9';
-import { ServiceFeatures, ServiceProcess, ServiceTechnologies, WhyChooseUs, ServiceCTA } from '@/components/service-page';
+const faqs = [
+    {
+        question: "Which platforms do you run ad campaigns on?",
+        answer: "We specialize in Google Ads (Search, Display, YouTube), Meta platforms (Facebook, Instagram), LinkedIn Ads, Twitter Ads, and emerging platforms like TikTok. We recommend channels based on your target audience and business goals."
+    },
+    {
+        question: "What is your approach to ROI tracking?",
+        answer: "We implement comprehensive tracking using Google Analytics 4, UTM parameters, conversion pixels, and custom dashboards. You'll receive detailed weekly/monthly reports showing ROAS, cost per acquisition, customer lifetime value, and campaign performance metrics."
+    },
+    {
+        question: "Do you handle content creation for social media?",
+        answer: "Yes! Our team creates engaging posts, graphics, video content, and copy tailored to each platform. We also use HENU Content AI to scale content production while maintaining your brand voice and quality standards."
+    },
+    {
+        question: "How do you measure campaign success?",
+        answer: "Success metrics vary by goal - ROAS for e-commerce, CPL for lead generation, engagement rates for brand awareness. We set clear KPIs upfront and optimize campaigns weekly based on data to maximize your marketing investment."
+    }
+];
 
 export default function DigitalMarketingPage() {
-    const heroData = {
-        title: (
-            <>
-                Results-Driven <br /> <span className="gradient-text">Digital Marketing & Ads</span>
-            </>
-        ),
-        subtitle: 'Skyrocket your visibility and sales with data-backed campaigns across all channels.',
-        actions: [
-            {
-                text: 'Launch Your Campaign',
-                onClick: () => window.location.href = '/contact',
-                className: 'btn-primary',
-                icon: <ArrowRight size={18} />
-            },
-            {
-                text: 'Our Process',
-                onClick: () => {
-                    const element = document.getElementById('process');
-                    element?.scrollIntoView({ behavior: 'smooth' });
-                },
-                className: 'btn-secondary'
-            },
-        ],
-
-        stats: [
-            {
-                value: '500%',
-                label: 'Average ROAS',
-                icon: <Target className="h-5 w-5 text-cyan-400" />,
-            },
-            {
-                value: '₹1Cr+',
-                label: 'Monthly Managed Spend',
-                icon: <Zap className="h-5 w-5 text-amber-400" />,
-            },
-            {
-                value: '98%',
-                label: 'Client Retention',
-                icon: <Users className="h-5 w-5 text-cyan-400" />,
-            },
-        ],
-        images: [
-            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop',
-        ],
-    };
-
     return (
-        <main className="relative">
-            {/* Hard spacer to force content down */}
-            <div className="h-[80px] md:h-[120px]" />
-            <div className="relative z-10">
-                <HeroSection
-                    className="border-b border-white/5"
-                    title={heroData.title}
-                    subtitle={heroData.subtitle}
-                    actions={heroData.actions}
-                    stats={heroData.stats}
-                    images={heroData.images}
-                />
-            </div>
-            <ServiceFeatures features={features} accentColor="cyan" />
-            <ServiceProcess process={process} accentColor="cyan" />
-            <ServiceTechnologies technologies={technologies} />
-            <WhyChooseUs />
-            <ServiceCTA
-                title="Dominate Digital"
-                description="Grow your audience today. Let's campaign!"
-                accentColor="cyan"
-            />
-        </main>
+        <ServicePage
+            heroTitle="Results-Driven"
+            heroHighlight="Digital Marketing & Ads"
+            heroDescription="Skyrocket your visibility and sales with data-backed campaigns across all channels."
+            heroAccentColor="cyan"
+            features={features}
+            process={process}
+            technologies={technologies}
+            ctaTitle="Dominate Digital"
+            ctaDescription="Grow your audience today. Let's campaign!"
+            faqs={faqs}
+        />
     );
 }
 
