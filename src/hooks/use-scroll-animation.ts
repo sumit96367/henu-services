@@ -24,7 +24,7 @@ interface UseScrollAnimationOptions {
 
 interface ScrollAnimationResult {
     /** Reference to attach to the element */
-    ref: React.RefObject<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement | null>;
 
     /** Scroll progress from 0 to 1 */
     progress: MotionValue<number>;
