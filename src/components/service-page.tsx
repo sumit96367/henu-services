@@ -6,11 +6,16 @@ import {
     ArrowRight,
     Check,
     ChevronRight,
-    ChevronDown,
 } from 'lucide-react';
 import Link from 'next/link';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { cn } from '@/lib/utils';
+import { FAQ } from '@/components/ui/faq-section';
+
+export interface ServiceFAQ {
+    question: string;
+    answer: string;
+}
 
 // ============================================
 // TYPES
@@ -88,7 +93,7 @@ export const ServiceHero = ({
     return (
         <section
             ref={containerRef}
-            className="relative min-h-screen pt-24 md:pt-48 pb-32 flex flex-col md:flex-row items-start md:items-center overflow-hidden bg-transparent"
+            className="relative min-h-screen pt-24 md:pt-48 pb-32 flex flex-col md:flex-row items-center overflow-hidden bg-transparent"
         >
             {/* Background Effects */}
             <div className="absolute inset-0">
@@ -352,90 +357,8 @@ export const ServiceCTA = ({ title, description, accentColor }: { title: string;
 };
 
 
-// ============================================
-// SERVICE FAQ SECTION
-// ============================================
-export interface ServiceFAQ {
-    question: string;
-    answer: string;
-}
-
 export const ServiceFAQSection = ({ faqs }: { faqs: ServiceFAQ[] }) => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-    return (
-        <section className="section bg-transparent py-32">
-            <div className="container max-w-5xl">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-24"
-                >
-                    <h2 className="text-5xl md:text-6xl font-light text-white tracking-wide">
-                        Got <span className="text-cyan-400 font-normal">Questions</span><span className="text-amber-400">?</span>
-                    </h2>
-                </motion.div>
-
-                <div className="space-y-0">
-                    {faqs.map((faq, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.08 }}
-                            className="border-b border-white/[0.06] last:border-0"
-                        >
-                            <button
-                                className="w-full py-10 flex items-center justify-between text-left group transition-all duration-300"
-                                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                            >
-                                <span className={cn(
-                                    "text-xl md:text-2xl font-normal tracking-wide pr-8 transition-colors duration-300",
-                                    openIndex === index
-                                        ? "text-cyan-400"
-                                        : index === 0
-                                            ? "text-cyan-400 group-hover:text-cyan-300"
-                                            : "text-white/90 group-hover:text-white"
-                                )}>
-                                    {faq.question}
-                                </span>
-                                <motion.div
-                                    animate={{
-                                        rotate: openIndex === index ? 180 : 0,
-                                        scale: openIndex === index ? 1.1 : 1
-                                    }}
-                                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                                    className="flex-shrink-0"
-                                >
-                                    <ChevronDown className={cn(
-                                        "w-6 h-6 transition-colors duration-300",
-                                        openIndex === index ? "text-cyan-400" : "text-gray-500 group-hover:text-cyan-400"
-                                    )} />
-                                </motion.div>
-                            </button>
-                            <AnimatePresence>
-                                {openIndex === index && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                                        className="overflow-hidden"
-                                    >
-                                        <div className="pb-12 pt-2 text-gray-400 text-lg leading-relaxed max-w-4xl">
-                                            {faq.answer}
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+    return <FAQ faqs={faqs} />;
 };
 
 

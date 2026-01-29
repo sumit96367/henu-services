@@ -113,20 +113,39 @@ const faqs = [
     }
 ];
 
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
+import BackendHeroSection from '@/components/ui/backend-hero-section';
+
 export default function BackendDevelopmentPage() {
     return (
-        <ServicePage
-            heroTitle="Scalable"
-            heroHighlight="Backend Development"
-            heroDescription="Power your app with rock-solid servers, AI intelligence, and seamless scalability. Built on HENU OS for ultimate reliability."
-            heroAccentColor="cyan"
-            features={features}
-            process={process}
-            technologies={technologies}
-            ctaTitle="Scale Your Backend"
-            ctaDescription="Unlock speed and reliability. Contact us now!"
-            faqs={faqs}
-        />
+        <main className="relative">
+            <BackendHeroSection
+                title="Scalable"
+                highlight="Backend Development"
+                description="Power your app with rock-solid servers, AI intelligence, and seamless scalability. Built on HENU OS for ultimate reliability."
+            />
+
+            <ServiceFeatures features={features} accentColor="cyan" />
+            <ServiceProcess process={process} accentColor="cyan" />
+
+            {technologies && technologies.length > 0 && (
+                <ServiceTechnologies technologies={technologies} />
+            )}
+
+            <ServiceFAQSection faqs={faqs} />
+
+            <ServiceCTA
+                title="Scale Your Backend"
+                description="Unlock speed and reliability. Contact us now!"
+                accentColor="cyan"
+            />
+        </main>
     );
 }
 

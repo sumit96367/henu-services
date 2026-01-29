@@ -111,11 +111,17 @@ const faqs = [
         answer: "Yes! We can seamlessly integrate your mobile app with existing web platforms, databases, and APIs. We'll ensure user data, authentication, and features sync perfectly across all platforms."
     }
 ];
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
 import { FloatingIconsHero } from '@/components/ui/floating-icons-hero-section';
 import {
     FaAndroid,
     FaApple,
-    FaGithub,
     FaGooglePlay,
     FaAppStoreIos
 } from 'react-icons/fa';
@@ -154,19 +160,40 @@ const mobileIcons = [
 ];
 
 export default function MobileAppDevelopmentPage() {
+    const heroTitle = "Innovative";
+    const heroHighlight = "Mobile App Development";
+    const heroDescription = "Transform your ideas into powerful mobile experiences. We build apps that users love and businesses rely on.";
+    const heroAccentColor = "cyan";
+
     return (
-        <ServicePage
-            heroTitle="Innovative"
-            heroHighlight="Mobile App Development"
-            heroDescription="Transform your ideas into powerful mobile experiences. We build apps that users love and businesses rely on."
-            heroAccentColor="cyan"
-            features={features}
-            process={process}
-            technologies={technologies}
-            ctaTitle="Launch Your App"
-            ctaDescription="Ready to take your business mobile? Let's build something amazing together."
-            faqs={faqs}
-        />
+        <main>
+            {/* Navbar Spacer for all views */}
+            <div className="h-[100px] md:h-[140px] w-full" />
+
+            <FloatingIconsHero
+                title={heroTitle}
+                highlight={heroHighlight}
+                subtitle={heroDescription}
+                ctaText="Start Your Project"
+                ctaHref="/contact"
+                icons={mobileIcons}
+            />
+
+            <ServiceFeatures features={features} accentColor={heroAccentColor} />
+            <ServiceProcess process={process} accentColor={heroAccentColor} />
+
+            {technologies && technologies.length > 0 && (
+                <ServiceTechnologies technologies={technologies} />
+            )}
+
+            <ServiceFAQSection faqs={faqs} />
+
+            <ServiceCTA
+                title="Launch Your App"
+                description="Ready to take your business mobile? Let's build something amazing together."
+                accentColor={heroAccentColor}
+            />
+        </main>
     );
 }
 
