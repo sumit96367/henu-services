@@ -136,70 +136,45 @@ export default function AboutPage() {
                         </p>
                     </motion.div>
 
-                    <div className="grid md:grid-cols-2 gap-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                        >
-                            <GlowingCard className="h-full" innerClassName="p-12">
-                                <Cpu className="w-10 h-10 text-cyan-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Systems Over Features</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    We don't add features—we architect systems designed to evolve. Every decision considers
-                                    scalability, maintainability, and how components interact over time.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                        >
-                            <GlowingCard className="h-full" innerClassName="p-12">
-                                <Focus className="w-10 h-10 text-cyan-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Clarity First</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    Simple is hard. We prioritize clear interfaces, straightforward logic, and intentional
-                                    design over clever abstraction. If it's confusing, it's wrong.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.3 }}
-                        >
-                            <GlowingCard className="h-full" innerClassName="p-12">
-                                <Layers className="w-10 h-10 text-cyan-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Engineering-Led Decisions</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    Technical constraints inform our choices—not the other way around. We build what works,
-                                    even if it means saying no to trends or surface-level requests.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.4 }}
-                        >
-                            <GlowingCard className="h-full" innerClassName="p-12">
-                                <TrendingUp className="w-10 h-10 text-cyan-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Long-Term Product Vision</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    We're not building for next quarter. Every system is designed for years of iteration,
-                                    growth, and continuous refinement alongside your ambitions.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
+                    <div className="grid md:grid-cols-2 gap-10">
+                        {[
+                            {
+                                icon: <Cpu className="w-12 h-12 text-cyan-400 mb-8" />,
+                                title: "Systems Over Features",
+                                desc: "We don't add features—we architect systems designed to evolve. Every decision considers scalability, maintainability, and how components interact over time."
+                            },
+                            {
+                                icon: <Focus className="w-12 h-12 text-cyan-400 mb-8" />,
+                                title: "Clarity First",
+                                desc: "Simple is hard. We prioritize clear interfaces, straightforward logic, and intentional design over clever abstraction. If it's confusing, it's wrong."
+                            },
+                            {
+                                icon: <Layers className="w-12 h-12 text-cyan-400 mb-8" />,
+                                title: "Engineering-Led Decisions",
+                                desc: "Technical constraints inform our choices—not the other way around. We build what works, even if it means saying no to trends or surface-level requests."
+                            },
+                            {
+                                icon: <TrendingUp className="w-12 h-12 text-cyan-400 mb-8" />,
+                                title: "Long-Term Product Vision",
+                                desc: "We're not building for next quarter. Every system is designed for years of iteration, growth, and continuous refinement alongside your ambitions."
+                            }
+                        ].map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                            >
+                                <GlowingCard className="h-full" innerClassName="p-10 md:p-14">
+                                    {item.icon}
+                                    <h3 className="text-3xl font-bold text-white mb-6 leading-tight">{item.title}</h3>
+                                    <p className="text-gray-400 text-lg leading-relaxed font-normal">
+                                        {item.desc}
+                                    </p>
+                                </GlowingCard>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -221,66 +196,45 @@ export default function AboutPage() {
                         </p>
                     </motion.div>
 
-                    <div className="grid md:grid-cols-2 gap-8">
-                        <motion.div
-                            initial={{ opacity: 0, x: -40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <GlowingCard innerClassName="p-12">
-                                <Wrench className="w-10 h-10 text-amber-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Product Engineering</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    Full-stack systems designed to scale with your ambition. Web, mobile, backend—architected
-                                    as unified platforms, not disconnected projects.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <GlowingCard innerClassName="p-12">
-                                <Target className="w-10 h-10 text-amber-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Experience Architecture</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    Interfaces built for precision and purpose. Every interaction is deliberate, every
-                                    layout optimized for clarity and conversion.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: -40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <GlowingCard innerClassName="p-12">
-                                <Sparkles className="w-10 h-10 text-amber-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Applied AI & Automation</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    Intelligent systems that remove friction. From autonomous agents to workflow automation,
-                                    we build AI that works—not experiments.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <GlowingCard innerClassName="p-12">
-                                <Gauge className="w-10 h-10 text-amber-400 mb-6" />
-                                <h3 className="text-3xl font-bold text-white mb-4">Performance Optimization</h3>
-                                <p className="text-gray-400 text-lg leading-relaxed">
-                                    Speed matters. Load times, response rates, database efficiency—we obsess over milliseconds
-                                    because your users notice.
-                                </p>
-                            </GlowingCard>
-                        </motion.div>
+                    <div className="grid md:grid-cols-2 gap-10">
+                        {[
+                            {
+                                icon: <Wrench className="w-12 h-12 text-amber-400 mb-8" />,
+                                title: "Product Engineering",
+                                desc: "Full-stack systems designed to scale with your ambition. Web, mobile, backend—architected as unified platforms, not disconnected projects."
+                            },
+                            {
+                                icon: <Target className="w-12 h-12 text-amber-400 mb-8" />,
+                                title: "Experience Architecture",
+                                desc: "Interfaces built for precision and purpose. Every interaction is deliberate, every layout optimized for clarity and conversion."
+                            },
+                            {
+                                icon: <Sparkles className="w-12 h-12 text-amber-400 mb-8" />,
+                                title: "Applied AI & Automation",
+                                desc: "Intelligent systems that remove friction. From autonomous agents to workflow automation, we build AI that works—not experiments."
+                            },
+                            {
+                                icon: <Gauge className="w-12 h-12 text-amber-400 mb-8" />,
+                                title: "Performance Optimization",
+                                desc: "Speed matters. Load times, response rates, database efficiency—we obsess over milliseconds because your users notice."
+                            }
+                        ].map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                            >
+                                <GlowingCard className="h-full" innerClassName="p-10 md:p-14">
+                                    {item.icon}
+                                    <h3 className="text-3xl font-bold text-white mb-6 leading-tight">{item.title}</h3>
+                                    <p className="text-gray-400 text-lg leading-relaxed font-normal">
+                                        {item.desc}
+                                    </p>
+                                </GlowingCard>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -318,7 +272,7 @@ export default function AboutPage() {
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
                             >
-                                <div className="p-8 border border-white/10 rounded-xl hover:border-red-400/30 transition-colors bg-white/[0.02]">
+                                <div className="p-10 border border-white/10 rounded-xl hover:border-red-400/30 transition-colors bg-white/[0.02]">
                                     <div className="flex items-center gap-3 mb-3">
                                         <XCircle className="w-5 h-5 text-red-400 shrink-0" />
                                         <h3 className="text-xl font-bold text-white">{item.title}</h3>
@@ -347,7 +301,7 @@ export default function AboutPage() {
                             We work best with founders and teams who think long-term.
                         </p>
 
-                        <GlowingCard innerClassName="p-12 md:p-16">
+                        <GlowingCard innerClassName="p-14 md:p-20">
                             <div className="space-y-8">
                                 <div className="flex gap-6">
                                     <Users className="w-8 h-8 text-cyan-400 shrink-0 mt-1" />
