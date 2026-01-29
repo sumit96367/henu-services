@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import {
     ExternalLink,
@@ -22,6 +22,7 @@ import {
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { ProjectCard } from '@/components/ui/project-card';
 import { AnimatedLetterText } from '@/components/ui/potfolio-text';
+import { MouseTrailComponent } from '@/components/ui/mouse-trail';
 import Casestudies from '@/components/ui/case-studies';
 import GalleryHoverCarousel from '@/components/ui/gallery-hover-carousel';
 import { Spotlight } from '@/components/ui/spotlight';
@@ -168,6 +169,7 @@ const projects = [
 
 
 export default function PortfolioPage() {
+    const [activeCategory, setActiveCategory] = useState('all');
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -177,8 +179,16 @@ export default function PortfolioPage() {
     const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+    const filteredProjects = useMemo(() => {
+        if (activeCategory === 'all') return projects;
+        return projects.filter(project => project.category === activeCategory);
+    }, [activeCategory]);
+
     return (
         <main className="relative z-10">
+            {/* Mouse Trail Effect */}
+            <MouseTrailComponent />
+
 
             {/* Hero Section */}
             <section
@@ -241,29 +251,101 @@ export default function PortfolioPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.8 }}
-                            className="text-xl md:text-2xl text-gray-400 max-w-2xl leading-relaxed text-center"
+                            className="text-xl md:text-2xl text-gray-400 max-w-2xl mb-16 leading-relaxed text-center"
                         >
-                            Architecting the future through technical excellence and strategic innovation.
+                            A curated selection of our most impactful work across technology, marketing, and strategy.
                         </motion.p>
+
+                        {/* Category Filters */}
+                        <div className="flex flex-wrap justify-center gap-4">
+                            {categories.map((category) => (
+                                <button
+                                    key={category.id}
+                                    onClick={() => setActiveCategory(category.id)}
+                                    className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center gap-2 border whitespace-nowrap ${activeCategory === category.id
+                                        ? 'bg-white/10 text-white border-cyan-500/50 shadow-[0_0_30px_rgba(0,212,255,0.1)] scale-105'
+                                        : 'bg-white/[0.02] text-gray-500 hover:text-gray-300 border-white/5 hover:border-white/20 hover:bg-white/5'
+                                        }`}
+                                >
+                                    <category.icon size={14} className={activeCategory === category.id ? 'text-cyan-400' : 'text-gray-600'} />
+                                    {category.name}
+                                </button>
+                            ))}
+                        </div>
                     </motion.div>
                 </div>
+            </section>
 
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5 }}
-                    className="absolute bottom-12 left-1/2 -translate-x-1/2"
-                >
-                    <motion.div
-                        animate={{ y: [0, 10, 0] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="flex flex-col items-center gap-2 text-gray-500"
-                    >
-                        <span className="text-sm uppercase tracking-widest font-bold">Scroll</span>
-                        <ArrowRight className="rotate-90" size={16} />
-                    </motion.div>
-                </motion.div>
+            {/* Projects Grid */}
+            <section className="section bg-transparent pt-0 relative z-20">
+                <div className="container">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeCategory}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                        >
+                            {filteredProjects.map((project, index) => (
+                                <ProjectCard
+                                    key={project.id}
+                                    imgSrc={project.image}
+                                    title={project.title}
+                                    description={project.description}
+                                    link={`/portfolio/${project.id}`}
+                                    linkText="View Details"
+                                />
+                            ))}
+                        </motion.div>
+                    </AnimatePresence>
+
+                    {filteredProjects.length === 0 && (
+                        <div className="text-center py-40">
+                            <p className="text-2xl text-gray-500 font-medium">No projects found in this category.</p>
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            {/* Stats Section */}
+            <section className="py-20 relative z-20" style={{ background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 149, 0, 0.05) 100%)' }}>
+                <div className="container">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                        >
+                            <div className="text-5xl font-bold gradient-text mb-2">200+</div>
+                            <div className="text-gray-400">Projects Completed</div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.1 }}
+                        >
+                            <div className="text-5xl font-bold gradient-text mb-2">150+</div>
+                            <div className="text-gray-400">Happy Clients</div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            <div className="text-5xl font-bold gradient-text mb-2">98%</div>
+                            <div className="text-gray-400">Success Rate</div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.3 }}
+                        >
+                            <div className="text-5xl font-bold gradient-text mb-2">5.0</div>
+                            <div className="text-gray-400">Client Rating</div>
+                        </motion.div>
+                    </div>
+                </div>
             </section>
 
             {/* Featured Projects Carousel */}
@@ -271,7 +353,6 @@ export default function PortfolioPage() {
 
             {/* Case Studies Section */}
             <Casestudies />
-
 
             {/* CTA Section */}
             <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-6" style={{ background: '#050505' }}>
