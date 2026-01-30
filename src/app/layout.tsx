@@ -4,6 +4,8 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { AuthProvider } from "@/context/AuthContext";
+import { AuthModal, AuthPopup } from "@/components/auth";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -66,13 +68,17 @@ export default function RootLayout({
         className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}
         style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
       >
-        <SmoothScrollProvider>
-          <Navbar />
-          <div className="relative z-10">
-            {children}
-          </div>
-          <Footer />
-        </SmoothScrollProvider>
+        <AuthProvider>
+          <SmoothScrollProvider>
+            <Navbar />
+            <div className="relative z-10">
+              {children}
+            </div>
+            <Footer />
+          </SmoothScrollProvider>
+          <AuthModal />
+          <AuthPopup />
+        </AuthProvider>
       </body>
     </html>
   );
