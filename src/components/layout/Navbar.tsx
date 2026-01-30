@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Menu, MenuItem, ProductItem, HoveredLink, ServiceSubItem } from '@/components/ui/navbar-menu';
 import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
+import { UserMenu } from '@/components/auth';
 import {
     Menu as MenuIcon,
     X,
@@ -190,13 +191,21 @@ export const Navbar = () => {
                         </Menu>
                     </div>
 
-                    {/* Mobile Toggle - Right */}
-                    <button
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="p-2 text-white md:hidden hover:bg-white/10 rounded-lg transition-colors z-20"
-                    >
-                        {isMobileMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
-                    </button>
+                    {/* User Menu & Mobile Toggle - Right */}
+                    <div className="flex items-center gap-3">
+                        {/* User Menu (Desktop) */}
+                        <div className="hidden md:block">
+                            <UserMenu />
+                        </div>
+
+                        {/* Mobile Toggle */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="p-2 text-white md:hidden hover:bg-white/10 rounded-lg transition-colors z-20"
+                        >
+                            {isMobileMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
+                        </button>
+                    </div>
                 </div>
             </motion.nav>
 
@@ -286,6 +295,11 @@ export const Navbar = () => {
                                     {link.name}
                                 </Link>
                             ))}
+
+                            {/* Mobile Auth Buttons */}
+                            <div className="pt-6 mt-4 border-t border-white/10">
+                                <UserMenu />
+                            </div>
                         </nav>
                     </motion.div>
                 )}
