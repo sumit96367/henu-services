@@ -1,16 +1,18 @@
 'use client';
 
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useRef, ReactNode, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, ReactNode } from 'react';
 import {
     ArrowRight,
-    Check,
     ChevronRight,
 } from 'lucide-react';
 import Link from 'next/link';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { cn } from '@/lib/utils';
 import { FAQ } from '@/components/ui/faq-section';
+import { FeaturesSectionWithHoverEffects } from '@/components/ui/feature-section-with-hover-effects';
+import { StickyScroll } from '@/components/ui/sticky-scroll-reveal';
+import { BrandScroller, BrandScrollerReverse } from '@/components/ui/brand-scroller';
 
 export interface ServiceFAQ {
     question: string;
@@ -179,7 +181,7 @@ export const ServiceHero = ({
 // ============================================
 // FEATURES SECTION (with hover effects)
 // ============================================
-import { FeaturesSectionWithHoverEffects } from '@/components/ui/feature-section-with-hover-effects';
+
 
 export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFeature[]; accentColor: 'cyan' | 'amber' }) => {
     return (
@@ -214,7 +216,7 @@ export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFe
 // ============================================
 // PROCESS SECTION (Sticky Scroll)
 // ============================================
-import { StickyScroll } from '@/components/ui/sticky-scroll-reveal';
+
 
 export const ServiceProcess = ({ process, accentColor }: { process: ServiceProcess[]; accentColor: 'cyan' | 'amber' }) => {
     // Transform process steps into StickyScroll content format
@@ -282,7 +284,7 @@ export const ServiceProcess = ({ process, accentColor }: { process: ServiceProce
 // ============================================
 // TECHNOLOGIES SECTION
 // ============================================
-import { BrandScroller, BrandScrollerReverse } from '@/components/ui/brand-scroller';
+
 
 export const ServiceTechnologies = ({ technologies }: { technologies: ServiceTech[] }) => {
     // Extract just the names from the technologies array

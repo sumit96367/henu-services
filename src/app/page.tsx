@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import {
   Globe,
@@ -12,8 +11,6 @@ import {
   Megaphone,
   Bot,
   Scale,
-  FileText,
-  BadgeCheck,
   Coins,
   ChevronDown,
   ArrowRight,
@@ -21,7 +18,6 @@ import {
   ExternalLink,
   Zap,
   ShieldCheck,
-  Users,
   Cpu,
   Check,
 } from 'lucide-react';
@@ -30,8 +26,9 @@ import { SplineScene } from '@/components/ui/splite';
 import { Spotlight } from '@/components/ui/spotlight';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
-import { cn } from "@/lib/utils";
-import { ReviewSection } from '@/components/review-section';
+import { ReviewSection, Review } from '@/components/review-section';
+import { TestimonialsColumn, Testimonial } from '@/components/ui/testimonials-columns';
+
 
 // ============================================
 // HERO SECTION WITH 3D SPLINE
@@ -792,7 +789,6 @@ const WhyChooseUsSection = () => {
 // ============================================
 // TESTIMONIALS SECTION
 // ============================================
-import { TestimonialsColumn } from '@/components/ui/testimonials-columns';
 
 const initialTestimonials = [
   {
@@ -851,7 +847,7 @@ const initialTestimonials = [
   }
 ];
 
-const TestimonialsSection = ({ testimonials }: { testimonials: any[] }) => {
+const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) => {
   const firstColumn = testimonials.slice(0, Math.ceil(testimonials.length / 3));
   const secondColumn = testimonials.slice(Math.ceil(testimonials.length / 3), Math.ceil(testimonials.length * 2 / 3));
   const thirdColumn = testimonials.slice(Math.ceil(testimonials.length * 2 / 3));
@@ -892,11 +888,11 @@ const TestimonialsSection = ({ testimonials }: { testimonials: any[] }) => {
 export default function HomePage() {
   const [allTestimonials, setAllTestimonials] = useState(initialTestimonials);
 
-  const handleReviewSubmitted = (review: any) => {
+  const handleReviewSubmitted = (review: Review) => {
     setAllTestimonials((prev) => [
       {
         text: review.text,
-        image: review.image,
+        image: review.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(review.name)}&background=random&color=fff`,
         name: review.name,
         role: review.role,
       },

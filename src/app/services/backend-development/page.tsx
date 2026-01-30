@@ -1,6 +1,5 @@
 'use client';
 
-import { ServicePage } from '@/components/service-page';
 import {
     Server,
     Database,
@@ -9,6 +8,14 @@ import {
     Cloud,
     GitBranch
 } from 'lucide-react';
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
+import BackendHeroSection from '@/components/ui/backend-hero-section';
 
 const features = [
     {
@@ -113,14 +120,7 @@ const faqs = [
     }
 ];
 
-import {
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    ServiceCTA,
-    ServiceFAQSection
-} from '@/components/service-page';
-import BackendHeroSection from '@/components/ui/backend-hero-section';
+
 
 export default function BackendDevelopmentPage() {
     return (

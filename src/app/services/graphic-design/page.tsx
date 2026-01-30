@@ -1,6 +1,5 @@
 'use client';
 
-import { ServicePage } from '@/components/service-page';
 import {
     Palette,
     Layers,
@@ -9,6 +8,14 @@ import {
     Type,
     Video
 } from 'lucide-react';
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
+import GraphicDesignHero from '@/components/ui/graphic-design-hero';
 
 const features = [
     {
@@ -111,14 +118,7 @@ const faqs = [
     }
 ];
 
-import {
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    ServiceCTA,
-    ServiceFAQSection
-} from '@/components/service-page';
-import GraphicDesignHero from '@/components/ui/graphic-design-hero';
+
 
 export default function GraphicDesignPage() {
     return (

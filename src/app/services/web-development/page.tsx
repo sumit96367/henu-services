@@ -1,6 +1,5 @@
 'use client';
 
-import { ServicePage } from '@/components/service-page';
 import {
     Globe,
     Zap,
@@ -9,6 +8,14 @@ import {
     Search,
     Palette
 } from 'lucide-react';
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
+import StackFeatureSection from '@/components/ui/stack-feature-section';
 
 const features = [
     {
@@ -113,14 +120,7 @@ const faqs = [
     }
 ];
 
-import {
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    ServiceCTA,
-    ServiceFAQSection
-} from '@/components/service-page';
-import StackFeatureSection from '@/components/ui/stack-feature-section';
+
 
 export default function WebDevelopmentPage() {
     const heroTitle = "Innovative";

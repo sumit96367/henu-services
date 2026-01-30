@@ -1,6 +1,5 @@
 'use client';
 
-import { ServicePage } from '@/components/service-page';
 import {
     Smartphone,
     Zap,
@@ -9,6 +8,34 @@ import {
     ShoppingCart,
     MapPin
 } from 'lucide-react';
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
+import { FloatingIconsHero } from '@/components/ui/floating-icons-hero-section';
+import {
+    FaAndroid,
+    FaApple,
+    FaGooglePlay,
+    FaAppStoreIos
+} from 'react-icons/fa';
+import {
+    SiFlutter,
+    SiReact,
+    SiFirebase,
+    SiKotlin,
+    SiSwift,
+    SiDart,
+    SiExpo,
+    SiRedux,
+    SiTypescript,
+    SiJavascript,
+    SiVite,
+    SiFramer
+} from 'react-icons/si';
 
 const features = [
     {
@@ -111,34 +138,7 @@ const faqs = [
         answer: "Yes! We can seamlessly integrate your mobile app with existing web platforms, databases, and APIs. We'll ensure user data, authentication, and features sync perfectly across all platforms."
     }
 ];
-import {
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    ServiceCTA,
-    ServiceFAQSection
-} from '@/components/service-page';
-import { FloatingIconsHero } from '@/components/ui/floating-icons-hero-section';
-import {
-    FaAndroid,
-    FaApple,
-    FaGooglePlay,
-    FaAppStoreIos
-} from 'react-icons/fa';
-import {
-    SiFlutter,
-    SiReact,
-    SiFirebase,
-    SiKotlin,
-    SiSwift,
-    SiDart,
-    SiExpo,
-    SiRedux,
-    SiTypescript,
-    SiJavascript,
-    SiVite,
-    SiFramer
-} from 'react-icons/si';
+
 
 const mobileIcons = [
     { id: 1, icon: FaAndroid, color: "#3DDC84", className: 'top-[10%] left-[10%]' },

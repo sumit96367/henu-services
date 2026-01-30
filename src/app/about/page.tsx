@@ -18,10 +18,7 @@ import {
     Users,
     Lightbulb,
     ArrowRight,
-    Target,
-    ShieldCheck,
     X,
-    Check,
     ExternalLink
 } from 'lucide-react';
 

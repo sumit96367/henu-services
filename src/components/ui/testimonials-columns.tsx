@@ -3,9 +3,9 @@ import React from "react";
 import { motion } from "motion/react";
 import { GlowingCard } from "./glowing-card";
 
-interface Testimonial {
+export interface Testimonial {
     text: string;
-    image: string;
+    image?: string;
     name: string;
     role: string;
 }
@@ -44,7 +44,7 @@ export const TestimonialsColumn = (props: {
                                         <img
                                             width={44}
                                             height={44}
-                                            src={image}
+                                            src={image || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff`}
                                             alt={name}
                                             className="h-11 w-11 rounded-full object-cover border-2 border-cyan-500/30"
                                         />

@@ -6,7 +6,7 @@ import { Star, Send, User, MessageSquare, CheckCircle2, Users, Briefcase } from 
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 
-interface Review {
+export interface Review {
     id: string;
     name: string;
     role: string;

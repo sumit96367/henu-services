@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GlowingEffect } from "./glowing-effect";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const transition = {
@@ -135,7 +135,7 @@ export const ServiceSubItem = ({
 }: {
     title: string;
     href: string;
-    icon: any;
+    icon: LucideIcon;
 }) => {
     return (
         <Link

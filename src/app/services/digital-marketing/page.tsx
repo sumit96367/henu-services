@@ -1,6 +1,5 @@
 'use client';
 
-import { ServicePage } from '@/components/service-page';
 import {
     Megaphone,
     TrendingUp,
@@ -12,6 +11,14 @@ import {
     Search,
     ArrowRight
 } from 'lucide-react';
+import {
+    ServiceFeatures,
+    ServiceProcess,
+    ServiceTechnologies,
+    ServiceCTA,
+    ServiceFAQSection
+} from '@/components/service-page';
+import HeroSection from '@/components/ui/hero-section-9';
 
 const features = [
     {
@@ -114,14 +121,7 @@ const faqs = [
     }
 ];
 
-import {
-    ServiceFeatures,
-    ServiceProcess,
-    ServiceTechnologies,
-    ServiceCTA,
-    ServiceFAQSection
-} from '@/components/service-page';
-import HeroSection from '@/components/ui/hero-section-9';
+
 
 export default function DigitalMarketingPage() {
     const heroData = {

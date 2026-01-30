@@ -45,7 +45,7 @@ export function ParticleBackground({
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const particlesRef = useRef<Particle[]>([])
     const mouseRef = useRef({ x: 0, y: 0 })
-    const animationRef = useRef<number>()
+    const animationRef = useRef<number | null>(null)
 
     const initParticles = useCallback((width: number, height: number) => {
         particlesRef.current = Array.from({ length: particleCount }, () => ({
