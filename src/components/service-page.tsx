@@ -46,6 +46,7 @@ interface ServicePageProps {
     heroHighlight: string;
     heroDescription: string;
     heroAccentColor: 'cyan' | 'amber';
+    heroAnimation?: ReactNode;
 
     // Features
     features: ServiceFeature[];
@@ -66,19 +67,20 @@ interface ServicePageProps {
 
 
 
-// ============================================
 // SERVICE HERO
 // ============================================
 export const ServiceHero = ({
     title,
     highlight,
     description,
-    accentColor
+    accentColor,
+    animation
 }: {
     title: string;
     highlight: string;
     description: string;
     accentColor: 'cyan' | 'amber';
+    animation?: ReactNode;
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -119,6 +121,13 @@ export const ServiceHero = ({
                     transition={{ duration: 8, repeat: Infinity }}
                 />
             </div>
+
+            {/* Animation on the right side (absolute positioned, no box) */}
+            {animation && (
+                <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center pointer-events-none z-0">
+                    {animation}
+                </div>
+            )}
 
             <motion.div
                 style={{ y, opacity }}
@@ -372,6 +381,7 @@ export const ServicePage = ({
     heroHighlight,
     heroDescription,
     heroAccentColor,
+    heroAnimation,
     features,
     process,
     technologies,
@@ -386,6 +396,7 @@ export const ServicePage = ({
                 highlight={heroHighlight}
                 description={heroDescription}
                 accentColor={heroAccentColor}
+                animation={heroAnimation}
             />
             <ServiceFeatures features={features} accentColor={heroAccentColor} />
             <ServiceProcess process={process} accentColor={heroAccentColor} />

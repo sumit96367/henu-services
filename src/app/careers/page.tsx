@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import EnrollmentModal from '@/components/EnrollmentModal';
+import StarfieldCanvas from '@/components/ui/hyperdrive-hero';
 
 const internships = [
     {
@@ -99,6 +100,9 @@ export default function CareersPage() {
         <main className="relative z-10" style={{ paddingTop: '120px' }}>
             {/* Hero Section - Full Screen */}
             <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+                {/* Starfield Background */}
+                <StarfieldCanvas />
+
                 {/* Background Grid & Effects (similar to portfolio) */}
                 <div className="absolute inset-0">
                     <div className="horizon-grid" />

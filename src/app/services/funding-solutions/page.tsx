@@ -1,6 +1,7 @@
 'use client';
 
 import { ServicePage } from '@/components/service-page';
+import FundingHeroAnimation from '@/components/animations/FundingHeroAnimation';
 import {
     Coins,
     TrendingUp,
@@ -116,6 +117,7 @@ export default function FundingSolutionsPage() {
             heroHighlight="Funding Solutions"
             heroDescription="Fuel your growth with tailored funding strategies. Government grants to investor pitches."
             heroAccentColor="amber"
+            heroAnimation={<FundingHeroAnimation />}
             features={features}
             process={process}
             technologies={technologies}
