@@ -164,7 +164,7 @@ const HowWeThinkSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '80px', paddingBottom: '80px' }} className="bg-transparent px-6">
+        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
             <div className="container mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -193,7 +193,7 @@ const HowWeThinkSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                         >
-                            <GlowingCard className="h-full" innerClassName="p-8 md:p-10">
+                            <GlowingCard className="h-full" innerClassName="p-10 md:p-14">
                                 <div className="flex items-start gap-5">
                                     <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20">
                                         {item.icon}
@@ -242,7 +242,7 @@ const BuiltToDoSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '80px', paddingBottom: '80px' }} className="bg-transparent relative overflow-hidden px-6">
+        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent relative overflow-hidden px-6">
             <div className="container mx-auto space-y-12">
                 {/* Header Row */}
                 <motion.div
@@ -553,7 +553,7 @@ const WhatWeDontDoSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '80px', paddingBottom: '80px' }} className="bg-transparent px-6">
+        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
             <div className="container mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -621,7 +621,7 @@ const WhoWereBestForSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '80px', paddingBottom: '80px' }} className="bg-transparent px-6">
+        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
             <div className="container mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -700,7 +700,7 @@ const JourneySection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '80px', paddingBottom: '80px' }} className="bg-transparent px-6">
+        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
             <div className="container mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -742,7 +742,7 @@ const JourneySection = () => {
 // ============================================
 const CTASection = () => {
     return (
-        <section style={{ marginTop: '120px', paddingTop: '80px', paddingBottom: '120px' }} className="bg-transparent px-6 relative overflow-hidden">
+        <section style={{ marginTop: '120px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6 relative overflow-hidden">
             {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
 
@@ -780,7 +780,7 @@ const CTASection = () => {
 // ============================================
 export default function AboutPage() {
     return (
-        <main className="relative">
+        <main className="relative" style={{ paddingTop: '120px' }}>
             <AboutHero />
             <HowWeThinkSection />
             <BuiltToDoSection />

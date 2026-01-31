@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 
 export function FeaturesBuiltToDo() {
     return (
-        <section style={{ marginTop: '200px', paddingTop: '80px', paddingBottom: '80px' }} className="bg-transparent">
+        <section style={{ marginTop: '200px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent">
             <div className="mx-auto max-w-5xl space-y-12 px-6">
                 {/* Header Row - Title left, Description right */}
                 <motion.div

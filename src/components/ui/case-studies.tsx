@@ -59,7 +59,7 @@ function MetricStat({
     const { prefix, end, suffix, decimals } = parseMetricValue(value);
 
     return (
-        <div className="flex flex-col gap-2 text-left p-6">
+        <div className="flex flex-col gap-2 text-left p-10 md:p-14">
             <p
                 className="text-2xl font-bold text-white sm:text-5xl tracking-tighter"
                 aria-label={`${label} ${value}`}
@@ -142,7 +142,7 @@ export default function Casestudies() {
 
     return (
         <section
-            className="py-16 md:py-24 bg-transparent"
+            className="py-24 md:py-[120px] bg-transparent"
             aria-labelledby="case-studies-heading"
         >
             <div className="container mx-auto px-6">
@@ -153,7 +153,7 @@ export default function Casestudies() {
                         return (
                             <div
                                 key={study.id}
-                                className="grid gap-16 lg:grid-cols-3 xl:gap-24 items-center border-b border-white/5 pb-20"
+                                className="grid gap-16 lg:grid-cols-3 xl:gap-24 items-center border-b border-white/5 pb-[120px]"
                             >
                                 {/* Left: Image + Quote */}
                                 <div

@@ -33,7 +33,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
                 </div>
 
                 {/* Card Content Section */}
-                <div className="flex flex-1 flex-col p-6">
+                <div className="flex flex-1 flex-col p-10 md:p-14">
                     <h3 className="text-xl font-semibold transition-colors duration-300 group-hover:text-primary">
                         {title}
                     </h3>

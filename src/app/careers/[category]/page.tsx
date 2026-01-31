@@ -195,11 +195,11 @@ export default function InternshipSourcesPage() {
     };
 
     return (
-        <main className="min-h-screen bg-black text-white">
-            {/* Hero Section - Full Height */}
-            <section className="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12">
-                {/* Back Button - Absolute positioned at top */}
-                <div className="absolute top-8 left-1/2 -translate-x-1/2">
+        <main className="min-h-screen bg-black text-white" style={{ paddingTop: '120px' }}>
+            {/* Hero Section */}
+            <section className="relative pt-32 pb-16 px-6 md:px-12" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
+                <div className="max-w-4xl mx-auto">
+                    {/* Back Button */}
                     <button
                         onClick={() => router.push('/careers')}
                         className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/50 rounded-xl text-white hover:text-cyan-400 transition-all duration-300 group"
@@ -235,10 +235,9 @@ export default function InternshipSourcesPage() {
                 </div>
             </section>
 
-            {/* Form Block Section */}
-            <section className="relative -mt-64 pb-24 px-6 md:px-12 z-10 flex justify-center">
-                <div className="w-full max-w-4xl">
-                    {/* Info Block */}
+            {/* Form Section */}
+            <section className="pb-24 px-6 md:px-12" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
+                <div className="max-w-2xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -356,10 +355,10 @@ export default function InternshipSourcesPage() {
                             >
                                 <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border border-cyan-400/30 rounded-2xl p-8">
                                     <h3 className="text-2xl font-bold text-white mb-2">
-                                        {selectedRole.label}
+                                        {selectedRole!.label}
                                     </h3>
                                     <div className="text-4xl font-black text-cyan-400 mb-6">
-                                        {selectedRole.price}
+                                        {selectedRole!.price}
                                     </div>
 
                                     <div className="mb-8">
@@ -367,7 +366,7 @@ export default function InternshipSourcesPage() {
                                             What's Included:
                                         </h4>
                                         <ul className="space-y-2">
-                                            {selectedRole.includes.map((item, index) => (
+                                            {selectedRole!.includes.map((item, index) => (
                                                 <li key={index} className="flex items-start gap-2 text-gray-300">
                                                     <span className="text-cyan-400 mt-1">✓</span>
                                                     <span>{item}</span>

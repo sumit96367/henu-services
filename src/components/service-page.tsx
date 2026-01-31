@@ -185,7 +185,7 @@ export const ServiceHero = ({
 
 export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFeature[]; accentColor: 'cyan' | 'amber' }) => {
     return (
-        <section className="section bg-transparent">
+        <section className="section bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             <div className="container">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -256,7 +256,7 @@ export const ServiceProcess = ({ process, accentColor }: { process: ServiceProce
     });
 
     return (
-        <section id="process" className="section pt-8 bg-transparent">
+        <section id="process" className="section pt-8 bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             <div className="container">
                 {/* Header */}
                 <motion.div
@@ -291,7 +291,7 @@ export const ServiceTechnologies = ({ technologies }: { technologies: ServiceTec
     const techNames = technologies.map(tech => tech.name);
 
     return (
-        <section className="section bg-transparent">
+        <section className="section bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             <div className="container">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -321,7 +321,7 @@ export const ServiceCTA = ({ title, description, accentColor }: { title: string;
     const gradientClass = accentColor === 'cyan' ? 'gradient-text-tech' : 'gradient-text-legal';
 
     return (
-        <section className="section relative overflow-hidden bg-transparent">
+        <section className="section relative overflow-hidden bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             {/* Background glow */}
             <div
                 className="absolute inset-0"

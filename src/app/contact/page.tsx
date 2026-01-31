@@ -254,7 +254,7 @@ export default function ContactPage() {
             </section>
 
             {/* Contact Grid Section */}
-            <section className="py-12 bg-transparent px-6">
+            <section className="py-12 bg-transparent px-6" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="container mx-auto">
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {contactInfo.map((info, index) => (
@@ -307,7 +307,7 @@ export default function ContactPage() {
             </section>
 
             {/* Form Section */}
-            <section className="section relative px-6" id="inquiry">
+            <section className="section relative px-6" id="inquiry" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="container max-w-5xl mx-auto relative z-10">
                     <div className="flex flex-col gap-12">
 

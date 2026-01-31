@@ -193,7 +193,7 @@ export default function ServicesPage() {
             </section>
 
             {/* Services Showcase Grid */}
-            <div className="w-full pb-32">
+            <div className="w-full" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <GalleryHoverGrid
                     heading="Our Expertise"
                     items={[
@@ -244,7 +244,7 @@ export default function ServicesPage() {
             </div>
 
             {/* CTA Section */}
-            <section className="section relative overflow-hidden" style={{ background: '#050505' }}>
+            <section className="section relative overflow-hidden" style={{ background: '#050505', paddingTop: '120px', paddingBottom: '120px' }}>
                 <div
                     className="absolute inset-0"
                     style={{

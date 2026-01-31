@@ -25,7 +25,7 @@ const complianceCards = [
 
 export const ComplianceSection = () => {
     return (
-        <section className="section relative overflow-hidden bg-transparent">
+        <section className="section relative overflow-hidden bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             {/* Background patterns */}
             <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[100px]" />
