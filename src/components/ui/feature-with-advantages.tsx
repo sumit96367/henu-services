@@ -13,7 +13,7 @@ function Feature() {
     ];
 
     return (
-        <div style={{ marginTop: '200px', paddingTop: '80px', paddingBottom: '80px' }} className="w-full bg-transparent">
+        <div style={{ marginTop: '200px', paddingTop: '120px', paddingBottom: '120px' }} className="w-full bg-transparent">
             <div className="container mx-auto px-6">
                 <div className="flex gap-6 flex-col items-start">
                     <motion.div

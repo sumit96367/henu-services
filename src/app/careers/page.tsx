@@ -86,7 +86,7 @@ const internships = [
 
 export default function CareersPage() {
     return (
-        <main className="relative z-10">
+        <main className="relative z-10" style={{ paddingTop: '120px' }}>
             {/* Hero Section - Full Screen */}
             <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
                 {/* Background Grid & Effects (similar to portfolio) */}
@@ -147,7 +147,7 @@ export default function CareersPage() {
             </section>
 
             {/* Internships Grid - Below Hero */}
-            <section className="section bg-transparent pt-0 relative z-20">
+            <section className="section bg-transparent pt-0 relative z-20" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="container">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {internships.map((internship, index) => {
@@ -157,7 +157,7 @@ export default function CareersPage() {
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="group relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/[0.06] hover:border-cyan-400/50 transition-all duration-300"
+                                    className="group relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-10 md:p-14 hover:bg-white/[0.06] hover:border-cyan-400/50 transition-all duration-300"
                                 >
                                     {/* Gradient overlay on hover */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />

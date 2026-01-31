@@ -195,9 +195,9 @@ export default function InternshipSourcesPage() {
     };
 
     return (
-        <main className="min-h-screen bg-black text-white">
+        <main className="min-h-screen bg-black text-white" style={{ paddingTop: '120px' }}>
             {/* Hero Section */}
-            <section className="relative pt-32 pb-16 px-6 md:px-12">
+            <section className="relative pt-32 pb-16 px-6 md:px-12" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="max-w-4xl mx-auto">
                     {/* Back Button */}
                     <button
@@ -228,7 +228,7 @@ export default function InternshipSourcesPage() {
             </section>
 
             {/* Form Section */}
-            <section className="pb-24 px-6 md:px-12">
+            <section className="pb-24 px-6 md:px-12" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="max-w-2xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}

@@ -28,6 +28,7 @@ import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { ReviewSection, Review } from '@/components/review-section';
 import { TestimonialsColumn, Testimonial } from '@/components/ui/testimonials-columns';
+import { CharacterV1 } from '@/components/ui/text-scroll-animation';
 
 
 // ============================================
@@ -184,28 +185,54 @@ const stats = [
   { label: 'Client Satisfaction', value: '5.0', desc: 'Across all service sectors.' },
 ];
 
-const StatsSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
+// Scroll animated heading component
+const ScrollAnimatedHeading = ({ text, className }: { text: string; className?: string }) => {
+  const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end start']
+    // Animation triggers when element enters viewport and completes when near the top - slower animation
+    offset: ['start 0.95', 'start 0.15']
   });
+
+  const characters = text.split("");
+  const centerIndex = Math.floor(characters.length / 2);
+
+  return (
+    <div ref={ref} className={className} style={{ perspective: "500px" }}>
+      {characters.map((char, index) => (
+        <CharacterV1
+          key={index}
+          char={char}
+          index={index}
+          centerIndex={centerIndex}
+          scrollYProgress={scrollYProgress}
+        />
+      ))}
+    </div>
+  );
+};
+
+const StatsSection = () => {
+  const ref = useRef<HTMLDivElement>(null);
 
   return (
     <section
       ref={ref}
       className="section relative bg-transparent"
+      style={{ paddingTop: '120px', paddingBottom: '120px' }}
     >
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            <PremiumTextReveal text="Impact by the" /> <span className="gradient-text"><PremiumTextReveal text="Numbers" delay={0.3} /></span>
+            <ScrollAnimatedHeading
+              text="Impact by the Numbers"
+              className="inline-block text-4xl md:text-5xl font-bold"
+            />
           </h2>
         </motion.div>
 
@@ -215,7 +242,6 @@ const StatsSection = () => {
               key={stat.label}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-
               transition={{ delay: index * 0.1, duration: 0.6 }}
               className="h-full"
             >
@@ -232,12 +258,13 @@ const StatsSection = () => {
   );
 };
 
+
 // ============================================
 // HENU OS INTRODUCTION SECTION
 // ============================================
 const HenuOSIntroductionSection = () => {
   return (
-    <section className="section bg-transparent relative overflow-hidden">
+    <section className="section bg-transparent relative overflow-hidden" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       {/* Background Light Effect */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
 
@@ -649,16 +676,18 @@ const ServiceMatrixSection = () => {
   const [activeService, setActiveService] = useState(services[0]);
 
   return (
-    <section className="section relative bg-transparent">
+    <section className="section relative bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            <PremiumTextReveal text="360°" /> <span className="gradient-text"><PremiumTextReveal text="Business Solutions" delay={0.2} /></span>
+            <ScrollAnimatedHeading
+              text="360° Business Solutions"
+              className="inline-block text-4xl md:text-5xl font-bold"
+            />
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-center">
             Comprehensive services spanning technology, legal, and finance sectors
@@ -719,7 +748,7 @@ const WhyChooseUsSection = () => {
   ];
 
   return (
-    <section className="section bg-transparent">
+    <section className="section bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       <div className="container">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -759,7 +788,7 @@ const WhyChooseUsSection = () => {
             viewport={{ once: true }}
             className="relative space-y-6"
           >
-            <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
+            <GlowingCard innerClassName="p-14 md:p-20 flex flex-col items-center text-center h-full">
               <div className="text-4xl font-bold mb-4">
                 <span className="text-green-400">200</span>
                 <span className="text-amber-400">+</span>
@@ -768,7 +797,7 @@ const WhyChooseUsSection = () => {
               <div className="text-gray-400 text-base leading-relaxed font-medium">Across web, mobile, AI, and enterprise solutions</div>
             </GlowingCard>
             <div className="ml-8 md:ml-12">
-              <GlowingCard innerClassName="p-12 md:p-16 flex flex-col items-center text-center h-full">
+              <GlowingCard innerClassName="p-14 md:p-20 flex flex-col items-center text-center h-full">
                 <div className="text-4xl font-bold mb-4">
                   <span className="text-green-400">98</span>
                   <span className="text-amber-400">%</span>
@@ -853,7 +882,7 @@ const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) 
   const thirdColumn = testimonials.slice(Math.ceil(testimonials.length * 2 / 3));
 
   return (
-    <section className="section relative bg-transparent">
+    <section className="section relative bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       <div className="container text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -866,7 +895,10 @@ const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) 
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            <PremiumTextReveal text="Partners in" /> <span className="gradient-text"><PremiumTextReveal text="Growth." delay={0.3} /></span>
+            <ScrollAnimatedHeading
+              text="Partners in Growth."
+              className="inline-block text-4xl md:text-5xl font-bold"
+            />
           </h2>
           <p className="text-gray-400 max-w-[540px] mx-auto text-center">
             See what our clients have to say about working with us.

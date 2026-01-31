@@ -46,6 +46,7 @@ export const Navbar = () => {
         { name: 'Services', href: '/services' },
         { name: 'Portfolio', href: '/portfolio' },
         { name: 'About', href: '/about' },
+        { name: 'Pricing', href: '/pricing' },
         { name: 'Careers', href: '/careers' },
         { name: 'Contact', href: '/contact' },
     ];
@@ -167,6 +168,16 @@ export const Navbar = () => {
                                 )}
                             >
                                 About
+                            </Link>
+                            <Link
+                                href="/pricing"
+                                onMouseEnter={() => setActive(null)}
+                                className={cn(
+                                    "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
+                                    pathname === "/pricing" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                )}
+                            >
+                                Pricing
                             </Link>
                             <Link
                                 href="/careers"

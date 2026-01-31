@@ -56,7 +56,7 @@ export const ReviewSection = ({ onReviewSubmitted }: { onReviewSubmitted: (revie
     };
 
     return (
-        <section className="section bg-transparent relative overflow-hidden">
+        <section className="section bg-transparent relative overflow-hidden" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             {/* Background elements */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
 

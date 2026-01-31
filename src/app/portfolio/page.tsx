@@ -185,7 +185,7 @@ export default function PortfolioPage() {
     }, [activeCategory]);
 
     return (
-        <main className="relative z-10">
+        <main className="relative z-10" style={{ paddingTop: '120px' }}>
             {/* Mouse Trail Effect */}
             <MouseTrailComponent />
 
@@ -277,7 +277,7 @@ export default function PortfolioPage() {
             </section>
 
             {/* Projects Grid */}
-            <section className="section bg-transparent pt-0 relative z-20">
+            <section className="section bg-transparent pt-0 relative z-20" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="container">
                     <AnimatePresence mode="wait">
                         <motion.div
@@ -310,7 +310,7 @@ export default function PortfolioPage() {
             </section>
 
             {/* Stats Section */}
-            <section className="py-20 relative z-20" style={{ background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 149, 0, 0.05) 100%)' }}>
+            <section className="py-20 relative z-20" style={{ background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 149, 0, 0.05) 100%)', paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="container">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                         <motion.div
