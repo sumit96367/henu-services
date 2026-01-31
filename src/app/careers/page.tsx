@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import EnrollmentModal from '@/components/EnrollmentModal';
 
 const internships = [
     {
@@ -85,6 +87,14 @@ const internships = [
 ];
 
 export default function CareersPage() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedInternship, setSelectedInternship] = useState<typeof internships[0] | null>(null);
+
+    const handleGetItNow = (internship: typeof internships[0]) => {
+        setSelectedInternship(internship);
+        setModalOpen(true);
+    };
+
     return (
         <main className="relative z-10" style={{ paddingTop: '120px' }}>
             {/* Hero Section - Full Screen */}
@@ -198,7 +208,10 @@ export default function CareersPage() {
                                                     VIEW SOURCES
                                                 </button>
                                             </a>
-                                            <button className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300">
+                                            <button
+                                                onClick={() => handleGetItNow(internship)}
+                                                className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300"
+                                            >
                                                 GET IT NOW
                                             </button>
                                         </div>
@@ -209,6 +222,16 @@ export default function CareersPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Enrollment Modal */}
+            {selectedInternship && (
+                <EnrollmentModal
+                    isOpen={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    domainCategory={selectedInternship.category}
+                    domainTitle={selectedInternship.title}
+                />
+            )}
         </main>
     );
 }
