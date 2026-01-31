@@ -188,11 +188,16 @@ export default function CareersPage() {
 
                                         {/* Buttons */}
                                         <div className="flex gap-3">
-                                            <Link href={`/careers/${internship.category}`} className="flex-1">
+                                            <a
+                                                href="https://docs.google.com/forms/d/e/1FAIpQLSeLCTboNiGh-l0EZ232XfbvSsapAuUnxvDAt9Y9SFsnq1mLYg/viewform?usp=publish-editor"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex-1"
+                                            >
                                                 <button className="w-full py-2.5 px-4 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/50 rounded-xl text-sm font-bold text-white hover:text-cyan-400 transition-all duration-300">
                                                     VIEW SOURCES
                                                 </button>
-                                            </Link>
+                                            </a>
                                             <button className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300">
                                                 GET IT NOW
                                             </button>
