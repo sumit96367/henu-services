@@ -101,8 +101,8 @@ export const BlurredPricing = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 className={`relative overflow-hidden rounded-3xl p-6 ${plan.popular
-                                        ? 'bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 border-2 border-cyan-500/30'
-                                        : 'bg-white/[0.02] border border-white/5'
+                                    ? 'bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 border-2 border-cyan-500/30'
+                                    : 'bg-white/[0.02] border border-white/5'
                                     }`}
                             >
                                 {plan.popular && (
@@ -131,8 +131,8 @@ export const BlurredPricing = () => {
                                 </ul>
 
                                 <button className={`w-full py-3 rounded-xl font-semibold transition-all ${plan.popular
-                                        ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-black hover:from-cyan-400 hover:to-cyan-500'
-                                        : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
+                                    ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-black hover:from-cyan-400 hover:to-cyan-500'
+                                    : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                                     }`}>
                                     Get Started
                                 </button>
@@ -177,10 +177,11 @@ export const BlurredPricing = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[500] flex items-center justify-center p-4"
+                        className="fixed inset-0 flex items-center justify-center p-4"
+                        style={{ zIndex: 9999 }}
                         onClick={() => setShowContactModal(false)}
                     >
-                        <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
+                        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)' }} />
 
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -201,9 +202,9 @@ export const BlurredPricing = () => {
                                     <X size={20} />
                                 </button>
 
-                                <div className="relative p-8">
-                                    <div className="text-center mb-8">
-                                        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-amber-500/20 border border-white/10 flex items-center justify-center">
+                                <div className="relative" style={{ padding: '48px' }}>
+                                    <div className="text-center mb-8" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <div style={{ width: '64px', height: '64px', borderRadius: '16px', background: 'linear-gradient(to bottom right, rgba(0, 212, 255, 0.2), rgba(255, 149, 0, 0.2))', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
                                             <MessageCircle size={32} className="text-white" />
                                         </div>
                                         <h3 className="text-2xl font-bold text-white mb-2">
@@ -214,10 +215,10 @@ export const BlurredPricing = () => {
                                         </p>
                                     </div>
 
-                                    <div className="space-y-3">
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                         {/* WhatsApp */}
                                         <a
-                                            href="https://wa.me/919876543210?text=Hi, I'm interested in your pricing plans for my company."
+                                            href="https://wa.me/918094100513?text=Hi, I'm interested in your pricing plans for my company."
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-4 p-4 rounded-2xl bg-green-500/10 border border-green-500/20 hover:border-green-500/40 hover:bg-green-500/15 transition-all group"
@@ -234,7 +235,7 @@ export const BlurredPricing = () => {
 
                                         {/* Phone Call */}
                                         <a
-                                            href="tel:+919876543210"
+                                            href="tel:+918094100513"
                                             className="flex items-center gap-4 p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 hover:bg-cyan-500/15 transition-all group"
                                         >
                                             <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center">

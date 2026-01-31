@@ -109,22 +109,22 @@ function CompanyDashboard({ user }: { user: DashboardUser | null }) {
     ];
 
     return (
-        <div className="min-h-screen bg-[#050505] pt-24 pb-20">
-            <div className="max-w-7xl mx-auto px-6">
+        <div className="min-h-screen bg-[#050505] pb-20 flex justify-center" style={{ paddingTop: '150px' }}>
+            <div className="w-full max-w-6xl px-6 lg:px-8 flex flex-col gap-24">
                 {/* Header */}
                 <motion.div
                     initial="hidden"
                     animate="visible"
                     variants={fadeInUp}
-                    className="mb-12"
+                    className=""
                 >
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center">
-                            <Building2 size={28} className="text-black" />
+                    <div className="flex flex-col items-center text-center gap-4 mb-4">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center">
+                            <Building2 size={32} className="text-black" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold text-white">Company Dashboard</h1>
-                            <p className="text-gray-400">Welcome back, {user?.name}</p>
+                            <h1 className="text-4xl font-bold text-white">Company Dashboard</h1>
+                            <p className="text-gray-400 mt-1">Welcome back, {user?.name}</p>
                         </div>
                     </div>
                 </motion.div>
@@ -134,7 +134,7 @@ function CompanyDashboard({ user }: { user: DashboardUser | null }) {
                     initial="hidden"
                     animate="visible"
                     variants={staggerContainer}
-                    className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-12"
+                    className="grid grid-cols-1 md:grid-cols-4 gap-4"
                 >
                     {[
                         { label: 'Active Services', value: '4', icon: Briefcase, color: 'cyan' },
@@ -145,13 +145,23 @@ function CompanyDashboard({ user }: { user: DashboardUser | null }) {
                         <motion.div
                             key={stat.label}
                             variants={fadeInUp}
-                            className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors"
+                            className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors text-center"
                         >
-                            <div className="flex items-center justify-between mb-3">
-                                <stat.icon size={22} className={`text-${stat.color}-400`} />
-                                <span className="text-2xl font-bold text-white">{stat.value}</span>
+                            <div className="flex flex-col items-center gap-3">
+                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${stat.color === 'cyan' ? 'bg-cyan-500/10' :
+                                    stat.color === 'amber' ? 'bg-amber-500/10' :
+                                        stat.color === 'green' ? 'bg-green-500/10' :
+                                            'bg-purple-500/10'
+                                    }`}>
+                                    <stat.icon size={24} className={`${stat.color === 'cyan' ? 'text-cyan-400' :
+                                        stat.color === 'amber' ? 'text-amber-400' :
+                                            stat.color === 'green' ? 'text-green-400' :
+                                                'text-purple-400'
+                                        }`} />
+                                </div>
+                                <span className="text-3xl font-bold text-white">{stat.value}</span>
+                                <p className="text-sm text-gray-400">{stat.label}</p>
                             </div>
-                            <p className="text-sm text-gray-400">{stat.label}</p>
                         </motion.div>
                     ))}
                 </motion.div>
@@ -161,7 +171,7 @@ function CompanyDashboard({ user }: { user: DashboardUser | null }) {
                     initial="hidden"
                     animate="visible"
                     variants={staggerContainer}
-                    className="mb-16"
+                    className=""
                 >
                     <h2 className="text-2xl font-bold text-white mb-6">Your Services</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -169,14 +179,15 @@ function CompanyDashboard({ user }: { user: DashboardUser | null }) {
                             <motion.div
                                 key={service.title}
                                 variants={fadeInUp}
-                                className="group relative overflow-hidden rounded-3xl p-6 bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/5 hover:border-white/10 transition-all duration-300"
+                                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/5 hover:border-white/10 transition-all duration-300"
+                                style={{ padding: '40px' }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                                 <div className="relative">
                                     <div className={`w-12 h-12 rounded-xl mb-4 flex items-center justify-center ${service.color === 'cyan'
-                                            ? 'bg-cyan-500/10 text-cyan-400'
-                                            : 'bg-amber-500/10 text-amber-400'
+                                        ? 'bg-cyan-500/10 text-cyan-400'
+                                        : 'bg-amber-500/10 text-amber-400'
                                         }`}>
                                         <service.icon size={24} />
                                     </div>
@@ -203,7 +214,9 @@ function CompanyDashboard({ user }: { user: DashboardUser | null }) {
                 </motion.div>
 
                 {/* Blurred Pricing Section */}
-                <BlurredPricing />
+                <div style={{ paddingBottom: '150px' }}>
+                    <BlurredPricing />
+                </div>
             </div>
         </div>
     );

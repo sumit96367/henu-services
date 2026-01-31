@@ -71,7 +71,7 @@ export default function RootLayout({
         <AuthProvider>
           <SmoothScrollProvider>
             <Navbar />
-            <div className="relative z-10">
+            <div className="relative">
               {children}
             </div>
             <Footer />
