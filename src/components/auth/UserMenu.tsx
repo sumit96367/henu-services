@@ -72,8 +72,8 @@ export const UserMenu = () => {
             >
                 {/* Avatar */}
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${user?.userType === 'company'
-                        ? 'bg-gradient-to-br from-cyan-500 to-cyan-600'
-                        : 'bg-gradient-to-br from-amber-500 to-amber-600'
+                    ? 'bg-gradient-to-br from-cyan-500 to-cyan-600'
+                    : 'bg-gradient-to-br from-amber-500 to-amber-600'
                     }`}>
                     {user?.userType === 'company' ? (
                         <Building2 size={16} className="text-black" />
@@ -103,29 +103,33 @@ export const UserMenu = () => {
                         className="absolute right-0 mt-2 w-64 rounded-2xl bg-[#0a0a0a] border border-white/10 shadow-2xl overflow-hidden z-50"
                     >
                         {/* User info header */}
-                        <div className="p-4 border-b border-white/5">
-                            <div className="flex items-center gap-3">
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${user?.userType === 'company'
-                                        ? 'bg-gradient-to-br from-cyan-500 to-cyan-600'
-                                        : 'bg-gradient-to-br from-amber-500 to-amber-600'
+                        <div className="p-5 border-b border-white/5 bg-white/[0.02]">
+                            <div className="flex items-center gap-4">
+                                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-lg ${user?.userType === 'company'
+                                    ? 'bg-gradient-to-br from-cyan-500 to-cyan-600 shadow-cyan-500/20'
+                                    : 'bg-gradient-to-br from-amber-500 to-amber-600 shadow-amber-500/20'
                                     }`}>
                                     {user?.userType === 'company' ? (
-                                        <Building2 size={20} className="text-black" />
+                                        <Building2 size={22} className="text-black" />
                                     ) : (
-                                        <User size={20} className="text-black" />
+                                        <User size={22} className="text-black" />
                                     )}
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-white font-medium truncate">{user?.name}</p>
-                                    <p className="text-xs text-gray-400 truncate">{user?.email}</p>
+                                <div className="flex flex-col min-w-0 -space-y-0.5">
+                                    <h3 className="text-white font-bold text-[15px] truncate leading-tight m-0">
+                                        {user?.name}
+                                    </h3>
+                                    <p className="text-[10px] text-cyan-400 font-extrabold uppercase tracking-[0.15em] truncate leading-tight m-0">
+                                        {user?.companyName || user?.email}
+                                    </p>
                                 </div>
                             </div>
-                            <div className="mt-3">
-                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${user?.userType === 'company'
-                                        ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
-                                        : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                            <div className="mt-4 flex items-center gap-2">
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-tighter ${user?.userType === 'company'
+                                    ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
+                                    : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
                                     }`}>
-                                    <Sparkles size={12} />
+                                    <Sparkles size={10} />
                                     {user?.userType === 'company' ? 'Company Account' : 'Personal Account'}
                                 </span>
                             </div>

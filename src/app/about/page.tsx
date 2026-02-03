@@ -84,15 +84,7 @@ const AboutHero = () => {
             >
                 <div className="max-w-5xl w-full mx-auto flex flex-col items-center text-center">
                     {/* Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
-                    >
-                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                        <span className="text-sm text-gray-300 font-mono">ABOUT US</span>
-                    </motion.div>
+
 
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full">
                         <PremiumTextReveal text="We Build Systems" className="w-full justify-center" />
@@ -164,22 +156,19 @@ const HowWeThinkSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
-            <div className="container mx-auto">
+        <section style={{ paddingTop: '120px', paddingBottom: '120px' }} className="w-full flex flex-col items-center bg-transparent px-6">
+            <div className="container mx-auto flex flex-col items-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-16"
+                    className="mb-16 flex flex-col items-center text-center"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6 font-mono text-cyan-400 text-xs">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                        OUR PHILOSOPHY
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 mx-auto">
                         How We <span className="gradient-text">Think</span>
                     </h2>
-                    <p className="text-lg text-gray-400 max-w-2xl">
+                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Our approach isn't defined by process—it's shaped by principles that drive every decision we make.
                     </p>
                 </motion.div>
@@ -242,19 +231,19 @@ const BuiltToDoSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent relative overflow-hidden px-6">
-            <div className="container mx-auto space-y-12">
+        <section style={{ paddingTop: '120px', paddingBottom: '120px' }} className="w-full flex flex-col items-center bg-transparent relative overflow-hidden px-6">
+            <div className="container mx-auto space-y-12 flex flex-col items-center">
                 {/* Header Row */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="relative z-10 grid items-center gap-4 md:grid-cols-2 md:gap-12"
+                    className="relative z-10 flex flex-col items-center text-center gap-6 mb-16"
                 >
-                    <h2 className="text-4xl font-bold text-white">
+                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         What We're <span className="gradient-text">Built To Do</span>
                     </h2>
-                    <p className="max-w-sm text-gray-400 sm:ml-auto">
+                    <p className="max-w-2xl text-lg text-gray-400 leading-relaxed mx-auto">
                         Core capabilities, not services. Outcomes, not deliverables. We architect systems that drive real business value.
                     </p>
                 </motion.div>
@@ -515,7 +504,7 @@ const BuiltToDoSection = () => {
                 </motion.div>
 
                 {/* 4-Column Feature Grid */}
-                <div className="relative mx-auto grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4 mt-16 md:mt-24">
+                <div className="relative mx-auto grid grid-cols-2 gap-x-12 gap-y-12 lg:grid-cols-4 mt-16 md:mt-24">
                     {capabilities.map((item, index) => (
                         <motion.div
                             key={index}
@@ -523,13 +512,15 @@ const BuiltToDoSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 * index }}
-                            className="space-y-3"
+                            className="flex flex-col items-center text-center space-y-4"
                         >
-                            <div className="flex items-center gap-2">
+                            <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">
                                 {item.icon}
-                                <h3 className="text-sm font-medium text-white">{item.title}</h3>
                             </div>
-                            <p className="text-sm text-gray-400">{item.desc}</p>
+                            <div className="space-y-2">
+                                <h3 className="text-sm font-bold text-white uppercase tracking-wider">{item.title}</h3>
+                                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+                            </div>
                         </motion.div>
                     ))}
                 </div>
@@ -553,22 +544,19 @@ const WhatWeDontDoSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
-            <div className="container mx-auto">
+        <section style={{ paddingTop: '120px', paddingBottom: '120px' }} className="w-full flex flex-col items-center bg-transparent px-6">
+            <div className="container mx-auto flex flex-col items-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-12"
+                    className="mb-12 flex flex-col items-center text-center"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 mb-6 font-mono text-red-400 text-xs">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                        BOUNDARIES
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 mx-auto">
                         What We <span className="text-red-400">Don't Do</span>
                     </h2>
-                    <p className="text-lg text-gray-400 max-w-2xl">
+                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Honesty over opportunity. These are the lines we draw to ensure we deliver high-quality, high-performance systems.
                     </p>
                 </motion.div>
@@ -581,13 +569,13 @@ const WhatWeDontDoSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 * index }}
-                            className="flex gap-4 items-start p-6 rounded-xl bg-white/[0.02] border border-white/5 hover:border-red-500/20 transition-colors"
+                            className="flex flex-col items-center text-center p-8 rounded-xl bg-white/[0.02] border border-white/5 hover:border-red-500/20 transition-all duration-300 group"
                         >
-                            <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0">
-                                <X className="w-4 h-4 text-red-400" />
+                            <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center shrink-0 mb-6 group-hover:scale-110 transition-transform">
+                                <X className="w-6 h-6 text-red-400" />
                             </div>
                             <div>
-                                <h3 className="text-white font-bold mb-2">{item.title}</h3>
+                                <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
                                 <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
                             </div>
                         </motion.div>
@@ -621,19 +609,16 @@ const WhoWereBestForSection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
-            <div className="container mx-auto">
+        <section style={{ paddingTop: '120px', paddingBottom: '120px' }} className="w-full flex flex-col items-center bg-transparent px-6">
+            <div className="container mx-auto flex flex-col items-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="max-w-4xl mx-auto"
+                    className="max-w-4xl mx-auto flex flex-col items-center"
                 >
                     <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 mb-6 font-mono text-amber-400 text-xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                            IDEAL PARTNERS
-                        </div>
+
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                             Who We're <span className="text-amber-400">Best For</span>
                         </h2>
@@ -642,28 +627,28 @@ const WhoWereBestForSection = () => {
                         </p>
                     </div>
 
-                    <GlowingCard innerClassName="p-8 md:p-12">
+                    <GlowingCard innerClassName="p-8 md:p-12 w-full max-w-4xl">
                         <div className="space-y-8">
                             {audiences.map((item, index) => (
                                 <motion.div
                                     key={index}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
-                                    className="flex gap-5"
+                                    className="flex flex-col items-center text-center"
                                 >
-                                    <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20">
+                                    <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6 border border-cyan-500/20 shadow-lg shadow-cyan-500/5">
                                         {item.icon}
                                     </div>
-                                    <div>
-                                        <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                                        <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+                                    <div className="max-w-xl">
+                                        <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                                        <p className="text-gray-400 text-lg leading-relaxed">{item.desc}</p>
                                     </div>
                                 </motion.div>
                             ))}
 
-                            <div className="pt-6 border-t border-white/10">
+                            <div className="pt-6 border-t border-white/10 text-center">
                                 <p className="text-gray-500 italic">
                                     <strong className="text-white">Not a fit?</strong> If you're chasing trends, need work yesterday
                                     without planning, or prioritize optics over outcomes—we're probably not the right partner.
@@ -700,8 +685,8 @@ const JourneySection = () => {
     ];
 
     return (
-        <section style={{ marginTop: '160px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6">
-            <div className="container mx-auto">
+        <section style={{ paddingTop: '120px', paddingBottom: '120px' }} className="w-full flex flex-col items-center bg-transparent px-6">
+            <div className="container mx-auto flex flex-col items-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -715,7 +700,7 @@ const JourneySection = () => {
                         We don't just build products—we help you establish technical foundations that evolve with your vision.
                     </p>
 
-                    <div className="grid md:grid-cols-3 gap-8 text-left">
+                    <div className="grid md:grid-cols-3 gap-8 text-center">
                         {steps.map((step, index) => (
                             <motion.div
                                 key={index}
@@ -723,11 +708,11 @@ const JourneySection = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.1 * index }}
-                                className="relative"
+                                className="relative flex flex-col items-center"
                             >
                                 <div className="text-5xl font-black text-cyan-500/20 mb-4">{step.number}</div>
                                 <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
-                                <p className="text-gray-400 leading-relaxed">{step.desc}</p>
+                                <p className="text-gray-400 leading-relaxed mx-auto max-w-xs">{step.desc}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -742,11 +727,11 @@ const JourneySection = () => {
 // ============================================
 const CTASection = () => {
     return (
-        <section style={{ marginTop: '120px', paddingTop: '120px', paddingBottom: '120px' }} className="bg-transparent px-6 relative overflow-hidden">
+        <section style={{ paddingTop: '120px', paddingBottom: '120px' }} className="w-full flex flex-col items-center bg-transparent px-6 relative overflow-hidden">
             {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="container mx-auto relative z-10 text-center">
+            <div className="container mx-auto relative z-10 flex flex-col items-center text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -780,7 +765,7 @@ const CTASection = () => {
 // ============================================
 export default function AboutPage() {
     return (
-        <main className="relative" style={{ paddingTop: '120px' }}>
+        <main className="relative">
             <AboutHero />
             <HowWeThinkSection />
             <BuiltToDoSection />

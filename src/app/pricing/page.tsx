@@ -113,10 +113,7 @@ export default function PricingPage() {
                             className="text-center mb-16"
                             style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
                         >
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/10 to-amber-500/10 border border-white/10 mb-6">
-                                <Sparkles size={16} className="text-amber-400" />
-                                <span className="text-sm font-medium text-gray-300">Simple, Transparent Pricing</span>
-                            </div>
+
                             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{ textAlign: 'center', width: '100%' }}>
                                 Choose the Perfect Plan
                                 <span className="block gradient-text">for Your Business</span>
@@ -168,13 +165,7 @@ export default function PricingPage() {
                                             : 'bg-white/[0.02] border border-white/10'
                                             }`}
                                     >
-                                        {plan.popular && (
-                                            <div className="absolute top-0 right-0">
-                                                <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-black text-xs font-bold px-4 py-1 rounded-bl-xl">
-                                                    MOST POPULAR
-                                                </div>
-                                            </div>
-                                        )}
+
 
                                         <h3 className="text-2xl font-bold text-white mb-2" style={{ textAlign: 'center' }}>{plan.name}</h3>
                                         <p className="text-gray-400 text-sm mb-6" style={{ textAlign: 'center' }}>{plan.description}</p>

@@ -150,9 +150,9 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#050505]" style={{ paddingTop: '100px' }}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[120px] pb-[120px]">
-                <div className="flex flex-col lg:flex-row gap-12">
+        <div className="min-h-screen bg-[#050505] w-full flex flex-col items-center" style={{ paddingTop: '100px' }}>
+            <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-[120px] pb-[120px]">
+                <div className="flex flex-col lg:flex-row gap-12 justify-center">
                     {/* Sidebar */}
                     <motion.aside
                         initial={{ opacity: 0, x: -30 }}
@@ -168,8 +168,8 @@ export default function DashboardPage() {
                                         {user?.name?.charAt(0).toUpperCase()}
                                     </span>
                                 </div>
-                                <h3 className="text-lg font-semibold text-white mb-1">{user?.name}</h3>
-                                <p className="text-sm text-gray-400 break-all">{user?.email}</p>
+                                <h3 className="text-lg font-bold text-white mb-1">{user?.name}</h3>
+                                <p className="text-sm text-cyan-400 font-medium">{user?.companyName || user?.email}</p>
                             </div>
                         </div>
 
@@ -200,7 +200,9 @@ export default function DashboardPage() {
                     >
                         {/* Header */}
                         <div className="mb-8">
-                            <h1 className="text-3xl font-bold text-white mb-2">My Account</h1>
+                            <h1 className="text-3xl font-bold text-white mb-2">
+                                Hello, {user?.name || 'User'}
+                            </h1>
                             <div className="h-1 w-20 bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" />
                         </div>
 

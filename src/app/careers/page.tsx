@@ -86,7 +86,7 @@ const internships = [
 
 export default function CareersPage() {
     return (
-        <main className="relative z-10" style={{ paddingTop: '120px' }}>
+        <main className="relative z-10">
             {/* Hero Section - Full Screen */}
             <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
                 {/* Background Grid & Effects (similar to portfolio) */}

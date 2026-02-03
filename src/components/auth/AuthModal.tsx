@@ -66,7 +66,7 @@ export const AuthModal = () => {
             if (authModalMode === 'login') {
                 await login(email, password, selectedType);
             } else {
-                await signup(email, password, name, selectedType);
+                await signup(email, password, name, selectedType, companyName);
             }
             // Reset form
             setEmail('');

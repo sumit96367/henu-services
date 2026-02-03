@@ -8,6 +8,7 @@ interface User {
     id: string;
     email: string;
     name: string;
+    companyName?: string;
     userType: UserType;
     createdAt: Date;
 }
@@ -18,7 +19,7 @@ interface AuthContextType {
     userType: UserType;
     isLoading: boolean;
     login: (email: string, password: string, type: UserType) => Promise<void>;
-    signup: (email: string, password: string, name: string, type: UserType) => Promise<void>;
+    signup: (email: string, password: string, name: string, type: UserType, companyName?: string) => Promise<void>;
     logout: () => void;
     showAuthModal: boolean;
     setShowAuthModal: (show: boolean) => void;
@@ -71,7 +72,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const newUser: User = {
                 id: `user_${Date.now()}`,
                 email,
-                name: email.split('@')[0],
+                name: 'Sumit Kumar',
+                companyName: type === 'company' ? 'Henu OS Private Limited' : undefined,
                 userType: type,
                 createdAt: new Date(),
             };
@@ -87,7 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
-    const signup = async (email: string, password: string, name: string, type: UserType) => {
+    const signup = async (email: string, password: string, name: string, type: UserType, companyName?: string) => {
         setIsLoading(true);
         try {
             // Simulate API call - In production, replace with actual API
@@ -97,6 +99,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 id: `user_${Date.now()}`,
                 email,
                 name,
+                companyName,
                 userType: type,
                 createdAt: new Date(),
             };

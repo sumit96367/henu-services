@@ -185,7 +185,7 @@ export default function PortfolioPage() {
     }, [activeCategory]);
 
     return (
-        <main className="relative z-10" style={{ paddingTop: '120px' }}>
+        <main className="relative z-10">
             {/* Mouse Trail Effect */}
             <MouseTrailComponent />
 

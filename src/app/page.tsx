@@ -95,16 +95,7 @@ const HeroSection = () => {
             style={{ y, opacity }}
             className="flex-1 text-center lg:text-left pt-24 lg:pt-0"
           >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
-            >
-              <span className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-sm text-gray-300">Available for New Projects</span>
-            </motion.div>
+
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-2 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start">
