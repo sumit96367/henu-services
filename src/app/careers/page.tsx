@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import EnrollmentModal from '@/components/EnrollmentModal';
+import StarfieldCanvas from '@/components/ui/hyperdrive-hero';
 
 const internships = [
     {
@@ -85,10 +88,21 @@ const internships = [
 ];
 
 export default function CareersPage() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedInternship, setSelectedInternship] = useState<typeof internships[0] | null>(null);
+
+    const handleGetItNow = (internship: typeof internships[0]) => {
+        setSelectedInternship(internship);
+        setModalOpen(true);
+    };
+
     return (
         <main className="relative z-10">
             {/* Hero Section - Full Screen */}
             <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+                {/* Starfield Background */}
+                <StarfieldCanvas />
+
                 {/* Background Grid & Effects (similar to portfolio) */}
                 <div className="absolute inset-0">
                     <div className="horizon-grid" />
@@ -188,12 +202,20 @@ export default function CareersPage() {
 
                                         {/* Buttons */}
                                         <div className="flex gap-3">
-                                            <Link href={`/careers/${internship.category}`} className="flex-1">
+                                            <a
+                                                href="https://docs.google.com/forms/d/e/1FAIpQLSeLCTboNiGh-l0EZ232XfbvSsapAuUnxvDAt9Y9SFsnq1mLYg/viewform?usp=publish-editor"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex-1"
+                                            >
                                                 <button className="w-full py-2.5 px-4 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/50 rounded-xl text-sm font-bold text-white hover:text-cyan-400 transition-all duration-300">
                                                     VIEW SOURCES
                                                 </button>
-                                            </Link>
-                                            <button className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300">
+                                            </a>
+                                            <button
+                                                onClick={() => handleGetItNow(internship)}
+                                                className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300"
+                                            >
                                                 GET IT NOW
                                             </button>
                                         </div>
@@ -204,6 +226,16 @@ export default function CareersPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Enrollment Modal */}
+            {selectedInternship && (
+                <EnrollmentModal
+                    isOpen={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    domainCategory={selectedInternship.category}
+                    domainTitle={selectedInternship.title}
+                />
+            )}
         </main>
     );
 }

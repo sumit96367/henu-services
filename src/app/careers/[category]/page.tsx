@@ -202,25 +202,33 @@ export default function InternshipSourcesPage() {
                     {/* Back Button */}
                     <button
                         onClick={() => router.push('/careers')}
-                        className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors mb-8 group"
+                        className="flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/50 rounded-xl text-white hover:text-cyan-400 transition-all duration-300 group"
                     >
                         <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
                         Back to Careers
                     </button>
+                </div>
 
+                <div className="max-w-4xl mx-auto text-center">
                     {/* Title */}
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-6xl font-black mb-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent text-center"
+                        className="text-5xl md:text-7xl font-black mb-6 leading-tight"
                     >
-                        {data.title} Internship Sources
+                        <span className="text-white">Ready to access</span>
+                        <br />
+                        <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+                            {data.title}
+                        </span>
+                        <br />
+                        <span className="text-white">Internship Sources?</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-lg text-gray-400 text-center max-w-2xl mx-auto"
+                        className="text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto"
                     >
                         {data.description}
                     </motion.p>
@@ -233,72 +241,93 @@ export default function InternshipSourcesPage() {
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-8"
+                        transition={{ delay: 0.3 }}
+                        className="backdrop-blur-xl shadow-2xl"
+                        style={{
+                            marginTop: '-40px',
+                            padding: 'clamp(28px, 3vw, 38px)',
+                            borderRadius: '18px',
+                            background: 'rgba(255, 255, 255, 0.04)',
+                            border: '1px solid rgba(255, 255, 255, 0.08)'
+                        }}
                     >
-                        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                            {/* Email */}
-                            <div>
-                                <label className="block text-sm font-bold text-gray-300 mb-2">
-                                    Email *
-                                </label>
-                                <input
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
-                                    placeholder="your.email@example.com"
-                                />
+                        {/* Section Title */}
+                        <div className="text-center mb-8">
+                            <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                                Let's Start with <span className="text-cyan-400">Your Details</span>
+                            </h2>
+                            <p className="text-gray-400 text-sm">
+                                Select your specialization to view curated sources and pricing
+                            </p>
+                        </div>
+
+                        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {/* Email */}
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                        Email *
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
+                                        placeholder="your.email@example.com"
+                                    />
+                                </div>
+
+                                {/* Full Name */}
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                        Full Name *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={formData.fullName}
+                                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
+                                        placeholder="John Doe"
+                                    />
+                                </div>
                             </div>
 
-                            {/* Full Name */}
-                            <div>
-                                <label className="block text-sm font-bold text-gray-300 mb-2">
-                                    Full Name *
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.fullName}
-                                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
-                                    placeholder="John Doe"
-                                />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {/* Contact */}
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                        Contact *
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        value={formData.contact}
+                                        onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
+                                        placeholder="+91 98765 43210"
+                                    />
+                                </div>
+
+                                {/* Sub-Domain Dropdown */}
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                        Sub-Domain / Role *
+                                    </label>
+                                    <select
+                                        value={formData.subDomain}
+                                        onChange={(e) => handleSubDomainChange(e.target.value)}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/50 transition-colors appearance-none cursor-pointer"
+                                    >
+                                        <option value="" className="bg-gray-900">Select a specialization</option>
+                                        {data.roles.map((role) => (
+                                            <option key={role.value} value={role.value} className="bg-gray-900">
+                                                {role.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
 
-                            {/* Contact */}
-                            <div>
-                                <label className="block text-sm font-bold text-gray-300 mb-2">
-                                    Contact *
-                                </label>
-                                <input
-                                    type="tel"
-                                    value={formData.contact}
-                                    onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
-                                    placeholder="+91 98765 43210"
-                                />
-                            </div>
-
-                            {/* Sub-Domain Dropdown */}
-                            <div>
-                                <label className="block text-sm font-bold text-gray-300 mb-2">
-                                    Sub-Domain / Role *
-                                </label>
-                                <select
-                                    value={formData.subDomain}
-                                    onChange={(e) => handleSubDomainChange(e.target.value)}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/50 transition-colors appearance-none cursor-pointer"
-                                >
-                                    <option value="" className="bg-gray-900">Select a specialization</option>
-                                    {data.roles.map((role) => (
-                                        <option key={role.value} value={role.value} className="bg-gray-900">
-                                            {role.label}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            {/* Query Textarea */}
+                            {/* Query Textarea - Full Width */}
                             <div>
                                 <label className="block text-sm font-bold text-gray-300 mb-2">
                                     Any Query (Optional)
@@ -326,10 +355,10 @@ export default function InternshipSourcesPage() {
                             >
                                 <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border border-cyan-400/30 rounded-2xl p-8">
                                     <h3 className="text-2xl font-bold text-white mb-2">
-                                        {selectedRole.label}
+                                        {selectedRole!.label}
                                     </h3>
                                     <div className="text-4xl font-black text-cyan-400 mb-6">
-                                        {selectedRole.price}
+                                        {selectedRole!.price}
                                     </div>
 
                                     <div className="mb-8">
@@ -337,7 +366,7 @@ export default function InternshipSourcesPage() {
                                             What's Included:
                                         </h4>
                                         <ul className="space-y-2">
-                                            {selectedRole.includes.map((item, index) => (
+                                            {selectedRole!.includes.map((item, index) => (
                                                 <li key={index} className="flex items-start gap-2 text-gray-300">
                                                     <span className="text-cyan-400 mt-1">✓</span>
                                                     <span>{item}</span>
