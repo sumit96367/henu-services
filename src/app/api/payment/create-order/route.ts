@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { saveEnrollment, savePayment } from '@/lib/data-store';
+import { EnrollmentRecord, PaymentRecord } from '@/types/admin';
 
 export async function POST(req: NextRequest) {
     try {
@@ -12,7 +14,8 @@ export async function POST(req: NextRequest) {
             plan,
             amount,
             paymentMethod,
-            billingAddress
+            billingAddress,
+            domainCategory
         } = body;
 
         // Validate required fields
@@ -22,6 +25,47 @@ export async function POST(req: NextRequest) {
                 { status: 400 }
             );
         }
+
+        // Generate unique IDs
+        const enrollmentId = `ENR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const orderId = `order_${Date.now()}`;
+        const invoiceNumber = `INV-${Date.now()}`;
+        const timestamp = new Date().toISOString();
+
+        // Create enrollment record
+        const enrollmentRecord: EnrollmentRecord = {
+            id: enrollmentId,
+            timestamp,
+            fullName,
+            email,
+            domain,
+            domainCategory: domainCategory || domain,
+            subDomain,
+            plan,
+            amount,
+            billingAddress,
+            paymentMethod,
+            orderId,
+            status: 'pending'
+        };
+
+        // Create payment record
+        const paymentRecord: PaymentRecord = {
+            id: `PAY_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            timestamp,
+            enrollmentId,
+            invoiceNumber,
+            fullName,
+            email,
+            amount,
+            status: 'pending',
+            paymentMethod,
+            orderId
+        };
+
+        // Save to data store
+        saveEnrollment(enrollmentRecord);
+        savePayment(paymentRecord);
 
         // TODO: Implement Razorpay order creation
         // const Razorpay = require('razorpay');
@@ -41,7 +85,7 @@ export async function POST(req: NextRequest) {
 
         // For now, return a mock order
         const mockOrder = {
-            id: `order_${Date.now()}`,
+            id: orderId,
             amount: amount * 100,
             currency: 'INR',
             receipt: `receipt_${Date.now()}`,
@@ -59,7 +103,9 @@ export async function POST(req: NextRequest) {
                 plan,
                 amount,
                 paymentMethod,
-                billingAddress
+                billingAddress,
+                enrollmentId,
+                invoiceNumber
             }
         });
 
