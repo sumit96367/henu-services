@@ -1,11 +1,8 @@
-import * as bcrypt from 'bcrypt';
 import { SignJWT, jwtVerify } from 'jose';
 
 const JWT_SECRET = new TextEncoder().encode(
-    process.env.JWT_SECRET || 'default-secret-key-change-in-production'
+    process.env.JWT_SECRET || 'default-secret-key-change-in-production-min-32-chars'
 );
-
-const JWT_EXPIRY = process.env.JWT_EXPIRY || '24h';
 
 export interface JWTPayload {
     adminId: string;
@@ -14,28 +11,13 @@ export interface JWTPayload {
 }
 
 /**
- * Hash a password using bcrypt
- */
-export async function hashPassword(password: string): Promise<string> {
-    const saltRounds = 10;
-    return bcrypt.hash(password, saltRounds);
-}
-
-/**
- * Verify a password against a hash
- */
-export async function verifyPassword(password: string, hash: string): Promise<boolean> {
-    return bcrypt.compare(password, hash);
-}
-
-/**
- * Generate a JWT token
+ * Generate a JWT token for admin authentication
  */
 export async function generateToken(adminId: string): Promise<string> {
     const token = await new SignJWT({ adminId })
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime(JWT_EXPIRY)
+        .setExpirationTime('24h')
         .sign(JWT_SECRET);
 
     return token;
@@ -65,27 +47,11 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
 }
 
 /**
- * Verify admin credentials against environment variables
+ * Validate admin credentials
  */
-export async function verifyAdminCredentials(
-    adminId: string,
-    password: string
-): Promise<boolean> {
-    const envAdminId = process.env.ADMIN_ID;
-    const envAdminPassword = process.env.ADMIN_PASSWORD;
+export function validateCredentials(adminId: string, password: string): boolean {
+    const validAdminId = process.env.ADMIN_ID || 'admin@henuservices.com';
+    const validPassword = process.env.ADMIN_PASSWORD || 'henu@2025';
 
-    if (!envAdminId || !envAdminPassword) {
-        console.error('Admin credentials not configured in environment variables');
-        return false;
-    }
-
-    // Check if admin ID matches
-    if (adminId !== envAdminId) {
-        return false;
-    }
-
-    // For simplicity, we're using plain text password comparison
-    // In production, you should hash the password in .env
-    // For now, comparing directly
-    return password === envAdminPassword;
+    return adminId === validAdminId && password === validPassword;
 }

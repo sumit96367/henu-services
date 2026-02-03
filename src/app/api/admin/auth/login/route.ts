@@ -1,25 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAdminCredentials, generateToken } from '@/lib/auth';
+import { generateToken, validateCredentials } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const { adminId, password } = body;
 
-        // Validate input
-        if (!adminId || !password) {
+        // Validate credentials
+        if (!validateCredentials(adminId, password)) {
             return NextResponse.json(
-                { error: 'Admin ID and password are required' },
-                { status: 400 }
-            );
-        }
-
-        // Verify credentials
-        const isValid = await verifyAdminCredentials(adminId, password);
-
-        if (!isValid) {
-            return NextResponse.json(
-                { error: 'Invalid credentials' },
+                { error: 'Invalid admin credentials' },
                 { status: 401 }
             );
         }
@@ -27,18 +17,17 @@ export async function POST(request: NextRequest) {
         // Generate JWT token
         const token = await generateToken(adminId);
 
-        // Create response with token in HTTP-only cookie
-        const response = NextResponse.json({
-            success: true,
-            message: 'Login successful',
-            adminId
-        });
+        // Create response with HTTP-only cookie
+        const response = NextResponse.json(
+            { success: true, message: 'Login successful' },
+            { status: 200 }
+        );
 
-        // Set HTTP-only cookie with the token
+        // Set HTTP-only cookie
         response.cookies.set('admin_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 24 hours
             path: '/',
         });

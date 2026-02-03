@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
 
         if (!token) {
             return NextResponse.json(
-                { isValid: false, error: 'No token found' },
+                { authenticated: false },
                 { status: 401 }
             );
         }
@@ -16,20 +16,20 @@ export async function GET(request: NextRequest) {
 
         if (!payload) {
             return NextResponse.json(
-                { isValid: false, error: 'Invalid or expired token' },
+                { authenticated: false },
                 { status: 401 }
             );
         }
 
-        return NextResponse.json({
-            isValid: true,
-            adminId: payload.adminId
-        });
+        return NextResponse.json(
+            { authenticated: true, adminId: payload.adminId },
+            { status: 200 }
+        );
     } catch (error) {
         console.error('Validation error:', error);
         return NextResponse.json(
-            { isValid: false, error: 'Internal server error' },
-            { status: 500 }
+            { authenticated: false },
+            { status: 401 }
         );
     }
 }
