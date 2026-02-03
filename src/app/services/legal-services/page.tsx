@@ -1,6 +1,7 @@
 'use client';
 
 import { ServicePage } from '@/components/service-page';
+import LegalHeroAnimation from '@/components/animations/LegalHeroAnimation';
 import {
     Scale,
     FileCheck,
@@ -117,6 +118,7 @@ export default function LegalServicesPage() {
             heroHighlight="Legal Services"
             heroDescription="Navigate business compliance effortlessly. From registration to annual filings—India-focused expertise."
             heroAccentColor="amber"
+            heroAnimation={<LegalHeroAnimation />}
             features={features}
             process={process}
             technologies={technologies}

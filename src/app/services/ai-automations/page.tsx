@@ -1,6 +1,7 @@
 'use client';
 
 import { ServicePage } from '@/components/service-page';
+import AIHeroAnimation from '@/components/animations/AIHeroAnimation';
 import {
     Bot,
     Cpu,
@@ -118,6 +119,7 @@ export default function AIAutomationsPage() {
             heroHighlight="AI Automations"
             heroDescription="Automate your workflows with custom HENU AI agents. Save time, cut costs, boost efficiency."
             heroAccentColor="cyan"
+            heroAnimation={<AIHeroAnimation />}
             features={features}
             process={process}
             technologies={technologies}
