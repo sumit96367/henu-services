@@ -1,8 +1,24 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    updateProfile,
+    GoogleAuthProvider,
+    signInWithPopup,
+    OAuthProvider,
+    RecaptchaVerifier,
+    signInWithPhoneNumber,
+    ConfirmationResult
+} from 'firebase/auth';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from '@/lib/firebase';
 
 export type UserType = 'company' | 'personal' | null;
+export type UserRole = 'admin' | 'user';
 
 interface User {
     id: string;
@@ -10,7 +26,9 @@ interface User {
     name: string;
     companyName?: string;
     userType: UserType;
+    role: UserRole;
     createdAt: Date;
+    phoneNumber?: string;
 }
 
 interface AuthContextType {
@@ -18,8 +36,12 @@ interface AuthContextType {
     isAuthenticated: boolean;
     userType: UserType;
     isLoading: boolean;
-    login: (email: string, password: string, type: UserType) => Promise<void>;
+    login: (email: string, password: string) => Promise<void>;
     signup: (email: string, password: string, name: string, type: UserType, companyName?: string) => Promise<void>;
+    signInWithGoogle: (type: UserType) => Promise<void>;
+    signInWithApple: (type: UserType) => Promise<void>;
+    requestPhoneOTP: (phoneNumber: string, containerId: string) => Promise<ConfirmationResult>;
+    verifyPhoneOTP: (confirmationResult: ConfirmationResult, otp: string, type: UserType) => Promise<void>;
     logout: () => void;
     showAuthModal: boolean;
     setShowAuthModal: (show: boolean) => void;
@@ -47,39 +69,72 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [showAuthModal, setShowAuthModal] = useState(false);
     const [authModalMode, setAuthModalMode] = useState<'login' | 'signup'>('login');
 
-    // Load user from localStorage on mount
+    // Sync with Firebase Auth state
     useEffect(() => {
-        const storedUser = localStorage.getItem('henu_user');
-        if (storedUser) {
-            try {
-                const parsedUser = JSON.parse(storedUser);
-                setUser(parsedUser);
-            } catch (error) {
-                console.error('Failed to parse stored user:', error);
-                localStorage.removeItem('henu_user');
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        setUser({
+                            id: firebaseUser.uid,
+                            email: firebaseUser.email || '',
+                            name: userData.name || '',
+                            companyName: userData.companyName,
+                            userType: userData.userType,
+                            role: userData.role || 'user',
+                            createdAt: userData.createdAt?.toDate() || new Date(),
+                            phoneNumber: firebaseUser.phoneNumber || undefined,
+                        });
+                    } else {
+                        setUser({
+                            id: firebaseUser.uid,
+                            email: firebaseUser.email || '',
+                            name: firebaseUser.displayName || '',
+                            userType: 'personal',
+                            role: 'user',
+                            createdAt: new Date(),
+                            phoneNumber: firebaseUser.phoneNumber || undefined,
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error fetching user profile:', error);
+                }
+            } else {
+                setUser(null);
             }
-        }
-        setIsLoading(false);
+            setIsLoading(false);
+        });
+
+        return () => unsubscribe();
     }, []);
 
-    const login = async (email: string, password: string, type: UserType) => {
+    const ensureUserProfile = async (firebaseUser: any, type: UserType, extraData: any = {}) => {
+        const userRef = doc(db, 'users', firebaseUser.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+            const userData = {
+                uid: firebaseUser.uid,
+                email: firebaseUser.email || null,
+                name: firebaseUser.displayName || extraData.name || 'User',
+                userType: type || 'personal',
+                companyName: extraData.companyName || null,
+                phoneNumber: firebaseUser.phoneNumber || null,
+                role: extraData.role || 'user',
+                createdAt: serverTimestamp(),
+            };
+            await setDoc(userRef, userData);
+            return userData;
+        }
+        return userSnap.data();
+    };
+
+    const login = async (email: string, password: string) => {
         setIsLoading(true);
         try {
-            // Simulate API call - In production, replace with actual API
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            // Mock login - In production, validate credentials with backend
-            const newUser: User = {
-                id: `user_${Date.now()}`,
-                email,
-                name: 'Sumit Kumar',
-                companyName: type === 'company' ? 'Henu OS Private Limited' : undefined,
-                userType: type,
-                createdAt: new Date(),
-            };
-
-            setUser(newUser);
-            localStorage.setItem('henu_user', JSON.stringify(newUser));
+            await signInWithEmailAndPassword(auth, email, password);
             setShowAuthModal(false);
         } catch (error) {
             console.error('Login failed:', error);
@@ -92,20 +147,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const signup = async (email: string, password: string, name: string, type: UserType, companyName?: string) => {
         setIsLoading(true);
         try {
-            // Simulate API call - In production, replace with actual API
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            const newUser: User = {
-                id: `user_${Date.now()}`,
-                email,
-                name,
-                companyName,
-                userType: type,
-                createdAt: new Date(),
-            };
-
-            setUser(newUser);
-            localStorage.setItem('henu_user', JSON.stringify(newUser));
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await updateProfile(userCredential.user, { displayName: name });
+            await ensureUserProfile(userCredential.user, type, { name, companyName });
             setShowAuthModal(false);
         } catch (error) {
             console.error('Signup failed:', error);
@@ -115,9 +159,64 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('henu_user');
+    const signInWithGoogle = async (type: UserType) => {
+        setIsLoading(true);
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            await ensureUserProfile(result.user, type);
+            setShowAuthModal(false);
+        } catch (error) {
+            console.error('Google sign in failed:', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const signInWithApple = async (type: UserType) => {
+        setIsLoading(true);
+        try {
+            const provider = new OAuthProvider('apple.com');
+            const result = await signInWithPopup(auth, provider);
+            await ensureUserProfile(result.user, type);
+            setShowAuthModal(false);
+        } catch (error) {
+            console.error('Apple sign in failed:', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const requestPhoneOTP = async (phoneNumber: string, containerId: string) => {
+        const recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
+            size: 'invisible',
+        });
+        return await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
+    };
+
+    const verifyPhoneOTP = async (confirmationResult: ConfirmationResult, otp: string, type: UserType) => {
+        setIsLoading(true);
+        try {
+            const result = await confirmationResult.confirm(otp);
+            await ensureUserProfile(result.user, type);
+            setShowAuthModal(false);
+        } catch (error) {
+            console.error('Phone verification failed:', error);
+            throw error;
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const logout = async () => {
+        try {
+            await signOut(auth);
+            setUser(null);
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     };
 
     const value: AuthContextType = {
@@ -127,6 +226,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         isLoading,
         login,
         signup,
+        signInWithGoogle,
+        signInWithApple,
+        requestPhoneOTP,
+        verifyPhoneOTP,
         logout,
         showAuthModal,
         setShowAuthModal,

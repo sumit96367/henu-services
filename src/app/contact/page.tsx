@@ -41,6 +41,7 @@ import { StepIndicator } from '@/components/ui/step-indicator';
 import { FloatingPillButton } from '@/components/ui/floating-pill-button';
 import { ExpandableTextarea } from '@/components/ui/expandable-textarea';
 import { Spotlight } from '@/components/ui/spotlight';
+import { useAuth } from '@/context/AuthContext';
 
 // Contact Info
 const contactInfo = [
@@ -97,6 +98,7 @@ const budgetOptions = [
 ];
 
 export default function ContactPage() {
+    const { user } = useAuth();
     const [currentStep, setCurrentStep] = useState(1);
     const [formState, setFormState] = useState({
         name: '',
@@ -134,12 +136,31 @@ export default function ContactPage() {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate form submission
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        try {
+            const response = await fetch('/api/contact/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formState,
+                    userId: user?.id || null,
+                    userType: user?.userType || 'company',
+                    companyName: user?.companyName || null
+                })
+            });
 
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        setCurrentStep(1); // Reset to step 1
+            if (response.ok) {
+                setIsSubmitted(true);
+                setCurrentStep(1); // Reset to step 1 for future use
+            } else {
+                const data = await response.json();
+                alert(data.error || 'Failed to send inquiry');
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('An error occurred. Please try again later.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

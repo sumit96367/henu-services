@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CreditCard, Smartphone, CheckCircle2, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
 
 // COMPLETE Domain to sub-domain mapping (as per requirements)
 const domainSubDomainMap: Record<string, string[]> = {
@@ -98,6 +99,7 @@ export default function EnrollmentModal({
     domainCategory,
     domainTitle
 }: EnrollmentModalProps) {
+    const { user } = useAuth();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -210,7 +212,10 @@ export default function EnrollmentModal({
                     plan: formData.plan,
                     amount,
                     paymentMethod: formData.paymentMethod,
-                    billingAddress: formData.billingAddress
+                    billingAddress: formData.billingAddress,
+                    userId: user?.id,
+                    userType: user?.userType,
+                    companyName: user?.companyName
                 })
             });
 

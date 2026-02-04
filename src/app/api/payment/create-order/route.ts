@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveEnrollment, savePayment } from '@/lib/data-store';
 import { EnrollmentRecord, PaymentRecord } from '@/types/admin';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export async function POST(req: NextRequest) {
     try {
@@ -15,7 +17,10 @@ export async function POST(req: NextRequest) {
             amount,
             paymentMethod,
             billingAddress,
-            domainCategory
+            domainCategory,
+            userId,
+            userType,
+            companyName
         } = body;
 
         // Validate required fields
@@ -32,7 +37,7 @@ export async function POST(req: NextRequest) {
         const invoiceNumber = `INV-${Date.now()}`;
         const timestamp = new Date().toISOString();
 
-        // Create enrollment record
+        // Create enrollment record (local store)
         const enrollmentRecord: EnrollmentRecord = {
             id: enrollmentId,
             timestamp,
@@ -49,7 +54,7 @@ export async function POST(req: NextRequest) {
             status: 'pending'
         };
 
-        // Create payment record
+        // Create payment record (local store)
         const paymentRecord: PaymentRecord = {
             id: `PAY_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             timestamp,
@@ -63,27 +68,41 @@ export async function POST(req: NextRequest) {
             orderId
         };
 
-        // Save to data store
+        // Save to local data store
         saveEnrollment(enrollmentRecord);
         savePayment(paymentRecord);
 
-        // TODO: Implement Razorpay order creation
-        // const Razorpay = require('razorpay');
-        // const razorpay = new Razorpay({
-        //     key_id: process.env.RAZORPAY_KEY_ID,
-        //     key_secret: process.env.RAZORPAY_KEY_SECRET
-        // });
-        //
-        // const options = {
-        //     amount: amount * 100, // amount in smallest currency unit (paise)
-        //     currency: 'INR',
-        //     receipt: `receipt_${Date.now()}`,
-        //     payment_capture: 1
-        // };
-        //
-        // const order = await razorpay.orders.create(options);
+        // Save to Firestore for real-time dashboard updates
+        let firestoreId = null;
+        try {
+            const orderRef = await addDoc(collection(db, 'orders'), {
+                userId: userId || null,
+                fullName,
+                email,
+                domain,
+                subDomain,
+                plan,
+                amount,
+                paymentMethod,
+                billingAddress,
+                status: 'Processing',
+                statusColor: 'cyan',
+                userType: userType || 'personal',
+                companyName: companyName || null,
+                type: 'internship_enrollment',
+                enrollmentId,
+                invoiceNumber,
+                orderId,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp()
+            });
+            firestoreId = orderRef.id;
+        } catch (fsError) {
+            console.error('Firestore save error:', fsError);
+            // Non-blocking for now, as local save succeeded
+        }
 
-        // For now, return a mock order
+        // For now, return a mock response that includes the IDs
         const mockOrder = {
             id: orderId,
             amount: amount * 100,
@@ -95,6 +114,8 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             success: true,
             order: mockOrder,
+            enrollmentId,
+            firestoreId,
             enrollmentData: {
                 fullName,
                 email,

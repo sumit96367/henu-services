@@ -10,10 +10,10 @@ export async function middleware(request: NextRequest) {
 
     // Allow access to login page
     if (pathname === '/admin/login') {
-        // If already authenticated, redirect to dashboard
+        // If already authenticated as ADMIN, redirect to dashboard
         if (token) {
             const payload = await verifyToken(token);
-            if (payload) {
+            if (payload && payload.role === 'admin') {
                 return NextResponse.redirect(new URL('/admin/dashboard', request.url));
             }
         }
@@ -23,12 +23,13 @@ export async function middleware(request: NextRequest) {
     // Protect all other /admin routes
     if (pathname.startsWith('/admin')) {
         if (!token) {
-            // No token, redirect to login
+            // No token at all, redirect to admin login
             return NextResponse.redirect(new URL('/admin/login', request.url));
         }
 
-        // Verify token
+        // Verify token and role
         const payload = await verifyToken(token);
+
         if (!payload) {
             // Invalid token, redirect to login and clear cookie
             const response = NextResponse.redirect(new URL('/admin/login', request.url));
@@ -36,7 +37,17 @@ export async function middleware(request: NextRequest) {
             return response;
         }
 
-        // Token is valid, allow access
+        if (payload.role !== 'admin') {
+            // VALID token but NOT an admin -> Redirect to homepage
+            const response = NextResponse.redirect(new URL('/', request.url));
+            // We keep the cookie if it's a valid user token, but since this is specifically 
+            // an 'admin_token' that failed the role check, we should probably clear it 
+            // to prevent repeated failed attempts.
+            response.cookies.delete('admin_token');
+            return response;
+        }
+
+        // Token is valid and user is admin, allow access
         return NextResponse.next();
     }
 

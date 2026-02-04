@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import EnrollmentModal from '@/components/EnrollmentModal';
 import StarfieldCanvas from '@/components/ui/hyperdrive-hero';
 
@@ -90,6 +92,18 @@ const internships = [
 export default function CareersPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedInternship, setSelectedInternship] = useState<typeof internships[0] | null>(null);
+    const { userType, isLoading } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!isLoading && userType !== 'personal') {
+            router.push('/');
+        }
+    }, [userType, isLoading, router]);
+
+    if (isLoading || userType !== 'personal') {
+        return <div className="min-h-screen bg-black" />; // Or a loading spinner
+    }
 
     const handleGetItNow = (internship: typeof internships[0]) => {
         setSelectedInternship(internship);

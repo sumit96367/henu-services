@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 
 export default function AdminLoginPage() {
     const [adminId, setAdminId] = useState("");
@@ -13,26 +16,47 @@ export default function AdminLoginPage() {
         setIsLoading(true);
 
         try {
+            // 1. Authenticate with Firebase
+            const userCredential = await signInWithEmailAndPassword(auth, adminId, password);
+            const user = userCredential.user;
+
+            // 2. Verify Admin Role in Firestore
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+
+            if (!userDoc.exists() || userDoc.data()?.role !== 'admin') {
+                setError("Access denied: You do not have administrator privileges.");
+                setIsLoading(false);
+                return;
+            }
+
+            const userData = userDoc.data();
+
+            // 3. Set the secure session cookie via our API
             const response = await fetch('/api/admin/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ adminId, password }),
+                body: JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    role: userData.role
+                }),
             });
-
-            const data = await response.json();
 
             if (response.ok) {
                 // Success - redirect to dashboard
                 window.location.href = "/admin/dashboard";
             } else {
-                // Show error message
-                setError(data.error || "Invalid admin credentials");
+                const data = await response.json();
+                setError(data.error || "Failed to establish admin session.");
                 setIsLoading(false);
             }
-        } catch (err) {
-            setError("Failed to login. Please try again.");
+        } catch (err: any) {
+            console.error("Admin Auth Error:", err);
+            setError(err.code === 'auth/invalid-credential'
+                ? "Invalid admin ID or password."
+                : "Authentication failed. Please try again.");
             setIsLoading(false);
         }
     };
