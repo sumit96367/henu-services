@@ -17,7 +17,8 @@ import {
     Twitter,
     Linkedin,
     Github,
-    Instagram
+    Instagram,
+    ShoppingCart
 } from 'lucide-react';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { ProjectCard } from '@/components/ui/project-card';
@@ -38,127 +39,117 @@ const categories = [
     { id: 'funding', name: 'Grants & Funding', icon: Coins },
 ];
 
-// Projects Data
+// Projects Data - 11 Software Products
 const projects = [
     {
         id: 1,
-        title: 'FinServe Pro Dashboard',
-        category: 'web',
-        description: 'Enterprise financial dashboard with real-time analytics and AI-powered insights.',
-        image: '/projects/finserve.jpg',
-        tags: ['React', 'Node.js', 'PostgreSQL', 'AI'],
-        color: 'from-blue-500 to-cyan-500',
-        stats: { metric: '40%', label: 'Efficiency Increase' }
+        title: 'Hospital Management System',
+        category: 'all',
+        description: 'Comprehensive healthcare management solution with patient records, appointment scheduling, billing, inventory management, and analytics. Streamline your hospital operations with our advanced digital platform.',
+        image: '/projects/hospital.jpg',
+        tags: ['Healthcare', 'Management', 'Digital'],
+        color: 'from-purple-500 to-pink-500',
+        stats: { metric: 'HMS', label: 'Solution' }
     },
     {
         id: 2,
-        title: 'HealthMate Mobile App',
-        category: 'mobile',
-        description: 'Cross-platform health tracking app with telemedicine integration.',
-        image: '/projects/healthmate.jpg',
-        tags: ['React Native', 'Firebase', 'HealthKit'],
+        title: 'Accounting Software',
+        category: 'all',
+        description: 'Complete accounting solution for businesses with GST compliance, invoicing, expense tracking, financial reports, and tax management. Simplify your financial operations with automated workflows.',
+        image: '/projects/accounting.jpg',
+        tags: ['Finance', 'GST', 'Invoicing'],
         color: 'from-green-500 to-emerald-500',
-        stats: { metric: '100K+', label: 'Downloads' }
+        stats: { metric: 'Accounting', label: 'Software' }
     },
     {
         id: 3,
-        title: 'AutoSupport AI Agent',
-        category: 'ai',
-        description: 'Intelligent customer support agent that reduced response time by 80%.',
-        image: '/projects/autosupport.jpg',
-        tags: ['GPT-4', 'LangChain', 'Python'],
-        color: 'from-purple-500 to-pink-500',
-        stats: { metric: '80%', label: 'Faster Response' }
+        title: 'Hotel Management System',
+        category: 'all',
+        description: 'All-in-one hotel management platform featuring room booking, guest management, POS integration, housekeeping, and revenue analytics. Enhance guest experiences and operational efficiency.',
+        image: '/projects/hotel.jpg',
+        tags: ['Hospitality', 'Booking', 'POS'],
+        color: 'from-amber-500 to-orange-500',
+        stats: { metric: 'Hotel', label: 'System' }
     },
     {
         id: 4,
-        title: 'GreenTech Campaign',
-        category: 'marketing',
-        description: 'Multi-channel digital campaign that achieved 500% ROAS.',
-        image: '/projects/greentech.jpg',
-        tags: ['Meta Ads', 'Google Ads', 'SEO'],
-        color: 'from-orange-500 to-red-500',
-        stats: { metric: '500%', label: 'ROAS' }
+        title: 'School / College Fees Management System',
+        category: 'all',
+        description: 'Comprehensive educational institution management with student enrollment, fee collection, attendance tracking, grade management, and parent portal. Digitize your campus operations.',
+        image: '/projects/school.jpg',
+        tags: ['Education', 'Fees', 'Management'],
+        color: 'from-blue-500 to-indigo-500',
+        stats: { metric: 'Education', label: 'Platform' }
     },
     {
         id: 5,
-        title: 'TechStart Incorporation',
-        category: 'legal',
-        description: 'Complete company setup including registration, compliance, and trademark.',
-        image: '/projects/techstart.jpg',
-        tags: ['Pvt Ltd', 'Trademark', 'Compliance'],
-        color: 'from-amber-500 to-orange-500',
-        stats: { metric: '15 Days', label: 'Complete Setup' }
+        title: 'Restaurant Management System',
+        category: 'all',
+        description: 'Complete restaurant solution with table management, order processing, kitchen display, inventory tracking, and billing. Optimize your restaurant workflow and customer service.',
+        image: '/projects/restaurant.jpg',
+        tags: ['Restaurant', 'POS', 'Kitchen'],
+        color: 'from-red-500 to-pink-500',
+        stats: { metric: 'Restaurant', label: 'Solution' }
     },
     {
         id: 6,
-        title: 'AgriTech Startup India Grant',
-        category: 'funding',
-        description: 'Secured ₹50L government grant for agricultural technology startup.',
-        image: '/projects/agritech.jpg',
-        tags: ['Startup India', 'MSME', 'Seed Fund'],
-        color: 'from-yellow-500 to-amber-500',
-        stats: { metric: '₹50L', label: 'Grant Secured' }
+        title: 'Travel Agency Management System',
+        category: 'all',
+        description: 'End-to-end travel agency platform with booking management, itinerary creation, payment processing, customer management, and vendor coordination. Grow your travel business digitally.',
+        image: '/projects/travel.jpg',
+        tags: ['Travel', 'Booking', 'CRM'],
+        color: 'from-teal-500 to-green-500',
+        stats: { metric: 'Travel', label: 'Platform' }
     },
     {
         id: 7,
-        title: 'EduLearn Platform',
-        category: 'web',
-        description: 'Scalable e-learning platform with live classes and AI tutoring.',
-        image: '/projects/edulearn.jpg',
-        tags: ['Next.js', 'WebRTC', 'MongoDB'],
-        color: 'from-indigo-500 to-purple-500',
-        stats: { metric: '50K+', label: 'Active Students' }
+        title: 'Pharmacy Management System',
+        category: 'all',
+        description: 'Advanced pharmacy software with inventory management, prescription tracking, billing, expiry alerts, and sales analytics. Ensure compliance and efficient pharmacy operations.',
+        image: '/projects/pharmacy.jpg',
+        tags: ['Pharmacy', 'Inventory', 'Billing'],
+        color: 'from-green-500 to-teal-500',
+        stats: { metric: 'Pharmacy', label: 'Software' }
     },
     {
         id: 8,
-        title: 'FoodDash Delivery App',
-        category: 'mobile',
-        description: 'Food delivery app with real-time tracking and smart recommendations.',
-        image: '/projects/fooddash.jpg',
-        tags: ['Flutter', 'Node.js', 'Maps API'],
-        color: 'from-red-500 to-pink-500',
-        stats: { metric: '2M+', label: 'Orders Delivered' }
+        title: 'E-commerce Solutions',
+        category: 'all',
+        description: 'Full-featured e-commerce platform with product catalog, shopping cart, payment gateway integration, order management, and customer analytics. Launch your online store with confidence.',
+        image: '/projects/ecommerce.jpg',
+        tags: ['E-commerce', 'Online Store', 'Payment'],
+        color: 'from-orange-500 to-red-500',
+        stats: { metric: 'E-commerce', label: 'Platform' }
     },
     {
         id: 9,
-        title: 'Legal Document Automation',
-        category: 'ai',
-        description: 'AI system that generates and reviews legal documents automatically.',
-        image: '/projects/legaldoc.jpg',
-        tags: ['NLP', 'GPT-4', 'Document AI'],
-        color: 'from-cyan-500 to-blue-500',
-        stats: { metric: '90%', label: 'Time Saved' }
+        title: 'Employee Management System',
+        category: 'all',
+        description: 'Complete HR and employee management solution with attendance, payroll, leave management, performance tracking, and employee portal. Streamline your workforce management.',
+        image: '/projects/employee.jpg',
+        tags: ['HR', 'Payroll', 'Attendance'],
+        color: 'from-indigo-500 to-purple-500',
+        stats: { metric: 'HRMS', label: 'Solution' }
     },
     {
         id: 10,
-        title: 'D2C Brand Launch',
-        category: 'marketing',
-        description: 'Complete digital launch strategy for direct-to-consumer fashion brand.',
-        image: '/projects/d2c.jpg',
-        tags: ['Influencer', 'Performance', 'Content'],
-        color: 'from-pink-500 to-rose-500',
-        stats: { metric: '₹1Cr+', label: 'Revenue Generated' }
+        title: 'Invoicing System',
+        category: 'all',
+        description: 'Professional invoicing and billing software with customizable templates, automatic payment reminders, expense tracking, and financial reports. Get paid faster and stay organized.',
+        image: '/projects/invoicing.jpg',
+        tags: ['Invoicing', 'Billing', 'Finance'],
+        color: 'from-yellow-500 to-amber-500',
+        stats: { metric: 'Invoicing', label: 'System' }
     },
     {
         id: 11,
-        title: 'MedTech CDSCO Approval',
-        category: 'legal',
-        description: 'Regulatory compliance and licensing for medical device manufacturer.',
-        image: '/projects/medtech.jpg',
-        tags: ['CDSCO', 'FDA', 'Compliance'],
-        color: 'from-teal-500 to-cyan-500',
-        stats: { metric: '3 Months', label: 'Approval Time' }
-    },
-    {
-        id: 12,
-        title: 'CleanEnergy BioGas Grant',
-        category: 'funding',
-        description: 'Secured ₹2Cr MNRE grant for renewable energy project.',
-        image: '/projects/cleanenergy.jpg',
-        tags: ['MNRE', 'State Grant', 'Subsidy'],
-        color: 'from-green-500 to-teal-500',
-        stats: { metric: '₹2Cr', label: 'Grant Secured' }
+        title: 'Inventory Management System',
+        category: 'all',
+        description: 'Robust inventory management solution with stock tracking, purchase orders, warehouse management, supplier management, and real-time reports. Optimize your inventory control.',
+        image: '/projects/inventory.jpg',
+        tags: ['Inventory', 'Warehouse', 'Stock'],
+        color: 'from-pink-500 to-rose-500',
+        stats: { metric: 'Inventory', label: 'System' }
     },
 ];
 
@@ -170,6 +161,17 @@ const projects = [
 
 export default function PortfolioPage() {
     const [activeCategory, setActiveCategory] = useState('all');
+    const [selectedProduct, setSelectedProduct] = useState<typeof projects[0] | null>(null);
+    const [showPaymentDialog, setShowPaymentDialog] = useState(false);
+    const [paymentForm, setPaymentForm] = useState({
+        productName: '',
+        name: '',
+        email: '',
+        contact: '',
+        paymentMethod: '',
+        requirements: ''
+    });
+
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -183,6 +185,33 @@ export default function PortfolioPage() {
         if (activeCategory === 'all') return projects;
         return projects.filter(project => project.category === activeCategory);
     }, [activeCategory]);
+
+    const openModal = (product: typeof projects[0]) => {
+        setSelectedProduct(product);
+        setPaymentForm(prev => ({ ...prev, productName: product.title }));
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+        setSelectedProduct(null);
+        setShowPaymentDialog(false);
+        document.body.style.overflow = 'auto';
+    };
+
+    const handleGetItNow = () => {
+        window.location.href = 'https://henuos.netlify.app/';
+    };
+
+    const handleBuyNow = () => {
+        setShowPaymentDialog(true);
+    };
+
+    const handlePaymentSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        alert(`Payment request submitted for ${paymentForm.productName}!\n\nCustomer Details:\nName: ${paymentForm.name}\nEmail: ${paymentForm.email}\nContact: ${paymentForm.contact}\nPayment Method: ${paymentForm.paymentMethod}\n\nAdditional Requirements:\n${paymentForm.requirements || 'None'}`);
+        setShowPaymentDialog(false);
+        closeModal();
+    };
 
     return (
         <main className="relative z-10">
@@ -289,14 +318,24 @@ export default function PortfolioPage() {
                             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                         >
                             {filteredProjects.map((project, index) => (
-                                <ProjectCard
+                                <motion.div
                                     key={project.id}
-                                    imgSrc={project.image}
-                                    title={project.title}
-                                    description={project.description}
-                                    link={`/portfolio/${project.id}`}
-                                    linkText="View Details"
-                                />
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.05 }}
+                                    onClick={() => openModal(project)}
+                                    className="relative group cursor-pointer"
+                                >
+                                    <div
+                                        className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.08] hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(184,140,255,0.15)] hover:-translate-y-1"
+                                        style={{ padding: '1cm' }}
+                                    >
+                                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
+                                    </div>
+                                </motion.div>
                             ))}
                         </motion.div>
                     </AnimatePresence>
@@ -394,6 +433,201 @@ export default function PortfolioPage() {
                 <div className="absolute top-1/2 left-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent hidden xl:block" />
                 <div className="absolute top-1/2 right-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent hidden xl:block" />
             </section>
+
+            {/* Product Details Modal */}
+            <AnimatePresence>
+                {selectedProduct && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+                        onClick={closeModal}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative flex items-stretch justify-center gap-8 w-full max-w-6xl px-4"
+                        >
+                            {/* Close Button */}
+                            <button
+                                onClick={closeModal}
+                                className="absolute -top-14 right-4 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                            >
+                                <X className="w-6 h-6 text-white" />
+                            </button>
+
+                            {/* Left: Product Name Pill */}
+                            <div className="flex items-center justify-center bg-gradient-to-br from-[#B88CFF] to-[#9B6FE8] px-12 py-10 rounded-[50px] shadow-2xl min-w-[280px] max-w-[320px]">
+                                <h2 className="text-3xl md:text-4xl font-bold text-white text-center leading-tight break-words w-full">
+                                    {selectedProduct.title}
+                                </h2>
+                            </div>
+
+                            {/* Center: Description Window */}
+                            <div className="relative bg-gradient-to-br from-[#F2D5E6] to-[#E8C4D8] rounded-3xl shadow-2xl p-10 max-w-xl min-h-[300px] flex items-center justify-center">
+                                {/* Window Controls */}
+                                <div className="absolute top-5 right-5 flex gap-2">
+                                    <div className="w-4 h-4 rounded-full bg-[#D98BBE]"></div>
+                                    <div className="w-4 h-4 rounded-full bg-[#E89DC6]"></div>
+                                    <div className="w-4 h-4 rounded-full bg-[#F2A6C9]"></div>
+                                </div>
+
+                                {/* Description Text */}
+                                <div className="px-6 py-8">
+                                    <p className="text-[#4A2A3E] text-xl leading-relaxed font-semibold text-center">
+                                        {selectedProduct.description}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Right: Action Buttons */}
+                            <div className="flex flex-col items-center justify-center gap-5 min-w-[220px]">
+                                <button
+                                    onClick={handleGetItNow}
+                                    className="w-full px-10 py-5 bg-gradient-to-r from-[#F6F1EB] to-[#EEE5D9] hover:from-[#FFFBF5] hover:to-[#F6F1EB] text-[#4A2A3E] font-bold text-xl rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-105 border-2 border-[#D98BBE]"
+                                >
+                                    <span className="text-2xl">⭐</span>
+                                    Get-it-Now
+                                </button>
+
+                                <button
+                                    onClick={handleBuyNow}
+                                    className="w-full px-10 py-5 bg-gradient-to-r from-[#D98BBE] to-[#C76FA0] hover:from-[#E89DC6] hover:to-[#D77FAA] text-white font-bold text-xl rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-105"
+                                >
+                                    <ShoppingCart className="w-6 h-6" />
+                                    BUY NOW
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Payment Requirements Dialog */}
+            <AnimatePresence>
+                {showPaymentDialog && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+                        onClick={() => setShowPaymentDialog(false)}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="relative w-full max-w-lg bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto"
+                            style={{ padding: '1cm' }}
+                        >
+                            <button
+                                onClick={() => setShowPaymentDialog(false)}
+                                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                            >
+                                <X className="w-4 h-4 text-white" />
+                            </button>
+
+                            <h3 className="text-2xl font-bold text-white mb-6">Payment Requirements</h3>
+
+                            <form onSubmit={handlePaymentSubmit} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-purple-300 mb-2">Product</label>
+                                    <input
+                                        type="text"
+                                        value={paymentForm.productName}
+                                        readOnly
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-purple-500/50"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-purple-300 mb-2">Full Name</label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={paymentForm.name}
+                                        onChange={(e) => setPaymentForm({ ...paymentForm, name: e.target.value })}
+                                        placeholder="John Doe"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-purple-300 mb-2">Email Address</label>
+                                    <input
+                                        type="email"
+                                        required
+                                        value={paymentForm.email}
+                                        onChange={(e) => setPaymentForm({ ...paymentForm, email: e.target.value })}
+                                        placeholder="your@email.com"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-purple-300 mb-2">Contact Number</label>
+                                    <input
+                                        type="tel"
+                                        required
+                                        value={paymentForm.contact}
+                                        onChange={(e) => setPaymentForm({ ...paymentForm, contact: e.target.value })}
+                                        placeholder="+1 234 567 8900"
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-purple-300 mb-2">Payment Method</label>
+                                    <select
+                                        required
+                                        value={paymentForm.paymentMethod}
+                                        onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value })}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-purple-500/50"
+                                    >
+                                        <option value="" className="bg-gray-900">Select payment method</option>
+                                        <option value="credit-card" className="bg-gray-900">Credit Card</option>
+                                        <option value="debit-card" className="bg-gray-900">Debit Card</option>
+                                        <option value="upi" className="bg-gray-900">UPI</option>
+                                        <option value="net-banking" className="bg-gray-900">Net Banking</option>
+                                        <option value="wallet" className="bg-gray-900">Digital Wallet</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-purple-300 mb-2">Additional Requirements</label>
+                                    <textarea
+                                        value={paymentForm.requirements}
+                                        onChange={(e) => setPaymentForm({ ...paymentForm, requirements: e.target.value })}
+                                        placeholder="Any specific requirements or notes..."
+                                        rows={3}
+                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                                    />
+                                </div>
+
+                                <div className="flex gap-3 pt-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPaymentDialog(false)}
+                                        className="flex-1 px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-colors border border-white/10"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold rounded-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/50"
+                                    >
+                                        Proceed
+                                    </button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
         </main>
     );

@@ -210,7 +210,8 @@ export const AuthModal = () => {
                                 <div className="grid grid-cols-2 gap-6">
                                     <button
                                         onClick={() => setSelectedType('company')}
-                                        className={`relative p-8 rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'company' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 hover:border-white/20'}`}
+                                        className={`relative rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'company' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 hover:border-white/20'}`}
+                                        style={{ padding: 'max(37.8px, 1.5rem)' }}
                                     >
                                         <div className="mb-auto">
                                             <Building2 size={32} className={selectedType === 'company' ? 'text-cyan-400' : 'text-gray-400'} />
@@ -223,7 +224,8 @@ export const AuthModal = () => {
 
                                     <button
                                         onClick={() => setSelectedType('personal')}
-                                        className={`relative p-8 rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'personal' ? 'border-amber-500 bg-amber-500/10' : 'border-white/10 hover:border-white/20'}`}
+                                        className={`relative rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'personal' ? 'border-amber-500 bg-amber-500/10' : 'border-white/10 hover:border-white/20'}`}
+                                        style={{ padding: 'max(37.8px, 1.5rem)' }}
                                     >
                                         <User size={32} className={selectedType === 'personal' ? 'text-amber-400' : 'text-gray-400'} />
                                         <div className="mt-6">
@@ -237,6 +239,7 @@ export const AuthModal = () => {
                                     onClick={() => selectedType && setStep('credentials')}
                                     disabled={!selectedType}
                                     className={`w-full py-4 rounded-full font-semibold transition-all ${selectedType ? (selectedType === 'company' ? 'bg-cyan-500 text-white' : 'bg-amber-500 text-black') : 'bg-white/10 text-white/40 cursor-not-allowed'}`}
+                                    style={{ marginTop: '2cm' }}
                                 >
                                     Continue
                                 </button>

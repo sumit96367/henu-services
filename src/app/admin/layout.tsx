@@ -1,19 +1,20 @@
-import type { Metadata } from "next";
-import { AdminLayout } from "@/components/layout/AdminLayout";
+"use client";
 
-export const metadata: Metadata = {
-    title: "Admin Portal - Henu OS",
-    description: "Admin dashboard for managing internships, payments, and users",
-    robots: {
-        index: false,
-        follow: false,
-    },
-};
+import { AdminLayout } from "@/components/layout/AdminLayout";
+import { usePathname } from "next/navigation";
 
 export default function AdminRootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const pathname = usePathname();
+
+    // Don't render AdminLayout on the login page
+    if (pathname === '/admin/login') {
+        return <>{children}</>;
+    }
+
+    // Render with AdminLayout for all other admin pages
     return <AdminLayout>{children}</AdminLayout>;
 }
