@@ -6,6 +6,7 @@ const JWT_SECRET = new TextEncoder().encode(
 
 export interface JWTPayload {
     adminId: string;
+    role: string;
     iat?: number;
     exp?: number;
 }
@@ -13,8 +14,8 @@ export interface JWTPayload {
 /**
  * Generate a JWT token for admin authentication
  */
-export async function generateToken(adminId: string): Promise<string> {
-    const token = await new SignJWT({ adminId })
+export async function generateToken(adminId: string, role: string): Promise<string> {
+    const token = await new SignJWT({ adminId, role })
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
         .setExpirationTime('24h')
@@ -31,9 +32,10 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
         const { payload } = await jwtVerify(token, JWT_SECRET);
 
         // Validate that payload contains required adminId field
-        if (payload && typeof payload.adminId === 'string') {
+        if (payload && typeof payload.adminId === 'string' && typeof payload.role === 'string') {
             return {
                 adminId: payload.adminId,
+                role: payload.role,
                 iat: payload.iat,
                 exp: payload.exp
             };

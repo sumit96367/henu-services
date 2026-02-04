@@ -1,7 +1,8 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 
@@ -159,8 +160,15 @@ const categoryData: Record<string, {
 export default function InternshipSourcesPage() {
     const params = useParams();
     const router = useRouter();
+    const { userType, isLoading } = useAuth();
     const category = params.category as string;
     const data = categoryData[category];
+
+    useEffect(() => {
+        if (!isLoading && userType !== 'personal') {
+            router.push('/');
+        }
+    }, [userType, isLoading, router]);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -171,6 +179,10 @@ export default function InternshipSourcesPage() {
     });
 
     const [selectedRole, setSelectedRole] = useState<typeof data.roles[0] | null>(null);
+
+    if (isLoading || userType !== 'personal') {
+        return <div className="min-h-screen bg-black" />;
+    }
 
     if (!data) {
         return (

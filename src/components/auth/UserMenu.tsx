@@ -137,6 +137,16 @@ export const UserMenu = () => {
 
                         {/* Menu items */}
                         <div className="p-2">
+                            {user?.role === 'admin' && (
+                                <Link
+                                    href="/admin/dashboard"
+                                    onClick={() => setIsOpen(false)}
+                                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 transition-colors"
+                                >
+                                    <Sparkles size={18} />
+                                    <span>Admin Portal</span>
+                                </Link>
+                            )}
                             <Link
                                 href="/dashboard"
                                 onClick={() => setIsOpen(false)}

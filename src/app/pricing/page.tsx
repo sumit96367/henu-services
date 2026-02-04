@@ -149,12 +149,12 @@ export default function PricingPage() {
 
                         {/* Pricing Cards with Blur */}
                         <div style={{ position: 'relative', width: '100%', maxWidth: '1152px', margin: '0 auto' }}>
-                            {/* Blurred Pricing Cards */}
+                            {/* Pricing Cards with Selective Blur */}
                             <motion.div
                                 variants={staggerContainer}
                                 initial="hidden"
                                 animate="visible"
-                                style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', filter: 'blur(8px)', pointerEvents: 'none', userSelect: 'none', width: '100%' }}
+                                style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', width: '100%' }}
                             >
                                 {pricingPlans.map((plan, index) => (
                                     <motion.div
@@ -170,7 +170,12 @@ export default function PricingPage() {
                                         <h3 className="text-2xl font-bold text-white mb-2" style={{ textAlign: 'center' }}>{plan.name}</h3>
                                         <p className="text-gray-400 text-sm mb-6" style={{ textAlign: 'center' }}>{plan.description}</p>
 
-                                        <div className="mb-8" style={{ textAlign: 'center' }}>
+                                        <div
+                                            className="mb-8 cursor-pointer hover:scale-105 transition-transform duration-300"
+                                            style={{ textAlign: 'center', filter: 'blur(8px)', userSelect: 'none' }}
+                                            onClick={() => setShowContactModal(true)}
+                                            title="Click to unlock pricing"
+                                        >
                                             <span className="text-5xl font-bold text-white">
                                                 {billingCycle === 'yearly'
                                                     ? `₹${Math.round(parseInt(plan.price.replace(/[₹,]/g, '')) * 0.8).toLocaleString('en-IN')}`
@@ -191,44 +196,19 @@ export default function PricingPage() {
                                             </ul>
                                         </div>
 
-                                        <div
-                                            className={`w-full py-4 rounded-xl font-semibold flex items-center justify-center gap-2 ${plan.popular
-                                                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black'
-                                                : 'bg-white/5 text-white border border-white/10'
+                                        <button
+                                            onClick={() => setShowContactModal(true)}
+                                            className={`w-full py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] ${plan.popular
+                                                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/20'
+                                                : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                                                 }`}
                                         >
                                             Get Started
                                             <ArrowRight size={18} />
-                                        </div>
+                                        </button>
                                     </motion.div>
                                 ))}
                             </motion.div>
-
-                            {/* Unlock Overlay */}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="text-center p-14 md:p-20 rounded-3xl bg-gradient-to-br from-[#0a0a0a]/95 to-[#151515]/95 border border-white/10 shadow-2xl max-w-md cursor-pointer hover:border-amber-500/30 transition-all duration-300"
-                                    onClick={() => setShowContactModal(true)}
-                                >
-                                    <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/20 flex items-center justify-center">
-                                        <Lock size={32} className="text-amber-400" />
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-white mb-3">
-                                        Unlock Pricing Details
-                                    </h3>
-                                    <p className="text-gray-400 mb-6">
-                                        Connect with us to get personalized pricing for your organization's specific needs.
-                                    </p>
-                                    <button
-                                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold rounded-xl hover:from-amber-400 hover:to-amber-500 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25"
-                                    >
-                                        <Sparkles size={20} />
-                                        Contact Sales Team
-                                    </button>
-                                </motion.div>
-                            </div>
                         </div>
                     </div>
                 </section>
