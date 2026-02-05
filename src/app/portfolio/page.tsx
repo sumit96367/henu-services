@@ -307,32 +307,56 @@ export default function PortfolioPage() {
 
             {/* Projects Grid */}
             <section className="section bg-transparent pt-0 relative z-20" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
-                <div className="container">
+                {/* Single Column Container */}
+                <div className="container max-w-3xl mx-auto">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeCategory}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.3 }}
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="space-y-6"
                         >
                             {filteredProjects.map((project, index) => (
                                 <motion.div
                                     key={project.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.05 }}
+                                    // Premium scroll animations with blur + scale
+                                    initial={{
+                                        opacity: 0,
+                                        x: index % 2 === 0 ? -60 : 60,  // Alternating left/right
+                                        scale: 0.8,  // Start smaller
+                                        filter: "blur(10px)"  // Start blurred
+                                    }}
+                                    whileInView={{
+                                        opacity: 1,
+                                        x: 0,
+                                        scale: 1,  // Scale to normal
+                                        filter: "blur(0px)"  // Clear blur
+                                    }}
+                                    viewport={{
+                                        once: true,
+                                        margin: "-50px"
+                                    }}
+                                    transition={{
+                                        duration: 0.7,
+                                        ease: [0.22, 0.61, 0.36, 1],
+                                        delay: index * 0.1
+                                    }}
                                     onClick={() => openModal(project)}
                                     className="relative group cursor-pointer"
                                 >
+                                    {/* Card Box - PRESERVED */}
                                     <div
-                                        className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.08] hover:border-purple-500/30 hover:shadow-[0_0_30px_rgba(184,140,255,0.15)] hover:-translate-y-1"
+                                        className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20"
                                         style={{ padding: '1cm' }}
                                     >
-                                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                                        {/* Software Title */}
+                                        <h3 className="text-3xl font-black text-white mb-3 group-hover:text-purple-400 transition-colors tracking-tight leading-tight font-['Space_Grotesk'] uppercase">
                                             {project.title}
                                         </h3>
+
+                                        {/* Accent Underline - PRESERVED */}
                                         <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
                                     </div>
                                 </motion.div>
@@ -449,7 +473,7 @@ export default function PortfolioPage() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="relative flex items-stretch justify-center gap-8 w-full max-w-6xl px-4"
+                            className="relative flex items-center justify-center gap-6 w-full max-w-6xl px-4"
                         >
                             {/* Close Button */}
                             <button
@@ -459,15 +483,45 @@ export default function PortfolioPage() {
                                 <X className="w-6 h-6 text-white" />
                             </button>
 
-                            {/* Left: Product Name Pill */}
-                            <div className="flex items-center justify-center bg-gradient-to-br from-[#B88CFF] to-[#9B6FE8] px-12 py-10 rounded-[50px] shadow-2xl min-w-[280px] max-w-[320px]">
-                                <h2 className="text-3xl md:text-4xl font-bold text-white text-center leading-tight break-words w-full">
+                            {/* Left: Product Name Card */}
+                            <div
+                                className="bg-gradient-to-br from-[#B88CFF] to-[#9B6FE8] shadow-2xl"
+                                style={{
+                                    minWidth: '280px',
+                                    maxWidth: '360px',
+                                    height: 'auto',
+                                    padding: '28px',
+                                    borderRadius: '40px'
+                                }}
+                            >
+                                <h2
+                                    className="text-white font-['Space_Grotesk']"
+                                    style={{
+                                        fontSize: 'clamp(26px, 2.6vw, 38px)',
+                                        fontWeight: '700',
+                                        textAlign: 'center',
+                                        wordBreak: 'keep-all',
+                                        overflowWrap: 'normal',
+                                        whiteSpace: 'normal',
+                                        hyphens: 'none',
+                                        lineHeight: '1.25',
+                                        width: '100%'
+                                    }}
+                                >
                                     {selectedProduct.title}
                                 </h2>
                             </div>
 
-                            {/* Center: Description Window */}
-                            <div className="relative bg-gradient-to-br from-[#F2D5E6] to-[#E8C4D8] rounded-3xl shadow-2xl p-10 max-w-xl min-h-[300px] flex items-center justify-center">
+                            {/* Center: Description Card */}
+                            <div
+                                className="relative bg-gradient-to-br from-[#F2D5E6] to-[#E8C4D8] shadow-2xl flex flex-col"
+                                style={{
+                                    width: '450px',
+                                    minHeight: '280px',
+                                    padding: '32px',
+                                    borderRadius: '32px'
+                                }}
+                            >
                                 {/* Window Controls */}
                                 <div className="absolute top-5 right-5 flex gap-2">
                                     <div className="w-4 h-4 rounded-full bg-[#D98BBE]"></div>
@@ -476,28 +530,38 @@ export default function PortfolioPage() {
                                 </div>
 
                                 {/* Description Text */}
-                                <div className="px-6 py-8">
-                                    <p className="text-[#4A2A3E] text-xl leading-relaxed font-semibold text-center">
+                                <div className="flex items-center justify-center flex-1">
+                                    <p
+                                        className="text-[#4A2A3E] font-semibold text-center"
+                                        style={{
+                                            fontSize: '18px',
+                                            lineHeight: '1.6',
+                                            wordBreak: 'normal',
+                                            overflowWrap: 'break-word'
+                                        }}
+                                    >
                                         {selectedProduct.description}
                                     </p>
                                 </div>
                             </div>
 
                             {/* Right: Action Buttons */}
-                            <div className="flex flex-col items-center justify-center gap-5 min-w-[220px]">
+                            <div className="flex flex-col items-center justify-center gap-4" style={{ minWidth: '200px' }}>
                                 <button
                                     onClick={handleGetItNow}
-                                    className="w-full px-10 py-5 bg-gradient-to-r from-[#F6F1EB] to-[#EEE5D9] hover:from-[#FFFBF5] hover:to-[#F6F1EB] text-[#4A2A3E] font-bold text-xl rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-105 border-2 border-[#D98BBE]"
+                                    className="w-full px-8 py-4 bg-gradient-to-r from-[#F6F1EB] to-[#EEE5D9] hover:from-[#FFFBF5] hover:to-[#F6F1EB] text-[#4A2A3E] font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl hover:scale-105 border-2 border-[#D98BBE]"
+                                    style={{ fontSize: '16px' }}
                                 >
-                                    <span className="text-2xl">⭐</span>
+                                    <span className="text-xl">⭐</span>
                                     Get-it-Now
                                 </button>
 
                                 <button
                                     onClick={handleBuyNow}
-                                    className="w-full px-10 py-5 bg-gradient-to-r from-[#D98BBE] to-[#C76FA0] hover:from-[#E89DC6] hover:to-[#D77FAA] text-white font-bold text-xl rounded-full transition-all duration-300 flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl hover:scale-105"
+                                    className="w-full px-8 py-4 bg-gradient-to-r from-[#D98BBE] to-[#C76FA0] hover:from-[#E89DC6] hover:to-[#D77FAA] text-white font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl hover:scale-105"
+                                    style={{ fontSize: '16px' }}
                                 >
-                                    <ShoppingCart className="w-6 h-6" />
+                                    <ShoppingCart className="w-5 h-5" />
                                     BUY NOW
                                 </button>
                             </div>

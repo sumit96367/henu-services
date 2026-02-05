@@ -1,11 +1,54 @@
+'use client';
+
 import ShaderDemo_ATC from '@/components/ui/atc-shader';
 import { Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { GlowingCard } from '@/components/ui/glowing-card';
 import Link from 'next/link';
 
 export default function PrivacyPolicyPage() {
+    const sections = [
+        {
+            title: 'Introduction',
+            content: `At Henu OS, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data when you visit our website or use our services.`
+        },
+        {
+            title: 'Information We Collect',
+            content: `We collect information that you provide directly to us, such as when you create an account, fill out a form, or communicate with us. This may include your name, email address, phone number, and any other information you choose to provide.`
+        },
+        {
+            title: 'How We Use Your Information',
+            content: `We use the information we collect to provide, maintain, and improve our services, to communicate with you, to monitor and analyze trends and usage, and to personalize your experience. We may also use your information to send you technical notices, updates, security alerts, and support messages.`
+        },
+        {
+            title: 'Information Sharing and Disclosure',
+            content: `We do not sell, trade, or rent your personal information to third parties. We may share your information with service providers who perform services on our behalf, or when required by law or to protect our rights and safety.`
+        },
+        {
+            title: 'Data Security',
+            content: `We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.`
+        },
+        {
+            title: 'Your Rights',
+            content: `You have the right to access, update, or delete your personal information. You may also have the right to object to or restrict certain types of processing. To exercise these rights, please contact us using the information provided below.`
+        },
+        {
+            title: 'Cookies and Tracking Technologies',
+            content: `We use cookies and similar tracking technologies to collect information about your browsing activities. You can control cookies through your browser settings and other tools.`
+        },
+        {
+            title: 'Changes to This Policy',
+            content: `We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.`
+        },
+        {
+            title: 'Contact Us',
+            content: `If you have any questions about this Privacy Policy, please contact us through our contact page.`
+        }
+    ];
+
     return (
         <div className="min-h-screen bg-black text-white">
-            {/* Shader Hero Section */}
+            {/* Hero Section - DO NOT MODIFY */}
             <div className="relative flex h-[40vh] w-full flex-col items-center justify-center overflow-hidden">
                 <ShaderDemo_ATC />
                 <div className="absolute pointer-events-none z-10 text-center px-6">
@@ -13,142 +56,69 @@ export default function PrivacyPolicyPage() {
                         Privacy Policy
                     </h1>
                     <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">
-                        How we collect, use, and protect your data
+                        Your privacy is our priority
                     </p>
                 </div>
             </div>
 
-            <div className="container mx-auto px-6 pt-12 pb-16 max-w-4xl">
-                {/* Last Updated */}
-                <div className="text-center mb-12">
-                    <p className="text-sm text-[#D98BBE]">Last updated: February 4, 2026</p>
-                </div>
+            {/* Content Sections - ~2cm gap after hero */}
+            <div className="w-full" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
+                <div className="container mx-auto px-6 space-y-16">
+                    {/* Intro Section */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -60 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                        <GlowingCard innerClassName="p-10 md:p-14">
+                            <div className="flex items-start gap-4 mb-6">
+                                <Shield className="w-8 h-8 text-white shrink-0 mt-1" />
+                                <h2 className="text-3xl md:text-4xl font-bold text-white">
+                                    {sections[0].title}
+                                </h2>
+                            </div>
+                            <p className="text-lg text-gray-400 leading-relaxed">
+                                {sections[0].content}
+                            </p>
+                        </GlowingCard>
+                    </motion.div>
 
-                {/* Content Sections */}
-                <div className="space-y-12">
-                    {/* Introduction */}
-                    <section>
-                        <h2 className="text-3xl font-bold text-[#B88CFF] mt-12 mb-5 leading-tight" style={{ letterSpacing: '0.3px' }}>
-                            <Shield className="w-8 h-8 inline-block mr-3" />
-                            Introduction
-                        </h2>
-                        <p className="text-lg text-[#F6F1EB] leading-relaxed max-w-[720px] mb-5" style={{ lineHeight: '1.8' }}>
-                            At Henu OS, we are committed to protecting your privacy and ensuring the security of your
-                            personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard
-                            your data when you visit our website or use our services.
-                        </p>
-                    </section>
-
-                    <div className="h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
-
-                    {/* Information We Collect */}
-                    <section>
-                        <h2 className="text-3xl font-bold text-[#B88CFF] mt-12 mb-5 leading-tight" style={{ letterSpacing: '0.3px' }}>Information We Collect</h2>
-                        <p className="text-lg text-[#F6F1EB] leading-relaxed max-w-[720px] mb-5" style={{ lineHeight: '1.8' }}>
-                            We may collect the following types of information:
-                        </p>
-                        <ul className="space-y-2.5 text-[#F6F1EB] mt-3 mb-7 pl-6">
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Personal identification information (name, email address, phone number)</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Usage data and analytics</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Device and browser information</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Cookies and tracking technologies</span>
-                            </li>
-                        </ul>
-                    </section>
-
-                    <div className="h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
-
-                    {/* How We Use Your Information */}
-                    <section>
-                        <h2 className="text-3xl font-bold text-[#B88CFF] mt-12 mb-5 leading-tight" style={{ letterSpacing: '0.3px' }}>How We Use Your Information</h2>
-                        <p className="text-lg text-[#F6F1EB] leading-relaxed max-w-[720px] mb-5" style={{ lineHeight: '1.8' }}>
-                            We use the collected information for various purposes, including:
-                        </p>
-                        <ul className="space-y-2.5 text-[#F6F1EB] mt-3 mb-7 pl-6">
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Providing and maintaining our services</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Improving user experience and website functionality</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Communicating with you about updates and promotions</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Analyzing usage patterns and trends</span>
-                            </li>
-                        </ul>
-                    </section>
-
-                    <div className="h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
-
-                    {/* Data Security */}
-                    <section>
-                        <h2 className="text-3xl font-bold text-[#B88CFF] mt-12 mb-5 leading-tight" style={{ letterSpacing: '0.3px' }}>Data Security</h2>
-                        <p className="text-lg text-[#F6F1EB] leading-relaxed max-w-[720px] mb-5" style={{ lineHeight: '1.8' }}>
-                            We implement appropriate technical and organizational security measures to protect your personal
-                            data against unauthorized access, alteration, disclosure, or destruction. However, no method of
-                            transmission over the internet is 100% secure, and we cannot guarantee absolute security.
-                        </p>
-                    </section>
-
-                    <div className="h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
-
-                    {/* Your Rights */}
-                    <section>
-                        <h2 className="text-3xl font-bold text-[#B88CFF] mt-12 mb-5 leading-tight" style={{ letterSpacing: '0.3px' }}>Your Rights</h2>
-                        <p className="text-lg text-[#F6F1EB] leading-relaxed max-w-[720px] mb-5" style={{ lineHeight: '1.8' }}>
-                            You have the following rights regarding your personal data:
-                        </p>
-                        <ul className="space-y-2.5 text-[#F6F1EB] mt-3 mb-7 pl-6">
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Access and review your personal information</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Request correction of inaccurate data</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Request deletion of your data</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                                <span className="text-[#D98BBE] mt-1">•</span>
-                                <span className="text-lg leading-relaxed">Opt-out of marketing communications</span>
-                            </li>
-                        </ul>
-                    </section>
-
-                    <div className="h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+                    {/* Remaining Sections - Alternating Animation */}
+                    {sections.slice(1).map((section, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? 60 : -60 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                            <GlowingCard innerClassName="p-10 md:p-14">
+                                <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                                    {section.title}
+                                </h2>
+                                <p className="text-lg text-gray-400 leading-relaxed">
+                                    {section.content}
+                                </p>
+                            </GlowingCard>
+                        </motion.div>
+                    ))}
 
                     {/* Contact CTA */}
-                    <section className="text-center">
-                        <p className="text-lg text-[#F6F1EB] leading-relaxed max-w-[720px] mb-8 mx-auto" style={{ lineHeight: '1.8' }}>
-                            If you have any questions about this privacy policy or our privacy practices, please get in touch with us.
-                        </p>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center pt-8"
+                    >
                         <Link
                             href="/contact"
-                            className="inline-block px-12 py-5 bg-gradient-to-r from-gray-100 to-white text-gray-900 font-bold rounded-full text-xl hover:from-white hover:to-gray-100 transition-all duration-300 hover:shadow-xl hover:shadow-white/30 hover:-translate-y-1 border border-gray-200"
+                            className="inline-block px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-full text-lg hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 hover:-translate-y-0.5"
                         >
                             Contact Us
                         </Link>
-                    </section>
+                    </motion.div>
                 </div>
             </div>
         </div>
