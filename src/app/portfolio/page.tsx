@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import {
     ExternalLink,
@@ -27,6 +27,7 @@ import { MouseTrailComponent } from '@/components/ui/mouse-trail';
 import Casestudies from '@/components/ui/case-studies';
 import GalleryHoverCarousel from '@/components/ui/gallery-hover-carousel';
 import { Spotlight } from '@/components/ui/spotlight';
+import { GradientTracing } from '@/components/ui/gradient-tracing';
 
 // Project Categories
 const categories = [
@@ -171,6 +172,8 @@ export default function PortfolioPage() {
         paymentMethod: '',
         requirements: ''
     });
+    // State for merged projects (hardcoded + custom from API)
+    const [allProjects, setAllProjects] = useState(projects);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -178,13 +181,29 @@ export default function PortfolioPage() {
         offset: ['start start', 'end start']
     });
 
+    // Fetch custom software on component mount
+    useEffect(() => {
+        fetch('/api/admin/software')
+            .then(res => res.json())
+            .then(data => {
+                const customSoftware = data.software || [];
+                // Merge hardcoded projects with custom software
+                setAllProjects([...projects, ...customSoftware]);
+            })
+            .catch(error => {
+                console.error('Error fetching custom software:', error);
+                // Keep hardcoded projects on error
+                setAllProjects(projects);
+            });
+    }, []);
+
     const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     const filteredProjects = useMemo(() => {
-        if (activeCategory === 'all') return projects;
-        return projects.filter(project => project.category === activeCategory);
-    }, [activeCategory]);
+        if (activeCategory === 'all') return allProjects;
+        return allProjects.filter(project => project.category === activeCategory);
+    }, [activeCategory, allProjects]);
 
     const openModal = (product: typeof projects[0]) => {
         setSelectedProduct(product);
@@ -348,16 +367,41 @@ export default function PortfolioPage() {
                                 >
                                     {/* Card Box - PRESERVED */}
                                     <div
-                                        className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20"
+                                        className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden"
                                         style={{ padding: '1cm' }}
                                     >
-                                        {/* Software Title */}
-                                        <h3 className="text-3xl font-black text-white mb-3 group-hover:text-purple-400 transition-colors tracking-tight leading-tight font-['Space_Grotesk'] uppercase">
+                                        {/* Gradient Tracing Animation */}
+                                        <motion.div
+                                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-8"
+                                            initial={{ opacity: 0 }}
+                                            animate={{
+                                                opacity: [0, 1, 1, 0]
+                                            }}
+                                            transition={{
+                                                delay: index * 2,
+                                                duration: 2,
+                                                repeat: Infinity,
+                                                repeatDelay: (filteredProjects.length - 1) * 2,
+                                                times: [0, 0.1, 0.9, 1]
+                                            }}
+                                        >
+                                            <GradientTracing
+                                                width={1500}
+                                                height={80}
+                                                path="M0,40 Q375,10 750,40 T1500,40"
+                                                gradientColors={["#A855F7", "#EC4899", "#A855F7"]}
+                                                animationDuration={2}
+                                                strokeWidth={4}
+                                            />
+                                        </motion.div>
+
+                                        {/* Software Title - CENTER ALIGNED */}
+                                        <h3 className="text-3xl font-black text-white mb-3 group-hover:text-purple-400 transition-colors tracking-tight leading-tight font-['Space_Grotesk'] uppercase text-center">
                                             {project.title}
                                         </h3>
 
                                         {/* Accent Underline - PRESERVED */}
-                                        <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
+                                        <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto" />
                                     </div>
                                 </motion.div>
                             ))}

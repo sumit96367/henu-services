@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import ShaderDemo_ATC from '@/components/ui/atc-shader';
+import NeuralBackground from '@/components/ui/flow-field-background';
 import { Map } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { GlowingCard } from '@/components/ui/glowing-card';
@@ -52,9 +52,13 @@ export default function SitemapPage() {
 
     return (
         <div className="min-h-screen bg-black text-white">
-            {/* Hero Section - DO NOT MODIFY */}
+            {/* Hero Section */}
             <div className="relative flex h-[40vh] w-full flex-col items-center justify-center overflow-hidden">
-                <ShaderDemo_ATC />
+                <NeuralBackground
+                    color="#818cf8"
+                    trailOpacity={0.1}
+                    speed={0.8}
+                />
                 <div className="absolute pointer-events-none z-10 text-center px-6">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
                         Site Map
@@ -67,37 +71,39 @@ export default function SitemapPage() {
 
             {/* Content Sections */}
             <div className="w-full" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
-                <div className="container mx-auto px-6 space-y-16">
-                    {sections.map((section, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true, margin: '-100px' }}
-                            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                        >
-                            <GlowingCard innerClassName="p-10 md:p-14">
-                                <div className="flex items-start gap-4 mb-8">
-                                    {index === 0 && <Map className="w-8 h-8 text-white shrink-0 mt-1" />}
-                                    <h2 className="text-2xl md:text-3xl font-bold text-white">
-                                        {section.title}
-                                    </h2>
-                                </div>
-                                <div className="grid gap-4">
-                                    {section.links.map((link, idx) => (
-                                        <Link
-                                            key={idx}
-                                            href={link.href}
-                                            className="group flex items-center gap-3 text-lg text-gray-400 hover:text-white transition-colors"
-                                        >
-                                            <span className="text-cyan-400 group-hover:translate-x-1 transition-transform">→</span>
-                                            <span className="leading-relaxed">{link.name}</span>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </GlowingCard>
-                        </motion.div>
-                    ))}
+                <div className="policy-container mx-auto px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {sections.map((section, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-100px' }}
+                                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
+                            >
+                                <GlowingCard innerClassName="policy-box-padding h-full">
+                                    <div className="flex items-start gap-4 mb-8">
+                                        {index === 0 && <Map className="w-8 h-8 text-white shrink-0 mt-1" />}
+                                        <h2 className="text-2xl md:text-3xl font-bold text-white">
+                                            {section.title}
+                                        </h2>
+                                    </div>
+                                    <div className="grid gap-4">
+                                        {section.links.map((link, idx) => (
+                                            <Link
+                                                key={idx}
+                                                href={link.href}
+                                                className="group flex items-center gap-3 text-lg text-gray-400 hover:text-white transition-colors"
+                                            >
+                                                <span className="text-cyan-400 group-hover:translate-x-1 transition-transform">→</span>
+                                                <span className="leading-relaxed">{link.name}</span>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </GlowingCard>
+                            </motion.div>
+                        ))}
+                    </div>
 
                     {/* Contact CTA */}
                     <motion.div
@@ -105,7 +111,8 @@ export default function SitemapPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="text-center pt-8"
+                        className="text-center"
+                        style={{ marginTop: '0.5cm' }}
                     >
                         <p className="text-lg text-gray-400 mb-6 max-w-2xl mx-auto">
                             This sitemap provides an overview of all the main pages and sections of the Henu OS website.
@@ -113,7 +120,7 @@ export default function SitemapPage() {
                         </p>
                         <Link
                             href="/contact"
-                            className="inline-block px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-full text-lg hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 hover:-translate-y-0.5"
+                            className="policy-cta-button rounded-full transition-all duration-300 hover:shadow-lg"
                         >
                             Contact Us
                         </Link>

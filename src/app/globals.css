@@ -233,6 +233,50 @@ li {
   }
 }
 
+/* Policy Pages - Wider Container */
+.policy-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .policy-container {
+    padding: 0 24px;
+  }
+}
+
+/* Policy Box - 1cm Internal Padding */
+.policy-box-padding {
+  padding: 1cm;
+}
+
+/* Policy CTA Button - Prominent Primary Button */
+.policy-cta-button {
+  padding: 20px 48px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  min-height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #000;
+  border: none;
+}
+
+.policy-cta-button:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .policy-cta-button {
+    padding: 18px 40px;
+    min-height: 56px;
+  }
+}
+
 .section {
   padding: 200px 0;
   position: relative;

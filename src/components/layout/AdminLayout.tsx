@@ -16,6 +16,8 @@ const navItems: NavItem[] = [
     { name: "Payments", path: "/admin/payments", icon: "💳" },
     { name: "Invoices", path: "/admin/invoices", icon: "📄" },
     { name: "Queries & Support", path: "/admin/queries", icon: "💬" },
+    { name: "Add Software", path: "/admin/software", icon: "📦" },
+    { name: "Manage Software", path: "/admin/manage-software", icon: "📋" },
 ];
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {

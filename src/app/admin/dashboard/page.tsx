@@ -30,6 +30,20 @@ export default function AdminDashboardPage() {
             href: "/admin/queries",
             gradient: "from-orange-500 to-red-500",
         },
+        {
+            title: "Add Software",
+            description: "Add new software entries to your portfolio",
+            icon: "📦",
+            href: "/admin/software",
+            gradient: "from-indigo-500 to-purple-500",
+        },
+        {
+            title: "Manage Software",
+            description: "View and delete custom software entries",
+            icon: "📋",
+            href: "/admin/manage-software",
+            gradient: "from-purple-500 to-pink-500",
+        },
     ];
 
     return (

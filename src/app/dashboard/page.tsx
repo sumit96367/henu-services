@@ -93,6 +93,13 @@ const quickAccessCards = [
         description: 'Manage your addresses, set default and select where to ship your orders.',
         color: 'rose'
     },
+    {
+        icon: Lock,
+        title: 'Settings',
+        id: 'settings',
+        description: 'Manage your account preferences, security settings, and personal information.',
+        color: 'indigo'
+    },
 ];
 
 // Interface for orders
@@ -269,6 +276,18 @@ export default function DashboardPage() {
 
     const renderSection = () => {
         switch (activeSection) {
+            case 'settings':
+                return (
+                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <h1 className="text-3xl font-bold text-white mb-8 text-center md:text-left">Settings</h1>
+                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl p-12 text-center">
+                            <Lock size={48} className="mx-auto text-indigo-400 mb-4" />
+                            <h2 className="text-xl font-bold text-white mb-2">Account Settings</h2>
+                            <p className="text-gray-500 mb-6">Manage your preferences, security, and notifications</p>
+                            <p className="text-sm text-gray-600">Settings interface coming soon</p>
+                        </div>
+                    </motion.div>
+                );
             case 'account':
                 return (
                     <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="space-y-12">
@@ -364,7 +383,8 @@ export default function DashboardPage() {
                                             amber: "bg-amber-500/10 text-amber-400",
                                             purple: "bg-purple-500/10 text-purple-400",
                                             green: "bg-green-500/10 text-green-400",
-                                            rose: "bg-rose-500/10 text-rose-400"
+                                            rose: "bg-rose-500/10 text-rose-400",
+                                            indigo: "bg-indigo-500/10 text-indigo-400"
                                         };
                                         const colorClasses = colors[card.color] || colors.cyan;
                                         return (

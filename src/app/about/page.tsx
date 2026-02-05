@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { Spotlight } from '@/components/ui/spotlight';
+import AIAssistantAnimation from '@/components/ui/ai-assistant-animation';
+import CodeEditorAnimation from '@/components/ui/code-editor-animation';
+import SystemCoreAnimation from '@/components/ui/system-core-animation';
 import {
     Cpu,
     Layers,
@@ -775,13 +778,11 @@ const HenuOSSection = () => {
                     className="grid md:grid-cols-2 gap-16 items-center"
                 >
                     {/* Visual - Left */}
-                    <div className="relative">
+                    <div className="relative h-96">
                         <div className="absolute inset-0 bg-cyan-500/20 rounded-3xl blur-[100px]" />
-                        <img
-                            src="/images/henu-os-visual.png"
-                            alt="HENU OS System Architecture"
-                            className="relative z-10 w-full h-auto rounded-2xl"
-                        />
+                        <div className="relative z-10 w-full h-full">
+                            <SystemCoreAnimation />
+                        </div>
                     </div>
 
                     {/* Content - Right */}
@@ -795,6 +796,12 @@ const HenuOSSection = () => {
                             system-level intelligence. Built to support modern businesses, creators, and
                             platforms, HENU OS is the backbone of the Henu ecosystem.
                         </p>
+                        <div style={{ marginTop: '38px' }}>
+                            <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                HENU OS
+                                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
                     </div>
                 </motion.div>
             </div>
@@ -827,16 +834,20 @@ const HenuIDESection = () => {
                             voice assistant that understands developer intent, allowing developers to write, edit,
                             debug, and navigate code with ease.
                         </p>
+                        <div style={{ marginTop: '38px' }}>
+                            <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                HENU IDE
+                                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
                     </div>
 
                     {/* Visual - Right */}
-                    <div className="relative md:order-2 order-1">
+                    <div className="relative md:order-2 order-1 h-96">
                         <div className="absolute inset-0 bg-purple-500/20 rounded-3xl blur-[100px]" />
-                        <img
-                            src="/images/henu-ide-visual.png"
-                            alt="HENU IDE Development Environment"
-                            className="relative z-10 w-full h-auto rounded-2xl"
-                        />
+                        <div className="relative z-10 w-full h-full">
+                            <CodeEditorAnimation />
+                        </div>
                     </div>
                 </motion.div>
             </div>
@@ -859,13 +870,11 @@ const HenuPASection = () => {
                     className="grid md:grid-cols-2 gap-16 items-center"
                 >
                     {/* Visual - Left */}
-                    <div className="relative">
+                    <div className="relative h-96">
                         <div className="absolute inset-0 bg-blue-500/20 rounded-3xl blur-[100px]" />
-                        <img
-                            src="/images/henu-pa-visual.png"
-                            alt="HENU PA+++ AI Assistant"
-                            className="relative z-10 w-full h-auto rounded-2xl"
-                        />
+                        <div className="relative z-10 w-full h-full">
+                            <AIAssistantAnimation />
+                        </div>
                     </div>
 
                     {/* Content - Right */}
@@ -879,6 +888,12 @@ const HenuPASection = () => {
                             reduces decision fatigue by assisting with reminders, information, and task execution
                             across the Henu ecosystem.
                         </p>
+                        <div style={{ marginTop: '38px' }}>
+                            <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                HENU PA+++
+                                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
                     </div>
                 </motion.div>
             </div>
