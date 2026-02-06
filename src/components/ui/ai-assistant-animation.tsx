@@ -26,15 +26,18 @@ export default function AIAssistantAnimation() {
         };
 
         class Particle {
-            x: number;
-            y: number;
-            vx: number;
-            vy: number;
-            radius: number;
+            x!: number;
+            y!: number;
+            vx!: number;
+            vy!: number;
+            radius!: number;
 
             constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
+                const width = canvas?.width ?? 800;
+                const height = canvas?.height ?? 600;
+
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.radius = Math.random() * 2 + 1;

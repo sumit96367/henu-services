@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
 import { UserMenu } from '@/components/auth';
 import { useAuth } from '@/context/AuthContext';
+import { GlobalSearch } from '@/components/ui/GlobalSearch';
 import {
     Menu as MenuIcon,
     X,
@@ -200,8 +201,11 @@ export const Navbar = () => {
                         </Menu>
                     </div>
 
-                    {/* User Menu & Mobile Toggle - Right */}
+                    {/* Search, User Menu & Mobile Toggle - Right */}
                     <div className="flex items-center gap-3">
+                        {/* Global Search */}
+                        <GlobalSearch />
+
                         {/* User Menu (Desktop) */}
                         <div className="hidden md:block">
                             <UserMenu />

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
     User,
     ShoppingBag,
@@ -23,7 +23,8 @@ import {
     CheckCircle2,
     Clock,
     AlertCircle,
-    ArrowLeft
+    ArrowLeft,
+    Upload
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy, updateDoc, doc } from 'firebase/firestore';
@@ -111,6 +112,8 @@ export default function DashboardPage() {
     // Profile Edit State
     const [editName, setEditName] = useState('');
     const [editCompany, setEditCompany] = useState('');
+    const [profilePicture, setProfilePicture] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         setMounted(true);
@@ -126,6 +129,7 @@ export default function DashboardPage() {
         if (user) {
             setEditName(user.name || '');
             setEditCompany(user.companyName || '');
+            setProfilePicture((user as any).profilePicture || null);
             fetchUserOrders();
         }
     }, [user]);
@@ -215,6 +219,17 @@ export default function DashboardPage() {
         }
     };
 
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfilePicture(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) return;
@@ -225,6 +240,7 @@ export default function DashboardPage() {
             await updateDoc(userRef, {
                 name: editName,
                 companyName: editCompany,
+                profilePicture: profilePicture,
                 updatedAt: new Date()
             });
             // Profile will automatically update via AuthContext listener
@@ -428,55 +444,100 @@ export default function DashboardPage() {
                     <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
                         <h1 className="text-3xl font-bold text-white mb-8 text-center md:text-left">Edit Profile</h1>
 
-                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '40px' }}>
-                            {/* Decorative background element */}
-                            <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl" />
+                        <div className="flex gap-6 flex-col md:flex-row">
+                            {/* Profile Picture Upload Box */}
+                            <div className="bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '0.5cm', minWidth: '280px', maxWidth: '280px' }}>
+                                <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl" />
 
-                            <form onSubmit={handleUpdateProfile} className="space-y-6 relative">
-                                <div className="space-y-4">
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Full Name</label>
-                                        <input
-                                            type="text"
-                                            value={editName}
-                                            onChange={(e) => setEditName(e.target.value)}
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                            placeholder="Your Name"
-                                            disabled={isUpdating}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Company Name</label>
-                                        <input
-                                            type="text"
-                                            value={editCompany}
-                                            onChange={(e) => setEditCompany(e.target.value)}
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                            placeholder="Company (Optional)"
-                                            disabled={isUpdating}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
-                                        <input
-                                            type="email"
-                                            value={user?.email || ''}
-                                            disabled
-                                            className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-gray-500 cursor-not-allowed italic"
-                                        />
-                                        <p className="text-[10px] text-gray-600 mt-2 px-1">Email cannot be changed for security reasons.</p>
-                                    </div>
+                                <div className="relative flex flex-col items-center gap-4">
+                                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 text-center">Profile Picture</label>
+
+                                    {/* Upload Button */}
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        className="hidden"
+                                    />
+
+                                    <button
+                                        type="button"
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="w-full px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-gray-300 hover:bg-white/10 hover:border-cyan-500/50 hover:text-white transition-all flex items-center justify-center gap-2 font-medium text-sm"
+                                    >
+                                        <Upload size={16} />
+                                        Upload Photo
+                                    </button>
+
+                                    {profilePicture && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setProfilePicture(null)}
+                                            className="w-full px-6 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 hover:bg-red-500/20 hover:border-red-500/40 transition-all flex items-center justify-center gap-2 font-medium text-sm"
+                                        >
+                                            <UserX size={16} />
+                                            Remove Photo
+                                        </button>
+                                    )}
+
+                                    <p className="text-[10px] text-gray-600 text-center px-4">
+                                        {profilePicture ? 'Photo uploaded. Click Save Profile to apply changes.' : 'Upload a profile picture to personalize your account'}
+                                    </p>
                                 </div>
+                            </div>
 
-                                <button
-                                    type="submit"
-                                    disabled={isUpdating}
-                                    className="w-full py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
-                                >
-                                    {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
-                                    {isUpdating ? 'Saving Changes...' : 'Save Profile'}
-                                </button>
-                            </form>
+                            {/* Profile Form */}
+                            <div className="flex-1 bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '0.5cm' }}>
+                                {/* Decorative background element */}
+                                <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl" />
+
+                                <form onSubmit={handleUpdateProfile} className="space-y-6 relative">
+                                    <div className="flex flex-col gap-[0.2cm]">
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+                                            <input
+                                                type="text"
+                                                value={editName}
+                                                onChange={(e) => setEditName(e.target.value)}
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                placeholder="Your Name"
+                                                disabled={isUpdating}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Company Name</label>
+                                            <input
+                                                type="text"
+                                                value={editCompany}
+                                                onChange={(e) => setEditCompany(e.target.value)}
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                placeholder="Company (Optional)"
+                                                disabled={isUpdating}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
+                                            <input
+                                                type="email"
+                                                value={user?.email || ''}
+                                                disabled
+                                                className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-gray-500 cursor-not-allowed italic"
+                                            />
+                                            <p className="text-[10px] text-gray-600 mt-2 px-1">Email cannot be changed for security reasons.</p>
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isUpdating}
+                                        className="w-full py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
+                                    >
+                                        {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
+                                        {isUpdating ? 'Saving Changes...' : 'Save Profile'}
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </motion.div>
                 );
@@ -528,16 +589,25 @@ export default function DashboardPage() {
                                 width: '48px',
                                 height: '48px',
                                 borderRadius: '50%',
-                                background: 'linear-gradient(to bottom right, #06b6d4, #3b82f6)',
+                                background: (profilePicture || (user as any)?.profilePicture) ? 'transparent' : 'linear-gradient(to bottom right, #06b6d4, #3b82f6)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 fontSize: '20px',
                                 fontWeight: 'bold',
                                 color: '#fff',
+                                overflow: 'hidden',
                             }}
                         >
-                            {user?.name?.charAt(0).toUpperCase()}
+                            {(profilePicture || (user as any)?.profilePicture) ? (
+                                <img
+                                    src={profilePicture || (user as any).profilePicture}
+                                    alt="Profile"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                            ) : (
+                                user?.name?.charAt(0).toUpperCase()
+                            )}
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
                             <h3
