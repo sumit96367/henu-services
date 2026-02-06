@@ -503,6 +503,26 @@ li {
   }
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -539,6 +559,14 @@ li {
 
 .animate-rotate-text {
   animation: rotate-text 30s linear infinite;
+}
+
+.animate-marquee {
+  animation: marquee var(--duration) linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse var(--duration) linear infinite;
 }
 
 @keyframes spotlight {
@@ -957,4 +985,20 @@ li {
 
 .animate-fifth {
   animation: moveInCircle 20s ease infinite;
+}
+
+/* ============================================
+   UTILITY: Hide Scrollbar
+   ============================================ */
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
 }

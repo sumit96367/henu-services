@@ -40,12 +40,12 @@ export async function POST(request: NextRequest) {
         ensureDataFile();
 
         const body = await request.json();
-        const { name, description, tags, category, color, image } = body;
+        const { name, description, category, tags, formLink, image } = body;
 
         // Validation
-        if (!name || !description) {
+        if (!name || !description || !category) {
             return NextResponse.json(
-                { error: "Name and description are required" },
+                { error: "Name, description, and category are required" },
                 { status: 400 }
             );
         }
@@ -62,11 +62,12 @@ export async function POST(request: NextRequest) {
         const newSoftware = {
             id: newId,
             title: name,
-            category: category || "all",
+            category: category,
             description,
             image: image || "/projects/custom.jpg",
             tags: tags || ["Custom", "Software", "Solution"],
-            color: color || "from-cyan-500 to-blue-500",
+            color: "from-cyan-500 to-blue-500", // Keep for backward compatibility
+            formLink: formLink || "",
             stats: {
                 metric: name.split(" ")[0],
                 label: "Software"
@@ -87,6 +88,76 @@ export async function POST(request: NextRequest) {
         console.error("Error adding software:", error);
         return NextResponse.json(
             { error: "Failed to add software" },
+            { status: 500 }
+        );
+    }
+}
+
+// PUT - Update existing software
+export async function PUT(request: NextRequest) {
+    try {
+        ensureDataFile();
+
+        const body = await request.json();
+        const { id, name, description, category, tags, formLink } = body;
+
+        // Validation
+        if (!id || !name || !description) {
+            return NextResponse.json(
+                { error: "ID, name, and description are required" },
+                { status: 400 }
+            );
+        }
+
+        const softwareId = parseInt(id);
+
+        // Prevent editing hardcoded software (ID < 1000)
+        if (softwareId < 1000) {
+            return NextResponse.json(
+                { error: "Cannot edit hardcoded software entries" },
+                { status: 403 }
+            );
+        }
+
+        // Read current data
+        const data = fs.readFileSync(DATA_FILE, 'utf-8');
+        const jsonData = JSON.parse(data);
+
+        // Find the software to update
+        const softwareIndex = jsonData.software.findIndex(
+            (s: any) => s.id === softwareId
+        );
+
+        if (softwareIndex === -1) {
+            return NextResponse.json(
+                { error: "Software not found" },
+                { status: 404 }
+            );
+        }
+
+        // Update the software entry
+        const updatedSoftware = {
+            ...jsonData.software[softwareIndex],
+            title: name,
+            description,
+            category: category || jsonData.software[softwareIndex].category,
+            tags: tags || jsonData.software[softwareIndex].tags,
+            formLink: formLink !== undefined ? formLink : jsonData.software[softwareIndex].formLink || "",
+        };
+
+        jsonData.software[softwareIndex] = updatedSoftware;
+
+        // Save updated data
+        fs.writeFileSync(DATA_FILE, JSON.stringify(jsonData, null, 2));
+
+        return NextResponse.json({
+            success: true,
+            software: updatedSoftware
+        });
+    } catch (error) {
+        console.error("Error updating software:", error);
+        return NextResponse.json(
+            { error: "Failed to update software" },
             { status: 500 }
         );
     }

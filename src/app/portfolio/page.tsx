@@ -1,18 +1,11 @@
 'use client';
 
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
     ExternalLink,
     ArrowRight,
-    Globe,
-    Smartphone,
-    Bot,
-    Megaphone,
-    Scale,
-    Coins,
-    Filter,
     X,
     Twitter,
     Linkedin,
@@ -28,128 +21,132 @@ import Casestudies from '@/components/ui/case-studies';
 import GalleryHoverCarousel from '@/components/ui/gallery-hover-carousel';
 import { Spotlight } from '@/components/ui/spotlight';
 import { GradientTracing } from '@/components/ui/gradient-tracing';
+import { GravitationalMeshBackground } from '@/components/ui/gravitational-mesh';
+import { CategoryScroller } from '@/components/ui/category-scroller';
 
-// Project Categories
-const categories = [
-    { id: 'all', name: 'All Projects', icon: Filter },
-    { id: 'web', name: 'Web Development', icon: Globe },
-    { id: 'mobile', name: 'Mobile Apps', icon: Smartphone },
-    { id: 'ai', name: 'AI & Automation', icon: Bot },
-    { id: 'marketing', name: 'Digital Marketing', icon: Megaphone },
-    { id: 'legal', name: 'Legal & Compliance', icon: Scale },
-    { id: 'funding', name: 'Grants & Funding', icon: Coins },
-];
+
 
 // Projects Data - 11 Software Products
 const projects = [
     {
         id: 1,
         title: 'Hospital Management System',
-        category: 'all',
+        category: 'Healthcare Retail',
         description: 'Comprehensive healthcare management solution with patient records, appointment scheduling, billing, inventory management, and analytics. Streamline your hospital operations with our advanced digital platform.',
         image: '/projects/hospital.jpg',
         tags: ['Healthcare', 'Management', 'Digital'],
         color: 'from-purple-500 to-pink-500',
+        formLink: '',
         stats: { metric: 'HMS', label: 'Solution' }
     },
     {
         id: 2,
         title: 'Accounting Software',
-        category: 'all',
+        category: 'Business & Finance',
         description: 'Complete accounting solution for businesses with GST compliance, invoicing, expense tracking, financial reports, and tax management. Simplify your financial operations with automated workflows.',
         image: '/projects/accounting.jpg',
         tags: ['Finance', 'GST', 'Invoicing'],
         color: 'from-green-500 to-emerald-500',
+        formLink: '',
         stats: { metric: 'Accounting', label: 'Software' }
     },
     {
         id: 3,
         title: 'Hotel Management System',
-        category: 'all',
+        category: 'Hospitality & Services',
         description: 'All-in-one hotel management platform featuring room booking, guest management, POS integration, housekeeping, and revenue analytics. Enhance guest experiences and operational efficiency.',
         image: '/projects/hotel.jpg',
         tags: ['Hospitality', 'Booking', 'POS'],
         color: 'from-amber-500 to-orange-500',
+        formLink: '',
         stats: { metric: 'Hotel', label: 'System' }
     },
     {
         id: 4,
         title: 'School / College Fees Management System',
-        category: 'all',
+        category: 'Enterprise & Institutional',
         description: 'Comprehensive educational institution management with student enrollment, fee collection, attendance tracking, grade management, and parent portal. Digitize your campus operations.',
         image: '/projects/school.jpg',
         tags: ['Education', 'Fees', 'Management'],
         color: 'from-blue-500 to-indigo-500',
+        formLink: '',
         stats: { metric: 'Education', label: 'Platform' }
     },
     {
         id: 5,
         title: 'Restaurant Management System',
-        category: 'all',
+        category: 'Hospitality & Services',
         description: 'Complete restaurant solution with table management, order processing, kitchen display, inventory tracking, and billing. Optimize your restaurant workflow and customer service.',
         image: '/projects/restaurant.jpg',
         tags: ['Restaurant', 'POS', 'Kitchen'],
         color: 'from-red-500 to-pink-500',
+        formLink: '',
         stats: { metric: 'Restaurant', label: 'Solution' }
     },
     {
         id: 6,
         title: 'Travel Agency Management System',
-        category: 'all',
+        category: 'Hospitality & Services',
         description: 'End-to-end travel agency platform with booking management, itinerary creation, payment processing, customer management, and vendor coordination. Grow your travel business digitally.',
         image: '/projects/travel.jpg',
         tags: ['Travel', 'Booking', 'CRM'],
         color: 'from-teal-500 to-green-500',
+        formLink: '',
         stats: { metric: 'Travel', label: 'Platform' }
     },
     {
         id: 7,
         title: 'Pharmacy Management System',
-        category: 'all',
+        category: 'Healthcare Retail',
         description: 'Advanced pharmacy software with inventory management, prescription tracking, billing, expiry alerts, and sales analytics. Ensure compliance and efficient pharmacy operations.',
         image: '/projects/pharmacy.jpg',
         tags: ['Pharmacy', 'Inventory', 'Billing'],
         color: 'from-green-500 to-teal-500',
+        formLink: '',
         stats: { metric: 'Pharmacy', label: 'Software' }
     },
     {
         id: 8,
         title: 'E-commerce Solutions',
-        category: 'all',
+        category: 'Digital Commerce',
         description: 'Full-featured e-commerce platform with product catalog, shopping cart, payment gateway integration, order management, and customer analytics. Launch your online store with confidence.',
         image: '/projects/ecommerce.jpg',
         tags: ['E-commerce', 'Online Store', 'Payment'],
         color: 'from-orange-500 to-red-500',
+        formLink: '',
         stats: { metric: 'E-commerce', label: 'Platform' }
     },
     {
         id: 9,
         title: 'Employee Management System',
-        category: 'all',
+        category: 'Enterprise & Institutional',
         description: 'Complete HR and employee management solution with attendance, payroll, leave management, performance tracking, and employee portal. Streamline your workforce management.',
         image: '/projects/employee.jpg',
         tags: ['HR', 'Payroll', 'Attendance'],
         color: 'from-indigo-500 to-purple-500',
+        formLink: '',
         stats: { metric: 'HRMS', label: 'Solution' }
     },
     {
         id: 10,
         title: 'Invoicing System',
-        category: 'all',
+        category: 'Business & Finance',
         description: 'Professional invoicing and billing software with customizable templates, automatic payment reminders, expense tracking, and financial reports. Get paid faster and stay organized.',
         image: '/projects/invoicing.jpg',
         tags: ['Invoicing', 'Billing', 'Finance'],
         color: 'from-yellow-500 to-amber-500',
+        formLink: '',
         stats: { metric: 'Invoicing', label: 'System' }
     },
     {
         id: 11,
         title: 'Inventory Management System',
-        category: 'all',
+        category: 'Business & Finance',
         description: 'Robust inventory management solution with stock tracking, purchase orders, warehouse management, supplier management, and real-time reports. Optimize your inventory control.',
         image: '/projects/inventory.jpg',
         tags: ['Inventory', 'Warehouse', 'Stock'],
         color: 'from-pink-500 to-rose-500',
+        formLink: '',
         stats: { metric: 'Inventory', label: 'System' }
     },
 ];
@@ -161,7 +158,6 @@ const projects = [
 
 
 export default function PortfolioPage() {
-    const [activeCategory, setActiveCategory] = useState('all');
     const [selectedProduct, setSelectedProduct] = useState<typeof projects[0] | null>(null);
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);
     const [paymentForm, setPaymentForm] = useState({
@@ -174,6 +170,8 @@ export default function PortfolioPage() {
     });
     // State for merged projects (hardcoded + custom from API)
     const [allProjects, setAllProjects] = useState(projects);
+    // Dynamic categories extracted from all projects
+    const [categories, setCategories] = useState<string[]>([]);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -188,22 +186,29 @@ export default function PortfolioPage() {
             .then(data => {
                 const customSoftware = data.software || [];
                 // Merge hardcoded projects with custom software
-                setAllProjects([...projects, ...customSoftware]);
+                const merged = [...projects, ...customSoftware];
+                setAllProjects(merged);
+
+                // Extract unique categories from all projects
+                const uniqueCategories = Array.from(
+                    new Set(merged.map(project => project.category).filter(cat => cat && cat !== 'all'))
+                );
+                setCategories(uniqueCategories);
             })
             .catch(error => {
                 console.error('Error fetching custom software:', error);
                 // Keep hardcoded projects on error
                 setAllProjects(projects);
+                // Extract categories from hardcoded projects only
+                const uniqueCategories = Array.from(
+                    new Set(projects.map(project => project.category).filter(cat => cat && cat !== 'all'))
+                );
+                setCategories(uniqueCategories);
             });
     }, []);
 
     const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-    const filteredProjects = useMemo(() => {
-        if (activeCategory === 'all') return allProjects;
-        return allProjects.filter(project => project.category === activeCategory);
-    }, [activeCategory, allProjects]);
 
     const openModal = (product: typeof projects[0]) => {
         setSelectedProduct(product);
@@ -218,7 +223,13 @@ export default function PortfolioPage() {
     };
 
     const handleGetItNow = () => {
-        window.location.href = 'https://henuos.netlify.app/';
+        if (selectedProduct?.formLink) {
+            // Open the Google Form link in a new tab
+            window.open(selectedProduct.formLink, '_blank');
+        } else {
+            // Fallback to default URL if no form link is set
+            window.location.href = 'https://henuos.netlify.app/';
+        }
     };
 
     const handleBuyNow = () => {
@@ -288,9 +299,9 @@ export default function PortfolioPage() {
                         className="max-w-5xl w-full flex flex-col items-center text-center"
                     >
                         <div className="flex flex-col items-center mb-6">
-                            <PremiumTextReveal text="Our Digital" className="text-gray-400" delay={0.2} />
+                            <PremiumTextReveal text="The Henu" className="text-gray-300 text-2xl md:text-3xl font-semibold" delay={0.2} />
                             <AnimatedLetterText
-                                text="Portfolio"
+                                text="Ecosystem"
                                 letterToReplace="o"
                                 className="text-7xl md:text-9xl text-white mt-[-20px]"
                             />
@@ -301,43 +312,50 @@ export default function PortfolioPage() {
                             transition={{ delay: 0.8 }}
                             className="text-xl md:text-2xl text-gray-400 max-w-2xl mb-16 leading-relaxed text-center"
                         >
-                            A curated selection of our most impactful work across technology, marketing, and strategy.
+                            Explore our complete suite of products, systems, and solutions designed to transform your business.
                         </motion.p>
-
-                        {/* Category Filters */}
-                        <div className="flex flex-wrap justify-center gap-4">
-                            {categories.map((category) => (
-                                <button
-                                    key={category.id}
-                                    onClick={() => setActiveCategory(category.id)}
-                                    className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center gap-2 border whitespace-nowrap ${activeCategory === category.id
-                                        ? 'bg-white/10 text-white border-cyan-500/50 shadow-[0_0_30px_rgba(0,212,255,0.1)] scale-105'
-                                        : 'bg-white/[0.02] text-gray-500 hover:text-gray-300 border-white/5 hover:border-white/20 hover:bg-white/5'
-                                        }`}
-                                >
-                                    <category.icon size={14} className={activeCategory === category.id ? 'text-cyan-400' : 'text-gray-600'} />
-                                    {category.name}
-                                </button>
-                            ))}
-                        </div>
                     </motion.div>
                 </div>
             </section>
 
+            {/* Gap after hero: 0.5cm */}
+            <div style={{ height: '0.5cm' }} />
+
+            {/* Categories Line - Scrolling Marquee */}
+            <section className="relative z-20 bg-transparent">
+                <div className="container max-w-7xl mx-auto">
+                    <div className="flex items-center gap-8">
+                        {/* Label */}
+                        <div className="text-white/80 font-bold text-[18px] uppercase tracking-[0.2em] whitespace-nowrap">
+                            CATEGORIES
+                        </div>
+
+                        {/* Separator */}
+                        <div className="h-6 w-px bg-white/15" />
+
+                        {/* Category Scroller - Animated Marquee */}
+                        <div className="flex-1 overflow-hidden">
+                            <CategoryScroller categories={categories} />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Gap before projects: 0.7cm */}
+            <div style={{ height: '0.7cm' }} />
+
             {/* Projects Grid */}
             <section className="section bg-transparent pt-0 relative z-20" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
-                {/* Single Column Container */}
-                <div className="container max-w-3xl mx-auto">
+                {/* Grid Container */}
+                <div className="container max-w-7xl mx-auto">
                     <AnimatePresence mode="wait">
                         <motion.div
-                            key={activeCategory}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                            className="space-y-6"
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                         >
-                            {filteredProjects.map((project, index) => (
+                            {allProjects.map((project, index) => (
                                 <motion.div
                                     key={project.id}
                                     // Premium scroll animations with blur + scale
@@ -381,7 +399,7 @@ export default function PortfolioPage() {
                                                 delay: index * 2,
                                                 duration: 2,
                                                 repeat: Infinity,
-                                                repeatDelay: (filteredProjects.length - 1) * 2,
+                                                repeatDelay: (allProjects.length - 1) * 2,
                                                 times: [0, 0.1, 0.9, 1]
                                             }}
                                         >
@@ -408,9 +426,9 @@ export default function PortfolioPage() {
                         </motion.div>
                     </AnimatePresence>
 
-                    {filteredProjects.length === 0 && (
+                    {allProjects.length === 0 && (
                         <div className="text-center py-40">
-                            <p className="text-2xl text-gray-500 font-medium">No projects found in this category.</p>
+                            <p className="text-2xl text-gray-500 font-medium">No projects found.</p>
                         </div>
                     )}
                 </div>
@@ -502,112 +520,118 @@ export default function PortfolioPage() {
                 <div className="absolute top-1/2 right-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent hidden xl:block" />
             </section>
 
-            {/* Product Details Modal */}
+            {/* Product Details Modal - HERO STYLE */}
             <AnimatePresence>
                 {selectedProduct && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
                         onClick={closeModal}
                     >
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
                             onClick={(e) => e.stopPropagation()}
-                            className="relative flex items-center justify-center gap-6 w-full max-w-6xl px-4"
+                            className="relative w-full max-w-[1100px] bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden"
+                            style={{ minHeight: '70vh' }}
                         >
+                            {/* Gravitational Mesh Background */}
+                            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                                <GravitationalMeshBackground />
+                            </div>
+
                             {/* Close Button */}
                             <button
                                 onClick={closeModal}
-                                className="absolute -top-14 right-4 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                className="absolute top-6 right-6 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:rotate-90"
                             >
-                                <X className="w-6 h-6 text-white" />
+                                <X className="w-5 h-5 text-white" />
                             </button>
 
-                            {/* Left: Product Name Card */}
-                            <div
-                                className="bg-gradient-to-br from-[#B88CFF] to-[#9B6FE8] shadow-2xl"
-                                style={{
-                                    minWidth: '280px',
-                                    maxWidth: '360px',
-                                    height: 'auto',
-                                    padding: '28px',
-                                    borderRadius: '40px'
-                                }}
-                            >
-                                <h2
-                                    className="text-white font-['Space_Grotesk']"
-                                    style={{
-                                        fontSize: 'clamp(26px, 2.6vw, 38px)',
-                                        fontWeight: '700',
-                                        textAlign: 'center',
-                                        wordBreak: 'keep-all',
-                                        overflowWrap: 'normal',
-                                        whiteSpace: 'normal',
-                                        hyphens: 'none',
-                                        lineHeight: '1.25',
-                                        width: '100%'
-                                    }}
-                                >
-                                    {selectedProduct.title}
-                                </h2>
-                            </div>
+                            {/* Content Container */}
+                            <div className="relative z-10 flex flex-col items-center justify-center px-12 py-16 h-full min-h-[70vh]">
 
-                            {/* Center: Description Card */}
-                            <div
-                                className="relative bg-gradient-to-br from-[#F2D5E6] to-[#E8C4D8] shadow-2xl flex flex-col"
-                                style={{
-                                    width: '450px',
-                                    minHeight: '280px',
-                                    padding: '32px',
-                                    borderRadius: '32px'
-                                }}
-                            >
-                                {/* Window Controls */}
-                                <div className="absolute top-5 right-5 flex gap-2">
-                                    <div className="w-4 h-4 rounded-full bg-[#D98BBE]"></div>
-                                    <div className="w-4 h-4 rounded-full bg-[#E89DC6]"></div>
-                                    <div className="w-4 h-4 rounded-full bg-[#F2A6C9]"></div>
-                                </div>
-
-                                {/* Description Text */}
-                                <div className="flex items-center justify-center flex-1">
-                                    <p
-                                        className="text-[#4A2A3E] font-semibold text-center"
+                                {/* 1. Hero Title Section */}
+                                <div className="text-center mb-8 max-w-[90%] mx-auto">
+                                    <motion.h1
+                                        initial={{ opacity: 0, y: -20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.1 }}
+                                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight leading-tight font-['Space_Grotesk'] px-4"
                                         style={{
-                                            fontSize: '18px',
-                                            lineHeight: '1.6',
                                             wordBreak: 'normal',
-                                            overflowWrap: 'break-word'
+                                            overflowWrap: 'break-word',
+                                            hyphens: 'manual',
+                                            textShadow: '0 0 40px rgba(168, 85, 247, 0.3)'
                                         }}
                                     >
+                                        {selectedProduct.title}
+                                    </motion.h1>
+
+                                    {/* Royal Lavender Accent Underline */}
+                                    <motion.div
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: 1 }}
+                                        transition={{ delay: 0.2, duration: 0.5 }}
+                                        className="w-32 h-1.5 mx-auto bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500 rounded-full"
+                                        style={{
+                                            boxShadow: '0 0 20px rgba(168, 85, 247, 0.6)'
+                                        }}
+                                    />
+                                </div>
+
+                                {/* 2. Description Section */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                    className="max-w-[650px] mx-auto mb-12"
+                                >
+                                    <p className="text-gray-300 text-lg md:text-xl text-center leading-relaxed font-medium">
                                         {selectedProduct.description}
                                     </p>
-                                </div>
-                            </div>
+                                </motion.div>
 
-                            {/* Right: Action Buttons */}
-                            <div className="flex flex-col items-center justify-center gap-4" style={{ minWidth: '200px' }}>
-                                <button
-                                    onClick={handleGetItNow}
-                                    className="w-full px-8 py-4 bg-gradient-to-r from-[#F6F1EB] to-[#EEE5D9] hover:from-[#FFFBF5] hover:to-[#F6F1EB] text-[#4A2A3E] font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl hover:scale-105 border-2 border-[#D98BBE]"
-                                    style={{ fontSize: '16px' }}
+                                {/* 3. CTA Buttons Section */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                    className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md"
+                                    style={{ marginTop: '1cm' }}
                                 >
-                                    <span className="text-xl">⭐</span>
-                                    Get-it-Now
-                                </button>
+                                    {/* Primary: Get-it-Now */}
+                                    <button
+                                        onClick={handleGetItNow}
+                                        className="group relative w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-bold text-xl rounded-full transition-all duration-300 overflow-hidden shadow-lg hover:shadow-purple-500/50"
+                                        style={{ padding: '0.2cm' }}
+                                    >
+                                        {/* Glow effect on hover */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
+                                        <span className="relative flex items-center justify-center gap-2">
+                                            <span className="text-2xl">⭐</span>
+                                            Get-it-Now
+                                        </span>
+                                    </button>
 
-                                <button
-                                    onClick={handleBuyNow}
-                                    className="w-full px-8 py-4 bg-gradient-to-r from-[#D98BBE] to-[#C76FA0] hover:from-[#E89DC6] hover:to-[#D77FAA] text-white font-bold rounded-full transition-all duration-300 flex items-center justify-center gap-2 shadow-xl hover:shadow-2xl hover:scale-105"
-                                    style={{ fontSize: '16px' }}
-                                >
-                                    <ShoppingCart className="w-5 h-5" />
-                                    BUY NOW
-                                </button>
+                                    {/* Secondary: Buy Now */}
+                                    <button
+                                        onClick={handleBuyNow}
+                                        className="group relative w-full sm:w-auto px-10 py-5 bg-transparent hover:bg-purple-500/10 text-purple-400 font-bold text-xl rounded-full border-2 border-purple-500 hover:border-purple-400 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-purple-500/30"
+                                        style={{ padding: '0.2cm' }}
+                                    >
+                                        {/* Glow effect on hover */}
+                                        <div className="absolute inset-0 bg-purple-500/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
+                                        <span className="relative flex items-center justify-center gap-2">
+                                            <ShoppingCart className="w-6 h-6" />
+                                            Buy Now
+                                        </span>
+                                    </button>
+                                </motion.div>
                             </div>
                         </motion.div>
                     </motion.div>

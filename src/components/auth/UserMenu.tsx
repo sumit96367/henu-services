@@ -47,16 +47,17 @@ export const UserMenu = () => {
 
     if (!isAuthenticated) {
         return (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 mr-2">
                 <button
                     onClick={handleLogin}
-                    className="px-4 py-2 text-white/80 hover:text-white font-medium transition-colors"
+                    className="px-3 py-2 text-white/80 hover:text-white font-medium transition-colors"
                 >
                     Sign In
                 </button>
                 <button
                     onClick={handleSignup}
-                    className="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-semibold rounded-full hover:from-cyan-400 hover:to-cyan-500 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25"
+                    className="px-4 py-2.5 bg-gradient-to-r from-purple-400 to-violet-300 text-white font-semibold rounded-full hover:from-purple-300 hover:to-violet-200 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-400/25"
+                    style={{ padding: '0.2cm' }}
                 >
                     Get Started
                 </button>

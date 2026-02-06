@@ -8,9 +8,9 @@ export default function AddSoftwarePage() {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
+        category: "",
         tags: "",
-        category: "all",
-        color: "from-cyan-500 to-blue-500",
+        formLink: "",
         image: "/projects/custom.jpg",
     });
     const [showSuccess, setShowSuccess] = useState(false);
@@ -22,8 +22,8 @@ export default function AddSoftwarePage() {
         setShowError("");
 
         // Validate
-        if (!formData.name.trim() || !formData.description.trim()) {
-            setShowError("Please fill in all required fields");
+        if (!formData.name.trim() || !formData.description.trim() || !formData.category) {
+            setShowError("Please fill in all required fields (name, description, category)");
             return;
         }
 
@@ -45,9 +45,9 @@ export default function AddSoftwarePage() {
                 body: JSON.stringify({
                     name: formData.name,
                     description: formData.description,
-                    tags: tagsArray.slice(0, 3), // Max 3 tags
                     category: formData.category,
-                    color: formData.color,
+                    tags: tagsArray.slice(0, 3), // Max 3 tags
+                    formLink: formData.formLink,
                     image: formData.image,
                 }),
             });
@@ -67,9 +67,9 @@ export default function AddSoftwarePage() {
             setFormData({
                 name: "",
                 description: "",
+                category: "",
                 tags: "",
-                category: "all",
-                color: "from-cyan-500 to-blue-500",
+                formLink: "",
                 image: "/projects/custom.jpg",
             });
 
@@ -252,6 +252,52 @@ export default function AddSoftwarePage() {
                         />
                     </div>
 
+                    {/* Category */}
+                    <div style={{ marginBottom: "24px" }}>
+                        <label
+                            style={{
+                                display: "block",
+                                marginBottom: "12px",
+                                fontSize: "1rem",
+                                fontWeight: "600",
+                                color: "#fff",
+                            }}
+                        >
+                            Category <span style={{ color: "#ef4444" }}>*</span>
+                        </label>
+                        <input
+                            type="text"
+                            value={formData.category}
+                            onChange={(e) =>
+                                setFormData({ ...formData, category: e.target.value })
+                            }
+                            placeholder="e.g., Healthcare, E-commerce, Finance"
+                            required
+                            style={{
+                                width: "100%",
+                                padding: "14px 18px",
+                                backgroundColor: "rgba(255, 255, 255, 0.03)",
+                                border: "1px solid rgba(255, 255, 255, 0.1)",
+                                borderRadius: "12px",
+                                color: "#fff",
+                                fontSize: "1rem",
+                                outline: "none",
+                                transition: "all 0.2s ease",
+                            }}
+                            onFocus={(e) => {
+                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
+                                e.currentTarget.style.backgroundColor =
+                                    "rgba(255, 255, 255, 0.05)";
+                            }}
+                            onBlur={(e) => {
+                                e.currentTarget.style.borderColor =
+                                    "rgba(255, 255, 255, 0.1)";
+                                e.currentTarget.style.backgroundColor =
+                                    "rgba(255, 255, 255, 0.03)";
+                            }}
+                        />
+                    </div>
+
                     {/* Tags */}
                     <div style={{ marginBottom: "24px" }}>
                         <label
@@ -297,92 +343,49 @@ export default function AddSoftwarePage() {
                         />
                     </div>
 
-                    {/* Category & Color - Side by Side */}
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "40px" }}>
-                        {/* Category */}
-                        <div>
-                            <label
-                                style={{
-                                    display: "block",
-                                    marginBottom: "12px",
-                                    fontSize: "1rem",
-                                    fontWeight: "600",
-                                    color: "#fff",
-                                }}
-                            >
-                                Category
-                            </label>
-                            <select
-                                value={formData.category}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, category: e.target.value })
-                                }
-                                style={{
-                                    width: "100%",
-                                    padding: "14px 18px",
-                                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                                    borderRadius: "12px",
-                                    color: "#fff",
-                                    fontSize: "1rem",
-                                    outline: "none",
-                                    cursor: "pointer",
-                                }}
-                            >
-                                <option value="all">All Projects</option>
-                                <option value="web">Web Development</option>
-                                <option value="mobile">Mobile Apps</option>
-                                <option value="ai">AI & Automation</option>
-                                <option value="marketing">Digital Marketing</option>
-                                <option value="legal">Legal & Compliance</option>
-                                <option value="funding">Grants & Funding</option>
-                            </select>
-                        </div>
-
-                        {/* Color Gradient */}
-                        <div>
-                            <label
-                                style={{
-                                    display: "block",
-                                    marginBottom: "12px",
-                                    fontSize: "1rem",
-                                    fontWeight: "600",
-                                    color: "#fff",
-                                }}
-                            >
-                                Color Gradient
-                            </label>
-                            <input
-                                type="text"
-                                value={formData.color}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, color: e.target.value })
-                                }
-                                placeholder="e.g., from-purple-500 to-pink-500"
-                                style={{
-                                    width: "100%",
-                                    padding: "14px 18px",
-                                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                                    borderRadius: "12px",
-                                    color: "#fff",
-                                    fontSize: "1rem",
-                                    outline: "none",
-                                    transition: "all 0.2s ease",
-                                }}
-                                onFocus={(e) => {
-                                    e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
-                                    e.currentTarget.style.backgroundColor =
-                                        "rgba(255, 255, 255, 0.05)";
-                                }}
-                                onBlur={(e) => {
-                                    e.currentTarget.style.borderColor =
-                                        "rgba(255, 255, 255, 0.1)";
-                                    e.currentTarget.style.backgroundColor =
-                                        "rgba(255, 255, 255, 0.03)";
-                                }}
-                            />
-                        </div>
+                    {/* Google Form Link */}
+                    <div style={{ marginBottom: "40px" }}>
+                        <label
+                            style={{
+                                display: "block",
+                                marginBottom: "12px",
+                                fontSize: "1rem",
+                                fontWeight: "600",
+                                color: "#fff",
+                            }}
+                        >
+                            Google Form Link <span style={{ color: "#888", fontWeight: "400", fontSize: "0.875rem" }}>(optional - add later)</span>
+                        </label>
+                        <input
+                            type="url"
+                            value={formData.formLink}
+                            onChange={(e) =>
+                                setFormData({ ...formData, formLink: e.target.value })
+                            }
+                            placeholder="https://forms.google.com/your-form-link"
+                            style={{
+                                width: "100%",
+                                padding: "14px 18px",
+                                backgroundColor: "rgba(255, 255, 255, 0.03)",
+                                border: "1px solid rgba(255, 255, 255, 0.1)",
+                                borderRadius: "12px",
+                                color: "#fff",
+                                fontSize: "1rem",
+                                outline: "none",
+                                transition: "all 0.2s ease",
+                            }}
+                            onFocus={(e) => {
+                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
+                                e.currentTarget.style.backgroundColor =
+                                    "rgba(255, 255, 255, 0.05)";
+                            }}
+                            onBlur={(e) => {
+                                e.currentTarget.style.borderColor =
+                                    "rgba(255, 255, 255, 0.1)";
+                                e.currentTarget.style.backgroundColor =
+                                    "rgba(255, 255, 255, 0.03)";
+                            }}
+                        />
                     </div>
 
                     {/* Action Buttons */}

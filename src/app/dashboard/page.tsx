@@ -48,9 +48,8 @@ const sidebarItems = [
     { icon: User, label: 'My Account', id: 'account' },
     { icon: ShoppingBag, label: 'Orders', id: 'orders' },
     { icon: FileText, label: 'Quotes', id: 'quotes' },
-    { icon: Palette, label: 'Saved Designs', id: 'designs' },
-    { icon: Image, label: 'Images', id: 'images' },
     { icon: MapPin, label: 'Addresses', id: 'addresses' },
+    { icon: Lock, label: 'Settings', id: 'settings' },
     { icon: UserCircle, label: 'Profile', id: 'profile' },
     { icon: Lock, label: 'Change Password', id: 'password' },
     { icon: UserX, label: 'Deactivate Account', id: 'deactivate' },
@@ -71,20 +70,6 @@ const quickAccessCards = [
         id: 'quotes',
         description: 'View all the approved and requested quotes with the facility to place quick orders.',
         color: 'amber'
-    },
-    {
-        icon: Palette,
-        title: 'Saved Designs',
-        id: 'designs',
-        description: 'View your designs, check PDF previews and place quick orders with a click.',
-        color: 'purple'
-    },
-    {
-        icon: Image,
-        title: 'Images',
-        id: 'images',
-        description: 'Add, delete, or crop images as per design needs.',
-        color: 'green'
     },
     {
         icon: MapPin,
@@ -368,39 +353,6 @@ export default function DashboardPage() {
                             </div>
                         </div>
 
-                        {/* Quick Access */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {quickAccessCards.map((card) => (
-                                <motion.div
-                                    key={card.title}
-                                    variants={fadeInUp}
-                                    onClick={() => setActiveSection(card.id)}
-                                    className="group relative overflow-hidden rounded-2xl bg-white/[0.02] border border-white/5 p-6 cursor-pointer hover:border-white/10 transition-all duration-300"
-                                >
-                                    {(() => {
-                                        const colors: Record<string, string> = {
-                                            cyan: "bg-cyan-500/10 text-cyan-400",
-                                            amber: "bg-amber-500/10 text-amber-400",
-                                            purple: "bg-purple-500/10 text-purple-400",
-                                            green: "bg-green-500/10 text-green-400",
-                                            rose: "bg-rose-500/10 text-rose-400",
-                                            indigo: "bg-indigo-500/10 text-indigo-400"
-                                        };
-                                        const colorClasses = colors[card.color] || colors.cyan;
-                                        return (
-                                            <div className={`w-10 h-10 rounded-xl mb-4 flex items-center justify-center ${colorClasses}`}>
-                                                <card.icon size={20} />
-                                            </div>
-                                        );
-                                    })()}
-                                    <h3 className="text-white font-bold mb-2 flex items-center justify-between">
-                                        {card.title}
-                                        <ChevronRight size={16} className="text-gray-600 group-hover:text-cyan-400 transition-colors" />
-                                    </h3>
-                                    <p className="text-xs text-gray-500 leading-relaxed">{card.description}</p>
-                                </motion.div>
-                            ))}
-                        </div>
                     </motion.div>
                 );
 
@@ -476,7 +428,7 @@ export default function DashboardPage() {
                     <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
                         <h1 className="text-3xl font-bold text-white mb-8 text-center md:text-left">Edit Profile</h1>
 
-                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '40px' }}>
                             {/* Decorative background element */}
                             <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl" />
 
@@ -547,68 +499,148 @@ export default function DashboardPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#050505] w-full flex flex-col items-center" style={{ paddingTop: '100px' }}>
-            <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 pb-24">
-                <div className="flex flex-col lg:flex-row gap-12">
-                    {/* Sidebar */}
-                    <motion.aside
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="w-full lg:w-72 shrink-0"
-                    >
-                        {/* User Profile Card */}
-                        <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border border-cyan-500/20 rounded-2xl p-8 mb-6 relative overflow-hidden group">
-                            <div className="absolute -right-4 -bottom-4 opacity-5 transform group-hover:scale-110 transition-transform duration-500">
-                                <User size={120} />
-                            </div>
-                            <div className="flex flex-col items-center text-center relative">
-                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/30">
-                                    <span className="text-2xl font-black text-white italic">
-                                        {user?.name?.charAt(0).toUpperCase()}
-                                    </span>
-                                </div>
-                                <h3 className="text-lg font-bold text-white mb-1 truncate w-full">{user?.name}</h3>
-                                <p className="text-[10px] text-cyan-400 font-black uppercase tracking-[0.15em] opacity-80">
-                                    {user?.userType || 'Personal'}
-                                </p>
-                            </div>
+        <div style={{ minHeight: '100vh', backgroundColor: '#050505', display: 'flex' }}>
+            {/* Sidebar */}
+            <aside
+                style={{
+                    position: 'fixed',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: '280px',
+                    backgroundColor: 'rgba(10, 10, 10, 1)',
+                    borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    zIndex: 999,
+                }}
+            >
+                {/* User Profile Header */}
+                <div
+                    style={{
+                        padding: '32px 24px',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                    }}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                        <div
+                            style={{
+                                width: '48px',
+                                height: '48px',
+                                borderRadius: '50%',
+                                background: 'linear-gradient(to bottom right, #06b6d4, #3b82f6)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '20px',
+                                fontWeight: 'bold',
+                                color: '#fff',
+                            }}
+                        >
+                            {user?.name?.charAt(0).toUpperCase()}
                         </div>
-
-                        {/* Navigation Menu */}
-                        <nav className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                            {sidebarItems.map((item, index) => (
-                                <button
-                                    key={item.id}
-                                    onClick={() => handleSidebarClick(item.id)}
-                                    className={`w-full flex items-center gap-3 px-5 py-4 text-left transition-all duration-300 relative ${activeSection === item.id
-                                        ? 'bg-cyan-500/10 text-cyan-400'
-                                        : 'text-gray-500 hover:bg-white/[0.03] hover:text-gray-300'
-                                        } ${index !== sidebarItems.length - 1 ? 'border-b border-white/5' : ''}`}
-                                >
-                                    {activeSection === item.id && (
-                                        <motion.div layoutId="activeNav" className="absolute left-0 w-1 h-1/2 bg-cyan-400 rounded-r-full" />
-                                    )}
-                                    <item.icon size={18} strokeWidth={activeSection === item.id ? 2.5 : 2} />
-                                    <span className={`text-sm tracking-wide ${activeSection === item.id ? 'font-black' : 'font-medium'}`}>
-                                        {item.label}
-                                    </span>
-                                </button>
-                            ))}
-                        </nav>
-                    </motion.aside>
-
-                    {/* Main Content */}
-                    <motion.main
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="flex-1 min-w-0"
-                    >
-                        {renderSection()}
-                    </motion.main>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                            <h3
+                                style={{
+                                    fontSize: '1rem',
+                                    fontWeight: '600',
+                                    color: '#fff',
+                                    margin: 0,
+                                    marginBottom: '2px',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}
+                            >
+                                {user?.name}
+                            </h3>
+                            <p
+                                style={{
+                                    fontSize: '0.75rem',
+                                    color: '#888',
+                                    margin: 0,
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}
+                            >
+                                {user?.email}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                {/* Navigation */}
+                <nav
+                    style={{
+                        flex: 1,
+                        padding: '24px 0',
+                        overflowY: 'auto',
+                    }}
+                >
+                    {sidebarItems.map((item) => {
+                        const active = activeSection === item.id;
+                        return (
+                            <button
+                                key={item.id}
+                                onClick={() => handleSidebarClick(item.id)}
+                                style={{
+                                    width: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '12px',
+                                    padding: '14px 24px',
+                                    margin: '4px 12px',
+                                    marginLeft: '12px',
+                                    marginRight: '12px',
+                                    borderRadius: '12px',
+                                    textDecoration: 'none',
+                                    color: active ? '#fff' : '#888',
+                                    backgroundColor: active
+                                        ? 'rgba(6, 182, 212, 0.1)'
+                                        : 'transparent',
+                                    borderLeft: active ? '3px solid #06b6d4' : '3px solid transparent',
+                                    borderTop: 'none',
+                                    borderRight: 'none',
+                                    borderBottom: 'none',
+                                    transition: 'all 0.2s ease',
+                                    fontWeight: active ? '600' : '500',
+                                    fontSize: '0.95rem',
+                                    cursor: 'pointer',
+                                    fontFamily: 'inherit',
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!active) {
+                                        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
+                                        e.currentTarget.style.color = '#fff';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (!active) {
+                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                        e.currentTarget.style.color = '#888';
+                                    }
+                                }}
+                            >
+                                <item.icon size={20} />
+                                <span>{item.label}</span>
+                            </button>
+                        );
+                    })}
+                </nav>
+            </aside>
+
+            {/* Main Content */}
+            <main
+                style={{
+                    marginLeft: '280px',
+                    minHeight: '100vh',
+                    padding: '40px 48px',
+                    flex: 1,
+                }}
+            >
+                {renderSection()}
+            </main>
         </div>
     );
 }
