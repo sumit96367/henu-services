@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useId } from "react";
 
 export const BackgroundGradientAnimation = ({
     gradientBackgroundStart = "rgb(108, 0, 162)",
@@ -41,8 +41,8 @@ export const BackgroundGradientAnimation = ({
     const [tgX, setTgX] = useState(0);
     const [tgY, setTgY] = useState(0);
 
-    // Use unique ID for each instance to avoid conflicts
-    const [instanceId] = useState(() => Math.random().toString(36).substr(2, 9));
+    // Use unique ID for each instance to avoid conflicts - stable for SSR
+    const instanceId = useId().replace(/:/g, '');
 
     useEffect(() => {
         if (containerRef.current) {

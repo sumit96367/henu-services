@@ -536,7 +536,7 @@ export default function PortfolioPage() {
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
                             onClick={(e) => e.stopPropagation()}
-                            className="relative w-full max-w-[1100px] bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden"
+                            className="relative w-full max-w-[95vw] md:max-w-[1100px] bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden p-6 md:p-12"
                             style={{ minHeight: '70vh' }}
                         >
                             {/* Gravitational Mesh Background */}

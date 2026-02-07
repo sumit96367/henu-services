@@ -124,7 +124,15 @@ export const ServiceHero = ({
 
             {/* Animation on the right side (absolute positioned, no box) */}
             {animation && (
-                <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:flex items-center justify-center pointer-events-none z-0">
+                <div
+                    className="animation-container"
+                    style={{
+                        pointerEvents: 'none',
+                        willChange: 'transform, opacity',
+                        opacity: 1,
+                        visibility: 'visible'
+                    }}
+                >
                     {animation}
                 </div>
             )}
@@ -183,6 +191,53 @@ export const ServiceHero = ({
                     </motion.div>
                 </div>
             </motion.div>
+
+            {/* Responsive Animation Styles */}
+            <style jsx>{`
+                .animation-container {
+                    /* Desktop (≥1024px) - unchanged from original */
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    width: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: visible;
+                    z-index: 0;
+                }
+                
+                /* Tablet and Mobile (< 1024px) */
+                @media (max-width: 1023px) {
+                    .animation-container {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%) scale(0.7);
+                        width: 100%;
+                        height: 300px;
+                        overflow: visible;
+                        opacity: 0.3;
+                        z-index: 0;
+                    }
+                }
+                
+                /* Small Mobile (< 768px) */
+                @media (max-width: 767px) {
+                    .animation-container {
+                        transform: translate(-50%, -50%) scale(0.9);
+                        height: 380px;
+                        margin-top: 40px;
+                        opacity: 0.25;
+                    }
+                    
+                    /* Reduce blur on mobile for performance */
+                    .animation-container :global(div[style*="blur"]) {
+                        filter: blur(40px) !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 };

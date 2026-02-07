@@ -148,17 +148,17 @@ h6 {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(2rem, 8vw, 5rem);
   margin-bottom: 1.5rem;
 }
 
 h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
   margin-bottom: 1.25rem;
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.25rem, 3vw, 2rem);
   margin-bottom: 1rem;
 }
 
@@ -232,7 +232,13 @@ li {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 24px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
   }
 }
 
@@ -287,7 +293,13 @@ li {
 
 @media (max-width: 768px) {
   .section {
-    padding: 100px 0;
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 0;
   }
 }
 
@@ -340,6 +352,15 @@ li {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   box-shadow: var(--glow-white);
+  min-height: 44px;
+}
+
+@media (max-width: 768px) {
+  .btn-primary {
+    padding: 16px 32px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
 }
 
 .btn-primary:hover {
@@ -363,6 +384,15 @@ li {
   border-radius: 100px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  min-height: 44px;
+}
+
+@media (max-width: 768px) {
+  .btn-secondary {
+    padding: 16px 32px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
 }
 
 .btn-secondary:hover {
@@ -806,6 +836,36 @@ li {
   .mobile-center {
     text-align: center;
     align-items: center;
+  }
+
+  /* Mobile-specific utilities */
+  .mobile-full-width {
+    width: 100% !important;
+  }
+
+  .mobile-text-center {
+    text-align: center !important;
+  }
+
+  .mobile-px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .mobile-py-8 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .mobile-gap-4 {
+    gap: 1rem !important;
+  }
+
+  /* Prevent text overflow on mobile */
+  .mobile-text-balance {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 }
 

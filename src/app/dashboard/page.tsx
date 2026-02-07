@@ -115,6 +115,7 @@ export default function DashboardPage() {
     const [editCompany, setEditCompany] = useState('');
     const [profilePicture, setProfilePicture] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -220,14 +221,78 @@ export default function DashboardPage() {
         }
     };
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Compress and resize image to stay under Firestore's 1MB limit
+    const compressImage = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    // Create canvas for resizing
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Max dimensions (400x400 is plenty for profile pictures)
+                    const MAX_WIDTH = 400;
+                    const MAX_HEIGHT = 400;
+
+                    let width = img.width;
+                    let height = img.height;
+
+                    // Calculate new dimensions while maintaining aspect ratio
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height = height * (MAX_WIDTH / width);
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width = width * (MAX_HEIGHT / height);
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    // Draw resized image
+                    ctx?.drawImage(img, 0, 0, width, height);
+
+                    // Convert to base64 with compression (0.8 quality for JPEG)
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+
+                    // Check size (Firestore limit is ~1MB, base64 adds ~33% overhead)
+                    const sizeInBytes = compressedDataUrl.length;
+                    const sizeInKB = sizeInBytes / 1024;
+
+                    console.log(`Compressed image size: ${sizeInKB.toFixed(2)} KB`);
+
+                    if (sizeInBytes > 1048487) {
+                        // If still too large, compress more
+                        const veryCompressedDataUrl = canvas.toDataURL('image/jpeg', 0.5);
+                        resolve(veryCompressedDataUrl);
+                    } else {
+                        resolve(compressedDataUrl);
+                    }
+                };
+                img.onerror = reject;
+                img.src = e.target?.result as string;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfilePicture(reader.result as string);
-            };
-            reader.readAsDataURL(file);
+            try {
+                const compressedImage = await compressImage(file);
+                setProfilePicture(compressedImage);
+            } catch (error) {
+                console.error('Error compressing image:', error);
+                alert('Failed to process image. Please try a different image.');
+            }
         }
     };
 
@@ -599,6 +664,27 @@ export default function DashboardPage() {
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#050505', display: 'flex' }}>
+            {/* Mobile Menu Toggle */}
+            <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                style={{
+                    position: 'fixed',
+                    top: '20px',
+                    left: '20px',
+                    zIndex: 1000,
+                    display: 'none',
+                    padding: '12px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '12px',
+                    color: '#fff',
+                    cursor: 'pointer',
+                }}
+                className="mobile-menu-toggle"
+            >
+                <span style={{ fontSize: '24px' }}>{isMobileMenuOpen ? '✕' : '☰'}</span>
+            </button>
+
             {/* Sidebar */}
             <aside
                 style={{
@@ -612,7 +698,9 @@ export default function DashboardPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     zIndex: 999,
+                    transform: isMobileMenuOpen ? 'translateX(0)' : undefined,
                 }}
+                className="dashboard-sidebar"
             >
                 {/* User Profile Header */}
                 <div
@@ -691,7 +779,10 @@ export default function DashboardPage() {
                         return (
                             <button
                                 key={item.id}
-                                onClick={() => handleSidebarClick(item.id)}
+                                onClick={() => {
+                                    handleSidebarClick(item.id);
+                                    setIsMobileMenuOpen(false);
+                                }}
                                 style={{
                                     width: '100%',
                                     display: 'flex',
@@ -746,9 +837,47 @@ export default function DashboardPage() {
                     padding: '40px 48px',
                     flex: 1,
                 }}
+                className="dashboard-main-content"
             >
                 {renderSection()}
             </main>
+
+            {/* Mobile Overlay */}
+            {isMobileMenuOpen && (
+                <div
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        zIndex: 998,
+                        display: 'none',
+                    }}
+                    className="mobile-overlay"
+                />
+            )}
+
+            <style jsx>{`
+                @media (max-width: 768px) {
+                    .mobile-menu-toggle {
+                        display: block !important;
+                    }
+
+                    .dashboard-sidebar {
+                        transform: ${isMobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)'};
+                        transition: transform 0.3s ease;
+                    }
+
+                    .dashboard-main-content {
+                        margin-left: 0 !important;
+                        padding: 80px 24px 40px 24px !important;
+                    }
+
+                    .mobile-overlay {
+                        display: block !important;
+                    }
+                }
+            `}</style>
         </div>
     );
 }

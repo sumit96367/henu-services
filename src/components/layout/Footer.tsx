@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
+import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown } from 'lucide-react';
 import { TextHoverEffect } from '@/components/ui/hover-footer';
+import { useState } from 'react';
 
 const footerLinks = [
     {
-        title: "Technology",
+        title: "Development",
         links: [
             { label: "Website Development", href: "/services/web-development" },
             { label: "Backend Development", href: "/services/backend-development" },
@@ -60,27 +61,56 @@ const policyLinks = [
     { label: "Website Policies", href: "/website-policies" },
 ];
 
+// Mobile Accordion Component
+const MobileAccordion = ({ title, children, isOpen, onToggle }: { title: string; children: React.ReactNode; isOpen: boolean; onToggle: () => void }) => {
+    return (
+        <div className="border-b border-white/5">
+            <button
+                onClick={onToggle}
+                className="w-full flex items-center justify-between py-5 text-left min-h-[44px]"
+            >
+                <h4 className="text-white text-base font-semibold">{title}</h4>
+                <ChevronDown
+                    className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                />
+            </button>
+            <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 pb-6' : 'max-h-0'
+                    }`}
+            >
+                {children}
+            </div>
+        </div>
+    );
+};
+
 export const Footer = () => {
+    const [openSection, setOpenSection] = useState<string | null>(null);
+
+    const toggleSection = (section: string) => {
+        setOpenSection(openSection === section ? null : section);
+    };
+
     return (
         <footer className="bg-[#0a0a0c] relative overflow-hidden rounded-3xl mx-6 sm:mx-16 lg:mx-24 mb-10 mt-32 z-20">
-            {/* Background glow effect */}
+            {/* Background glow effect - reduced on mobile */}
             <div
-                className="absolute inset-0 z-0"
+                className="absolute inset-0 z-0 opacity-40 lg:opacity-100"
                 style={{
                     background: "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0, 212, 255, 0.08) 0%, transparent 60%)",
                 }}
             />
 
             {/* Main content */}
-            <div className="container mx-auto px-6 sm:px-12 lg:px-16 pt-40 pb-12 relative z-10">
-                {/* Balanced Columns - Spread out to fill full width */}
-                <div className="flex flex-col md:flex-row justify-between items-start gap-12 lg:gap-20 mb-24">
+            <div className="container mx-auto px-6 sm:px-12 lg:px-16 pt-16 lg:pt-40 pb-12 pb-[env(safe-area-inset-bottom,1rem)] relative z-10">
 
-                    {/* Brand section */}
-                    <div className="flex-1 flex flex-col space-y-8 min-w-[300px]">
-                        <div className="flex items-center gap-4">
-                            <div className="relative w-24 h-24 flex items-center justify-center overflow-visible">
-                                <div className="relative w-24 h-24" style={{ transform: 'scale(2.15)' }}>
+                {/* MOBILE LAYOUT (<lg) */}
+                <div className="lg:hidden space-y-8">
+                    {/* Brand section - centered on mobile */}
+                    <div className="flex flex-col items-center text-center space-y-4">
+                        <div className="flex items-center gap-3">
+                            <div className="relative w-16 h-16 flex items-center justify-center overflow-visible">
+                                <div className="relative w-16 h-16" style={{ transform: 'scale(1.5)' }}>
                                     <Image
                                         src="/logo.png"
                                         alt="Henu OS Logo"
@@ -89,122 +119,111 @@ export const Footer = () => {
                                     />
                                 </div>
                             </div>
-                            <span className="text-white text-4xl font-bold tracking-tight" style={{ lineHeight: '1' }}>Henu OS</span>
+                            <span className="text-white text-3xl font-bold tracking-tight" style={{ lineHeight: '1' }}>Henu OS</span>
                         </div>
-                        <p className="text-gray-400 text-lg leading-relaxed max-w-sm">
-                            Building the backbone of modern business. From AI-driven development to government grants and legal compliance.
+                        <p className="text-gray-400 text-sm leading-relaxed max-w-md">
+                            Building the backbone of modern business. AI-driven development, grants & legal compliance.
                         </p>
                     </div>
 
-                    {/* Development Links */}
-                    <div className="flex-1 flex flex-col min-w-[200px]">
-                        <h4 className="text-white text-xl font-semibold mb-10">Development</h4>
-                        <ul className="space-y-6">
-                            {footerLinks[0].links.map((link) => (
-                                <li key={link.label}>
-                                    <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                        {link.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    {/* Accordion Sections */}
+                    <div className="space-y-0">
+                        {/* Development */}
+                        <MobileAccordion
+                            title="Development"
+                            isOpen={openSection === 'development'}
+                            onToggle={() => toggleSection('development')}
+                        >
+                            <ul className="space-y-3">
+                                {footerLinks[0].links.map((link) => (
+                                    <li key={link.label}>
+                                        <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-sm block py-1">
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </MobileAccordion>
 
-                    {/* Growth & Legal Links */}
-                    <div className="flex-1 flex flex-col min-w-[200px]">
-                        <h4 className="text-white text-xl font-semibold mb-10">Growth & Legal</h4>
-                        <ul className="space-y-6">
-                            {footerLinks[1].links.map((link) => (
-                                <li key={link.label} className="flex items-center gap-3">
-                                    <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                        {link.label}
-                                    </Link>
-                                    {link.pulse && (
-                                        <span className="flex h-2 w-2 relative">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                                        </span>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                        {/* Growth & Legal */}
+                        <MobileAccordion
+                            title="Growth & Legal"
+                            isOpen={openSection === 'growth'}
+                            onToggle={() => toggleSection('growth')}
+                        >
+                            <ul className="space-y-3">
+                                {footerLinks[1].links.map((link) => (
+                                    <li key={link.label} className="flex items-center gap-2">
+                                        <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-sm block py-1">
+                                            {link.label}
+                                        </Link>
+                                        {link.pulse && (
+                                            <span className="flex h-2 w-2 relative">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                            </span>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </MobileAccordion>
 
-                    {/* Disclaimer & Policies Column */}
-                    <div className="flex-1 flex flex-col min-w-[200px]">
-                        <h4 className="text-white text-xl font-semibold mb-10">Disclaimer & Policies</h4>
-                        <ul className="space-y-6">
-                            <li>
-                                <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                    Privacy Policy
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/terms-of-use" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                    Terms of Use
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/copyright" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                    Copyright
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/feedback" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                    Feedback
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/site-map" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                    Site Map
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/website-policies" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
-                                    Website Policies
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
+                        {/* Legal & Policies */}
+                        <MobileAccordion
+                            title="Legal & Policies"
+                            isOpen={openSection === 'policies'}
+                            onToggle={() => toggleSection('policies')}
+                        >
+                            <ul className="space-y-3">
+                                {policyLinks.map((link) => (
+                                    <li key={link.label}>
+                                        <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-sm block py-1">
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </MobileAccordion>
 
-                    {/* Contact Us Section */}
-                    <div className="flex-1 flex flex-col min-w-[280px] lg:pl-8 lg:border-l border-white/5">
-                        <h4 className="text-white text-xl font-semibold mb-10">Contact Us</h4>
-                        <ul className="space-y-8">
-                            {contactInfo.map((info, idx) => (
-                                <li key={idx}>
-                                    {info.href ? (
-                                        <a href={info.href} className="flex items-center gap-5 text-gray-400 hover:text-cyan-400 transition-all group">
-                                            <div className="p-3.5 rounded-xl bg-white/5 group-hover:bg-cyan-500/10 transition-colors">
-                                                {info.icon}
+                        {/* Contact Us */}
+                        <MobileAccordion
+                            title="Contact Us"
+                            isOpen={openSection === 'contact'}
+                            onToggle={() => toggleSection('contact')}
+                        >
+                            <ul className="space-y-4">
+                                {contactInfo.map((info, idx) => (
+                                    <li key={idx}>
+                                        {info.href ? (
+                                            <a href={info.href} className="flex items-center gap-3 text-gray-400 hover:text-cyan-400 transition-all">
+                                                <div className="p-2 rounded-lg bg-white/5">
+                                                    {info.icon}
+                                                </div>
+                                                <span className="text-sm">{info.text}</span>
+                                            </a>
+                                        ) : (
+                                            <div className="flex items-center gap-3 text-gray-400">
+                                                <div className="p-2 rounded-lg bg-white/5">
+                                                    {info.icon}
+                                                </div>
+                                                <span className="text-sm">{info.text}</span>
                                             </div>
-                                            <span className="text-lg font-medium tracking-wide">{info.text}</span>
-                                        </a>
-                                    ) : (
-                                        <div className="flex items-center gap-5 text-gray-400">
-                                            <div className="p-3.5 rounded-xl bg-white/5">
-                                                {info.icon}
-                                            </div>
-                                            <span className="text-lg font-medium tracking-wide">{info.text}</span>
-                                        </div>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </MobileAccordion>
                     </div>
-                </div>
 
-                {/* Footer Bottom Bar */}
-                <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
-                    {/* Social Links */}
-                    <div className="flex items-center gap-6">
+                    {/* Social Links - centered */}
+                    <div className="flex items-center justify-center gap-4 pt-4">
                         {socialLinks.map((social) => (
                             <a
                                 key={social.label}
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                                className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-white transition-all duration-300"
                                 aria-label={social.label}
                             >
                                 {social.icon}
@@ -212,10 +231,158 @@ export const Footer = () => {
                         ))}
                     </div>
 
-                    {/* Copyright */}
-                    <p className="text-gray-500 text-base font-medium">
+                    {/* Copyright - centered */}
+                    <p className="text-gray-500 text-xs text-center pt-4 border-t border-white/5">
                         © {new Date().getFullYear()} Henu OS Private Limited. All rights reserved.
                     </p>
+                </div>
+
+                {/* DESKTOP LAYOUT (≥lg) - UNCHANGED */}
+                <div className="hidden lg:block">
+                    {/* Balanced Columns - Spread out to fill full width */}
+                    <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 lg:gap-20 mb-16 md:mb-24">
+
+                        {/* Brand section */}
+                        <div className="flex-1 flex flex-col space-y-6 md:space-y-8 w-full md:min-w-[300px]">
+                            <div className="flex items-center gap-4">
+                                <div className="relative w-24 h-24 flex items-center justify-center overflow-visible">
+                                    <div className="relative w-24 h-24" style={{ transform: 'scale(2.15)' }}>
+                                        <Image
+                                            src="/logo.png"
+                                            alt="Henu OS Logo"
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    </div>
+                                </div>
+                                <span className="text-white text-4xl font-bold tracking-tight" style={{ lineHeight: '1' }}>Henu OS</span>
+                            </div>
+                            <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-sm">
+                                Building the backbone of modern business. From AI-driven development to government grants and legal compliance.
+                            </p>
+                        </div>
+
+                        {/* Development Links */}
+                        <div className="flex-1 flex flex-col w-full md:min-w-[200px]">
+                            <h4 className="text-white text-lg md:text-xl font-semibold mb-6 md:mb-10">Development</h4>
+                            <ul className="space-y-4 md:space-y-6">
+                                {footerLinks[0].links.map((link) => (
+                                    <li key={link.label}>
+                                        <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Growth & Legal Links */}
+                        <div className="flex-1 flex flex-col w-full md:min-w-[200px]">
+                            <h4 className="text-white text-xl font-semibold mb-10">Growth & Legal</h4>
+                            <ul className="space-y-6">
+                                {footerLinks[1].links.map((link) => (
+                                    <li key={link.label} className="flex items-center gap-3">
+                                        <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                            {link.label}
+                                        </Link>
+                                        {link.pulse && (
+                                            <span className="flex h-2 w-2 relative">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                            </span>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Disclaimer & Policies Column */}
+                        <div className="flex-1 flex flex-col w-full md:min-w-[200px]">
+                            <h4 className="text-white text-xl font-semibold mb-10">Disclaimer & Policies</h4>
+                            <ul className="space-y-6">
+                                <li>
+                                    <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                        Privacy Policy
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/terms-of-use" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                        Terms of Use
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/copyright" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                        Copyright
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/feedback" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                        Feedback
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/site-map" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                        Site Map
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/website-policies" className="text-gray-400 hover:text-white transition-colors text-lg font-medium">
+                                        Website Policies
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Contact Us Section */}
+                        <div className="flex-1 flex flex-col w-full md:min-w-[280px] lg:pl-8 lg:border-l border-white/5">
+                            <h4 className="text-white text-xl font-semibold mb-10">Contact Us</h4>
+                            <ul className="space-y-8">
+                                {contactInfo.map((info, idx) => (
+                                    <li key={idx}>
+                                        {info.href ? (
+                                            <a href={info.href} className="flex items-center gap-5 text-gray-400 hover:text-cyan-400 transition-all group">
+                                                <div className="p-3.5 rounded-xl bg-white/5 group-hover:bg-cyan-500/10 transition-colors">
+                                                    {info.icon}
+                                                </div>
+                                                <span className="text-lg font-medium tracking-wide">{info.text}</span>
+                                            </a>
+                                        ) : (
+                                            <div className="flex items-center gap-5 text-gray-400">
+                                                <div className="p-3.5 rounded-xl bg-white/5">
+                                                    {info.icon}
+                                                </div>
+                                                <span className="text-lg font-medium tracking-wide">{info.text}</span>
+                                            </div>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Footer Bottom Bar */}
+                    <div className="pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10">
+                        {/* Social Links */}
+                        <div className="flex items-center gap-4 md:gap-6">
+                            {socialLinks.map((social) => (
+                                <a
+                                    key={social.label}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                                    aria-label={social.label}
+                                >
+                                    {social.icon}
+                                </a>
+                            ))}
+                        </div>
+
+                        {/* Copyright */}
+                        <p className="text-gray-500 text-base font-medium">
+                            © {new Date().getFullYear()} Henu OS Private Limited. All rights reserved.
+                        </p>
+                    </div>
                 </div>
             </div>
 

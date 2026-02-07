@@ -236,10 +236,10 @@ const StatsSection = () => {
               transition={{ delay: index * 0.1, duration: 0.6 }}
               className="h-full"
             >
-              <GlowingCard innerClassName="text-center p-14 md:p-20 h-full flex flex-col items-center justify-center">
-                <div className="stat-value gradient-text mb-4 text-4xl md:text-5xl font-extrabold">{stat.value}</div>
-                <div className="text-white font-bold text-lg uppercase tracking-widest mb-3">{stat.label}</div>
-                <div className="text-gray-500 text-base leading-relaxed">{stat.desc}</div>
+              <GlowingCard innerClassName="text-center p-8 md:p-14 lg:p-20 h-full flex flex-col items-center justify-center">
+                <div className="stat-value gradient-text mb-4 text-3xl md:text-4xl lg:text-5xl font-extrabold">{stat.value}</div>
+                <div className="text-white font-bold text-sm md:text-base lg:text-lg uppercase tracking-widest mb-2 md:mb-3">{stat.label}</div>
+                <div className="text-gray-500 text-xs md:text-sm lg:text-base leading-relaxed">{stat.desc}</div>
               </GlowingCard>
             </motion.div>
           ))}
@@ -431,7 +431,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             {/* Laptop Frame */}
-            <div className="relative">
+            <div className="relative scale-75 sm:scale-90 md:scale-100">
               <div className="w-64 h-40 border-2 border-cyan-500/30 rounded-lg bg-gradient-to-br from-cyan-500/5 to-transparent">
                 <div className="absolute inset-2 border border-cyan-500/20 rounded">
                   <div className="h-3 border-b border-cyan-500/20 flex items-center px-2 gap-1">
@@ -472,7 +472,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             {/* Chat Interface */}
-            <div className="w-72 h-56 glass rounded-xl overflow-hidden">
+            <div className="w-full max-w-[280px] sm:max-w-xs md:w-72 h-48 sm:h-52 md:h-56 glass rounded-xl overflow-hidden">
               <div className="h-8 border-b border-white/10 flex items-center px-4 gap-2">
                 <Bot className="w-4 h-4 text-cyan-400" />
                 <span className="text-xs text-gray-400">AI Assistant</span>
@@ -555,7 +555,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             {/* Document morphing to chart */}
-            <div className="relative">
+            <div className="relative scale-75 sm:scale-90 md:scale-100">
               {/* Document */}
               <motion.div
                 className="w-48 h-64 border border-amber-500/30 rounded-lg bg-gradient-to-br from-amber-500/5 to-transparent p-4"
@@ -609,7 +609,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative">
-              <Scale className="w-32 h-32 text-amber-500/50" />
+              <Scale className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 text-amber-500/50" />
               <motion.div
                 className="absolute inset-0 border-2 border-amber-500/20 rounded-full"
                 animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.2, 0.5] }}
@@ -623,7 +623,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative">
-              <Megaphone className="w-32 h-32 text-cyan-500/50" />
+              <Megaphone className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 text-cyan-500/50" />
               <motion.div
                 className="absolute -right-8 top-0"
                 animate={{ x: [0, 20, 0], opacity: [0, 1, 0] }}
@@ -685,19 +685,30 @@ const ServiceMatrixSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left - Navigation */}
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          {/* Right - Visual Preview - Shows FIRST on mobile */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="h-64 sm:h-80 lg:h-96 order-1 lg:order-2"
+          >
+            <GlowingCard className="h-full" innerClassName="h-full flex items-center justify-center overflow-hidden p-4 md:p-12 lg:p-20">
+              <ServiceVisual service={activeService} />
+            </GlowingCard>
+          </motion.div>
+
+          {/* Left - Navigation - Shows SECOND on mobile */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-
-            className="space-y-2"
+            className="space-y-2 order-2 lg:order-1"
           >
             {services.map((service) => (
               <div
                 key={service.id}
-                className={`service-item ${activeService.id === service.id ? 'active' : ''}`}
+                className={`service-item cursor-pointer ${activeService.id === service.id ? 'active' : ''}`}
                 onMouseEnter={() => setActiveService(service)}
+                onClick={() => setActiveService(service)}
               >
                 <div className="flex items-center gap-4">
                   <service.icon className={`w-6 h-6 ${activeService.id === service.id ? (service.color === 'cyan' ? 'text-cyan-400' : 'text-amber-400') : 'text-gray-500'}`} />
@@ -715,7 +726,7 @@ const ServiceMatrixSection = () => {
 
             className="h-80 lg:h-96"
           >
-            <GlowingCard className="h-full" innerClassName="h-full flex items-center justify-center overflow-hidden p-12 md:p-20">
+            <GlowingCard className="h-full" innerClassName="h-full flex items-center justify-center overflow-hidden p-4 md:p-12 lg:p-20">
               <ServiceVisual service={activeService} />
             </GlowingCard>
           </motion.div>
