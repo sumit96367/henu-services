@@ -70,7 +70,7 @@ export const Navbar = () => {
                     <div className="flex-shrink-0 z-10">
                         <Link href="/" className="flex items-center gap-3 group transition-all">
                             <div className="relative w-10 h-10 flex items-center justify-center overflow-visible">
-                                <div className="relative w-10 h-10 group-hover:scale-110 transition-transform" style={{ transform: 'scale(1.85)' }}>
+                                <div className="relative w-10 h-10 group-hover:scale-110 transition-transform" style={{ transform: 'scale(2.4)' }}>
                                     <Image
                                         src="/logo.png"
                                         alt="Henu OS Logo"

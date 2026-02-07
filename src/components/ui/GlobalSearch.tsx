@@ -46,10 +46,26 @@ export const GlobalSearch = () => {
         }
     }, [isOpen]);
 
-    // Focus input when opened
-    useEffect(() => {
+    // Focus handler - called when animation completes
+    const handleAnimationComplete = () => {
+        // Only focus if we're still open (not during close animation)
         if (isOpen && inputRef.current) {
             inputRef.current.focus();
+        }
+    };
+
+    // Multi-layered focus strategy to ensure immediate focus
+    useEffect(() => {
+        if (isOpen && inputRef.current) {
+            // Immediate attempt
+            inputRef.current.focus();
+
+            // Backup attempt after 50ms
+            const timer = setTimeout(() => {
+                inputRef.current?.focus();
+            }, 50);
+
+            return () => clearTimeout(timer);
         }
     }, [isOpen]);
 
@@ -215,6 +231,7 @@ export const GlobalSearch = () => {
                         animate={{ width: 400, opacity: 1 }}
                         exit={{ width: 40, opacity: 0 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                        onAnimationComplete={handleAnimationComplete}
                     >
                         {/* Search Input with Close Icon */}
                         <div className="relative flex items-center">
