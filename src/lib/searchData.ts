@@ -1,16 +1,18 @@
 // Search data structure and utilities for global search
 
 export interface SearchItem {
-    type: 'page' | 'service' | 'software' | 'category' | 'policy';
+    type: 'page' | 'service' | 'software' | 'category' | 'policy' | 'section';
     title: string;
     description: string;
     href: string;
     category?: string;
     tags?: string[];
     keywords?: string[];
+    priority?: number; // Higher number = higher priority in search results
 }
 
 export interface GroupedResults {
+    sections: SearchItem[];  // High-priority product/feature sections
     pages: SearchItem[];
     services: SearchItem[];
     software: SearchItem[];
@@ -25,49 +27,76 @@ const pages: SearchItem[] = [
         title: 'Home',
         description: 'Henu OS - Technology, Legal & Finance Solutions',
         href: '/',
-        keywords: ['home', 'main', 'landing', 'henu os', 'technology', 'legal', 'finance']
+        keywords: ['home', 'landing', 'start', 'main', 'index'],
+        priority: 8
     },
     {
         type: 'page',
         title: 'Services',
         description: 'Comprehensive solutions spanning technology, legal, and finance',
         href: '/services',
-        keywords: ['services', 'solutions', 'offerings', 'development', 'legal', 'finance']
+        keywords: ['services', 'solutions', 'offerings', 'development', 'legal', 'finance', 'what we do'],
+        priority: 7
     },
     {
         type: 'page',
-        title: 'Ecosystem',
+        title: 'Portfolio',
         description: 'Explore our complete suite of products, systems, and solutions',
         href: '/portfolio',
-        keywords: ['ecosystem', 'portfolio', 'projects', 'software', 'products', 'solutions']
+        keywords: ['portfolio', 'work', 'projects', 'case studies', 'examples', 'ecosystem', 'products', 'software'],
+        priority: 7
     },
     {
         type: 'page',
-        title: 'About',
+        title: 'About Us',
         description: 'Learn about Henu OS and our mission',
         href: '/about',
-        keywords: ['about', 'company', 'team', 'mission', 'vision', 'who we are']
+        keywords: ['about', 'company', 'who we are', 'team', 'story', 'henu', 'henu ide', 'ide', 'code editor', 'henu pa++', 'pa++', 'ai assistant', 'products'],
+        priority: 7
     },
     {
         type: 'page',
         title: 'Careers',
         description: 'Join our team and build the future',
         href: '/careers',
-        keywords: ['careers', 'jobs', 'hiring', 'employment', 'join', 'team', 'work']
+        keywords: ['careers', 'jobs', 'hiring', 'openings', 'internship', 'work with us'],
+        priority: 6
     },
     {
         type: 'page',
         title: 'Contact',
         description: 'Get in touch with us',
         href: '/contact',
-        keywords: ['contact', 'reach', 'email', 'phone', 'support', 'help']
+        keywords: ['contact', 'call', 'email', 'reach', 'support', 'help'],
+        priority: 6
     },
     {
         type: 'page',
-        title: 'Realm',
+        title: 'Pricing',
         description: 'Pricing and subscription plans',
         href: '/pricing',
-        keywords: ['realm', 'pricing', 'plans', 'subscription', 'cost', 'packages']
+        keywords: ['pricing', 'cost', 'price', 'plans', 'charges', 'fees', 'quote'],
+        priority: 7
+    }
+];
+
+// Section-specific entries (products, features within pages)
+const sections: SearchItem[] = [
+    {
+        type: 'section',
+        title: 'HENU IDE',
+        description: 'AI-powered development environment showcased on our About page',
+        href: '/about#henu-ide',
+        keywords: ['henu ide', 'ide', 'code editor', 'development environment', 'coding', 'programming'],
+        priority: 10
+    },
+    {
+        type: 'section',
+        title: 'HENU PA++',
+        description: 'Advanced AI assistant featured on our About page',
+        href: '/about#henu-pa',
+        keywords: ['henu pa++', 'pa++', 'ai assistant', 'personal assistant', 'virtual assistant'],
+        priority: 10
     }
 ];
 
@@ -80,7 +109,8 @@ const services: SearchItem[] = [
         href: '/services/web-development',
         category: 'Core Technology',
         tags: ['web', 'development', 'ai', 'scalability'],
-        keywords: ['website', 'web development', 'frontend', 'backend', 'full stack', 'responsive']
+        keywords: ['website', 'web', 'frontend', 'ui', 'ux', 'react', 'nextjs', 'web development', 'web design', 'responsive', 'landing page'],
+        priority: 9
     },
     {
         type: 'service',
@@ -89,7 +119,8 @@ const services: SearchItem[] = [
         href: '/services/backend-development',
         category: 'Core Technology',
         tags: ['backend', 'api', 'infrastructure', 'ai'],
-        keywords: ['backend', 'server', 'api', 'database', 'infrastructure', 'cloud']
+        keywords: ['backend', 'server', 'api', 'database', 'node', 'auth', 'backend development', 'rest api', 'graphql', 'microservices'],
+        priority: 9
     },
     {
         type: 'service',
@@ -98,7 +129,8 @@ const services: SearchItem[] = [
         href: '/services/mobile-app-development',
         category: 'Core Technology',
         tags: ['mobile', 'app', 'ios', 'android'],
-        keywords: ['mobile', 'app', 'android', 'ios', 'react native', 'flutter', 'native']
+        keywords: ['mobile', 'app', 'android', 'ios', 'flutter', 'react native', 'mobile app', 'mobile development', 'native app', 'cross platform'],
+        priority: 9
     },
     {
         type: 'service',
@@ -107,7 +139,8 @@ const services: SearchItem[] = [
         href: '/services/ai-automations',
         category: 'Core Technology',
         tags: ['ai', 'automation', 'agents', 'workflow'],
-        keywords: ['ai', 'automation', 'artificial intelligence', 'machine learning', 'chatbot', 'agents']
+        keywords: ['ai', 'automation', 'machine learning', 'bot', 'workflow', 'artificial intelligence', 'chatbot', 'ai agent', 'intelligent automation'],
+        priority: 9
     },
     {
         type: 'service',
@@ -116,7 +149,8 @@ const services: SearchItem[] = [
         href: '/services/graphic-design',
         category: 'Growth & Design',
         tags: ['design', 'graphics', 'branding', 'visual'],
-        keywords: ['graphic design', 'logo', 'branding', 'visual', 'creative', 'ui', 'ux']
+        keywords: ['design', 'graphics', 'logo', 'branding', 'ui design', 'graphic design', 'visual design', 'brand identity', 'creative'],
+        priority: 8
     },
     {
         type: 'service',
@@ -125,7 +159,8 @@ const services: SearchItem[] = [
         href: '/services/digital-marketing',
         category: 'Growth & Design',
         tags: ['marketing', 'advertising', 'digital', 'campaigns'],
-        keywords: ['digital marketing', 'seo', 'ads', 'social media', 'campaigns', 'advertising']
+        keywords: ['marketing', 'ads', 'seo', 'google ads', 'social media', 'growth', 'digital marketing', 'advertising', 'ppc', 'facebook ads'],
+        priority: 8
     },
     {
         type: 'service',
@@ -134,7 +169,8 @@ const services: SearchItem[] = [
         href: '/services/legal-services',
         category: 'Institutional & Financial',
         tags: ['legal', 'compliance', 'documentation', 'registration'],
-        keywords: ['legal', 'law', 'compliance', 'registration', 'documentation', 'startup']
+        keywords: ['legal', 'law', 'compliance', 'registration', 'startup legal', 'legal services', 'business registration', 'contracts'],
+        priority: 8
     },
     {
         type: 'service',
@@ -143,7 +179,8 @@ const services: SearchItem[] = [
         href: '/services/funding-solutions',
         category: 'Institutional & Financial',
         tags: ['funding', 'grants', 'investment', 'finance'],
-        keywords: ['funding', 'grants', 'investment', 'finance', 'capital', 'investors']
+        keywords: ['funding', 'investment', 'grants', 'startup funding', 'capital', 'investors', 'seed funding', 'angel investors'],
+        priority: 8
     }
 ];
 
@@ -257,42 +294,42 @@ const policies: SearchItem[] = [
         title: 'Privacy Policy',
         description: 'How we collect, use, and protect your personal information',
         href: '/privacy-policy',
-        keywords: ['privacy', 'data', 'personal information', 'gdpr', 'protection']
+        keywords: ['privacy', 'data', 'policy', 'gdpr']
     },
     {
         type: 'policy',
         title: 'Terms of Use',
         description: 'Terms and conditions for using our services',
         href: '/terms-of-use',
-        keywords: ['terms', 'conditions', 'agreement', 'usage', 'legal']
+        keywords: ['terms', 'conditions', 'usage', 'agreement']
     },
     {
         type: 'policy',
         title: 'Copyright',
         description: 'Copyright information and intellectual property rights',
         href: '/copyright',
-        keywords: ['copyright', 'intellectual property', 'rights', 'ownership']
+        keywords: ['copyright', 'ip', 'intellectual property']
     },
     {
         type: 'policy',
         title: 'Feedback',
         description: 'Share your feedback and suggestions with us',
         href: '/feedback',
-        keywords: ['feedback', 'suggestions', 'comments', 'review', 'input']
+        keywords: ['feedback', 'review', 'suggestion', 'complaint']
     },
     {
         type: 'policy',
         title: 'Site Map',
         description: 'Navigate through our website structure',
         href: '/site-map',
-        keywords: ['sitemap', 'navigation', 'structure', 'pages', 'links']
+        keywords: ['sitemap', 'pages', 'navigation', 'structure']
     },
     {
         type: 'policy',
         title: 'Website Policies',
         description: 'All policies governing the use of our website',
         href: '/website-policies',
-        keywords: ['policies', 'rules', 'guidelines', 'website']
+        keywords: ['policies', 'rules', 'legal info']
     }
 ];
 
@@ -368,12 +405,13 @@ export function highlightMatch(text: string, query: string): string {
     return text.replace(regex, '<mark>$1</mark>');
 }
 
-// Main search function
+// Main search function with priority-based ranking
 export async function searchContent(query: string): Promise<GroupedResults> {
     const normalizedQuery = query.toLowerCase().trim();
 
     if (!normalizedQuery) {
         return {
+            sections: [],
             pages: [],
             services: [],
             software: [],
@@ -403,12 +441,25 @@ export async function searchContent(query: string): Promise<GroupedResults> {
         return searchableText.includes(normalizedQuery);
     };
 
+    // Sort by priority (higher first), then alphabetically
+    const sortByPriority = (a: SearchItem, b: SearchItem): number => {
+        const priorityA = a.priority || 0;
+        const priorityB = b.priority || 0;
+
+        if (priorityA !== priorityB) {
+            return priorityB - priorityA; // Higher priority first
+        }
+
+        return a.title.localeCompare(b.title); // Alphabetical fallback
+    };
+
     return {
-        pages: pages.filter(matches),
-        services: services.filter(matches),
-        software: allSoftware.filter(matches),
-        categories: categories.filter(matches),
-        policies: policies.filter(matches)
+        sections: sections.filter(matches).sort(sortByPriority),
+        pages: pages.filter(matches).sort(sortByPriority),
+        services: services.filter(matches).sort(sortByPriority),
+        software: allSoftware.filter(matches).sort(sortByPriority),
+        categories: categories.filter(matches).sort(sortByPriority),
+        policies: policies.filter(matches).sort(sortByPriority)
     };
 }
 

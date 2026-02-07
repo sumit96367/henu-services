@@ -53,10 +53,11 @@ export const GlobalSearch = () => {
         }
     }, [isOpen]);
 
-    // Get all results as flat array
+    // Get all results as flat array (sections first due to highest priority)
     const getAllResults = useCallback((): SearchItem[] => {
         if (!results) return [];
         return [
+            ...results.sections,
             ...results.pages,
             ...results.services,
             ...results.software,
@@ -83,18 +84,29 @@ export const GlobalSearch = () => {
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 setSelectedIndex(prev => prev > 0 ? prev - 1 : -1);
-            } else if (e.key === 'Enter' && selectedIndex >= 0) {
+            } else if (e.key === 'Enter') {
                 e.preventDefault();
-                const selected = allResults[selectedIndex];
-                if (selected) {
-                    handleResultClick(selected);
+
+                // If item selected, navigate to it
+                if (selectedIndex >= 0 && allResults[selectedIndex]) {
+                    handleResultClick(allResults[selectedIndex]);
+                }
+                // If Enter pressed with query but no selection, go to best match
+                else if (query.trim() && allResults.length > 0) {
+                    handleResultClick(allResults[0]); // Redirect to top match
+                }
+                // If no matches, redirect to site map
+                else if (query.trim() && allResults.length === 0) {
+                    router.push('/site-map');
+                    setIsOpen(false);
+                    setQuery('');
                 }
             }
         };
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, selectedIndex, getAllResults]);
+    }, [isOpen, selectedIndex, query, results, router]);
 
     const handleResultClick = (item: SearchItem) => {
         router.push(item.href);
@@ -169,6 +181,7 @@ export const GlobalSearch = () => {
     };
 
     const hasResults = results && (
+        results.sections.length > 0 ||
         results.pages.length > 0 ||
         results.services.length > 0 ||
         results.software.length > 0 ||
@@ -232,6 +245,7 @@ export const GlobalSearch = () => {
                                     className="absolute top-full left-0 right-0 mt-2 max-h-[400px] overflow-y-auto bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[200]"
                                 >
                                     <div className="py-2">
+                                        <ResultGroup title="Products & Features" items={results.sections} />
                                         <ResultGroup title="Pages" items={results.pages} />
                                         <ResultGroup title="Services" items={results.services} />
                                         <ResultGroup title="Software" items={results.software} />

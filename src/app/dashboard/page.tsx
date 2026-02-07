@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy, updateDoc, doc } from 'firebase/firestore';
+import CircularWaveShader from '@/components/ui/circular-wave-shader';
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -444,15 +445,24 @@ export default function DashboardPage() {
                     <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
                         <h1 className="text-3xl font-bold text-white mb-8 text-center md:text-left">Edit Profile</h1>
 
-                        <div className="flex gap-6 flex-col md:flex-row">
+                        <div className="flex flex-col md:flex-row" style={{ gap: '0.4cm' }}>
                             {/* Profile Picture Upload Box */}
-                            <div className="bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '0.5cm', minWidth: '280px', maxWidth: '280px' }}>
-                                <div className="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl" />
+                            <div className="border border-cyan-500/30 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col items-center justify-center" style={{ padding: '2.5rem', width: '520px', height: '520px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 40px rgba(6, 182, 212, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4)' }}>
+                                {/* Background glowing orbs */}
+                                <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
+                                <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
 
-                                <div className="relative flex flex-col items-center gap-4">
-                                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 text-center">Profile Picture</label>
+                                {/* Tech lines decoration */}
+                                <div className="absolute top-0 left-0 w-full h-full opacity-20">
+                                    <div className="absolute top-1/4 left-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+                                    <div className="absolute top-3/4 right-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
+                                </div>
 
-                                    {/* Upload Button */}
+                                <div className="relative flex flex-col items-center justify-center gap-6 w-full h-full">
+                                    {/* Title */}
+                                    <h3 className="text-xl font-bold tracking-[0.3em] text-white/90 mb-2" style={{ fontFamily: 'monospace', letterSpacing: '0.3em' }}>PROFILE IDENTITY</h3>
+
+                                    {/* Hidden file input */}
                                     <input
                                         ref={fileInputRef}
                                         type="file"
@@ -461,79 +471,107 @@ export default function DashboardPage() {
                                         className="hidden"
                                     />
 
-                                    <button
-                                        type="button"
-                                        onClick={() => fileInputRef.current?.click()}
-                                        className="w-full px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-gray-300 hover:bg-white/10 hover:border-cyan-500/50 hover:text-white transition-all flex items-center justify-center gap-2 font-medium text-sm"
-                                    >
-                                        <Upload size={16} />
-                                        Upload Photo
-                                    </button>
+                                    {/* Circular Avatar Display */}
+                                    <div className="relative flex items-center justify-center mb-4">
+                                        <div
+                                            className="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden relative"
+                                            style={{
+                                                boxShadow: '0 0 30px rgba(6, 182, 212, 0.4), 0 0 60px rgba(168, 85, 247, 0.3)',
+                                                background: 'rgba(0, 0, 0, 0.6)'
+                                            }}
+                                        >
+                                            {/* Animated Wave Shader - always show, no profile picture */}
+                                            <CircularWaveShader />
+                                        </div>
+                                    </div>
 
-                                    {profilePicture && (
+                                    {/* Button(s) */}
+                                    {!profilePicture ? (
                                         <button
                                             type="button"
-                                            onClick={() => setProfilePicture(null)}
-                                            className="w-full px-6 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 hover:bg-red-500/20 hover:border-red-500/40 transition-all flex items-center justify-center gap-2 font-medium text-sm"
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="px-12 py-3 border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                            style={{ background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
                                         >
-                                            <UserX size={16} />
-                                            Remove Photo
+                                            UPLOAD IMAGE
                                         </button>
+                                    ) : (
+                                        <div className="flex gap-4">
+                                            <button
+                                                type="button"
+                                                onClick={() => fileInputRef.current?.click()}
+                                                className="px-8 py-3 border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                                style={{ background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                            >
+                                                REPLACE
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setProfilePicture(null)}
+                                                className="px-8 py-3 border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-red-400/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
+                                                style={{ background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                            >
+                                                REMOVE
+                                            </button>
+                                        </div>
                                     )}
-
-                                    <p className="text-[10px] text-gray-600 text-center px-4">
-                                        {profilePicture ? 'Photo uploaded. Click Save Profile to apply changes.' : 'Upload a profile picture to personalize your account'}
-                                    </p>
                                 </div>
                             </div>
 
                             {/* Profile Form */}
-                            <div className="flex-1 bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '0.5cm' }}>
-                                {/* Decorative background element */}
-                                <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl" />
+                            <div className="border border-cyan-500/30 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '2.5rem', width: '520px', height: '520px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 40px rgba(6, 182, 212, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4)' }}>
+                                {/* Background glowing orbs */}
+                                <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
+                                <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
 
-                                <form onSubmit={handleUpdateProfile} className="space-y-6 relative">
-                                    <div className="flex flex-col gap-[0.2cm]">
+                                {/* Tech lines decoration */}
+                                <div className="absolute top-0 left-0 w-full h-full opacity-20">
+                                    <div className="absolute top-1/4 left-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+                                    <div className="absolute top-3/4 right-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
+                                </div>
+
+                                <form onSubmit={handleUpdateProfile} className="relative flex flex-col justify-between h-full">
+                                    <div className="flex flex-col gap-8">
                                         <div>
-                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Full Name</label>
                                             <input
                                                 type="text"
                                                 value={editName}
                                                 onChange={(e) => setEditName(e.target.value)}
-                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
                                                 placeholder="Your Name"
                                                 disabled={isUpdating}
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Company Name</label>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Company Name</label>
                                             <input
                                                 type="text"
                                                 value={editCompany}
                                                 onChange={(e) => setEditCompany(e.target.value)}
-                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
                                                 placeholder="Company (Optional)"
                                                 disabled={isUpdating}
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Email Address</label>
                                             <input
                                                 type="email"
                                                 value={user?.email || ''}
                                                 disabled
-                                                className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-gray-500 cursor-not-allowed italic"
+                                                className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-5 py-4 text-gray-500 text-lg cursor-not-allowed italic"
                                             />
-                                            <p className="text-[10px] text-gray-600 mt-2 px-1">Email cannot be changed for security reasons.</p>
+                                            <p className="text-xs text-gray-600 mt-3 px-1">Email cannot be changed for security reasons.</p>
                                         </div>
                                     </div>
 
                                     <button
                                         type="submit"
                                         disabled={isUpdating}
-                                        className="w-full py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
+                                        className="w-full py-5 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-8"
                                     >
-                                        {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
+                                        {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
                                         {isUpdating ? 'Saving Changes...' : 'Save Profile'}
                                     </button>
                                 </form>
