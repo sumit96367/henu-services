@@ -47,13 +47,15 @@ export default function GraphicDesignHero() {
                 </ContainerAnimated>
 
                 <ContainerAnimated className="my-4 md:my-6">
-                    <p className="text-gray-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed">
-                        Stunning, high-impact designs that define your brand. We combine
-                        artistic mastery with strategic thinking to create visuals that convert.
-                    </p>
+                    <div className="w-full flex flex-col items-center justify-center">
+                        <p className="text-gray-300 text-base md:text-xl max-w-2xl leading-relaxed" style={{ textAlign: 'center' }}>
+                            Stunning, high-impact designs that define your brand. We combine
+                            artistic mastery with strategic thinking to create visuals that convert.
+                        </p>
+                    </div>
                 </ContainerAnimated>
 
-                <ContainerAnimated className="flex flex-wrap justify-center gap-4 md:gap-6 mt-2 md:mt-4">
+                <ContainerAnimated className="flex flex-wrap justify-center gap-4 md:gap-6" style={{ marginTop: '0.25cm' }}>
                     <Button asChild className="btn-primary !h-12 md:!h-14 !px-8 md:!px-10 text-sm md:text-base">
                         <Link href="/contact" className="flex items-center gap-2">
                             Start Your Project <ArrowRight size={18} />

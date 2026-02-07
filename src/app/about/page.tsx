@@ -455,7 +455,7 @@ const BuiltToDoSection = () => {
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center justify-between mb-2">
-                                                        <span className="text-sm text-gray-400">Mobile Apps</span>
+                                                        <span className="text-sm text-gray-400">Mobile App Development</span>
                                                         <span className="text-sm text-green-400 font-medium">25%</span>
                                                     </div>
                                                     <div className="w-full h-3 rounded-full bg-white/10 overflow-hidden">

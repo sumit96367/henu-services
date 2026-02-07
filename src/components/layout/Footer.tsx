@@ -11,7 +11,7 @@ const footerLinks = [
         links: [
             { label: "Website Development", href: "/services/web-development" },
             { label: "Backend Development", href: "/services/backend-development" },
-            { label: "Mobile Apps", href: "/services/mobile-apps" },
+            { label: "Mobile App Development", href: "/services/mobile-app-development" },
             { label: "AI Automations", href: "/services/ai-automations" },
         ],
     },
@@ -79,15 +79,17 @@ export const Footer = () => {
                     {/* Brand section */}
                     <div className="flex-1 flex flex-col space-y-8 min-w-[300px]">
                         <div className="flex items-center gap-4">
-                            <div className="relative w-24 h-24">
-                                <Image
-                                    src="/logo.png"
-                                    alt="Henu OS Logo"
-                                    fill
-                                    className="object-contain"
-                                />
+                            <div className="relative w-24 h-24 flex items-center justify-center overflow-visible">
+                                <div className="relative w-24 h-24" style={{ transform: 'scale(2.15)' }}>
+                                    <Image
+                                        src="/logo.png"
+                                        alt="Henu OS Logo"
+                                        fill
+                                        className="object-contain"
+                                    />
+                                </div>
                             </div>
-                            <span className="text-white text-4xl font-bold tracking-tight">Henu OS</span>
+                            <span className="text-white text-4xl font-bold tracking-tight" style={{ lineHeight: '1' }}>Henu OS</span>
                         </div>
                         <p className="text-gray-400 text-lg leading-relaxed max-w-sm">
                             Building the backbone of modern business. From AI-driven development to government grants and legal compliance.

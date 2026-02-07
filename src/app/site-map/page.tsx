@@ -24,7 +24,7 @@ export default function SitemapPage() {
             links: [
                 { name: 'Website Development', href: '/services/web-development' },
                 { name: 'Backend Development', href: '/services/backend-development' },
-                { name: 'Mobile Apps', href: '/services/mobile-apps' },
+                { name: 'Mobile App Development', href: '/services/mobile-app-development' },
                 { name: 'AI Automations', href: '/services/ai-automations' }
             ]
         },

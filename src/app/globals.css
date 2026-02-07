@@ -47,8 +47,8 @@
   --color-foreground: var(--foreground);
   --color-cyan: var(--cyan);
   --color-amber: var(--amber);
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-sans: "Eagle Lake", serif;
+  --font-display: "Eagle Lake", serif;
   --animate-diamond-rotate: diamond-rotate 8s linear infinite;
 
   @keyframes diamond-rotate {
@@ -102,7 +102,9 @@ html.lenis body {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1.9;
   overflow-x: hidden;
   letter-spacing: 0.015em;
@@ -137,8 +139,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1.2;
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
@@ -328,8 +331,9 @@ li {
   padding: 18px 40px;
   background: #fff;
   color: #000;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.05rem;
   border: none;
   border-radius: 50px;
@@ -351,8 +355,9 @@ li {
   padding: 18px 40px;
   background: transparent;
   color: #fff;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.05rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 100px;
@@ -730,9 +735,10 @@ li {
    ============================================ */
 
 .stat-value {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Eagle Lake", serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 700;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1;
 }
 
