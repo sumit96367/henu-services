@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { Spotlight } from '@/components/ui/spotlight';
+import AIAssistantAnimation from '@/components/ui/ai-assistant-animation';
+import CodeEditorAnimation from '@/components/ui/code-editor-animation';
+import SystemCoreAnimation from '@/components/ui/system-core-animation';
 import {
     Cpu,
     Layers,
@@ -452,7 +455,7 @@ const BuiltToDoSection = () => {
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center justify-between mb-2">
-                                                        <span className="text-sm text-gray-400">Mobile Apps</span>
+                                                        <span className="text-sm text-gray-400">Mobile App Development</span>
                                                         <span className="text-sm text-green-400 font-medium">25%</span>
                                                     </div>
                                                     <div className="w-full h-3 rounded-full bg-white/10 overflow-hidden">
@@ -761,6 +764,144 @@ const CTASection = () => {
 };
 
 // ============================================
+// HENU OS PRODUCT SECTION
+// ============================================
+const HenuOSSection = () => {
+    return (
+        <section style={{ paddingTop: '140px', paddingBottom: '140px' }} className="w-full bg-transparent px-6 relative overflow-hidden">
+            <div className="container mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="grid md:grid-cols-2 gap-16 items-center"
+                >
+                    {/* Visual - Left */}
+                    <div className="relative h-96">
+                        <div className="absolute inset-0 bg-cyan-500/20 rounded-3xl blur-[100px]" />
+                        <div className="relative z-10 w-full h-full">
+                            <SystemCoreAnimation />
+                        </div>
+                    </div>
+
+                    {/* Content - Right */}
+                    <div className="space-y-6">
+                        <h2 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tight">
+                            HENU <span className="gradient-text">OS</span>
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+                            HENU OS is the core ecosystem that powers Henu's digital products and services.
+                            It acts as the foundational operating layer for automation, scalability, and
+                            system-level intelligence. Built to support modern businesses, creators, and
+                            platforms, HENU OS is the backbone of the Henu ecosystem.
+                        </p>
+                        <div style={{ marginTop: '38px' }}>
+                            <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                HENU OS
+                                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+// ============================================
+// HENU IDE PRODUCT SECTION
+// ============================================
+const HenuIDESection = () => {
+    return (
+        <section style={{ paddingTop: '140px', paddingBottom: '140px' }} className="w-full bg-transparent px-6 relative overflow-hidden">
+            <div className="container mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="grid md:grid-cols-2 gap-16 items-center"
+                >
+                    {/* Content - Left */}
+                    <div className="space-y-6 md:order-1 order-2">
+                        <h2 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tight">
+                            HENU <span className="gradient-text">IDE</span>
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+                            HENU IDE is a next-generation development environment built to make coding faster,
+                            smarter, and more intuitive. It combines a clean coding workspace with an integrated
+                            voice assistant that understands developer intent, allowing developers to write, edit,
+                            debug, and navigate code with ease.
+                        </p>
+                        <div style={{ marginTop: '38px' }}>
+                            <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                HENU IDE
+                                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Visual - Right */}
+                    <div className="relative md:order-2 order-1 h-96">
+                        <div className="absolute inset-0 bg-purple-500/20 rounded-3xl blur-[100px]" />
+                        <div className="relative z-10 w-full h-full">
+                            <CodeEditorAnimation />
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+// ============================================
+// HENU PA+++ PRODUCT SECTION
+// ============================================
+const HenuPASection = () => {
+    return (
+        <section style={{ paddingTop: '140px', paddingBottom: '140px' }} className="w-full bg-transparent px-6 relative overflow-hidden">
+            <div className="container mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="grid md:grid-cols-2 gap-16 items-center"
+                >
+                    {/* Visual - Left */}
+                    <div className="relative h-96">
+                        <div className="absolute inset-0 bg-blue-500/20 rounded-3xl blur-[100px]" />
+                        <div className="relative z-10 w-full h-full">
+                            <AIAssistantAnimation />
+                        </div>
+                    </div>
+
+                    {/* Content - Right */}
+                    <div className="space-y-6">
+                        <h2 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tight">
+                            HENU <span className="gradient-text">PA+++</span>
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+                            HENU PA+++ is an intelligent personal assistant designed to simplify daily digital
+                            tasks through natural interaction. It understands user intent, adapts over time, and
+                            reduces decision fatigue by assisting with reminders, information, and task execution
+                            across the Henu ecosystem.
+                        </p>
+                        <div style={{ marginTop: '38px' }}>
+                            <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                HENU PA+++
+                                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+// ============================================
 // MAIN PAGE COMPONENT
 // ============================================
 export default function AboutPage() {
@@ -773,6 +914,9 @@ export default function AboutPage() {
             <WhoWereBestForSection />
             <JourneySection />
             <CTASection />
+            <HenuOSSection />
+            <HenuIDESection />
+            <HenuPASection />
         </main>
     );
 }

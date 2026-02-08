@@ -47,8 +47,8 @@
   --color-foreground: var(--foreground);
   --color-cyan: var(--cyan);
   --color-amber: var(--amber);
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-sans: "Eagle Lake", serif;
+  --font-display: "Eagle Lake", serif;
   --animate-diamond-rotate: diamond-rotate 8s linear infinite;
 
   @keyframes diamond-rotate {
@@ -102,7 +102,9 @@ html.lenis body {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1.9;
   overflow-x: hidden;
   letter-spacing: 0.015em;
@@ -137,25 +139,26 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1.2;
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(2rem, 8vw, 5rem);
   margin-bottom: 1.5rem;
 }
 
 h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
   margin-bottom: 1.25rem;
 }
 
 h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.25rem, 3vw, 2rem);
   margin-bottom: 1rem;
 }
 
@@ -229,7 +232,57 @@ li {
 
 @media (max-width: 768px) {
   .container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+/* Policy Pages - Wider Container */
+.policy-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .policy-container {
     padding: 0 24px;
+  }
+}
+
+/* Policy Box - 1cm Internal Padding */
+.policy-box-padding {
+  padding: 1cm;
+}
+
+/* Policy CTA Button - Prominent Primary Button */
+.policy-cta-button {
+  padding: 20px 48px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  min-height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #000;
+  border: none;
+}
+
+.policy-cta-button:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .policy-cta-button {
+    padding: 18px 40px;
+    min-height: 56px;
   }
 }
 
@@ -240,7 +293,13 @@ li {
 
 @media (max-width: 768px) {
   .section {
-    padding: 100px 0;
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 0;
   }
 }
 
@@ -284,14 +343,24 @@ li {
   padding: 18px 40px;
   background: #fff;
   color: #000;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.05rem;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   box-shadow: var(--glow-white);
+  min-height: 44px;
+}
+
+@media (max-width: 768px) {
+  .btn-primary {
+    padding: 16px 32px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
 }
 
 .btn-primary:hover {
@@ -307,13 +376,23 @@ li {
   padding: 18px 40px;
   background: transparent;
   color: #fff;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
+  font-family: "Eagle Lake", serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.05rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 100px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  min-height: 44px;
+}
+
+@media (max-width: 768px) {
+  .btn-secondary {
+    padding: 16px 32px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
 }
 
 .btn-secondary:hover {
@@ -459,6 +538,26 @@ li {
   }
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -495,6 +594,14 @@ li {
 
 .animate-rotate-text {
   animation: rotate-text 30s linear infinite;
+}
+
+.animate-marquee {
+  animation: marquee var(--duration) linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse var(--duration) linear infinite;
 }
 
 @keyframes spotlight {
@@ -658,9 +765,10 @@ li {
    ============================================ */
 
 .stat-value {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Eagle Lake", serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 700;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1;
 }
 
@@ -728,6 +836,36 @@ li {
   .mobile-center {
     text-align: center;
     align-items: center;
+  }
+
+  /* Mobile-specific utilities */
+  .mobile-full-width {
+    width: 100% !important;
+  }
+
+  .mobile-text-center {
+    text-align: center !important;
+  }
+
+  .mobile-px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .mobile-py-8 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .mobile-gap-4 {
+    gap: 1rem !important;
+  }
+
+  /* Prevent text overflow on mobile */
+  .mobile-text-balance {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 }
 
@@ -913,4 +1051,20 @@ li {
 
 .animate-fifth {
   animation: moveInCircle 20s ease infinite;
+}
+
+/* ============================================
+   UTILITY: Hide Scrollbar
+   ============================================ */
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
 }

@@ -277,7 +277,7 @@ export default function ContactPage() {
             {/* Contact Grid Section */}
             <section className="py-12 bg-transparent px-6" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
                 <div className="container mx-auto">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                         {contactInfo.map((info, index) => (
                             <motion.div
                                 key={info.title}
@@ -346,7 +346,7 @@ export default function ContactPage() {
                                 Our consultants are ready to dive deep into your requirements and provide a strategic roadmap tailored for your business.
                             </p>
 
-                            <div className="grid sm:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                                 <div className="space-y-4">
                                     <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">
                                         <CheckCircle className="w-6 h-6 text-cyan-400" />
@@ -433,7 +433,7 @@ export default function ContactPage() {
                                                                 <p className="text-lg text-gray-400">Tell us who you are</p>
                                                             </div>
 
-                                                            <div className="grid md:grid-cols-2 gap-8">
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                                                 <div className="space-y-5">
                                                                     <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Full Name</label>
                                                                     <div className="relative group flex items-center">
@@ -504,7 +504,7 @@ export default function ContactPage() {
                                                             <label className="text-xl font-bold text-gray-300 block px-1 tracking-wider uppercase text-[14px]">
                                                                 Service Aspect *
                                                             </label>
-                                                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                                                                 {serviceOptions.map((service) => (
                                                                     <SelectableCard
                                                                         key={service.id}

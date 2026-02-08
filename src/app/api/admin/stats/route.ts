@@ -4,8 +4,8 @@ import { AdminStats } from '@/types/admin';
 
 export async function GET() {
     try {
-        const enrollments = getEnrollments();
-        const payments = getPayments();
+        const enrollments = await getEnrollments();
+        const payments = await getPayments();
 
         // Calculate statistics
         const totalEnrollments = enrollments.length;

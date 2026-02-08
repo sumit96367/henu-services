@@ -91,13 +91,19 @@ Use the credentials you set in your `.env` file:
 
 ## Data Storage
 
-The admin dashboard uses **file-based JSON storage** located in the `/data` directory.
+The admin dashboard uses **Firebase Firestore cloud database** for all data storage.
 
-**Data Files:**
-- `data/enrollments.json` - All internship enrollments
-- `data/payments.json` - All payment transactions
+**Firestore Collections:**
+- `enrollments` - All internship enrollments
+- `payments` - All payment transactions
 
-**Note:** The `/data` directory is automatically gitignored for security.
+**Benefits:**
+- ✅ Cloud-based storage (accessible from anywhere)
+- ✅ Real-time data synchronization
+- ✅ Automatic backups and scaling
+- ✅ Secure with Firebase security rules
+
+**Note:** Data is automatically stored in your Firebase project configured in `.env`
 
 ---
 
@@ -158,8 +164,9 @@ The admin dashboard uses **file-based JSON storage** located in the `/data` dire
 
 ### Data Not Showing
 - Ensure payment flow is completing successfully
-- Check `/data` directory exists and has proper permissions
+- Check Firebase Console for data in `enrollments` and `payments` collections
 - View browser console for API errors
+- Verify Firebase configuration in `.env` file
 
 ### CSV Export Not Working
 - Check browser console for errors
@@ -168,21 +175,11 @@ The admin dashboard uses **file-based JSON storage** located in the `/data` dire
 
 ---
 
-## Migration to Database
-
-Currently using JSON file storage for simplicity. To migrate to a database:
-
-1. Choose your database (PostgreSQL, MongoDB, etc.)
-2. Update `src/lib/data-store.ts` functions
-3. Keep the same function signatures
-4. No changes needed to API routes or UI
-
----
-
 ## Tech Stack
 
 - **Framework**: Next.js 16.1.1
-- **Authentication**: jose (JWT)
+- **Database**: Firebase Firestore
+- **Authentication**: jose (JWT) + Firebase Auth
 - **Password Hashing**: bcrypt
 - **UI**: React 19.2.3, Framer Motion
 - **Styling**: Tailwind CSS

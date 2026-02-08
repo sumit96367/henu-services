@@ -173,7 +173,13 @@ export default function MobileAppDevelopmentPage() {
             <FloatingIconsHero
                 title={heroTitle}
                 highlight={heroHighlight}
-                subtitle={heroDescription}
+                subtitle={
+                    <>
+                        Transform your ideas into powerful mobile experiences.
+                        <br />
+                        We build apps that users love and businesses rely on.
+                    </>
+                }
                 ctaText="Start Your Project"
                 ctaHref="/contact"
                 icons={mobileIcons}

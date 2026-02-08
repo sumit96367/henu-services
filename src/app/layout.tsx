@@ -21,7 +21,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Henu OS Private Limited | Technology, Legal & Finance Solutions",
-  description: "Henu OS bridges Technology, Law, and Finance. We offer web development, mobile apps, AI agents, digital marketing, legal documentation, company registration, and government grants & funding solutions.",
+  description: "Henu OS bridges Technology, Law, and Finance. We offer web development, mobile app development, AI agents, digital marketing, legal documentation, company registration, and government grants & funding solutions.",
   keywords: [
     "web development",
     "mobile app development",
@@ -63,10 +63,13 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&display=swap" rel="stylesheet" />
       </head>
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}
-        style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+        style={{ fontFamily: "'Eagle Lake', serif", fontWeight: 400, fontStyle: 'normal' }}
       >
         <AuthProvider>
           <SmoothScrollProvider>

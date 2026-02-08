@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
                 endDate: searchParams.get('endDate') || undefined,
                 search: searchParams.get('search') || undefined,
             };
-            data = getEnrollments(filters);
+            data = await getEnrollments(filters);
             filename = `enrollments_${new Date().toISOString().split('T')[0]}.csv`;
         } else {
             // Get filters if provided
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
                 startDate: searchParams.get('startDate') || undefined,
                 endDate: searchParams.get('endDate') || undefined,
             };
-            data = getPayments(filters);
+            data = await getPayments(filters);
             filename = `payments_${new Date().toISOString().split('T')[0]}.csv`;
         }
 

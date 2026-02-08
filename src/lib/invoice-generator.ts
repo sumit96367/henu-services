@@ -181,7 +181,7 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<Buffer> {
     });
 
     // Amount
-    page.drawText(`₹${data.amount.toLocaleString('en-IN')}`, {
+    page.drawText(`Rs. ${data.amount.toLocaleString('en-IN')}`, {
         x: width - 150,
         y: yPosition,
         size: 11,
@@ -208,7 +208,7 @@ export async function generateInvoicePDF(data: InvoiceData): Promise<Buffer> {
         color: rgb(0, 0, 0)
     });
 
-    page.drawText(`₹${data.amount.toLocaleString('en-IN')}`, {
+    page.drawText(`Rs. ${data.amount.toLocaleString('en-IN')}`, {
         x: width - 150,
         y: yPosition,
         size: 14,

@@ -20,6 +20,22 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
+    // Redirect /admin to /admin/dashboard if authenticated
+    if (pathname === '/admin') {
+        if (!token) {
+            return NextResponse.redirect(new URL('/admin/login', request.url));
+        }
+
+        const payload = await verifyToken(token);
+        if (!payload) {
+            const response = NextResponse.redirect(new URL('/admin/login', request.url));
+            response.cookies.delete('admin_token');
+            return response;
+        }
+
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+    }
+
     // Protect all other /admin routes
     if (pathname.startsWith('/admin')) {
         if (!token) {

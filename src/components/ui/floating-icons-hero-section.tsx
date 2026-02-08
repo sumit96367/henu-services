@@ -18,7 +18,7 @@ interface IconProps {
 export interface FloatingIconsHeroProps {
     title: string;
     highlight?: string;
-    subtitle: string;
+    subtitle: React.ReactNode;
     ctaText: string;
     ctaHref: string;
     icons: IconProps[];
@@ -178,10 +178,12 @@ const FloatingIconsHero = React.forwardRef<
                         {title} <br />
                         {highlight && <span className="gradient-text-tech">{highlight}</span>}
                     </h1>
-                    <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed">
-                        {subtitle}
-                    </p>
-                    <div className="mt-12 flex flex-wrap justify-center items-center gap-6">
+                    <div className="mt-6 w-full flex flex-col items-center justify-center">
+                        <p className="max-w-2xl text-lg md:text-xl text-gray-400 leading-relaxed" style={{ textAlign: 'center' }}>
+                            {subtitle}
+                        </p>
+                    </div>
+                    <div className="flex flex-wrap justify-center items-center gap-6" style={{ marginTop: '0.25cm' }}>
                         <Button asChild className="btn-primary !h-14 !px-10 text-base">
                             <Link href={ctaHref}>{ctaText}</Link>
                         </Button>

@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
 import { UserMenu } from '@/components/auth';
 import { useAuth } from '@/context/AuthContext';
+import { GlobalSearch } from '@/components/ui/GlobalSearch';
 import {
     Menu as MenuIcon,
     X,
@@ -47,10 +48,10 @@ export const Navbar = () => {
 
     const navLinks = [
         { name: 'Services', href: '/services' },
-        { name: 'Portfolio', href: '/portfolio' },
+        { name: 'Ecosystem', href: '/portfolio' },
         { name: 'About', href: '/about' },
-        { name: 'Pricing', href: '/pricing' },
-        ...(userType === 'personal' ? [{ name: 'Careers', href: '/careers' }] : []),
+        ...(userType !== 'personal' ? [{ name: 'Realm', href: '/pricing' }] : []),
+        ...(userType !== 'company' ? [{ name: 'Careers', href: '/careers' }] : []),
         { name: 'Contact', href: '/contact' },
     ];
 
@@ -68,13 +69,15 @@ export const Navbar = () => {
                     {/* Branding - Left */}
                     <div className="flex-shrink-0 z-10">
                         <Link href="/" className="flex items-center gap-3 group transition-all">
-                            <div className="relative w-10 h-10 group-hover:scale-105 transition-transform">
-                                <Image
-                                    src="/logo.png"
-                                    alt="Henu OS Logo"
-                                    fill
-                                    className="object-contain"
-                                />
+                            <div className="relative w-10 h-10 flex items-center justify-center overflow-visible">
+                                <div className="relative w-10 h-10 group-hover:scale-110 transition-transform" style={{ transform: 'scale(2.4)' }}>
+                                    <Image
+                                        src="/logo.png"
+                                        alt="Henu OS Logo"
+                                        fill
+                                        className="object-contain"
+                                    />
+                                </div>
                             </div>
                             <span className="text-xl font-bold text-white tracking-tight whitespace-nowrap">Henu OS</span>
                         </Link>
@@ -84,72 +87,63 @@ export const Navbar = () => {
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block">
                         <Menu setActive={setActive}>
                             <div className="relative">
-                                <Link
-                                    href="/services"
-                                    onMouseEnter={() => setActive("Services")}
-                                    className={cn(
-                                        "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
-                                        pathname.startsWith("/services") ? "text-cyan-400" : "text-white hover:text-cyan-400"
-                                    )}
-                                >
-                                    <MenuItem setActive={setActive} active={active} item="Services">
-                                        <div className="w-[600px] text-left">
-                                            <div className="grid grid-cols-2 gap-x-4 gap-y-2 p-6">
-                                                <ServiceSubItem
-                                                    title="Website Development"
-                                                    href="/services/web-development"
-                                                    icon={Globe}
-                                                />
-                                                <ServiceSubItem
-                                                    title="Backend Development"
-                                                    href="/services/backend-development"
-                                                    icon={Server}
-                                                />
-                                                <ServiceSubItem
-                                                    title="Mobile App Development"
-                                                    href="/services/mobile-app-development"
-                                                    icon={Smartphone}
-                                                />
-                                                <ServiceSubItem
-                                                    title="AI Automations"
-                                                    href="/services/ai-automations"
-                                                    icon={Bot}
-                                                />
-                                                <ServiceSubItem
-                                                    title="Graphic Design"
-                                                    href="/services/graphic-design"
-                                                    icon={Palette}
-                                                />
-                                                <ServiceSubItem
-                                                    title="Digital & Ads"
-                                                    href="/services/digital-marketing"
-                                                    icon={Megaphone}
-                                                />
-                                                <ServiceSubItem
-                                                    title="Legal Services"
-                                                    href="/services/legal-services"
-                                                    icon={Scale}
-                                                />
-                                                <ServiceSubItem
-                                                    title="Funding Solutions"
-                                                    href="/services/funding-solutions"
-                                                    icon={Coins}
-                                                />
-                                            </div>
-
-                                            {/* Submenu Footer */}
-                                            <div className="p-4 bg-white/[0.03] border-t border-white/10 group/footer">
-                                                <Link
-                                                    href="/contact"
-                                                    className="flex items-center justify-center gap-2 text-sm font-medium text-gray-400 group-hover/footer:text-cyan-400 transition-colors"
-                                                >
-                                                    Interested? <span className="font-bold text-white group-hover/footer:text-cyan-400 transition-colors">Start your project</span>
-                                                    <ArrowRight size={14} className="group-hover/footer:translate-x-1 transition-transform" />
-                                                </Link>
-                                            </div>
+                                <MenuItem setActive={setActive} active={active} item="Services">
+                                    <div className="w-[600px] text-left">
+                                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 p-6">
+                                            <ServiceSubItem
+                                                title="Website Development"
+                                                href="/services/web-development"
+                                                icon={Globe}
+                                            />
+                                            <ServiceSubItem
+                                                title="Backend Development"
+                                                href="/services/backend-development"
+                                                icon={Server}
+                                            />
+                                            <ServiceSubItem
+                                                title="Mobile App Development"
+                                                href="/services/mobile-app-development"
+                                                icon={Smartphone}
+                                            />
+                                            <ServiceSubItem
+                                                title="AI Automations"
+                                                href="/services/ai-automations"
+                                                icon={Bot}
+                                            />
+                                            <ServiceSubItem
+                                                title="Graphic Design"
+                                                href="/services/graphic-design"
+                                                icon={Palette}
+                                            />
+                                            <ServiceSubItem
+                                                title="Digital & Ads"
+                                                href="/services/digital-marketing"
+                                                icon={Megaphone}
+                                            />
+                                            <ServiceSubItem
+                                                title="Legal Services"
+                                                href="/services/legal-services"
+                                                icon={Scale}
+                                            />
+                                            <ServiceSubItem
+                                                title="Funding Solutions"
+                                                href="/services/funding-solutions"
+                                                icon={Coins}
+                                            />
                                         </div>
-                                    </MenuItem>
-                                </Link>
+
+                                        {/* Submenu Footer */}
+                                        <div className="p-4 bg-white/[0.03] border-t border-white/10 group/footer">
+                                            <Link
+                                                href="/contact"
+                                                className="flex items-center justify-center gap-2 text-sm font-medium text-gray-400 group-hover/footer:text-cyan-400 transition-colors"
+                                            >
+                                                Interested? <span className="font-bold text-white group-hover/footer:text-cyan-400 transition-colors">Start your project</span>
+                                                <ArrowRight size={14} className="group-hover/footer:translate-x-1 transition-transform" />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </MenuItem>
                             </div>
 
                             <Link
@@ -160,7 +154,7 @@ export const Navbar = () => {
                                     pathname === "/portfolio" ? "text-cyan-400" : "text-white hover:text-cyan-400"
                                 )}
                             >
-                                Portfolio
+                                ECOSYSTEM
                             </Link>
                             <Link
                                 href="/about"
@@ -172,17 +166,19 @@ export const Navbar = () => {
                             >
                                 About
                             </Link>
-                            <Link
-                                href="/pricing"
-                                onMouseEnter={() => setActive(null)}
-                                className={cn(
-                                    "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
-                                    pathname === "/pricing" ? "text-cyan-400" : "text-white hover:text-cyan-400"
-                                )}
-                            >
-                                Pricing
-                            </Link>
-                            {userType === 'personal' && (
+                            {userType !== 'personal' && (
+                                <Link
+                                    href="/pricing"
+                                    onMouseEnter={() => setActive(null)}
+                                    className={cn(
+                                        "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
+                                        pathname === "/pricing" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                    )}
+                                >
+                                    Realm
+                                </Link>
+                            )}
+                            {userType !== 'company' && (
                                 <Link
                                     href="/careers"
                                     onMouseEnter={() => setActive(null)}
@@ -207,8 +203,11 @@ export const Navbar = () => {
                         </Menu>
                     </div>
 
-                    {/* User Menu & Mobile Toggle - Right */}
+                    {/* Search, User Menu & Mobile Toggle - Right */}
                     <div className="flex items-center gap-3">
+                        {/* Global Search */}
+                        <GlobalSearch />
+
                         {/* User Menu (Desktop) */}
                         <div className="hidden md:block">
                             <UserMenu />
