@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
             search: searchParams.get('search') || undefined,
         };
 
-        const enrollments = getEnrollments(filters);
+        const enrollments = await getEnrollments(filters);
 
         // Sort by timestamp (newest first)
         enrollments.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());

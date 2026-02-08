@@ -1,164 +1,258 @@
-import fs from 'fs';
-import path from 'path';
+import {
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    where,
+    orderBy,
+    updateDoc,
+    doc,
+    Timestamp
+} from 'firebase/firestore';
+import { db } from './firebase';
 import { EnrollmentRecord, PaymentRecord, EnrollmentFilters, PaymentFilters } from '@/types/admin';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const ENROLLMENTS_FILE = path.join(DATA_DIR, 'enrollments.json');
-const PAYMENTS_FILE = path.join(DATA_DIR, 'payments.json');
-
-// Ensure data directory exists
-function ensureDataDir() {
-    if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-}
-
-// Read JSON file
-function readJSONFile<T>(filePath: string): T[] {
-    ensureDataDir();
-    if (!fs.existsSync(filePath)) {
-        return [];
-    }
+/**
+ * Save an enrollment record to Firestore
+ */
+export async function saveEnrollment(enrollment: EnrollmentRecord): Promise<void> {
     try {
-        const data = fs.readFileSync(filePath, 'utf-8');
-        return JSON.parse(data);
+        await addDoc(collection(db, 'enrollments'), {
+            ...enrollment,
+            timestamp: enrollment.timestamp || new Date().toISOString()
+        });
     } catch (error) {
-        console.error(`Error reading ${filePath}:`, error);
-        return [];
-    }
-}
-
-// Write JSON file
-function writeJSONFile<T>(filePath: string, data: T[]) {
-    ensureDataDir();
-    try {
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-    } catch (error) {
-        console.error(`Error writing ${filePath}:`, error);
+        console.error('Error saving enrollment:', error);
         throw error;
     }
 }
 
 /**
- * Save an enrollment record
+ * Save a payment record to Firestore
  */
-export function saveEnrollment(enrollment: EnrollmentRecord): void {
-    const enrollments = readJSONFile<EnrollmentRecord>(ENROLLMENTS_FILE);
-    enrollments.push(enrollment);
-    writeJSONFile(ENROLLMENTS_FILE, enrollments);
+export async function savePayment(payment: PaymentRecord): Promise<void> {
+    try {
+        await addDoc(collection(db, 'payments'), {
+            ...payment,
+            timestamp: payment.timestamp || new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('Error saving payment:', error);
+        throw error;
+    }
 }
 
 /**
- * Save a payment record
+ * Save a query to Firestore
  */
-export function savePayment(payment: PaymentRecord): void {
-    const payments = readJSONFile<PaymentRecord>(PAYMENTS_FILE);
-    payments.push(payment);
-    writeJSONFile(PAYMENTS_FILE, payments);
+export async function saveQuery(query: {
+    enrollmentId: string;
+    fullName: string;
+    email: string;
+    domain: string;
+    subDomain: string;
+    queries: string;
+    timestamp: string;
+}): Promise<void> {
+    try {
+        // Only save if queries is not empty
+        if (query.queries && query.queries.trim()) {
+            await addDoc(collection(db, 'queries'), {
+                ...query,
+                timestamp: query.timestamp || new Date().toISOString(),
+                status: 'pending', // pending, replied, resolved
+                adminNotes: ''
+            });
+        }
+    } catch (error) {
+        console.error('Error saving query:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get all queries from Firestore
+ */
+export async function getQueries(): Promise<any[]> {
+    try {
+        const queriesRef = collection(db, 'queries');
+        const q = query(queriesRef, orderBy('timestamp', 'desc'));
+        const querySnapshot = await getDocs(q);
+
+        return querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+    } catch (error) {
+        console.error('Error getting queries:', error);
+        throw error;
+    }
+}
+
+/**
+ * Update query status and admin notes
+ */
+export async function updateQueryStatus(
+    queryId: string,
+    status: 'pending' | 'in-progress' | 'resolved',
+    adminNotes?: string
+): Promise<void> {
+    try {
+        const queryRef = doc(db, 'queries', queryId);
+        const updateData: any = { status };
+
+        if (adminNotes !== undefined) {
+            updateData.adminNotes = adminNotes;
+        }
+
+        await updateDoc(queryRef, updateData);
+    } catch (error) {
+        console.error('Error updating query status:', error);
+        throw error;
+    }
 }
 
 /**
  * Get all enrollments with optional filters
  */
-export function getEnrollments(filters?: EnrollmentFilters): EnrollmentRecord[] {
-    let enrollments = readJSONFile<EnrollmentRecord>(ENROLLMENTS_FILE);
+export async function getEnrollments(filters?: EnrollmentFilters): Promise<EnrollmentRecord[]> {
+    try {
+        const enrollmentsRef = collection(db, 'enrollments');
+        let q = query(enrollmentsRef);
 
-    if (!filters) return enrollments;
+        // Apply Firestore filters where possible
+        if (filters?.domain) {
+            q = query(q, where('domainCategory', '==', filters.domain));
+        }
 
-    // Apply filters
-    if (filters.domain) {
-        enrollments = enrollments.filter(e => e.domainCategory === filters.domain);
+        if (filters?.subDomain) {
+            q = query(q, where('subDomain', '==', filters.subDomain));
+        }
+
+        if (filters?.status) {
+            q = query(q, where('status', '==', filters.status));
+        }
+
+        const querySnapshot = await getDocs(q);
+        let enrollments: EnrollmentRecord[] = querySnapshot.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+        } as EnrollmentRecord));
+
+        // Apply client-side filters for date ranges and search
+        if (filters?.startDate) {
+            enrollments = enrollments.filter(e =>
+                new Date(e.timestamp) >= new Date(filters.startDate!)
+            );
+        }
+
+        if (filters?.endDate) {
+            enrollments = enrollments.filter(e =>
+                new Date(e.timestamp) <= new Date(filters.endDate!)
+            );
+        }
+
+        if (filters?.search) {
+            const searchLower = filters.search.toLowerCase();
+            enrollments = enrollments.filter(e =>
+                e.fullName.toLowerCase().includes(searchLower) ||
+                e.email.toLowerCase().includes(searchLower)
+            );
+        }
+
+        return enrollments;
+    } catch (error) {
+        console.error('Error fetching enrollments:', error);
+        return [];
     }
-
-    if (filters.subDomain) {
-        enrollments = enrollments.filter(e => e.subDomain === filters.subDomain);
-    }
-
-    if (filters.status) {
-        enrollments = enrollments.filter(e => e.status === filters.status);
-    }
-
-    if (filters.startDate) {
-        enrollments = enrollments.filter(e => new Date(e.timestamp) >= new Date(filters.startDate!));
-    }
-
-    if (filters.endDate) {
-        enrollments = enrollments.filter(e => new Date(e.timestamp) <= new Date(filters.endDate!));
-    }
-
-    if (filters.search) {
-        const searchLower = filters.search.toLowerCase();
-        enrollments = enrollments.filter(e =>
-            e.fullName.toLowerCase().includes(searchLower) ||
-            e.email.toLowerCase().includes(searchLower)
-        );
-    }
-
-    return enrollments;
 }
 
 /**
  * Get all payments with optional filters
  */
-export function getPayments(filters?: PaymentFilters): PaymentRecord[] {
-    let payments = readJSONFile<PaymentRecord>(PAYMENTS_FILE);
+export async function getPayments(filters?: PaymentFilters): Promise<PaymentRecord[]> {
+    try {
+        const paymentsRef = collection(db, 'payments');
+        let q = query(paymentsRef);
 
-    if (!filters) return payments;
+        // Apply Firestore filters where possible
+        if (filters?.status) {
+            q = query(q, where('status', '==', filters.status));
+        }
 
-    // Apply filters
-    if (filters.status) {
-        payments = payments.filter(p => p.status === filters.status);
+        const querySnapshot = await getDocs(q);
+        let payments: PaymentRecord[] = querySnapshot.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+        } as PaymentRecord));
+
+        // Apply client-side filters for date and amount ranges
+        if (filters?.startDate) {
+            payments = payments.filter(p =>
+                new Date(p.timestamp) >= new Date(filters.startDate!)
+            );
+        }
+
+        if (filters?.endDate) {
+            payments = payments.filter(p =>
+                new Date(p.timestamp) <= new Date(filters.endDate!)
+            );
+        }
+
+        if (filters?.minAmount !== undefined) {
+            payments = payments.filter(p => p.amount >= filters.minAmount!);
+        }
+
+        if (filters?.maxAmount !== undefined) {
+            payments = payments.filter(p => p.amount <= filters.maxAmount!);
+        }
+
+        return payments;
+    } catch (error) {
+        console.error('Error fetching payments:', error);
+        return [];
     }
-
-    if (filters.startDate) {
-        payments = payments.filter(p => new Date(p.timestamp) >= new Date(filters.startDate!));
-    }
-
-    if (filters.endDate) {
-        payments = payments.filter(p => new Date(p.timestamp) <= new Date(filters.endDate!));
-    }
-
-    if (filters.minAmount !== undefined) {
-        payments = payments.filter(p => p.amount >= filters.minAmount!);
-    }
-
-    if (filters.maxAmount !== undefined) {
-        payments = payments.filter(p => p.amount <= filters.maxAmount!);
-    }
-
-    return payments;
 }
 
 /**
- * Update enrollment status
+ * Update enrollment status in Firestore
  */
-export function updateEnrollmentStatus(enrollmentId: string, status: EnrollmentRecord['status']): void {
-    const enrollments = readJSONFile<EnrollmentRecord>(ENROLLMENTS_FILE);
-    const index = enrollments.findIndex(e => e.id === enrollmentId);
-
-    if (index !== -1) {
-        enrollments[index].status = status;
-        writeJSONFile(ENROLLMENTS_FILE, enrollments);
+export async function updateEnrollmentStatus(
+    enrollmentId: string,
+    status: EnrollmentRecord['status']
+): Promise<void> {
+    try {
+        const enrollmentRef = doc(db, 'enrollments', enrollmentId);
+        await updateDoc(enrollmentRef, { status });
+    } catch (error) {
+        console.error('Error updating enrollment status:', error);
+        throw error;
     }
 }
 
 /**
- * Update payment status
+ * Update payment status in Firestore
  */
-export function updatePaymentStatus(paymentId: string, status: PaymentRecord['status']): void {
-    const payments = readJSONFile<PaymentRecord>(PAYMENTS_FILE);
-    const index = payments.findIndex(p => p.id === paymentId);
-
-    if (index !== -1) {
-        payments[index].status = status;
-        writeJSONFile(PAYMENTS_FILE, payments);
+export async function updatePaymentStatus(
+    paymentId: string,
+    status: PaymentRecord['status']
+): Promise<void> {
+    try {
+        const paymentRef = doc(db, 'payments', status);
+        await updateDoc(paymentRef, { status });
+    } catch (error) {
+        console.error('Error updating payment status:', error);
+        throw error;
     }
 }
 
 /**
  * Export data to CSV format
  */
-export function exportToCSV(data: EnrollmentRecord[] | PaymentRecord[], type: 'enrollments' | 'payments'): string {
+export function exportToCSV(
+    data: EnrollmentRecord[] | PaymentRecord[],
+    type: 'enrollments' | 'payments'
+): string {
     if (data.length === 0) return '';
 
     if (type === 'enrollments') {

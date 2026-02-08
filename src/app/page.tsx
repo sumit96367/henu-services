@@ -718,18 +718,6 @@ const ServiceMatrixSection = () => {
               </div>
             ))}
           </motion.div>
-
-          {/* Right - Visual Preview */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-
-            className="h-80 lg:h-96"
-          >
-            <GlowingCard className="h-full" innerClassName="h-full flex items-center justify-center overflow-hidden p-4 md:p-12 lg:p-20">
-              <ServiceVisual service={activeService} />
-            </GlowingCard>
-          </motion.div>
         </div>
       </div>
     </section>

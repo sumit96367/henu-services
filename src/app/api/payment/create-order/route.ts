@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { saveEnrollment, savePayment } from '@/lib/data-store';
+import { saveEnrollment, savePayment, saveQuery } from '@/lib/data-store';
 import { EnrollmentRecord, PaymentRecord } from '@/types/admin';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -20,7 +20,8 @@ export async function POST(req: NextRequest) {
             domainCategory,
             userId,
             userType,
-            companyName
+            companyName,
+            queries
         } = body;
 
         // Validate required fields
@@ -68,9 +69,22 @@ export async function POST(req: NextRequest) {
             orderId
         };
 
-        // Save to local data store
-        saveEnrollment(enrollmentRecord);
-        savePayment(paymentRecord);
+        // Save to admin data store (Firestore)
+        await saveEnrollment(enrollmentRecord);
+        await savePayment(paymentRecord);
+
+        // Save queries if provided
+        if (queries && queries.trim()) {
+            await saveQuery({
+                enrollmentId,
+                fullName,
+                email,
+                domain,
+                subDomain,
+                queries,
+                timestamp
+            });
+        }
 
         // Save to Firestore for real-time dashboard updates
         let firestoreId = null;

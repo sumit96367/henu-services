@@ -1,105 +1,102 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-// Mock query data interface
+// Query data interface
 interface Query {
     id: string;
-    name: string;
+    fullName: string;
     email: string;
-    source: "Contact" | "Internship" | "Payment" | "Other";
-    subject: string;
-    message: string;
-    status: "new" | "in-progress" | "resolved";
+    domain: string;
+    subDomain: string;
+    queries: string;
+    status: "pending" | "in-progress" | "resolved";
     timestamp: string;
+    adminNotes: string;
+    enrollmentId: string;
 }
 
-// Sample mock data
-const mockQueries: Query[] = [
-    {
-        id: "Q001",
-        name: "Rahul Sharma",
-        email: "rahul.sharma@example.com",
-        source: "Internship",
-        subject: "Query about AI/ML internship duration",
-        message: "Hi, I wanted to know if the AI/ML internship can be extended beyond 3 months? I'm very interested in machine learning and would like more time to work on projects.",
-        status: "new",
-        timestamp: "2026-02-03T10:30:00Z",
-    },
-    {
-        id: "Q002",
-        name: "Priya Patel",
-        email: "priya.patel@example.com",
-        source: "Payment",
-        subject: "Payment confirmation not received",
-        message: "I made a payment for the Web Development internship yesterday but haven't received any confirmation email yet. My transaction ID is TXN1234567890. Please help.",
-        status: "in-progress",
-        timestamp: "2026-02-02T14:20:00Z",
-    },
-    {
-        id: "Q003",
-        name: "Arjun Kumar",
-        email: "arjun.kumar@example.com",
-        source: "Contact",
-        subject: "General inquiry about services",
-        message: "Hello, I'm interested in learning more about your internship programs. Can you provide more details about the curriculum and mentorship structure?",
-        status: "new",
-        timestamp: "2026-02-03T08:15:00Z",
-    },
-    {
-        id: "Q004",
-        name: "Sneha Reddy",
-        email: "sneha.reddy@example.com",
-        source: "Other",
-        subject: "Certificate issuance timeline",
-        message: "I completed my internship last week. When can I expect to receive my completion certificate?",
-        status: "resolved",
-        timestamp: "2026-02-01T16:45:00Z",
-    },
-    {
-        id: "Q005",
-        name: "Vikram Singh",
-        email: "vikram.singh@example.com",
-        source: "Internship",
-        subject: "Switching internship domain",
-        message: "Is it possible to switch from Finance & Trading to Software Development (SDE) domain? I realized my interests align more with SDE.",
-        status: "new",
-        timestamp: "2026-02-03T11:00:00Z",
-    },
-];
-
 export default function QueriesPage() {
-    const [queries] = useState<Query[]>(mockQueries);
+    const [queries, setQueries] = useState<Query[]>([]);
     const [selectedQuery, setSelectedQuery] = useState<Query | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [adminNotes, setAdminNotes] = useState("");
+
+    // Fetch queries from API
+    useEffect(() => {
+        fetchQueries();
+    }, []);
+
+    const fetchQueries = async () => {
+        try {
+            setIsLoading(true);
+            const response = await fetch('/api/admin/queries');
+            const data = await response.json();
+            setQueries(data.queries || []);
+        } catch (error) {
+            console.error('Error fetching queries:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     // Count new queries
-    const newQueriesCount = queries.filter((q) => q.status === "new").length;
+    const newQueriesCount = queries.filter((q) => q.status === "pending").length;
 
     const openModal = (query: Query) => {
         setSelectedQuery(query);
+        setAdminNotes(query.adminNotes || "");
         setIsModalOpen(true);
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
-        setTimeout(() => setSelectedQuery(null), 300);
+        setTimeout(() => {
+            setSelectedQuery(null);
+            setAdminNotes("");
+        }, 300);
     };
 
-    const handleMarkInProgress = () => {
+    const handleMarkInProgress = async () => {
         if (selectedQuery) {
-            // UI only - would update in backend
-            console.log(`Marking query ${selectedQuery.id} as in-progress`);
-            alert("Query marked as In Progress (UI only)");
+            try {
+                await fetch('/api/admin/queries', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        queryId: selectedQuery.id,
+                        status: 'in-progress',
+                        adminNotes
+                    })
+                });
+                await fetchQueries();
+                closeModal();
+            } catch (error) {
+                console.error('Error updating query:', error);
+                alert('Failed to update query status');
+            }
         }
     };
 
-    const handleMarkResolved = () => {
+    const handleMarkResolved = async () => {
         if (selectedQuery) {
-            // UI only - would update in backend
-            console.log(`Marking query ${selectedQuery.id} as resolved`);
-            alert("Query marked as Resolved (UI only)");
-            closeModal();
+            try {
+                await fetch('/api/admin/queries', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        queryId: selectedQuery.id,
+                        status: 'resolved',
+                        adminNotes
+                    })
+                });
+                await fetchQueries();
+                closeModal();
+            } catch (error) {
+                console.error('Error updating query:', error);
+                alert('Failed to update query status');
+            }
         }
     };
 
@@ -120,6 +117,7 @@ export default function QueriesPage() {
 
     const getStatusColor = (status: string) => {
         switch (status) {
+            case "pending":
             case "new":
                 return { bg: "rgba(59, 130, 246, 0.1)", text: "#3b82f6", border: "rgba(59, 130, 246, 0.3)" };
             case "in-progress":
@@ -292,7 +290,7 @@ export default function QueriesPage() {
                                                     {query.id}
                                                 </code>
                                             </td>
-                                            <td style={tableCellStyle}>{query.name}</td>
+                                            <td style={tableCellStyle}>{query.fullName}</td>
                                             <td style={tableCellStyle}>{query.email}</td>
                                             <td style={tableCellStyle}>
                                                 <span
@@ -302,16 +300,16 @@ export default function QueriesPage() {
                                                         borderRadius: "8px",
                                                         fontSize: "0.8rem",
                                                         fontWeight: "600",
-                                                        backgroundColor: `${getSourceColor(query.source)}20`,
-                                                        color: getSourceColor(query.source),
-                                                        border: `1px solid ${getSourceColor(query.source)}40`,
+                                                        backgroundColor: `${getSourceColor(query.subDomain)}20`,
+                                                        color: getSourceColor(query.subDomain),
+                                                        border: `1px solid ${getSourceColor(query.subDomain)}40`,
                                                     }}
                                                 >
-                                                    {query.source}
+                                                    {query.subDomain}
                                                 </span>
                                             </td>
                                             <td style={tableCellStyle}>
-                                                <span style={{ color: "#ccc" }}>{truncateText(query.subject, 40)}</span>
+                                                <span style={{ color: "#ccc" }}>{truncateText(query.domain, 40)}</span>
                                             </td>
                                             <td style={tableCellStyle}>
                                                 <span
@@ -478,10 +476,10 @@ export default function QueriesPage() {
 
                         {/* Modal Content */}
                         <div style={{ display: "grid", gap: "20px", marginBottom: "24px" }}>
-                            <DetailRow label="User Name" value={selectedQuery.name} />
+                            <DetailRow label="User Name" value={selectedQuery.fullName} />
                             <DetailRow label="Email" value={selectedQuery.email} />
                             <DetailRow
-                                label="Source"
+                                label="Category"
                                 value={
                                     <span
                                         style={{
@@ -490,12 +488,12 @@ export default function QueriesPage() {
                                             borderRadius: "8px",
                                             fontSize: "0.85rem",
                                             fontWeight: "600",
-                                            backgroundColor: `${getSourceColor(selectedQuery.source)}20`,
-                                            color: getSourceColor(selectedQuery.source),
-                                            border: `1px solid ${getSourceColor(selectedQuery.source)}40`,
+                                            backgroundColor: `${getSourceColor(selectedQuery.subDomain)}20`,
+                                            color: getSourceColor(selectedQuery.subDomain),
+                                            border: `1px solid ${getSourceColor(selectedQuery.subDomain)}40`,
                                         }}
                                     >
-                                        {selectedQuery.source}
+                                        {selectedQuery.subDomain}
                                     </span>
                                 }
                             />
@@ -519,7 +517,7 @@ export default function QueriesPage() {
                                     </span>
                                 }
                             />
-                            <DetailRow label="Subject" value={selectedQuery.subject} />
+                            <DetailRow label="Subject" value={selectedQuery.domain} />
                             <DetailRow label="Date & Time" value={formatDate(selectedQuery.timestamp)} />
 
                             {/* Full Message */}
@@ -532,11 +530,35 @@ export default function QueriesPage() {
                                 }}
                             >
                                 <div style={{ color: "#888", fontSize: "0.875rem", fontWeight: "600", marginBottom: "12px" }}>
-                                    Message
+                                    Query
                                 </div>
                                 <p style={{ color: "#fff", fontSize: "0.95rem", lineHeight: "1.6", margin: 0 }}>
-                                    {selectedQuery.message}
+                                    {selectedQuery.queries}
                                 </p>
+                            </div>
+
+                            {/* Admin Notes */}
+                            <div>
+                                <label style={{ color: "#888", fontSize: "0.875rem", fontWeight: "600", display: "block", marginBottom: "8px" }}>
+                                    Admin Notes
+                                </label>
+                                <textarea
+                                    value={adminNotes}
+                                    onChange={(e) => setAdminNotes(e.target.value)}
+                                    placeholder="Add internal notes about this query..."
+                                    rows={3}
+                                    style={{
+                                        width: "100%",
+                                        padding: "12px",
+                                        backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                                        borderRadius: "8px",
+                                        color: "#fff",
+                                        fontSize: "0.9rem",
+                                        resize: "vertical",
+                                        fontFamily: "inherit"
+                                    }}
+                                />
                             </div>
                         </div>
 

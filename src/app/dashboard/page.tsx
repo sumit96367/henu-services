@@ -24,10 +24,18 @@ import {
     Clock,
     AlertCircle,
     ArrowLeft,
-    Upload
+    Upload,
+    Plus,
+    Edit,
+    Trash2,
+    Home,
+    Phone,
+    Key,
+    AlertTriangle
 } from 'lucide-react';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, orderBy, updateDoc, doc } from 'firebase/firestore';
+import { db, auth } from '@/lib/firebase';
+import { collection, query, where, getDocs, orderBy, updateDoc, doc, addDoc, deleteDoc, Timestamp } from 'firebase/firestore';
+import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import CircularWaveShader from '@/components/ui/circular-wave-shader';
 
 const fadeInUp = {
@@ -101,6 +109,33 @@ interface Order {
     plan?: string;
 }
 
+// Interface for quotes
+interface Quote {
+    id: string;
+    email: string;
+    serviceType: string;
+    description: string;
+    amount?: string;
+    status: 'pending' | 'approved' | 'rejected';
+    createdAt: any;
+}
+
+// Interface for addresses
+interface Address {
+    id: string;
+    userId: string;
+    name: string;
+    phone: string;
+    addressLine1: string;
+    addressLine2?: string;
+    city: string;
+    state: string;
+    pincode: string;
+    isDefault: boolean;
+    createdAt: any;
+    updatedAt: any;
+}
+
 export default function DashboardPage() {
     const { user, isAuthenticated, isLoading: authLoading, logout } = useAuth();
     const router = useRouter();
@@ -116,6 +151,36 @@ export default function DashboardPage() {
     const [profilePicture, setProfilePicture] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Quotes State
+    const [quotes, setQuotes] = useState<Quote[]>([]);
+
+    // Addresses State
+    const [addresses, setAddresses] = useState<Address[]>([]);
+    const [isAddingAddress, setIsAddingAddress] = useState(false);
+    const [editingAddress, setEditingAddress] = useState<Address | null>(null);
+    const [newAddress, setNewAddress] = useState({
+        name: '',
+        phone: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        pincode: '',
+        isDefault: false
+    });
+
+    // Password Change State
+    const [passwordForm, setPasswordForm] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+    const [passwordError, setPasswordError] = useState('');
+    const [passwordSuccess, setPasswordSuccess] = useState(false);
+
+    // Deactivate Account State
+    const [showDeactivateConfirm, setShowDeactivateConfirm] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -133,6 +198,8 @@ export default function DashboardPage() {
             setEditCompany(user.companyName || '');
             setProfilePicture((user as any).profilePicture || null);
             fetchUserOrders();
+            fetchUserQuotes();
+            fetchUserAddresses();
         }
     }, [user]);
 
@@ -221,12 +288,56 @@ export default function DashboardPage() {
         }
     };
 
+    const fetchUserQuotes = async () => {
+        if (!user) return;
+        try {
+            const quotesRef = collection(db, 'queries');
+            const q = query(quotesRef, where('email', '==', user.email), orderBy('timestamp', 'desc'));
+            const snapshot = await getDocs(q);
+
+            const fetchedQuotes = snapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    email: data.email || '',
+                    serviceType: data.domain || data.subDomain || 'General Query',
+                    description: data.queries || '',
+                    amount: data.amount || undefined,
+                    status: data.status || 'pending',
+                    createdAt: data.timestamp || data.createdAt
+                } as Quote;
+            });
+
+            setQuotes(fetchedQuotes);
+        } catch (error) {
+            console.error('Error fetching quotes:', error);
+        }
+    };
+
+    const fetchUserAddresses = async () => {
+        if (!user) return;
+        try {
+            const addressesRef = collection(db, 'addresses');
+            const q = query(addressesRef, where('userId', '==', user.id), orderBy('createdAt', 'desc'));
+            const snapshot = await getDocs(q);
+
+            const fetchedAddresses = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            } as Address));
+
+            setAddresses(fetchedAddresses);
+        } catch (error) {
+            console.error('Error fetching addresses:', error);
+        }
+    };
+
     // Compress and resize image to stay under Firestore's 1MB limit
     const compressImage = (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (e) => {
-                const img = new Image();
+                const img = document.createElement('img');
                 img.onload = () => {
                     // Create canvas for resizing
                     const canvas = document.createElement('canvas');
@@ -296,6 +407,116 @@ export default function DashboardPage() {
         }
     };
 
+    const handleAddAddress = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!user) return;
+
+        setIsUpdating(true);
+        try {
+            const addressData = {
+                ...newAddress,
+                userId: user.id,
+                createdAt: Timestamp.now(),
+                updatedAt: Timestamp.now()
+            };
+
+            // If this is set as default, unset all other defaults
+            if (newAddress.isDefault) {
+                const defaultAddresses = addresses.filter(addr => addr.isDefault);
+                for (const addr of defaultAddresses) {
+                    await updateDoc(doc(db, 'addresses', addr.id), { isDefault: false });
+                }
+            }
+
+            await addDoc(collection(db, 'addresses'), addressData);
+
+            // Reset form
+            setNewAddress({
+                name: '',
+                phone: '',
+                addressLine1: '',
+                addressLine2: '',
+                city: '',
+                state: '',
+                pincode: '',
+                isDefault: false
+            });
+            setIsAddingAddress(false);
+            await fetchUserAddresses();
+        } catch (error) {
+            console.error('Error adding address:', error);
+            alert('Failed to add address. Please try again.');
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
+    const handleUpdateAddress = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!editingAddress) return;
+
+        setIsUpdating(true);
+        try {
+            const addressRef = doc(db, 'addresses', editingAddress.id);
+
+            // If setting as default, unset all others
+            if (editingAddress.isDefault) {
+                const defaultAddresses = addresses.filter(addr => addr.isDefault && addr.id !== editingAddress.id);
+                for (const addr of defaultAddresses) {
+                    await updateDoc(doc(db, 'addresses', addr.id), { isDefault: false });
+                }
+            }
+
+            await updateDoc(addressRef, {
+                ...editingAddress,
+                updatedAt: Timestamp.now()
+            });
+
+            setEditingAddress(null);
+            await fetchUserAddresses();
+        } catch (error) {
+            console.error('Error updating address:', error);
+            alert('Failed to update address. Please try again.');
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
+    const handleDeleteAddress = async (addressId: string) => {
+        if (!confirm('Are you sure you want to delete this address?')) return;
+
+        setIsUpdating(true);
+        try {
+            await deleteDoc(doc(db, 'addresses', addressId));
+            await fetchUserAddresses();
+        } catch (error) {
+            console.error('Error deleting address:', error);
+            alert('Failed to delete address. Please try again.');
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
+    const handleSetDefaultAddress = async (addressId: string) => {
+        setIsUpdating(true);
+        try {
+            // Unset all other defaults
+            const defaultAddresses = addresses.filter(addr => addr.isDefault);
+            for (const addr of defaultAddresses) {
+                await updateDoc(doc(db, 'addresses', addr.id), { isDefault: false });
+            }
+
+            // Set new default
+            await updateDoc(doc(db, 'addresses', addressId), { isDefault: true });
+            await fetchUserAddresses();
+        } catch (error) {
+            console.error('Error setting default address:', error);
+            alert('Failed to set default address. Please try again.');
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) return;
@@ -314,6 +535,88 @@ export default function DashboardPage() {
         } catch (error) {
             console.error("Error updating profile:", error);
             alert("Failed to update profile. Please try again.");
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
+    const handleChangePassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setPasswordError('');
+        setPasswordSuccess(false);
+
+        // Validation
+        if (passwordForm.newPassword.length < 8) {
+            setPasswordError('New password must be at least 8 characters long');
+            return;
+        }
+
+        if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+            setPasswordError('New passwords do not match');
+            return;
+        }
+
+        if (!auth.currentUser) {
+            setPasswordError('No user signed in');
+            return;
+        }
+
+        setIsUpdating(true);
+        try {
+            // Reauthenticate user
+            const credential = EmailAuthProvider.credential(
+                auth.currentUser.email!,
+                passwordForm.currentPassword
+            );
+
+            await reauthenticateWithCredential(auth.currentUser, credential);
+
+            // Update password
+            await updatePassword(auth.currentUser, passwordForm.newPassword);
+
+            setPasswordSuccess(true);
+            setPasswordForm({
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: ''
+            });
+
+            // Logout after 2 seconds
+            setTimeout(() => {
+                logout();
+                router.push('/');
+            }, 2000);
+        } catch (error: any) {
+            console.error('Error changing password:', error);
+            if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                setPasswordError('Current password is incorrect');
+            } else {
+                setPasswordError('Failed to change password. Please try again.');
+            }
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
+    const handleDeactivateAccount = async () => {
+        if (!user) return;
+
+        setIsUpdating(true);
+        try {
+            const userRef = doc(db, 'users', user.id);
+            await updateDoc(userRef, {
+                status: 'deactivated',
+                deactivatedAt: Timestamp.now()
+            });
+
+            // Logout immediately
+            setTimeout(() => {
+                logout();
+                router.push('/');
+            }, 500);
+        } catch (error) {
+            console.error('Error deactivating account:', error);
+            alert('Failed to deactivate account. Please try again.');
         } finally {
             setIsUpdating(false);
         }
@@ -641,6 +944,391 @@ export default function DashboardPage() {
                                     </button>
                                 </form>
                             </div>
+                        </div>
+                    </motion.div>
+                );
+
+            case 'quotes':
+                return (
+                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                        <div className="mb-8 flex items-center justify-between">
+                            <div>
+                                <h1 className="text-3xl font-bold text-white mb-2">My Quotes</h1>
+                                <p className="text-gray-500">View and manage your quote requests</p>
+                            </div>
+                            <button
+                                onClick={() => setActiveSection('account')}
+                                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                            >
+                                <ArrowLeft size={16} /> Back
+                            </button>
+                        </div>
+
+                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden">
+                            {isDataLoading ? (
+                                <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
+                            ) : quotes.length > 0 ? (
+                                <div className="divide-y divide-white/5">
+                                    {quotes.map((quote) => (
+                                        <div key={quote.id} className="p-6 hover:bg-white/[0.01]">
+                                            <div className="flex justify-between items-start mb-2">
+                                                <h4 className="text-white font-bold">{quote.serviceType}</h4>
+                                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${quote.status === 'approved' ? 'bg-green-500/10 text-green-400' :
+                                                    quote.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
+                                                        'bg-amber-500/10 text-amber-400'
+                                                    }`}>{quote.status}</span>
+                                            </div>
+                                            <p className="text-sm text-gray-400 mb-2">{quote.description}</p>
+                                            <p className="text-xs text-gray-600">
+                                                {quote.createdAt?.toDate ? quote.createdAt.toDate().toLocaleDateString() : 'Recently'}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="p-20 text-center">
+                                    <FileText size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
+                                    <h3 className="text-white font-bold">No quotes found</h3>
+                                    <p className="text-gray-500 text-sm mt-1">You haven't submitted any quote requests yet.</p>
+                                </div>
+                            )}
+                        </div>
+                    </motion.div>
+                );
+
+            case 'addresses':
+                return (
+                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                        <div className="mb-8 flex items-center justify-between">
+                            <div>
+                                <h1 className="text-3xl font-bold text-white mb-2">My Addresses</h1>
+                                <p className="text-gray-500">Manage your shipping addresses</p>
+                            </div>
+                            <div className="flex gap-3">
+                                {!isAddingAddress && !editingAddress && (
+                                    <button
+                                        onClick={() => setIsAddingAddress(true)}
+                                        className="flex items-center gap-2 px-4 py-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors"
+                                    >
+                                        <Plus size={16} /> Add Address
+                                    </button>
+                                )}
+                                <button
+                                    onClick={() => setActiveSection('account')}
+                                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                                >
+                                    <ArrowLeft size={16} /> Back
+                                </button>
+                            </div>
+                        </div>
+
+                        {(isAddingAddress || editingAddress) && (
+                            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-8 mb-6">
+                                <h3 className="text-xl font-bold text-white mb-6">{editingAddress ? 'Edit Address' : 'Add New Address'}</h3>
+                                <form onSubmit={editingAddress ? handleUpdateAddress : handleAddAddress} className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Full Name</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.name : newAddress.name}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, name: e.target.value })
+                                                : setNewAddress({ ...newAddress, name: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Phone</label>
+                                        <input
+                                            type="tel"
+                                            required
+                                            value={editingAddress ? editingAddress.phone : newAddress.phone}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, phone: e.target.value })
+                                                : setNewAddress({ ...newAddress, phone: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        />
+                                    </div>
+                                    <div className="col-span-2">
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 1</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.addressLine1 : newAddress.addressLine1}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, addressLine1: e.target.value })
+                                                : setNewAddress({ ...newAddress, addressLine1: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        />
+                                    </div>
+                                    <div className="col-span-2">
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 2 (Optional)</label>
+                                        <input
+                                            type="text"
+                                            value={editingAddress ? (editingAddress.addressLine2 || '') : newAddress.addressLine2}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, addressLine2: e.target.value })
+                                                : setNewAddress({ ...newAddress, addressLine2: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">City</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.city : newAddress.city}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, city: e.target.value })
+                                                : setNewAddress({ ...newAddress, city: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">State</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.state : newAddress.state}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, state: e.target.value })
+                                                : setNewAddress({ ...newAddress, state: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Pincode</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.pincode : newAddress.pincode}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, pincode: e.target.value })
+                                                : setNewAddress({ ...newAddress, pincode: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        />
+                                    </div>
+                                    <div className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id="isDefault"
+                                            checked={editingAddress ? editingAddress.isDefault : newAddress.isDefault}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, isDefault: e.target.checked })
+                                                : setNewAddress({ ...newAddress, isDefault: e.target.checked })
+                                            }
+                                            className="mr-2"
+                                        />
+                                        <label htmlFor="isDefault" className="text-sm text-gray-400">Set as default address</label>
+                                    </div>
+                                    <div className="col-span-2 flex gap-3">
+                                        <button
+                                            type="submit"
+                                            disabled={isUpdating}
+                                            className="px-6 py-3 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors disabled:opacity-50"
+                                        >
+                                            {isUpdating ? <Loader2 className="animate-spin" size={20} /> : editingAddress ? 'Update Address' : 'Save Address'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setIsAddingAddress(false);
+                                                setEditingAddress(null);
+                                            }}
+                                            className="px-6 py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        )}
+
+                        <div className="grid gap-4">
+                            {addresses.length > 0 ? addresses.map((address) => (
+                                <div key={address.id} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.01]">
+                                    <div className="flex justify-between items-start">
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <h4 className="text-white font-bold">{address.name}</h4>
+                                                {address.isDefault && (
+                                                    <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 text-xs rounded-full font-bold">DEFAULT</span>
+                                                )}
+                                            </div>
+                                            <p className="text-sm text-gray-400 mb-1">{address.phone}</p>
+                                            <p className="text-sm text-gray-400">
+                                                {address.addressLine1}{address.addressLine2 && `, ${address.addressLine2}`}<br />
+                                                {address.city}, {address.state} - {address.pincode}
+                                            </p>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            {!address.isDefault && (
+                                                <button
+                                                    onClick={() => handleSetDefaultAddress(address.id)}
+                                                    className="p-2 text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors"
+                                                    title="Set as default"
+                                                >
+                                                    <Home size={18} />
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() => setEditingAddress(address)}
+                                                className="p-2 text-gray-400 hover:bg-white/10 rounded-lg transition-colors"
+                                            >
+                                                <Edit size={18} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteAddress(address.id)}
+                                                className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )) : (
+                                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-20 text-center">
+                                    <MapPin size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
+                                    <h3 className="text-white font-bold">No addresses found</h3>
+                                    <p className="text-gray-500 text-sm mt-1">Add your first shipping address</p>
+                                </div>
+                            )}
+                        </div>
+                    </motion.div>
+                );
+
+            case 'password':
+                return (
+                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold text-white mb-2">Change Password</h1>
+                            <p className="text-gray-500">Update your account password</p>
+                        </div>
+
+                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl" style={{ padding: '0.5cm' }}>
+                            <form onSubmit={handleChangePassword} style={{ display: 'flex', flexDirection: 'column', gap: '0.2cm' }}>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-400 mb-2">Current Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordForm.currentPassword}
+                                        onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
+                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-400 mb-2">New Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordForm.newPassword}
+                                        onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                    />
+                                    <p className="text-xs text-gray-600 mt-1">Must be at least 8 characters</p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-400 mb-2">Confirm New Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordForm.confirmPassword}
+                                        onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                    />
+                                </div>
+
+                                {passwordError && (
+                                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                                        {passwordError}
+                                    </div>
+                                )}
+
+                                {passwordSuccess && (
+                                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+                                        Password changed successfully! Logging out...
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={isUpdating || passwordSuccess}
+                                    className="w-full py-3 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <Key size={20} />}
+                                    {isUpdating ? 'Updating Password...' : 'Change Password'}
+                                </button>
+                            </form>
+                        </div>
+                    </motion.div>
+                );
+
+            case 'deactivate':
+                return (
+                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold text-white mb-2">Deactivate Account</h1>
+                            <p className="text-gray-500">Temporarily deactivate your account</p>
+                        </div>
+
+                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl p-8">
+                            {!showDeactivateConfirm ? (
+                                <div className="text-center">
+                                    <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
+                                        <AlertTriangle className="w-8 h-8 text-red-400" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-3">Deactivate Your Account?</h3>
+                                    <p className="text-gray-400 mb-6 leading-relaxed">
+                                        This will temporarily deactivate your account. You can reactivate it anytime by logging in again.
+                                    </p>
+                                    <div className="space-y-3">
+                                        <button
+                                            onClick={() => setShowDeactivateConfirm(true)}
+                                            className="w-full py-3 bg-red-500/20 text-red-400 font-bold rounded-lg hover:bg-red-500/30 transition-colors border border-red-500/30"
+                                        >
+                                            Continue to Deactivation
+                                        </button>
+                                        <button
+                                            onClick={() => setActiveSection('account')}
+                                            className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="text-center">
+                                    <h3 className="text-xl font-bold text-white mb-3">Are you absolutely sure?</h3>
+                                    <p className="text-gray-400 mb-6">
+                                        This action will deactivate your account and log you out immediately.
+                                    </p>
+                                    <div className="space-y-3">
+                                        <button
+                                            onClick={handleDeactivateAccount}
+                                            disabled={isUpdating}
+                                            className="w-full py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                        >
+                                            {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <UserX size={20} />}
+                                            {isUpdating ? 'Deactivating...' : 'Yes, Deactivate Account'}
+                                        </button>
+                                        <button
+                                            onClick={() => setShowDeactivateConfirm(false)}
+                                            className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                        >
+                                            No, Keep Account Active
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 );

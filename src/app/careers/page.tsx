@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import EnrollmentModal from '@/components/EnrollmentModal';
+import QueriesModal from '@/components/QueriesModal';
 import StarfieldCanvas from '@/components/ui/hyperdrive-hero';
 
 const internships = [
@@ -87,10 +88,18 @@ const internships = [
         iconPath: '/icons/internships/languages.png',
         category: 'languages',
     },
+    {
+        id: 12,
+        title: 'Queries & Support',
+        description: 'Have questions? Need help? Submit your queries and we\'ll get back to you.',
+        iconPath: '/icons/internships/queries.png',
+        category: 'queries',
+    },
 ];
 
 export default function CareersPage() {
     const [modalOpen, setModalOpen] = useState(false);
+    const [queriesModalOpen, setQueriesModalOpen] = useState(false);
     const [selectedInternship, setSelectedInternship] = useState<typeof internships[0] | null>(null);
     const { userType, isLoading } = useAuth();
     const router = useRouter();
@@ -106,8 +115,12 @@ export default function CareersPage() {
     }
 
     const handleGetItNow = (internship: typeof internships[0]) => {
-        setSelectedInternship(internship);
-        setModalOpen(true);
+        if (internship.category === 'queries') {
+            setQueriesModalOpen(true);
+        } else {
+            setSelectedInternship(internship);
+            setModalOpen(true);
+        }
     };
 
     return (
@@ -185,13 +198,13 @@ export default function CareersPage() {
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="group relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-10 md:p-14 hover:bg-white/[0.06] hover:border-cyan-400/50 transition-all duration-300"
+                                    className="group relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-10 md:p-14 hover:bg-white/[0.06] hover:border-cyan-400/50 transition-all duration-300 flex flex-col"
                                 >
                                     {/* Gradient overlay on hover */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
 
                                     {/* Content */}
-                                    <div className="relative z-10">
+                                    <div className="relative z-10 flex flex-col flex-1">
                                         {/* 3D Icon Image */}
                                         <div className="flex items-center justify-center mb-4">
                                             <div className="relative w-24 h-24">
@@ -210,28 +223,41 @@ export default function CareersPage() {
                                         </h3>
 
                                         {/* Description */}
-                                        <p className="text-sm text-gray-400 leading-relaxed mb-6 min-h-[3rem] text-center">
+                                        <p className="text-sm text-gray-400 leading-relaxed mb-6 text-center flex-1">
                                             {internship.description}
                                         </p>
 
                                         {/* Buttons */}
-                                        <div className="flex gap-3">
-                                            <a
-                                                href="https://docs.google.com/forms/d/e/1FAIpQLSeLCTboNiGh-l0EZ232XfbvSsapAuUnxvDAt9Y9SFsnq1mLYg/viewform?usp=publish-editor"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex-1"
-                                            >
-                                                <button className="w-full py-2.5 px-4 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/50 rounded-xl text-sm font-bold text-white hover:text-cyan-400 transition-all duration-300">
-                                                    VIEW SOURCES
+                                        <div className="flex gap-3 mt-auto">
+                                            {internship.category === 'queries' ? (
+                                                // Only "Submit Query" button for queries card
+                                                <button
+                                                    onClick={() => handleGetItNow(internship)}
+                                                    className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300"
+                                                >
+                                                    SUBMIT QUERY
                                                 </button>
-                                            </a>
-                                            <button
-                                                onClick={() => handleGetItNow(internship)}
-                                                className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300"
-                                            >
-                                                GET IT NOW
-                                            </button>
+                                            ) : (
+                                                // Normal buttons for other cards
+                                                <>
+                                                    <a
+                                                        href="https://docs.google.com/forms/d/e/1FAIpQLSeLCTboNiGh-l0EZ232XfbvSsapAuUnxvDAt9Y9SFsnq1mLYg/viewform?usp=publish-editor"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex-1"
+                                                    >
+                                                        <button className="w-full py-2.5 px-4 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/50 rounded-xl text-sm font-bold text-white hover:text-cyan-400 transition-all duration-300">
+                                                            VIEW SOURCES
+                                                        </button>
+                                                    </a>
+                                                    <button
+                                                        onClick={() => handleGetItNow(internship)}
+                                                        className="flex-1 py-2.5 px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300"
+                                                    >
+                                                        GET IT NOW
+                                                    </button>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </motion.div>
@@ -250,6 +276,12 @@ export default function CareersPage() {
                     domainTitle={selectedInternship.title}
                 />
             )}
+
+            {/* Queries Modal */}
+            <QueriesModal
+                isOpen={queriesModalOpen}
+                onClose={() => setQueriesModalOpen(false)}
+            />
         </main>
     );
 }
