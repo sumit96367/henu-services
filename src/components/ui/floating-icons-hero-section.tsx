@@ -104,7 +104,7 @@ const Icon = ({
                     rotate: [0, 5, 0, -5, 0],
                 }}
                 transition={{
-                    duration: 5 + Math.random() * 5,
+                    duration: 5 + (index % 10),
                     repeat: Infinity,
                     repeatType: 'mirror',
                     ease: 'easeInOut',

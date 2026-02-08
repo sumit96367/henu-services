@@ -3,6 +3,13 @@
 export default function AdminDashboardPage() {
     const cards = [
         {
+            title: "Service Requests",
+            description: "Manage client service inquiries and project briefs",
+            icon: "🛠️",
+            href: "/admin/service-requests",
+            gradient: "from-cyan-500 to-blue-500",
+        },
+        {
             title: "Internship Enrollments",
             description: "View all enrolled users and selected domains",
             icon: "👥",

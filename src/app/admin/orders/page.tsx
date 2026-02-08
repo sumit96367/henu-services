@@ -32,7 +32,7 @@ interface Order {
     amount: number;
     status: string;
     statusColor: string;
-    createdAt: any;
+    createdAt: Date;
     paymentMethod: string;
     message?: string;
     userType?: string;
@@ -203,7 +203,7 @@ export default function AdminOrdersPage() {
                                                 <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-wider truncate mb-1">{order.subDomain} • {order.plan}</div>
                                                 {order.message && (
                                                     <div className="text-[10px] text-cyan-400/60 italic truncate max-w-[200px]" title={order.message}>
-                                                        "{order.message}"
+                                                        &quot;{order.message}&quot;
                                                     </div>
                                                 )}
                                             </td>
@@ -247,7 +247,7 @@ export default function AdminOrdersPage() {
                         <div className="p-20 text-center">
                             <Package className="w-12 h-12 text-gray-700 mx-auto mb-4 opacity-30" />
                             <h3 className="text-lg font-bold text-white mb-1">No orders found</h3>
-                            <p className="text-gray-500 text-sm italic">No matching results for "{searchTerm}"</p>
+                            <p className="text-gray-500 text-sm italic">No matching results for &quot;{searchTerm}&quot;</p>
                         </div>
                     )}
                 </div>

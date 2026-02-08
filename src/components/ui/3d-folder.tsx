@@ -125,7 +125,9 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
 
     useEffect(() => {
         if (isOpen && currentIndex !== internalIndex && !isSliding) {
-            setIsSliding(true);
+            requestAnimationFrame(() => {
+                setIsSliding(true);
+            });
             const timer = setTimeout(() => {
                 setInternalIndex(currentIndex);
                 setIsSliding(false);
@@ -136,8 +138,10 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
 
     useEffect(() => {
         if (isOpen) {
-            setInternalIndex(currentIndex);
-            setIsSliding(false);
+            requestAnimationFrame(() => {
+                setInternalIndex(currentIndex);
+                setIsSliding(false);
+            });
         }
     }, [isOpen, currentIndex]);
 
@@ -170,18 +174,30 @@ const ImageLightbox: React.FC<ImageLightboxProps> = ({
             if (e.key === "ArrowLeft") navigatePrev();
         };
         window.addEventListener("keydown", handleKeyDown);
-        if (isOpen) document.body.style.overflow = "hidden";
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
-            document.body.style.overflow = "";
         };
     }, [isOpen, handleClose, navigateNext, navigatePrev]);
 
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isOpen]);
+
     useLayoutEffect(() => {
         if (isOpen && sourceRect) {
-            setShouldRender(true);
-            setAnimationPhase("initial");
-            setIsClosing(false);
+            requestAnimationFrame(() => {
+                setShouldRender(true);
+                setAnimationPhase("initial");
+                setIsClosing(false);
+            });
+
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     setAnimationPhase("animating");

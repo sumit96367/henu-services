@@ -104,7 +104,7 @@ const AboutHero = () => {
                         className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed text-center"
                     >
                         Engineering-led product studio focused on clarity, performance, and long-term thinking.
-                        We don't just ship code—we architect foundations for your digital future.
+                        We don&apos;t just ship code—we architect foundations for your digital future.
                     </motion.p>
                 </div>
             </motion.div>
@@ -139,12 +139,12 @@ const HowWeThinkSection = () => {
         {
             icon: <Cpu className="w-8 h-8 text-cyan-400" />,
             title: "Systems Over Features",
-            desc: "We don't add features—we architect systems designed to evolve. Every decision considers scalability, maintainability, and how components interact over time."
+            desc: "We don&apos;t add features—we architect systems designed to evolve. Every decision considers scalability, maintainability, and how components interact over time."
         },
         {
             icon: <Focus className="w-8 h-8 text-cyan-400" />,
             title: "Clarity First",
-            desc: "Simple is hard. We prioritize clear interfaces, straightforward logic, and intentional design over clever abstraction. If it's confusing, it's wrong."
+            desc: "Simple is hard. We prioritize clear interfaces, straightforward logic, and intentional design over clever abstraction. If it&apos;s confusing, it&apos;s wrong."
         },
         {
             icon: <Layers className="w-8 h-8 text-cyan-400" />,
@@ -154,7 +154,7 @@ const HowWeThinkSection = () => {
         {
             icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
             title: "Long-Term Product Vision",
-            desc: "We're not building for next quarter. Every system is designed for years of iteration, growth, and continuous refinement alongside your ambitions."
+            desc: "We&apos;re not building for next quarter. Every system is designed for years of iteration, growth, and continuous refinement alongside your ambitions."
         }
     ];
 
@@ -172,7 +172,7 @@ const HowWeThinkSection = () => {
                         How We <span className="gradient-text">Think</span>
                     </h2>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                        Our approach isn't defined by process—it's shaped by principles that drive every decision we make.
+                        Our approach isn&apos;t defined by process—it&apos;s shaped by principles that drive every decision we make.
                     </p>
                 </motion.div>
 
@@ -244,7 +244,7 @@ const BuiltToDoSection = () => {
                     className="relative z-10 flex flex-col items-center text-center gap-6 mb-16"
                 >
                     <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
-                        What We're <span className="gradient-text">Built To Do</span>
+                        What We&apos;re <span className="gradient-text">Built To Do</span>
                     </h2>
                     <p className="max-w-2xl text-lg text-gray-400 leading-relaxed mx-auto">
                         Core capabilities, not services. Outcomes, not deliverables. We architect systems that drive real business value.
@@ -538,12 +538,12 @@ const BuiltToDoSection = () => {
 // ============================================
 const WhatWeDontDoSection = () => {
     const items = [
-        { title: "Chase Trends", desc: "We don't rebuild your app because a new framework launched. Technology serves the product—not the other way around." },
-        { title: "Ship Rushed Work", desc: "Fast doesn't mean reckless. We optimize for speed without compromising quality, testing, or long-term maintainability." },
-        { title: "Build Bloated Interfaces", desc: "If a feature doesn't serve a clear purpose, it doesn't ship. Clean systems beat feature lists." },
-        { title: "Sell You What You Don't Need", desc: "We'll tell you when a simple solution beats a complex one. Honest guidance over maximizing billable hours." },
+        { title: "Chase Trends", desc: "We don&apos;t rebuild your app because a new framework launched. Technology serves the product—not the other way around." },
+        { title: "Ship Rushed Work", desc: "Fast doesn&apos;t mean reckless. We optimize for speed without compromising quality, testing, or long-term maintainability." },
+        { title: "Build Bloated Interfaces", desc: "If a feature doesn&apos;t serve a clear purpose, it doesn&apos;t ship. Clean systems beat feature lists." },
+        { title: "Sell You What You Don&apos;t Need", desc: "We&apos;ll tell you when a simple solution beats a complex one. Honest guidance over maximizing billable hours." },
         { title: "Work Without Strategy", desc: "Code without context is just noise. Every build aligns with your business goals and product vision." },
-        { title: "Ignore Performance", desc: "Slow products lose users. We don't ship anything that compromises speed, responsiveness, or reliability." }
+        { title: "Ignore Performance", desc: "Slow products lose users. We don&apos;t ship anything that compromises speed, responsiveness, or reliability." }
     ];
 
     return (
@@ -557,7 +557,7 @@ const WhatWeDontDoSection = () => {
                 >
 
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 mx-auto">
-                        What We <span className="text-red-400">Don't Do</span>
+                        What We <span className="text-red-400">Don&apos;t Do</span>
                     </h2>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Honesty over opportunity. These are the lines we draw to ensure we deliver high-quality, high-performance systems.
@@ -623,7 +623,7 @@ const WhoWereBestForSection = () => {
                     <div className="text-center mb-12">
 
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                            Who We're <span className="text-amber-400">Best For</span>
+                            Who We&apos;re <span className="text-amber-400">Best For</span>
                         </h2>
                         <p className="text-lg text-gray-400">
                             We work best with founders and teams who think long-term.
@@ -653,8 +653,8 @@ const WhoWereBestForSection = () => {
 
                             <div className="pt-6 border-t border-white/10 text-center">
                                 <p className="text-gray-500 italic">
-                                    <strong className="text-white">Not a fit?</strong> If you're chasing trends, need work yesterday
-                                    without planning, or prioritize optics over outcomes—we're probably not the right partner.
+                                    <strong className="text-white">Not a fit?</strong> If you&apos;re chasing trends, need work yesterday
+                                    without planning, or prioritize optics over outcomes—we&apos;re probably not the right partner.
                                 </p>
                             </div>
                         </div>
@@ -700,7 +700,7 @@ const JourneySection = () => {
                         From <span className="text-cyan-400">Idea</span> to <span className="text-amber-400">System</span>
                     </h2>
                     <p className="text-lg text-gray-400 mb-16 max-w-2xl mx-auto">
-                        We don't just build products—we help you establish technical foundations that evolve with your vision.
+                        We don&apos;t just build products—we help you establish technical foundations that evolve with your vision.
                     </p>
 
                     <div className="grid md:grid-cols-3 gap-8 text-center">
@@ -745,7 +745,7 @@ const CTASection = () => {
                         Ready to build something that matters?
                     </h2>
                     <p className="text-xl text-gray-400 mb-10">
-                        If this resonates, let's talk about what you're building.
+                        If this resonates, let&apos;s talk about what you&apos;re building.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link href="/contact" className="btn-primary group">
@@ -791,7 +791,7 @@ const HenuOSSection = () => {
                             HENU <span className="gradient-text">OS</span>
                         </h2>
                         <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-                            HENU OS is the core ecosystem that powers Henu's digital products and services.
+                            HENU OS is the core ecosystem that powers Henu&apos;s digital products and services.
                             It acts as the foundational operating layer for automation, scalability, and
                             system-level intelligence. Built to support modern businesses, creators, and
                             platforms, HENU OS is the backbone of the Henu ecosystem.

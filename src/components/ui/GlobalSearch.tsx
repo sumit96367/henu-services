@@ -6,6 +6,72 @@ import { Search, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { searchContent, GroupedResults, SearchItem } from '@/lib/searchData';
 
+const highlightText = (text: string, query: string) => {
+    if (!query) return text;
+
+    const parts = text.split(new RegExp(`(${query})`, 'gi'));
+    return (
+        <>
+            {parts.map((part, i) =>
+                part.toLowerCase() === query.toLowerCase() ? (
+                    <mark key={i} className="bg-cyan-500/30 text-cyan-300 rounded px-0.5">
+                        {part}
+                    </mark>
+                ) : (
+                    <span key={i}>{part}</span>
+                )
+            )}
+        </>
+    );
+};
+
+interface ResultGroupProps {
+    title: string;
+    items: SearchItem[];
+    query: string;
+    selectedIndex: number;
+    allResults: SearchItem[];
+    onResultClick: (item: SearchItem) => void;
+}
+
+const ResultGroup = ({ title, items, query, selectedIndex, allResults, onResultClick }: ResultGroupProps) => {
+    if (items.length === 0) return null;
+
+    return (
+        <div className="mb-2">
+            <div className="px-3 py-1.5">
+                <span className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+                    {title}
+                </span>
+            </div>
+            {items.map((item, idx) => {
+                const globalIndex = allResults.indexOf(item);
+                const isSelected = globalIndex === selectedIndex;
+
+                return (
+                    <button
+                        key={`${item.type}-${idx}`}
+                        onClick={() => onResultClick(item)}
+                        className={`w-full text-left px-3 py-2 transition-all duration-150 ${isSelected
+                            ? 'bg-cyan-500/20 border-l-2 border-cyan-500'
+                            : 'hover:bg-white/5 border-l-2 border-transparent'
+                            }`}
+                    >
+                        <div className="text-white font-medium text-sm truncate">
+                            {highlightText(item.title, query)}
+                        </div>
+                        {item.category && (
+                            <div className="text-xs text-gray-400 truncate mt-0.5">
+                                {highlightText(item.category, query)}
+                            </div>
+                        )}
+                    </button>
+                );
+            })}
+        </div>
+    );
+};
+
 export const GlobalSearch = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
@@ -17,13 +83,11 @@ export const GlobalSearch = () => {
 
     // Debounced search
     useEffect(() => {
-        if (!query.trim()) {
-            setResults(null);
-            return;
-        }
+        const queryTrimmed = query.trim();
+        if (!queryTrimmed) return;
 
         const timer = setTimeout(async () => {
-            const searchResults = await searchContent(query);
+            const searchResults = await searchContent(queryTrimmed);
             setResults(searchResults);
             setSelectedIndex(-1);
         }, 200);
@@ -69,18 +133,27 @@ export const GlobalSearch = () => {
         }
     }, [isOpen]);
 
+    const activeResults = query.trim() ? results : null;
+
     // Get all results as flat array (sections first due to highest priority)
     const getAllResults = useCallback((): SearchItem[] => {
-        if (!results) return [];
+        if (!activeResults) return [];
         return [
-            ...results.sections,
-            ...results.pages,
-            ...results.services,
-            ...results.software,
-            ...results.categories,
-            ...results.policies
+            ...activeResults.sections,
+            ...activeResults.pages,
+            ...activeResults.services,
+            ...activeResults.software,
+            ...activeResults.categories,
+            ...activeResults.policies
         ];
-    }, [results]);
+    }, [activeResults]);
+
+    const handleResultClick = useCallback((item: SearchItem) => {
+        router.push(item.href);
+        setIsOpen(false);
+        setQuery('');
+        setResults(null);
+    }, [router]);
 
     // Keyboard navigation
     useEffect(() => {
@@ -122,14 +195,7 @@ export const GlobalSearch = () => {
 
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, selectedIndex, query, results, router]);
-
-    const handleResultClick = (item: SearchItem) => {
-        router.push(item.href);
-        setIsOpen(false);
-        setQuery('');
-        setResults(null);
-    };
+    }, [isOpen, selectedIndex, query, results, router, getAllResults, handleResultClick]);
 
     const handleClose = () => {
         setIsOpen(false);
@@ -137,73 +203,16 @@ export const GlobalSearch = () => {
         setResults(null);
     };
 
-    // Highlight matched text
-    const highlightText = (text: string) => {
-        if (!query) return text;
-
-        const parts = text.split(new RegExp(`(${query})`, 'gi'));
-        return (
-            <>
-                {parts.map((part, i) =>
-                    part.toLowerCase() === query.toLowerCase() ? (
-                        <mark key={i} className="bg-cyan-500/30 text-cyan-300 rounded px-0.5">
-                            {part}
-                        </mark>
-                    ) : (
-                        <span key={i}>{part}</span>
-                    )
-                )}
-            </>
-        );
-    };
-
-    // Result group component
-    const ResultGroup = ({ title, items }: { title: string; items: SearchItem[] }) => {
-        if (items.length === 0) return null;
-
-        return (
-            <div className="mb-2">
-                <div className="px-3 py-1.5">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
-                        {title}
-                    </span>
-                </div>
-                {items.map((item, idx) => {
-                    const globalIndex = getAllResults().indexOf(item);
-                    const isSelected = globalIndex === selectedIndex;
-
-                    return (
-                        <button
-                            key={`${item.type}-${idx}`}
-                            onClick={() => handleResultClick(item)}
-                            className={`w-full text-left px-3 py-2 transition-all duration-150 ${isSelected
-                                ? 'bg-cyan-500/20 border-l-2 border-cyan-500'
-                                : 'hover:bg-white/5 border-l-2 border-transparent'
-                                }`}
-                        >
-                            <div className="text-white font-medium text-sm truncate">
-                                {highlightText(item.title)}
-                            </div>
-                            {item.category && (
-                                <div className="text-xs text-gray-400 truncate mt-0.5">
-                                    {item.category}
-                                </div>
-                            )}
-                        </button>
-                    );
-                })}
-            </div>
-        );
-    };
-
-    const hasResults = results && (
-        results.sections.length > 0 ||
-        results.pages.length > 0 ||
-        results.services.length > 0 ||
-        results.software.length > 0 ||
-        results.categories.length > 0 ||
-        results.policies.length > 0
+    const hasResults = activeResults && (
+        activeResults.sections.length > 0 ||
+        activeResults.pages.length > 0 ||
+        activeResults.services.length > 0 ||
+        activeResults.software.length > 0 ||
+        activeResults.categories.length > 0 ||
+        activeResults.policies.length > 0
     );
+
+    const allResults = getAllResults();
 
     return (
         <div ref={searchRef} className="relative">
@@ -253,7 +262,7 @@ export const GlobalSearch = () => {
 
                         {/* Inline Results Dropdown */}
                         <AnimatePresence>
-                            {query.trim() && hasResults && (
+                            {query.trim() && hasResults && activeResults && (
                                 <motion.div
                                     initial={{ opacity: 0, y: -5 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -262,15 +271,15 @@ export const GlobalSearch = () => {
                                     className="absolute top-full left-0 right-0 mt-2 max-h-[400px] overflow-y-auto bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[200]"
                                 >
                                     <div className="py-2">
-                                        <ResultGroup title="Products & Features" items={results.sections} />
-                                        <ResultGroup title="Pages" items={results.pages} />
-                                        <ResultGroup title="Services" items={results.services} />
-                                        <ResultGroup title="Software" items={results.software} />
-                                        <ResultGroup title="Categories" items={results.categories} />
+                                        <ResultGroup title="Products & Features" items={activeResults.sections} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                        <ResultGroup title="Pages" items={activeResults.pages} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                        <ResultGroup title="Services" items={activeResults.services} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                        <ResultGroup title="Software" items={activeResults.software} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                        <ResultGroup title="Categories" items={activeResults.categories} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
                                     </div>
                                 </motion.div>
                             )}
-                            {query.trim() && !hasResults && results && (
+                            {query.trim() && !hasResults && activeResults && (
                                 <motion.div
                                     initial={{ opacity: 0, y: -5 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -278,7 +287,7 @@ export const GlobalSearch = () => {
                                     className="absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[200]"
                                 >
                                     <div className="py-6 px-4 text-center text-gray-400 text-sm">
-                                        No results found for "{query}"
+                                        No results found for &quot;{query}&quot;
                                     </div>
                                 </motion.div>
                             )}

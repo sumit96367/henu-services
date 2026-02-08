@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface NavItem {
     name: string;
@@ -12,6 +12,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     { name: "Dashboard", path: "/admin/dashboard", icon: "📊" },
+    { name: "Service Requests", path: "/admin/service-requests", icon: "🛠️" },
     { name: "Internship Enrollments", path: "/admin/enrollments", icon: "👥" },
     { name: "Payments", path: "/admin/payments", icon: "💳" },
     { name: "Invoices", path: "/admin/invoices", icon: "📄" },
@@ -25,6 +26,18 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Lock scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMobileMenuOpen]);
 
     const handleLogout = async () => {
         setIsLoggingOut(true);
@@ -77,6 +90,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
 
             {/* Sidebar */}
             <aside
+                data-lenis-prevent
                 style={{
                     position: "fixed",
                     left: 0,
@@ -89,6 +103,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                     flexDirection: "column",
                     zIndex: 999,
                     transform: isMobileMenuOpen ? "translateX(0)" : undefined,
+                    overflowX: "hidden",
                 }}
                 className="admin-sidebar"
             >

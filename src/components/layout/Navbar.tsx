@@ -55,13 +55,16 @@ export const Navbar = () => {
         { name: 'Contact', href: '/contact' },
     ];
 
+    const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
+
     return (
         <>
             <motion.nav
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 className={cn(
-                    "fixed inset-x-0 z-[100] transition-all duration-300 w-full bg-black/50 backdrop-blur-md border-b border-white/10",
+                    "fixed z-[100] transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-white/10",
+                    isDashboard ? "md:left-[280px] md:w-[calc(100%-280px)] left-0 w-full" : "inset-x-0 w-full",
                     scrolled ? "py-4" : "py-6"
                 )}
             >
@@ -138,7 +141,7 @@ export const Navbar = () => {
                                                 href="/contact"
                                                 className="flex items-center justify-center gap-2 text-sm font-medium text-gray-400 group-hover/footer:text-cyan-400 transition-colors"
                                             >
-                                                Interested? <span className="font-bold text-white group-hover/footer:text-cyan-400 transition-colors">Start your project</span>
+                                                Interested&quest; <span className="font-bold text-white group-hover/footer:text-cyan-400 transition-colors">Start your project</span>
                                                 <ArrowRight size={14} className="group-hover/footer:translate-x-1 transition-transform" />
                                             </Link>
                                         </div>

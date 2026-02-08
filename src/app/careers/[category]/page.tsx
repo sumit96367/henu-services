@@ -266,7 +266,7 @@ export default function InternshipSourcesPage() {
                         {/* Section Title */}
                         <div className="text-center mb-8">
                             <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                                Let's Start with <span className="text-cyan-400">Your Details</span>
+                                Let&apos;s Start with <span className="text-cyan-400">Your Details</span>
                             </h2>
                             <p className="text-gray-400 text-sm">
                                 Select your specialization to view curated sources and pricing
@@ -375,7 +375,7 @@ export default function InternshipSourcesPage() {
 
                                     <div className="mb-8">
                                         <h4 className="text-sm font-bold text-gray-300 mb-3 uppercase tracking-wider">
-                                            What's Included:
+                                            What&apos;s Included:
                                         </h4>
                                         <ul className="space-y-2">
                                             {selectedRole!.includes.map((item, index) => (

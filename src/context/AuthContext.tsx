@@ -14,7 +14,7 @@ import {
     signInWithPhoneNumber,
     ConfirmationResult
 } from 'firebase/auth';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp, onSnapshot } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 
 export type UserType = 'company' | 'personal' | null;
@@ -29,6 +29,7 @@ interface User {
     role: UserRole;
     createdAt: Date;
     phoneNumber?: string;
+    profilePicture?: string;
 }
 
 interface AuthContextType {
@@ -71,10 +72,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // Sync with Firebase Auth state
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        let unsubscribeDoc: (() => void) | null = null;
+
+        const unsubscribeAuth = onAuthStateChanged(auth, async (firebaseUser) => {
             if (firebaseUser) {
-                try {
-                    const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+                // Set up real-time listener for user document
+                unsubscribeDoc = onSnapshot(doc(db, 'users', firebaseUser.uid), (userDoc: any) => {
                     if (userDoc.exists()) {
                         const userData = userDoc.data();
                         setUser({
@@ -86,6 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                             role: userData.role || 'user',
                             createdAt: userData.createdAt?.toDate() || new Date(),
                             phoneNumber: firebaseUser.phoneNumber || undefined,
+                            profilePicture: userData.profilePicture,
                         });
                     } else {
                         setUser({
@@ -98,19 +102,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                             phoneNumber: firebaseUser.phoneNumber || undefined,
                         });
                     }
-                } catch (error) {
-                    console.error('Error fetching user profile:', error);
-                }
+                    setIsLoading(false);
+                }, (error: Error) => {
+                    console.error('Error listening to user profile:', error);
+                    setIsLoading(false);
+                });
             } else {
+                if (unsubscribeDoc) {
+                    unsubscribeDoc();
+                    unsubscribeDoc = null;
+                }
                 setUser(null);
+                setIsLoading(false);
             }
-            setIsLoading(false);
         });
 
-        return () => unsubscribe();
+        return () => {
+            unsubscribeAuth();
+            if (unsubscribeDoc) unsubscribeDoc();
+        };
     }, []);
 
-    const ensureUserProfile = async (firebaseUser: any, type: UserType, extraData: any = {}) => {
+    const ensureUserProfile = async (firebaseUser: { uid: string; email: string | null; displayName: string | null; phoneNumber: string | null }, type: UserType, extraData: { name?: string; companyName?: string; role?: UserRole } = {}) => {
         const userRef = doc(db, 'users', firebaseUser.uid);
         const userSnap = await getDoc(userRef);
 

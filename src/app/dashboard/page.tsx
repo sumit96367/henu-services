@@ -4,12 +4,14 @@ import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
+import NextImage from 'next/image';
 import {
     User,
     ShoppingBag,
     FileText,
     Palette,
-    Image,
+    Image as ImageIcon,
     MapPin,
     UserCircle,
     Lock,
@@ -100,8 +102,8 @@ const quickAccessCards = [
 // Interface for orders
 interface Order {
     id: string;
-    orderDate: any;
-    modifiedDate: any;
+    orderDate: string;
+    modifiedDate: string;
     amount: string;
     status: string;
     statusColor: string;
@@ -117,7 +119,7 @@ interface Quote {
     description: string;
     amount?: string;
     status: 'pending' | 'approved' | 'rejected';
-    createdAt: any;
+    createdAt: Timestamp | Date;
 }
 
 // Interface for addresses
@@ -132,8 +134,8 @@ interface Address {
     state: string;
     pincode: string;
     isDefault: boolean;
-    createdAt: any;
-    updatedAt: any;
+    createdAt: Timestamp | Date;
+    updatedAt: Timestamp | Date;
 }
 
 export default function DashboardPage() {
@@ -196,12 +198,24 @@ export default function DashboardPage() {
         if (user) {
             setEditName(user.name || '');
             setEditCompany(user.companyName || '');
-            setProfilePicture((user as any).profilePicture || null);
+            setProfilePicture(user.profilePicture || null);
             fetchUserOrders();
             fetchUserQuotes();
             fetchUserAddresses();
         }
     }, [user]);
+
+    // Lock scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMobileMenuOpen]);
 
     const fetchUserOrders = async () => {
         if (!user) return;
@@ -228,8 +242,8 @@ export default function DashboardPage() {
 
             const orderMap = new Map<string, Order>();
 
-            const processSnapshot = (snapshot: any) => {
-                snapshot.forEach((doc: any) => {
+            const processSnapshot = (snapshot: { forEach: (callback: (doc: { id: string; data: () => any }) => void) => void }) => {
+                snapshot.forEach((doc) => {
                     const data = doc.data();
                     orderMap.set(doc.id, {
                         id: doc.id,
@@ -254,8 +268,8 @@ export default function DashboardPage() {
             });
 
             // Improved sorting if we had the raw timestamps
-            const allFetched: any[] = [];
-            [snapshotById, snapshotByEmail].forEach(s => s.forEach((d: any) => allFetched.push({ id: d.id, ...d.data() })));
+            const allFetched: { id: string;[key: string]: any }[] = [];
+            [snapshotById, snapshotByEmail].forEach(s => s.forEach((d) => allFetched.push({ id: d.id, ...d.data() })));
 
             const uniqueOrders = Array.from(new Map(allFetched.map(o => [o.id, o])).values());
             const finalOrders = uniqueOrders
@@ -586,9 +600,10 @@ export default function DashboardPage() {
                 logout();
                 router.push('/');
             }, 2000);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error changing password:', error);
-            if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+            const firebaseError = error as { code: string };
+            if (firebaseError.code === 'auth/wrong-password' || firebaseError.code === 'auth/invalid-credential') {
                 setPasswordError('Current password is incorrect');
             } else {
                 setPasswordError('Failed to change password. Please try again.');
@@ -801,7 +816,7 @@ export default function DashboardPage() {
                                 <div className="p-20 text-center">
                                     <Package size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
                                     <h3 className="text-white font-bold">No orders found</h3>
-                                    <p className="text-gray-500 text-sm mt-1">You haven't placed any orders with us yet.</p>
+                                    <p className="text-gray-500 text-sm mt-1">You haven&apos;t placed any orders with us yet.</p>
                                 </div>
                             )}
                         </div>
@@ -848,8 +863,16 @@ export default function DashboardPage() {
                                                 background: 'rgba(0, 0, 0, 0.6)'
                                             }}
                                         >
-                                            {/* Animated Wave Shader - always show, no profile picture */}
-                                            <CircularWaveShader />
+                                            {/* Profile Picture or Animated Wave Shader */}
+                                            {profilePicture ? (
+                                                <img
+                                                    src={profilePicture}
+                                                    alt="Profile"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <CircularWaveShader />
+                                            )}
                                         </div>
                                     </div>
 
@@ -980,7 +1003,7 @@ export default function DashboardPage() {
                                             </div>
                                             <p className="text-sm text-gray-400 mb-2">{quote.description}</p>
                                             <p className="text-xs text-gray-600">
-                                                {quote.createdAt?.toDate ? quote.createdAt.toDate().toLocaleDateString() : 'Recently'}
+                                                {quote.createdAt instanceof Timestamp ? quote.createdAt.toDate().toLocaleDateString() : quote.createdAt instanceof Date ? quote.createdAt.toLocaleDateString() : 'Recently'}
                                             </p>
                                         </div>
                                     ))}
@@ -989,7 +1012,7 @@ export default function DashboardPage() {
                                 <div className="p-20 text-center">
                                     <FileText size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
                                     <h3 className="text-white font-bold">No quotes found</h3>
-                                    <p className="text-gray-500 text-sm mt-1">You haven't submitted any quote requests yet.</p>
+                                    <p className="text-gray-500 text-sm mt-1">You haven&apos;t submitted any quote requests yet.</p>
                                 </div>
                             )}
                         </div>
@@ -1375,6 +1398,7 @@ export default function DashboardPage() {
 
             {/* Sidebar */}
             <aside
+                data-lenis-prevent
                 style={{
                     position: 'fixed',
                     left: 0,
@@ -1387,6 +1411,7 @@ export default function DashboardPage() {
                     flexDirection: 'column',
                     zIndex: 999,
                     transform: isMobileMenuOpen ? 'translateX(0)' : undefined,
+                    overflowX: 'hidden',
                 }}
                 className="dashboard-sidebar"
             >
@@ -1403,7 +1428,7 @@ export default function DashboardPage() {
                                 width: '48px',
                                 height: '48px',
                                 borderRadius: '50%',
-                                background: (profilePicture || (user as any)?.profilePicture) ? 'transparent' : 'linear-gradient(to bottom right, #06b6d4, #3b82f6)',
+                                background: (profilePicture || user?.profilePicture) ? 'transparent' : 'linear-gradient(to bottom right, #06b6d4, #3b82f6)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -1413,9 +1438,9 @@ export default function DashboardPage() {
                                 overflow: 'hidden',
                             }}
                         >
-                            {(profilePicture || (user as any)?.profilePicture) ? (
+                            {(profilePicture || user?.profilePicture) ? (
                                 <img
-                                    src={profilePicture || (user as any).profilePicture}
+                                    src={profilePicture || user?.profilePicture}
                                     alt="Profile"
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
@@ -1472,14 +1497,12 @@ export default function DashboardPage() {
                                     setIsMobileMenuOpen(false);
                                 }}
                                 style={{
-                                    width: '100%',
+                                    width: 'calc(100% - 24px)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '12px',
-                                    padding: '14px 24px',
+                                    padding: '14px 20px',
                                     margin: '4px 12px',
-                                    marginLeft: '12px',
-                                    marginRight: '12px',
                                     borderRadius: '12px',
                                     textDecoration: 'none',
                                     color: active ? '#fff' : '#888',
@@ -1495,6 +1518,8 @@ export default function DashboardPage() {
                                     fontSize: '0.95rem',
                                     cursor: 'pointer',
                                     fontFamily: 'inherit',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden'
                                 }}
                                 onMouseEnter={(e) => {
                                     if (!active) {

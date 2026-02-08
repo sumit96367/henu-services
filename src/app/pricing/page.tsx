@@ -269,7 +269,7 @@ export default function PricingPage() {
                         style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', zIndex: 1 }}
                     >
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'white', marginBottom: '16px', textAlign: 'center' }}>
-                            Ready to <span className="gradient-text">Get Started</span>?
+                            Ready to <span className="gradient-text">Get Started</span>&quest;
                         </h2>
                         <p style={{ color: '#9ca3af', marginBottom: '40px', textAlign: 'center', maxWidth: '500px', fontSize: '1.1rem' }}>
                             Contact our sales team for custom enterprise pricing tailored to your specific requirements
@@ -373,7 +373,7 @@ export default function PricingPage() {
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                         {/* WhatsApp */}
                                         <a
-                                            href="https://wa.me/918094100513?text=Hi, I'm interested in your pricing plans for my company."
+                                            href="https://wa.me/918094100513?text=Hi, I%27m interested in your pricing plans for my company."
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-4 p-4 rounded-2xl bg-green-500/10 border border-green-500/20 hover:border-green-500/40 hover:bg-green-500/15 transition-all group"
@@ -405,7 +405,7 @@ export default function PricingPage() {
 
                                         {/* Email */}
                                         <a
-                                            href="mailto:sales@henuos.com?subject=Pricing Inquiry&body=Hi, I'm interested in learning more about your pricing plans."
+                                            href="mailto:sales@henuos.com?subject=Pricing Inquiry&body=Hi, I%27m interested in learning more about your pricing plans."
                                             className="flex items-center gap-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 hover:bg-amber-500/15 transition-all group"
                                         >
                                             <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center">

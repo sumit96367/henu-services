@@ -113,6 +113,36 @@ export async function updateQueryStatus(
 }
 
 /**
+ * Get all service requests from Firestore
+ */
+export async function getServiceRequests(): Promise<any[]> {
+    try {
+        const ordersRef = collection(db, 'orders');
+        // Fetch all and filter locally
+        const q = query(ordersRef, orderBy('createdAt', 'desc'));
+        const querySnapshot = await getDocs(q);
+
+        const requests: any[] = [];
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            // Show everything that is NOT an internship enrollment as a service request
+            // This is safer in case some requests are missing the specific 'service_inquiry' type
+            if (data.type !== 'internship_enrollment') {
+                requests.push({
+                    id: doc.id,
+                    ...data,
+                    createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt
+                });
+            }
+        });
+        return requests;
+    } catch (error) {
+        console.error('Error getting service requests:', error);
+        return [];
+    }
+}
+
+/**
  * Get all enrollments with optional filters
  */
 export async function getEnrollments(filters?: EnrollmentFilters): Promise<EnrollmentRecord[]> {

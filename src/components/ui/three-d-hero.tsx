@@ -89,7 +89,16 @@ function FloatingArtifacts() {
     )
 }
 
-function Shape({ position, rotation, scale, color, speed, type }: any) {
+interface ShapeProps {
+    position: [number, number, number];
+    rotation: [number, number, number];
+    scale: number;
+    color: string;
+    speed: number;
+    type: number;
+}
+
+function Shape({ position, rotation, scale, color, speed, type }: ShapeProps) {
     const mesh = useRef<THREE.Mesh>(null!)
 
     useFrame((state, delta) => {

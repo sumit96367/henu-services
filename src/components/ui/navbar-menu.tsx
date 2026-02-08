@@ -152,7 +152,7 @@ export const ServiceSubItem = ({
     );
 };
 
-export const HoveredLink = ({ children, ...rest }: any) => {
+export const HoveredLink = ({ children, ...rest }: React.ComponentPropsWithoutRef<typeof Link>) => {
     return (
         <Link
             {...rest}

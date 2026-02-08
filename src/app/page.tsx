@@ -748,7 +748,7 @@ const WhyChooseUsSection = () => {
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Why Choose <span className="text-green-400">Henu</span>{" "}
-              <span className="text-amber-400">OS</span>?
+              <span className="text-amber-400">OS</span>&quest;
             </h2>
             <p className="text-gray-400 text-lg mb-8">
               We combine technical excellence with business acumen to deliver solutions that drive real results.
@@ -923,7 +923,7 @@ export default function HomePage() {
   };
 
   return (
-    <main>
+    <main className="overflow-hidden">
       <HeroSection />
       <StatsSection />
       <HenuOSIntroductionSection />

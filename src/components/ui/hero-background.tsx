@@ -99,15 +99,12 @@ export function StarField({
     starCount = 100,
     speed = 1,
 }: StarFieldProps) {
-    const [mounted, setMounted] = useState(false)
+    const [stars, setStars] = useState<Star[]>([]);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true)
-    }, [])
-
-    const stars: Star[] = useMemo(() => {
-        if (!mounted) return []
-        return Array.from({ length: starCount }, (_, i) => ({
+        setMounted(true);
+        const generatedStars = Array.from({ length: starCount }, (_, i) => ({
             id: i,
             x: Math.random() * 100,
             y: Math.random() * 100,
@@ -115,8 +112,9 @@ export function StarField({
             opacity: Math.random() * 0.7 + 0.3,
             animationDuration: (Math.random() * 3 + 2) / speed,
             animationDelay: Math.random() * 2,
-        }))
-    }, [starCount, speed, mounted])
+        }));
+        setStars(generatedStars);
+    }, [starCount, speed]);
 
     if (!mounted) return null
 

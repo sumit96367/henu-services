@@ -210,16 +210,26 @@ export default function PortfolioPage() {
     const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
+    // Handle body overflow when modal is open
+    useEffect(() => {
+        if (selectedProduct) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [selectedProduct]);
+
     const openModal = (product: typeof projects[0]) => {
         setSelectedProduct(product);
         setPaymentForm(prev => ({ ...prev, productName: product.title }));
-        document.body.style.overflow = 'hidden';
     };
 
     const closeModal = () => {
         setSelectedProduct(null);
         setShowPaymentDialog(false);
-        document.body.style.overflow = 'auto';
     };
 
     const handleGetItNow = () => {

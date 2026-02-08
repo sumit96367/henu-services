@@ -249,7 +249,7 @@ export default function ContactPage() {
                         </h1>
 
                         <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed text-center mt-6">
-                            Have a vision? We have the expertise. Let's discuss how Henu OS can accelerate your growth.
+                            Have a vision? We have the expertise. Let&apos;s discuss how Henu OS can accelerate your growth.
                         </p>
                     </div>
                 </motion.div>
@@ -340,7 +340,7 @@ export default function ContactPage() {
                             className="flex flex-col justify-center"
                         >
                             <h2 className="text-5xl md:text-6xl font-bold text-white mb-8 leading-tight">
-                                Let's Map Out Your <span className="gradient-text">Success Story</span>
+                                Let&apos;s Map Out Your <span className="gradient-text">Success Story</span>
                             </h2>
                             <p className="text-xl text-gray-400 mb-12 leading-relaxed">
                                 Our consultants are ready to dive deep into your requirements and provide a strategic roadmap tailored for your business.
@@ -391,7 +391,7 @@ export default function ContactPage() {
                                             </motion.div>
                                             <h3 className="text-5xl font-bold text-white mb-6">Inquiry Sent!</h3>
                                             <p className="text-2xl text-gray-400 mb-12 max-w-sm leading-relaxed">
-                                                We've received your request. One of our experts will contact you shortly.
+                                                We&apos;ve received your request. One of our experts will contact you shortly.
                                             </p>
                                             <motion.button
                                                 whileHover={{ scale: 1.05 }}
@@ -428,7 +428,7 @@ export default function ContactPage() {
                                                         <div className="space-y-12">
                                                             <div>
                                                                 <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">
-                                                                    Let's Start with <span className="gradient-text">Your Details</span>
+                                                                    Let&apos;s Start with <span className="gradient-text">Your Details</span>
                                                                 </h3>
                                                                 <p className="text-lg text-gray-400">Tell us who you are</p>
                                                             </div>
