@@ -257,7 +257,7 @@ export default function QueriesPage() {
                             <tbody>
                                 {queries.map((query, index) => {
                                     const statusColors = getStatusColor(query.status);
-                                    const isNew = query.status === "new";
+                                    const isNew = query.status === "pending";
 
                                     return (
                                         <tr
