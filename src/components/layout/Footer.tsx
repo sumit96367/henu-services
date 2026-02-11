@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown } from 'lucide-react';
 import { TextHoverEffect } from '@/components/ui/hover-footer';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const footerLinks = [
     {
@@ -86,13 +88,22 @@ const MobileAccordion = ({ title, children, isOpen, onToggle }: { title: string;
 
 export const Footer = () => {
     const [openSection, setOpenSection] = useState<string | null>(null);
+    const pathname = usePathname();
+    const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
 
     const toggleSection = (section: string) => {
         setOpenSection(openSection === section ? null : section);
     };
 
+    if (isDashboard) return null;
+
     return (
-        <footer className="bg-[#0a0a0c] relative overflow-hidden rounded-3xl mx-6 sm:mx-16 lg:mx-24 mb-10 mt-32 z-20">
+        <footer className={cn(
+            "bg-[#0a0a0c] relative overflow-hidden rounded-3xl transition-all duration-300 mb-10 mt-32",
+            isDashboard
+                ? "z-[1001] md:ml-[310px] md:mr-8 mx-6"
+                : "z-20 mx-6 sm:mx-16 lg:mx-24"
+        )}>
             {/* Background glow effect - reduced on mobile */}
             <div
                 className="absolute inset-0 z-0 opacity-40 lg:opacity-100"
@@ -102,7 +113,10 @@ export const Footer = () => {
             />
 
             {/* Main content */}
-            <div className="container mx-auto px-6 sm:px-12 lg:px-16 pt-16 lg:pt-40 pb-12 pb-[env(safe-area-inset-bottom,1rem)] relative z-10">
+            <div className={cn(
+                "px-6 sm:px-12 lg:px-16 pt-16 lg:pt-40 pb-12 pb-[env(safe-area-inset-bottom,1rem)] relative z-10",
+                isDashboard ? "w-full" : "container mx-auto"
+            )}>
 
                 {/* MOBILE LAYOUT (<lg) */}
                 <div className="lg:hidden space-y-8">
@@ -119,7 +133,7 @@ export const Footer = () => {
                                     />
                                 </div>
                             </div>
-                            <span className="text-white text-3xl font-bold tracking-tight" style={{ lineHeight: '1' }}>Henu OS</span>
+                            <span className="text-white text-2xl sm:text-3xl font-bold tracking-tight whitespace-nowrap" style={{ lineHeight: '1' }}>Henu OS</span>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed max-w-md">
                             Building the backbone of modern business. AI-driven development, grants & legal compliance.
@@ -240,10 +254,10 @@ export const Footer = () => {
                 {/* DESKTOP LAYOUT (≥lg) - UNCHANGED */}
                 <div className="hidden lg:block">
                     {/* Balanced Columns - Spread out to fill full width */}
-                    <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-12 lg:gap-20 mb-16 md:mb-24">
+                    <div className="flex flex-wrap justify-between items-start gap-y-12 gap-x-8 xl:gap-x-16 mb-16 md:mb-24">
 
                         {/* Brand section */}
-                        <div className="flex-1 flex flex-col space-y-6 md:space-y-8 w-full md:min-w-[300px]">
+                        <div className="flex-1 flex flex-col space-y-6 md:space-y-8 w-full min-w-[320px]">
                             <div className="flex items-center gap-4">
                                 <div className="relative w-24 h-24 flex items-center justify-center overflow-visible">
                                     <div className="relative w-24 h-24" style={{ transform: 'scale(2.15)' }}>
@@ -255,7 +269,7 @@ export const Footer = () => {
                                         />
                                     </div>
                                 </div>
-                                <span className="text-white text-4xl font-bold tracking-tight" style={{ lineHeight: '1' }}>Henu OS</span>
+                                <span className="text-white text-3xl xl:text-4xl font-bold tracking-tight whitespace-nowrap" style={{ lineHeight: '1' }}>Henu OS</span>
                             </div>
                             <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-sm">
                                 Building the backbone of modern business. From AI-driven development to government grants and legal compliance.
@@ -263,7 +277,7 @@ export const Footer = () => {
                         </div>
 
                         {/* Development Links */}
-                        <div className="flex-1 flex flex-col w-full md:min-w-[200px]">
+                        <div className="flex-1 flex flex-col w-full min-w-[150px]">
                             <h4 className="text-white text-lg md:text-xl font-semibold mb-6 md:mb-10">Development</h4>
                             <ul className="space-y-4 md:space-y-6">
                                 {footerLinks[0].links.map((link) => (
@@ -277,7 +291,7 @@ export const Footer = () => {
                         </div>
 
                         {/* Growth & Legal Links */}
-                        <div className="flex-1 flex flex-col w-full md:min-w-[200px]">
+                        <div className="flex-1 flex flex-col w-full min-w-[150px]">
                             <h4 className="text-white text-xl font-semibold mb-10">Growth & Legal</h4>
                             <ul className="space-y-6">
                                 {footerLinks[1].links.map((link) => (
@@ -297,7 +311,7 @@ export const Footer = () => {
                         </div>
 
                         {/* Disclaimer & Policies Column */}
-                        <div className="flex-1 flex flex-col w-full md:min-w-[200px]">
+                        <div className="flex-1 flex flex-col w-full min-w-[150px]">
                             <h4 className="text-white text-xl font-semibold mb-10">Disclaimer & Policies</h4>
                             <ul className="space-y-6">
                                 <li>
@@ -334,7 +348,7 @@ export const Footer = () => {
                         </div>
 
                         {/* Contact Us Section */}
-                        <div className="flex-1 flex flex-col w-full md:min-w-[280px] lg:pl-8 lg:border-l border-white/5">
+                        <div className="flex-1 flex flex-col w-full min-w-[240px] lg:pl-8 lg:border-l border-white/5">
                             <h4 className="text-white text-xl font-semibold mb-10">Contact Us</h4>
                             <ul className="space-y-8">
                                 {contactInfo.map((info, idx) => (
@@ -344,14 +358,14 @@ export const Footer = () => {
                                                 <div className="p-3.5 rounded-xl bg-white/5 group-hover:bg-cyan-500/10 transition-colors">
                                                     {info.icon}
                                                 </div>
-                                                <span className="text-lg font-medium tracking-wide">{info.text}</span>
+                                                <span className="text-sm xl:text-lg font-medium tracking-wide break-all">{info.text}</span>
                                             </a>
                                         ) : (
                                             <div className="flex items-center gap-5 text-gray-400">
                                                 <div className="p-3.5 rounded-xl bg-white/5">
                                                     {info.icon}
                                                 </div>
-                                                <span className="text-lg font-medium tracking-wide">{info.text}</span>
+                                                <span className="text-sm xl:text-lg font-medium tracking-wide break-all">{info.text}</span>
                                             </div>
                                         )}
                                     </li>

@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import { cn } from "@/lib/utils";
 import {
     Mail,
     Phone,
@@ -240,7 +241,7 @@ export default function ContactPage() {
                     className="relative z-10 w-full flex flex-col items-center justify-center px-6"
                 >
                     <div className="max-w-5xl w-full mx-auto flex flex-col items-center text-center">
-                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full">
+                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full uppercase">
                             <PremiumTextReveal text="Ready to" className="w-full justify-center" />
                             <span className="gradient-text block w-full text-center">
                                 <PremiumTextReveal text="Build Something" delay={0.2} className="w-full justify-center" />
@@ -274,51 +275,86 @@ export default function ContactPage() {
                 </motion.div>
             </section>
 
-            {/* Contact Grid Section */}
-            <section className="py-12 bg-transparent px-6" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
-                <div className="container mx-auto">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {/* Contact Info Section - Refined 4-Column Grid */}
+            <section className="w-full flex flex-col items-center bg-transparent" style={{ paddingTop: '60px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+                <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full">
                         {contactInfo.map((info, index) => (
                             <motion.div
                                 key={info.title}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
+                                transition={{ delay: index * 0.1, duration: 0.6 }}
                             >
                                 {info.link ? (
                                     <a href={info.link} className="group block h-full">
-                                        <GlowingCard className="h-full" innerClassName="text-left" style={{ paddingTop: '16px', paddingBottom: '16px', paddingLeft: '16px', paddingRight: '16px' }}>
-                                            <div className="flex" style={{ gap: '20px' }}>
-                                                <div
-                                                    className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-lg shrink-0"
-                                                    style={{ background: info.color === 'cyan' ? 'rgba(0, 212, 255, 0.1)' : 'rgba(255, 149, 0, 0.1)', border: `1px solid ${info.color === 'cyan' ? 'rgba(0, 212, 255, 0.2)' : 'rgba(255, 149, 0, 0.2)'}` }}
-                                                >
-                                                    <info.icon size={20} className={info.color === 'cyan' ? 'text-cyan-400' : 'text-amber-400'} />
+                                        <div className="relative group/card h-full transition-all duration-500">
+                                            {/* Accent Background Glow */}
+                                            <div className={cn(
+                                                "absolute inset-0 rounded-[1.5rem] opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 blur-[60px]",
+                                                info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                            )} />
+
+                                            <div className="relative h-full flex flex-col items-center justify-center bg-[#050505] border border-white/5 rounded-[1.5rem] overflow-hidden group-hover/card:border-white/20 transition-all duration-500" style={{ padding: '48px 24px' }}>
+                                                {/* Background Decorative Icon */}
+                                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] group-hover/card:opacity-[0.05] transition-opacity duration-700">
+                                                    <info.icon size={160} />
                                                 </div>
-                                                <div className="flex flex-col" style={{ gap: '2px' }}>
-                                                    <div className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors" style={{ lineHeight: '1.2', margin: 0 }}>{info.title}</div>
-                                                    <div className="text-gray-400 font-medium text-base" style={{ lineHeight: '1.4', margin: 0 }}>{info.value}</div>
+
+                                                <div className={cn(
+                                                    "w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-all duration-700 group-hover/card:scale-110",
+                                                    info.color === 'cyan' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_30px_rgba(0,212,255,0.1)]' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_30px_rgba(255,149,0,0.1)]'
+                                                )}>
+                                                    <info.icon size={24} />
                                                 </div>
+
+                                                <div className="text-center relative z-10 w-full px-2">
+                                                    <h3 className="text-[10px] font-bold text-gray-500 tracking-[0.4em] uppercase mb-3">{info.title}</h3>
+                                                    <p className="text-base md:text-lg font-bold text-white group-hover/card:text-white transition-colors tracking-tight leading-tight break-all">
+                                                        {info.value}
+                                                    </p>
+                                                </div>
+
+                                                {/* Bottom Accent Bar */}
+                                                <div className={cn(
+                                                    "absolute bottom-0 left-6 right-6 h-[2px] transition-all duration-700 opacity-0 group-hover/card:opacity-100",
+                                                    info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                                )} />
                                             </div>
-                                        </GlowingCard>
+                                        </div>
                                     </a>
                                 ) : (
-                                    <div className="h-full group">
-                                        <GlowingCard className="h-full" innerClassName="text-left" style={{ paddingTop: '16px', paddingBottom: '16px', paddingLeft: '16px', paddingRight: '16px' }}>
-                                            <div className="flex" style={{ gap: '20px' }}>
-                                                <div
-                                                    className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-lg shrink-0"
-                                                    style={{ background: info.color === 'cyan' ? 'rgba(0, 212, 255, 0.1)' : 'rgba(255, 149, 0, 0.1)', border: `1px solid ${info.color === 'cyan' ? 'rgba(0, 212, 255, 0.2)' : 'rgba(255, 149, 0, 0.2)'}` }}
-                                                >
-                                                    <info.icon size={20} className={info.color === 'cyan' ? 'text-cyan-400' : 'text-amber-400'} />
-                                                </div>
-                                                <div className="flex flex-col" style={{ gap: '2px' }}>
-                                                    <div className="text-xl font-bold text-white" style={{ lineHeight: '1.2', margin: 0 }}>{info.title}</div>
-                                                    <div className="text-gray-400 font-medium text-base" style={{ lineHeight: '1.4', margin: 0 }}>{info.value}</div>
-                                                </div>
+                                    <div className="h-full group/card relative transition-all duration-500">
+                                        <div className={cn(
+                                            "absolute inset-0 rounded-[1.5rem] opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 blur-[60px]",
+                                            info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                        )} />
+
+                                        <div className="relative h-full flex flex-col items-center justify-center bg-[#050505] border border-white/5 rounded-[1.5rem] overflow-hidden group-hover/card:border-white/20 transition-all duration-500" style={{ padding: '48px 24px' }}>
+                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] group-hover/card:opacity-[0.05] transition-opacity duration-700">
+                                                <info.icon size={160} />
                                             </div>
-                                        </GlowingCard>
+
+                                            <div className={cn(
+                                                "w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-all duration-700 group-hover/card:scale-110",
+                                                info.color === 'cyan' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_30px_rgba(0,212,255,0.1)]' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_30px_rgba(255,149,0,0.1)]'
+                                            )}>
+                                                <info.icon size={24} />
+                                            </div>
+
+                                            <div className="text-center relative z-10 w-full px-2">
+                                                <h3 className="text-[10px] font-bold text-gray-500 tracking-[0.4em] uppercase mb-3">{info.title}</h3>
+                                                <p className="text-base md:text-lg font-bold text-white tracking-tighter leading-tight">
+                                                    {info.value}
+                                                </p>
+                                            </div>
+
+                                            <div className={cn(
+                                                "absolute bottom-0 left-6 right-6 h-[2px] transition-all duration-700 opacity-0 group-hover/card:opacity-100",
+                                                info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                            )} />
+                                        </div>
                                     </div>
                                 )}
                             </motion.div>
@@ -328,8 +364,8 @@ export default function ContactPage() {
             </section>
 
             {/* Form Section */}
-            <section className="section relative px-6" id="inquiry" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
-                <div className="container max-w-5xl mx-auto relative z-10">
+            <section className="w-full flex flex-col items-center bg-transparent relative" id="inquiry" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+                <div style={{ width: '100%', maxWidth: '1024px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
                     <div className="flex flex-col gap-12">
 
                         {/* Left - Why Contact Us */}
@@ -339,10 +375,10 @@ export default function ContactPage() {
                             viewport={{ once: true }}
                             className="flex flex-col justify-center"
                         >
-                            <h2 className="text-5xl md:text-6xl font-bold text-white mb-8 leading-tight">
+                            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 leading-none tracking-tighter uppercase">
                                 Let&apos;s Map Out Your <span className="gradient-text">Success Story</span>
                             </h2>
-                            <p className="text-xl text-gray-400 mb-12 leading-relaxed">
+                            <p className="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed">
                                 Our consultants are ready to dive deep into your requirements and provide a strategic roadmap tailored for your business.
                             </p>
 
@@ -380,7 +416,7 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="p-16 text-center flex flex-col items-center justify-center !bg-black">
+                                        <GlowingCard className="h-full" innerClassName="text-center flex flex-col items-center justify-center bg-[#0A0A0A] border border-white/5" style={{ padding: '80px' }}>
                                             <motion.div
                                                 initial={{ scale: 0 }}
                                                 animate={{ scale: 1 }}
@@ -411,7 +447,7 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="!p-10 !bg-black">
+                                        <GlowingCard className="h-full" innerClassName="bg-[#0A0A0A] border border-white/5" style={{ padding: '64px' }}>
                                             {/* Step Indicator */}
                                             <StepIndicator currentStep={currentStep} totalSteps={2} className="mb-10" />
 
@@ -513,6 +549,7 @@ export default function ContactPage() {
                                                                         description={service.description}
                                                                         isSelected={selectedServiceIds.includes(service.id)}
                                                                         onClick={() => handleServiceSelect(service.id)}
+                                                                        className="p-8 md:p-10"
                                                                     />
                                                                 ))}
                                                             </div>

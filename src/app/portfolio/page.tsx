@@ -424,7 +424,7 @@ export default function PortfolioPage() {
                                         </motion.div>
 
                                         {/* Software Title - CENTER ALIGNED */}
-                                        <h3 className="text-3xl font-black text-white mb-3 group-hover:text-purple-400 transition-colors tracking-tight leading-tight font-['Space_Grotesk'] uppercase text-center">
+                                        <h3 className="text-3xl font-black text-white mb-3 group-hover:text-purple-400 transition-colors tracking-tight leading-tight uppercase text-center">
                                             {project.title}
                                         </h3>
 
@@ -571,7 +571,7 @@ export default function PortfolioPage() {
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.1 }}
-                                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight leading-tight font-['Space_Grotesk'] px-4"
+                                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight leading-tight px-4"
                                         style={{
                                             wordBreak: 'normal',
                                             overflowWrap: 'break-word',
@@ -611,18 +611,18 @@ export default function PortfolioPage() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.4 }}
-                                    className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md"
-                                    style={{ marginTop: '1cm' }}
+                                    className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
+                                    style={{ marginTop: '1.5rem' }}
                                 >
                                     {/* Primary: Get-it-Now */}
                                     <button
                                         onClick={handleGetItNow}
-                                        className="group relative w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-bold text-xl rounded-full transition-all duration-300 overflow-hidden shadow-lg hover:shadow-purple-500/50"
-                                        style={{ padding: '0.2cm' }}
+                                        className="group relative bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-bold text-xl rounded-full transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/60"
+                                        style={{ padding: '30px 60px', minWidth: '240px' }}
                                     >
                                         {/* Glow effect on hover */}
                                         <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
-                                        <span className="relative flex items-center justify-center gap-2">
+                                        <span className="relative flex items-center justify-center gap-4">
                                             <span className="text-2xl">⭐</span>
                                             Get-it-Now
                                         </span>
@@ -631,13 +631,13 @@ export default function PortfolioPage() {
                                     {/* Secondary: Buy Now */}
                                     <button
                                         onClick={handleBuyNow}
-                                        className="group relative w-full sm:w-auto px-10 py-5 bg-transparent hover:bg-purple-500/10 text-purple-400 font-bold text-xl rounded-full border-2 border-purple-500 hover:border-purple-400 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-purple-500/30"
-                                        style={{ padding: '0.2cm' }}
+                                        className="group relative bg-transparent hover:bg-purple-500/10 text-purple-400 font-bold text-xl rounded-full border-4 border-purple-500 hover:border-purple-400 transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/40"
+                                        style={{ padding: '30px 60px', minWidth: '240px' }}
                                     >
                                         {/* Glow effect on hover */}
                                         <div className="absolute inset-0 bg-purple-500/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
-                                        <span className="relative flex items-center justify-center gap-2">
-                                            <ShoppingCart className="w-6 h-6" />
+                                        <span className="relative flex items-center justify-center gap-4">
+                                            <ShoppingCart className="w-8 h-8" />
                                             Buy Now
                                         </span>
                                     </button>
@@ -663,72 +663,77 @@ export default function PortfolioPage() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="relative w-full max-w-lg bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto"
-                            style={{ padding: '1cm' }}
+                            className="relative w-full max-w-2xl bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto"
+                            style={{ padding: '50px 45px' }}
                         >
                             <button
                                 onClick={() => setShowPaymentDialog(false)}
-                                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
                             >
-                                <X className="w-4 h-4 text-white" />
+                                <X className="w-5 h-5 text-white" />
                             </button>
 
-                            <h3 className="text-2xl font-bold text-white mb-6">Payment Requirements</h3>
+                            <h3 className="text-3xl font-bold text-white" style={{ marginBottom: '35px' }}>Payment Requirements</h3>
 
-                            <form onSubmit={handlePaymentSubmit} className="space-y-4">
+                            <form onSubmit={handlePaymentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                                 <div>
-                                    <label className="block text-sm font-medium text-purple-300 mb-2">Product</label>
+                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Product</label>
                                     <input
                                         type="text"
                                         value={paymentForm.productName}
                                         readOnly
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-purple-500/50"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-purple-300 mb-2">Full Name</label>
+                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Full Name</label>
                                     <input
                                         type="text"
                                         required
                                         value={paymentForm.name}
                                         onChange={(e) => setPaymentForm({ ...paymentForm, name: e.target.value })}
                                         placeholder="John Doe"
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-purple-300 mb-2">Email Address</label>
+                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Email Address</label>
                                     <input
                                         type="email"
                                         required
                                         value={paymentForm.email}
                                         onChange={(e) => setPaymentForm({ ...paymentForm, email: e.target.value })}
                                         placeholder="your@email.com"
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-purple-300 mb-2">Contact Number</label>
+                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Contact Number</label>
                                     <input
                                         type="tel"
                                         required
                                         value={paymentForm.contact}
                                         onChange={(e) => setPaymentForm({ ...paymentForm, contact: e.target.value })}
                                         placeholder="+1 234 567 8900"
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-purple-300 mb-2">Payment Method</label>
+                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Payment Method</label>
                                     <select
                                         required
                                         value={paymentForm.paymentMethod}
                                         onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value })}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-purple-500/50"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     >
                                         <option value="" className="bg-gray-900">Select payment method</option>
                                         <option value="credit-card" className="bg-gray-900">Credit Card</option>
@@ -740,27 +745,30 @@ export default function PortfolioPage() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-purple-300 mb-2">Additional Requirements</label>
+                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Additional Requirements</label>
                                     <textarea
                                         value={paymentForm.requirements}
                                         onChange={(e) => setPaymentForm({ ...paymentForm, requirements: e.target.value })}
                                         placeholder="Any specific requirements or notes..."
-                                        rows={3}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                                        rows={4}
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
 
-                                <div className="flex gap-3 pt-4">
+                                <div className="flex gap-5" style={{ paddingTop: '20px' }}>
                                     <button
                                         type="button"
                                         onClick={() => setShowPaymentDialog(false)}
-                                        className="flex-1 px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-lg transition-colors border border-white/10"
+                                        className="flex-1 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors border border-white/10 font-bold text-lg"
+                                        style={{ padding: '20px' }}
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold rounded-lg transition-all duration-300 shadow-lg hover:shadow-purple-500/50"
+                                        className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold text-lg rounded-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50"
+                                        style={{ padding: '20px' }}
                                     >
                                         Proceed
                                     </button>

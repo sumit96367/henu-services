@@ -183,14 +183,14 @@ export const AuthModal = () => {
                     exit={{ opacity: 0, y: 20 }}
                     className="relative w-full max-w-2xl px-6"
                 >
-                    <div className={`text-center ${step === 'type-selection' ? 'mb-12' : 'mb-8'}`}>
-                        <h2 className={`font-bold text-white ${step === 'type-selection' ? 'text-4xl md:text-5xl mb-4' : 'text-3xl md:text-4xl mb-3'}`}>
+                    <div className={`text-center ${step === 'type-selection' ? 'mb-10' : 'mb-5'}`}>
+                        <h2 className={`font-bold text-white ${step === 'type-selection' ? 'text-3xl md:text-4xl mb-3' : 'text-2xl md:text-3xl mb-2'}`}>
                             {step === 'type-selection'
                                 ? (authModalMode === 'login' ? 'Welcome Back' : 'Join Henu OS')
                                 : (verificationStep === 'otp' ? 'Verify OTP' : (authModalMode === 'login' ? 'Sign In' : 'Create Account'))
                             }
                         </h2>
-                        <p className="text-gray-400 text-lg">
+                        <p className="text-gray-400 text-base">
                             {step === 'type-selection'
                                 ? 'Choose your account type to get started'
                                 : (verificationStep === 'otp' ? `Code sent to ${phoneNumber}` : `Continue as ${selectedType === 'company' ? 'Company' : 'Individual'}`)
@@ -238,8 +238,8 @@ export const AuthModal = () => {
                                 <button
                                     onClick={() => selectedType && setStep('credentials')}
                                     disabled={!selectedType}
-                                    className={`w-full py-4 rounded-full font-semibold transition-all ${selectedType ? (selectedType === 'company' ? 'bg-cyan-500 text-white' : 'bg-amber-500 text-black') : 'bg-white/10 text-white/40 cursor-not-allowed'}`}
-                                    style={{ marginTop: '2cm' }}
+                                    className={`w-full py-4 rounded-full font-bold text-lg transition-all ${selectedType ? (selectedType === 'company' ? 'bg-cyan-500 text-white hover:bg-cyan-400 shadow-lg shadow-cyan-500/30' : 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/30') : 'bg-white/10 text-white/40 cursor-not-allowed'}`}
+                                    style={{ marginTop: '32px' }}
                                 >
                                     Continue
                                 </button>
@@ -262,77 +262,77 @@ export const AuthModal = () => {
                                 className="w-full flex flex-col items-center"
                             >
                                 <div className="w-full max-w-md">
-                                    <button onClick={handleBack} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6">
+                                    <button onClick={handleBack} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors" style={{ marginBottom: '14px' }}>
                                         <ArrowLeft size={16} /> <span className="text-sm">Back</span>
                                     </button>
 
                                     {/* Auth Method Toggle */}
-                                    <div className="flex bg-white/5 p-1 rounded-xl mb-6 border border-white/10">
+                                    <div className="flex bg-white/5 p-1 rounded-xl border border-white/10" style={{ marginBottom: '16px' }}>
                                         <button
                                             onClick={() => setAuthMethod('email')}
-                                            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${authMethod === 'email' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                            className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${authMethod === 'email' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
                                         >
                                             Email
                                         </button>
                                         <button
                                             onClick={() => setAuthMethod('phone')}
-                                            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${authMethod === 'phone' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                            className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${authMethod === 'phone' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
                                         >
                                             Phone
                                         </button>
                                     </div>
 
                                     {authMethod === 'email' ? (
-                                        <form onSubmit={handleEmailSubmit} className="space-y-4">
+                                        <form onSubmit={handleEmailSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                                             {authModalMode === 'signup' && (
                                                 <>
                                                     {selectedType === 'company' && (
-                                                        <div className="flex items-center gap-3 w-full h-14 px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50">
-                                                            <Building2 size={18} className="text-gray-500" />
-                                                            <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="Company Name" className="flex-1 bg-transparent text-white outline-none" />
+                                                        <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                            <Building2 size={20} className="text-gray-500" />
+                                                            <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="Company Name" className="flex-1 bg-transparent text-white outline-none text-base" />
                                                         </div>
                                                     )}
-                                                    <div className="flex items-center gap-3 w-full h-14 px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50">
-                                                        <User size={18} className="text-gray-500" />
-                                                        <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" className="flex-1 bg-transparent text-white outline-none" required />
+                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                        <User size={20} className="text-gray-500" />
+                                                        <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                                     </div>
                                                 </>
                                             )}
-                                            <div className="flex items-center gap-3 w-full h-14 px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50">
-                                                <Mail size={18} className="text-gray-500" />
-                                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="flex-1 bg-transparent text-white outline-none" required />
+                                            <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                <Mail size={20} className="text-gray-500" />
+                                                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                             </div>
-                                            <div className="flex items-center gap-3 w-full h-14 px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50">
-                                                <Lock size={18} className="text-gray-500" />
-                                                <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" className="flex-1 bg-transparent text-white outline-none" required />
+                                            <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                <Lock size={20} className="text-gray-500" />
+                                                <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-gray-500 hover:text-white">
-                                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                                 </button>
                                             </div>
-                                            <button type="submit" disabled={isLoading} className={`w-full py-4 rounded-xl font-medium text-white flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500 hover:bg-cyan-600' : 'bg-amber-500 text-black hover:bg-amber-600'} ${isLoading ? 'opacity-50' : ''}`}>
+                                            <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500 hover:bg-cyan-600' : 'bg-amber-500 text-black hover:bg-amber-600'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
                                                 {isLoading ? <Loader2 className="animate-spin" /> : (authModalMode === 'login' ? 'Sign In' : 'Create Account')}
                                             </button>
                                         </form>
                                     ) : (
                                         <div className="space-y-4">
                                             {verificationStep === 'input' ? (
-                                                <form onSubmit={handlePhoneRequest} className="space-y-4">
-                                                    <div className="flex items-center gap-3 w-full h-14 px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50">
-                                                        <Smartphone size={18} className="text-gray-500" />
-                                                        <input type="tel" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} placeholder="+91 99999 99999" className="flex-1 bg-transparent text-white outline-none" required />
+                                                <form onSubmit={handlePhoneRequest} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                        <Smartphone size={20} className="text-gray-500" />
+                                                        <input type="tel" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} placeholder="+91 99999 99999" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                                     </div>
                                                     <div id="recaptcha-container"></div>
-                                                    <button type="submit" disabled={isLoading} className={`w-full py-4 rounded-xl font-medium text-white flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500' : 'bg-amber-500 text-black'} ${isLoading ? 'opacity-50' : ''}`}>
+                                                    <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500' : 'bg-amber-500 text-black'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
                                                         {isLoading ? <Loader2 className="animate-spin" /> : 'Send Code'}
                                                     </button>
                                                 </form>
                                             ) : (
-                                                <form onSubmit={handlePhoneVerify} className="space-y-4">
-                                                    <div className="flex items-center gap-3 w-full h-14 px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50">
-                                                        <Lock size={18} className="text-gray-500" />
-                                                        <input type="text" value={otp} onChange={e => setOtp(e.target.value)} placeholder="6-digit OTP" className="flex-1 bg-transparent text-white outline-none text-center tracking-widest" required maxLength={6} />
+                                                <form onSubmit={handlePhoneVerify} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                        <Lock size={20} className="text-gray-500" />
+                                                        <input type="text" value={otp} onChange={e => setOtp(e.target.value)} placeholder="6-digit OTP" className="flex-1 bg-transparent text-white outline-none text-center tracking-widest text-base" required maxLength={6} />
                                                     </div>
-                                                    <button type="submit" disabled={isLoading} className={`w-full py-4 rounded-xl font-medium text-white flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500' : 'bg-amber-500 text-black'} ${isLoading ? 'opacity-50' : ''}`}>
+                                                    <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500' : 'bg-amber-500 text-black'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
                                                         {isLoading ? <Loader2 className="animate-spin" /> : 'Verify & Continue'}
                                                     </button>
                                                 </form>
@@ -341,20 +341,20 @@ export const AuthModal = () => {
                                     )}
 
                                     {/* Social Auth */}
-                                    <div className="mt-8">
-                                        <div className="relative mb-6">
+                                    <div style={{ marginTop: '20px' }}>
+                                        <div className="relative" style={{ marginBottom: '14px' }}>
                                             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10"></div></div>
                                             <div className="relative flex justify-center text-sm"><span className="px-2 bg-[#0a0a0f] text-gray-500">Or continue with</span></div>
                                         </div>
 
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <button onClick={() => handleSocialAuth('google')} className="flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
-                                                <FaGoogle size={20} className="text-red-500" />
-                                                <span className="text-sm font-medium">Google</span>
+                                        <div className="grid grid-cols-2 gap-5">
+                                            <button onClick={() => handleSocialAuth('google')} className="flex items-center justify-center gap-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all" style={{ padding: '12px 16px' }}>
+                                                <FaGoogle size={22} className="text-red-500" />
+                                                <span className="text-base font-semibold">Google</span>
                                             </button>
-                                            <button onClick={() => handleSocialAuth('apple')} className="flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
-                                                <FaApple size={20} />
-                                                <span className="text-sm font-medium">Apple</span>
+                                            <button onClick={() => handleSocialAuth('apple')} className="flex items-center justify-center gap-3 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all" style={{ padding: '12px 16px' }}>
+                                                <FaApple size={22} />
+                                                <span className="text-base font-semibold">Apple</span>
                                             </button>
                                         </div>
                                     </div>

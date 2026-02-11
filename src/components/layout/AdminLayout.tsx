@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Menu as MenuIcon, X as CloseIcon } from "lucide-react";
 
 interface NavItem {
     name: string;
@@ -64,35 +65,42 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                 minHeight: "100vh",
                 backgroundColor: "#000",
                 color: "#fff",
-                fontFamily: "'Inter', system-ui, sans-serif",
+                fontFamily: "var(--font-lora), serif",
+                position: "relative",
+                display: "flex",
             }}
         >
             {/* Mobile Menu Toggle */}
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
-                    position: "fixed",
-                    top: "20px",
-                    left: "20px",
-                    zIndex: 1000,
+                    position: isMobileMenuOpen ? "fixed" : "absolute",
+                    top: "22px",
+                    left: isMobileMenuOpen ? "216px" : "16px",
+                    zIndex: isMobileMenuOpen ? 1001 : 50,
                     display: "none",
-                    padding: "12px",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    padding: "8px",
+                    backgroundColor: isMobileMenuOpen ? "transparent" : "rgba(255, 255, 255, 0.08)",
+                    backdropFilter: isMobileMenuOpen ? "none" : "blur(12px)",
+                    border: isMobileMenuOpen ? "none" : "1px solid rgba(255, 255, 255, 0.1)",
                     borderRadius: "12px",
                     color: "#fff",
                     cursor: "pointer",
+                    boxShadow: isMobileMenuOpen ? "none" : "0 8px 32px rgba(0, 0, 0, 0.4)",
+                    transition: "all 0.3s ease",
                 }}
-                className="mobile-menu-toggle"
+                className="mobile-menu-toggle hover:bg-white/10 active:scale-95"
             >
-                <span style={{ fontSize: "24px" }}>{isMobileMenuOpen ? "✕" : "☰"}</span>
+                <div className="flex items-center justify-center">
+                    {isMobileMenuOpen ? <CloseIcon size={28} /> : <MenuIcon size={22} />}
+                </div>
             </button>
 
             {/* Sidebar */}
             <aside
                 data-lenis-prevent
                 style={{
-                    position: "fixed",
+                    position: "absolute",
                     left: 0,
                     top: 0,
                     bottom: 0,
@@ -235,6 +243,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                     marginLeft: "280px",
                     minHeight: "100vh",
                     padding: "40px 48px",
+                    flex: 1,
                 }}
                 className="admin-main-content"
             >
@@ -257,26 +266,26 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             )}
 
             <style jsx>{`
-        @media (max-width: 768px) {
-          .mobile-menu-toggle {
-            display: block !important;
-          }
+                @media (max-width: 768px) {
+                  .mobile-menu-toggle {
+                    display: block !important;
+                  }
 
-          .admin-sidebar {
-            transform: ${isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)"};
-            transition: transform 0.3s ease;
-          }
+                  .admin-sidebar {
+                    transform: translateX(${isMobileMenuOpen ? "0" : "-100%"});
+                    transition: transform 0.3s ease;
+                  }
 
-          .admin-main-content {
-            margin-left: 0 !important;
-            padding: 80px 24px 40px 24px !important;
-          }
+                  .admin-main-content {
+                    margin-left: 0 !important;
+                    padding: 140px 20px 40px 20px !important;
+                  }
 
-          .mobile-overlay {
-            display: block !important;
-          }
-        }
-      `}</style>
+                  .mobile-overlay {
+                    display: block !important;
+                  }
+                }
+              `}</style>
         </div>
     );
 }

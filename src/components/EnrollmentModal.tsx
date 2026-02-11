@@ -304,7 +304,7 @@ export default function EnrollmentModal({
                             style={{
                                 background: 'rgba(0, 0, 0, 0.6)',
                                 boxShadow: '0 0 60px rgba(0, 212, 255, 0.15)',
-                                padding: '38px' // EXACTLY 1cm padding
+                                padding: '50px 45px'
                             }}
                         >
                             {/* Success Message Overlay */}
@@ -346,8 +346,8 @@ export default function EnrollmentModal({
                             </button>
 
                             {/* Header */}
-                            <div className="mb-6 pb-6 border-b border-white/10">
-                                <h2 className="text-3xl font-black text-white mb-2">
+                            <div className="pb-8 border-b border-white/10" style={{ marginBottom: '35px' }}>
+                                <h2 className="text-4xl font-black text-white mb-3">
                                     Internship Enrollment
                                 </h2>
                                 <p className="text-cyan-400 text-lg font-semibold">
@@ -363,34 +363,36 @@ export default function EnrollmentModal({
                                         <span className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-sm">1</span>
                                         User Details
                                     </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
-                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                 Full Name <span className="text-red-400">*</span>
                                             </label>
                                             <input
                                                 type="text"
                                                 value={formData.fullName}
                                                 onChange={(e) => handleChange('fullName', e.target.value)}
-                                                className={`w-full px-4 py-3 bg-white/5 border ${errors.fullName ? 'border-red-400/50' : 'border-white/10'
+                                                className={`w-full bg-white/5 border ${errors.fullName ? 'border-red-400/50' : 'border-white/10'
                                                     } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                                 placeholder="John Doe"
+                                                style={{ padding: '16px 20px', fontSize: '16px' }}
                                             />
                                             {errors.fullName && (
                                                 <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>
                                             )}
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                 Email Address <span className="text-red-400">*</span>
                                             </label>
                                             <input
                                                 type="email"
                                                 value={formData.email}
                                                 onChange={(e) => handleChange('email', e.target.value)}
-                                                className={`w-full px-4 py-3 bg-white/5 border ${errors.email ? 'border-red-400/50' : 'border-white/10'
+                                                className={`w-full bg-white/5 border ${errors.email ? 'border-red-400/50' : 'border-white/10'
                                                     } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                                 placeholder="john@example.com"
+                                                style={{ padding: '16px 20px', fontSize: '16px' }}
                                             />
                                             {errors.email && (
                                                 <p className="text-red-400 text-xs mt-1">{errors.email}</p>
@@ -405,28 +407,29 @@ export default function EnrollmentModal({
                                         <span className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-sm">2</span>
                                         Internship Selection
                                     </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
-                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                 Domain
                                             </label>
                                             <input
                                                 type="text"
                                                 value={domainTitle}
                                                 readOnly
-                                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-gray-400 cursor-not-allowed"
+                                                className="w-full bg-white/5 border border-white/10 rounded-xl text-gray-400 cursor-not-allowed"
+                                                style={{ padding: '16px 20px', fontSize: '16px' }}
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                 Sub-Domain / Role <span className="text-red-400">*</span>
                                             </label>
                                             <select
                                                 value={formData.subDomain}
                                                 onChange={(e) => handleChange('subDomain', e.target.value)}
-                                                className={`w-full px-4 py-3 bg-white/5 border ${errors.subDomain ? 'border-red-400/50' : 'border-white/10'
+                                                className={`w-full bg-white/5 border ${errors.subDomain ? 'border-red-400/50' : 'border-white/10'
                                                     } rounded-xl text-white focus:outline-none focus:border-cyan-400/50 transition-colors appearance-none cursor-pointer max-h-48 overflow-y-auto`}
-                                                style={{ minHeight: '48px' }}
+                                                style={{ padding: '16px 20px', fontSize: '16px', minHeight: '56px' }}
                                             >
                                                 <option value="" className="bg-gray-900">Select a role</option>
                                                 {subDomains.map((role) => (
@@ -503,16 +506,17 @@ export default function EnrollmentModal({
                                         Billing Address
                                     </h3>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                        <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                             Billing Address <span className="text-red-400">*</span>
                                         </label>
                                         <textarea
                                             value={formData.billingAddress}
                                             onChange={(e) => handleChange('billingAddress', e.target.value)}
                                             rows={3}
-                                            className={`w-full px-4 py-3 bg-white/5 border ${errors.billingAddress ? 'border-red-400/50' : 'border-white/10'
+                                            className={`w-full bg-white/5 border ${errors.billingAddress ? 'border-red-400/50' : 'border-white/10'
                                                 } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors resize-none`}
                                             placeholder="Enter your complete billing address"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
                                         />
                                         {errors.billingAddress && (
                                             <p className="text-red-400 text-xs mt-1">{errors.billingAddress}</p>
@@ -552,9 +556,9 @@ export default function EnrollmentModal({
                                                     exit={{ opacity: 0, height: 0 }}
                                                     className="mt-4 space-y-3 overflow-hidden"
                                                 >
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                                         <div className="md:col-span-2">
-                                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                                 Card Number <span className="text-red-400">*</span>
                                                             </label>
                                                             <input
@@ -562,48 +566,51 @@ export default function EnrollmentModal({
                                                                 value={formData.cardNumber}
                                                                 onChange={(e) => handleChange('cardNumber', e.target.value)}
                                                                 maxLength={19}
-                                                                className={`w-full px-4 py-3 bg-white/5 border ${errors.cardNumber ? 'border-red-400/50' : 'border-white/10'
+                                                                className={`w-full bg-white/5 border ${errors.cardNumber ? 'border-red-400/50' : 'border-white/10'
                                                                     } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                                                 placeholder="1234 5678 9012 3456"
+                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
                                                             />
                                                             {errors.cardNumber && (
                                                                 <p className="text-red-400 text-xs mt-1">{errors.cardNumber}</p>
                                                             )}
                                                         </div>
                                                         <div className="md:col-span-2">
-                                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                                 Cardholder Name <span className="text-red-400">*</span>
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 value={formData.cardholderName}
                                                                 onChange={(e) => handleChange('cardholderName', e.target.value)}
-                                                                className={`w-full px-4 py-3 bg-white/5 border ${errors.cardholderName ? 'border-red-400/50' : 'border-white/10'
+                                                                className={`w-full bg-white/5 border ${errors.cardholderName ? 'border-red-400/50' : 'border-white/10'
                                                                     } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                                                 placeholder="JOHN DOE"
+                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
                                                             />
                                                             {errors.cardholderName && (
                                                                 <p className="text-red-400 text-xs mt-1">{errors.cardholderName}</p>
                                                             )}
                                                         </div>
                                                         <div>
-                                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                                 Expiry Date <span className="text-red-400">*</span>
                                                             </label>
                                                             <input
                                                                 type="text"
                                                                 value={formData.expiryDate}
                                                                 onChange={(e) => handleChange('expiryDate', e.target.value)}
-                                                                className={`w-full px-4 py-3 bg-white/5 border ${errors.expiryDate ? 'border-red-400/50' : 'border-white/10'
+                                                                className={`w-full bg-white/5 border ${errors.expiryDate ? 'border-red-400/50' : 'border-white/10'
                                                                     } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                                                 placeholder="MM/YY"
+                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
                                                             />
                                                             {errors.expiryDate && (
                                                                 <p className="text-red-400 text-xs mt-1">{errors.expiryDate}</p>
                                                             )}
                                                         </div>
                                                         <div>
-                                                            <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                                 CVV <span className="text-red-400">*</span>
                                                             </label>
                                                             <input
@@ -611,9 +618,10 @@ export default function EnrollmentModal({
                                                                 value={formData.cvv}
                                                                 onChange={(e) => handleChange('cvv', e.target.value)}
                                                                 maxLength={4}
-                                                                className={`w-full px-4 py-3 bg-white/5 border ${errors.cvv ? 'border-red-400/50' : 'border-white/10'
+                                                                className={`w-full bg-white/5 border ${errors.cvv ? 'border-red-400/50' : 'border-white/10'
                                                                     } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                                                 placeholder="123"
+                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
                                                             />
                                                             {errors.cvv && (
                                                                 <p className="text-red-400 text-xs mt-1">{errors.cvv}</p>
@@ -649,16 +657,17 @@ export default function EnrollmentModal({
                                                     exit={{ opacity: 0, height: 0 }}
                                                     className="mt-4 overflow-hidden"
                                                 >
-                                                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                                    <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                                         UPI ID <span className="text-red-400">*</span>
                                                     </label>
                                                     <input
                                                         type="text"
                                                         value={formData.upiId}
                                                         onChange={(e) => handleChange('upiId', e.target.value)}
-                                                        className={`w-full px-4 py-3 bg-white/5 border ${errors.upiId ? 'border-red-400/50' : 'border-white/10'
+                                                        className={`w-full bg-white/5 border ${errors.upiId ? 'border-red-400/50' : 'border-white/10'
                                                             } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                                         placeholder="yourname@upi"
+                                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                                     />
                                                     {errors.upiId && (
                                                         <p className="text-red-400 text-xs mt-1">{errors.upiId}</p>
@@ -674,19 +683,21 @@ export default function EnrollmentModal({
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="flex gap-4 pt-4">
+                                <div className="flex gap-5" style={{ paddingTop: '20px' }}>
                                     <button
                                         type="button"
                                         onClick={onClose}
                                         disabled={isProcessing}
-                                        className="flex-1 py-3 px-6 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl font-bold text-lg text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        style={{ padding: '20px' }}
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={isProcessing}
-                                        className="flex-1 py-3 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-lg text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        style={{ padding: '20px' }}
                                     >
                                         {isProcessing ? (
                                             <>

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import {
   Globe,
@@ -181,24 +182,48 @@ const ScrollAnimatedHeading = ({ text, className }: { text: string; className?: 
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    // Animation triggers when element enters viewport and completes when near the top - slower animation
     offset: ['start 0.95', 'start 0.15']
   });
 
-  const characters = text.split("");
-  const centerIndex = Math.floor(characters.length / 2);
+  const words = text.split(" ");
+  let charCounter = 0;
+  const totalChars = text.length;
+  const centerIndex = Math.floor(totalChars / 2);
 
   return (
-    <div ref={ref} className={className} style={{ perspective: "500px" }}>
-      {characters.map((char, index) => (
-        <CharacterV1
-          key={index}
-          char={char}
-          index={index}
-          centerIndex={centerIndex}
-          scrollYProgress={scrollYProgress}
-        />
-      ))}
+    <div ref={ref} className={cn("flex flex-wrap justify-center", className)} style={{ perspective: "500px" }}>
+      {words.map((word, wordIndex) => {
+        const wordChars = word.split("");
+        const element = (
+          <span key={wordIndex} className="inline-block whitespace-nowrap">
+            {wordChars.map((char) => {
+              const element = (
+                <CharacterV1
+                  key={charCounter}
+                  char={char}
+                  index={charCounter}
+                  centerIndex={centerIndex}
+                  scrollYProgress={scrollYProgress}
+                />
+              );
+              charCounter++;
+              return element;
+            })}
+            {/* Add space after the word except for the last word */}
+            {wordIndex < words.length - 1 && (
+              <CharacterV1
+                key={charCounter}
+                char=" "
+                index={charCounter}
+                centerIndex={centerIndex}
+                scrollYProgress={scrollYProgress}
+              />
+            )}
+            {wordIndex < words.length - 1 && charCounter++ && null}
+          </span>
+        );
+        return element;
+      })}
     </div>
   );
 };
@@ -236,7 +261,7 @@ const StatsSection = () => {
               transition={{ delay: index * 0.1, duration: 0.6 }}
               className="h-full"
             >
-              <GlowingCard innerClassName="text-center p-8 md:p-14 lg:p-20 h-full flex flex-col items-center justify-center">
+              <GlowingCard innerClassName="text-center p-8 md:p-12 lg:p-16 h-full flex flex-col items-center justify-center bg-[#0A0A0A] border border-white/5">
                 <div className="stat-value gradient-text mb-4 text-3xl md:text-4xl lg:text-5xl font-extrabold">{stat.value}</div>
                 <div className="text-white font-bold text-sm md:text-base lg:text-lg uppercase tracking-widest mb-2 md:mb-3">{stat.label}</div>
                 <div className="text-gray-500 text-xs md:text-sm lg:text-base leading-relaxed">{stat.desc}</div>
@@ -267,10 +292,7 @@ const HenuOSIntroductionSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6 font-mono text-cyan-400 text-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              SYSTEM OVERVIEW
-            </div>
+
 
             <h2 className="text-5xl md:text-7xl font-black text-white mb-8 leading-tight">
               Powering the <br />
@@ -323,7 +345,7 @@ const HenuOSIntroductionSection = () => {
             className="relative"
           >
             <div className="absolute inset-0 bg-cyan-500/20 blur-[100px] rounded-full pointer-events-none" />
-            <GlowingCard className="relative z-10" innerClassName="p-0 overflow-hidden border-white/10 bg-black/40 backdrop-blur-xl">
+            <GlowingCard className="relative z-10" innerClassName="p-0 overflow-hidden border-white/10 bg-[#0A0A0A] backdrop-blur-xl">
               <div className="aspect-video relative group">
                 <iframe
                   src="https://www.youtube.com/embed/CTGvHiQyfwg?start=18&autoplay=0&mute=0&rel=0"
@@ -692,7 +714,7 @@ const ServiceMatrixSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             className="h-64 sm:h-80 lg:h-96 order-1 lg:order-2"
           >
-            <GlowingCard className="h-full" innerClassName="h-full flex items-center justify-center overflow-hidden p-4 md:p-12 lg:p-20">
+            <GlowingCard className="h-full" innerClassName="h-full flex items-center justify-center overflow-hidden p-8 md:p-16 bg-[#0A0A0A] border border-white/5">
               <ServiceVisual service={activeService} />
             </GlowingCard>
           </motion.div>
@@ -729,7 +751,6 @@ const ServiceMatrixSection = () => {
 // ============================================
 const WhyChooseUsSection = () => {
   const whyChooseUs = [
-    "10+ years of industry experience",
     "100% transparency in development process",
     "Dedicated project manager for each project",
     "24/7 support and maintenance",
@@ -740,7 +761,7 @@ const WhyChooseUsSection = () => {
   return (
     <section className="section bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       <div className="container">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -776,26 +797,53 @@ const WhyChooseUsSection = () => {
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative space-y-6"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full"
           >
-            <GlowingCard innerClassName="p-14 md:p-20 flex flex-col items-center text-center h-full">
-              <div className="text-4xl font-bold mb-4">
+            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden relative" style={{ padding: '80px 40px' }}>
+              {/* Background Decorative Element */}
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-green-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+              <div className="w-16 h-16 rounded-2xl bg-green-500/10 flex items-center justify-center mb-8 border border-green-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-green-500/5">
+                <Zap className="w-8 h-8 text-green-400" />
+              </div>
+
+              <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tighter">
                 <span className="text-green-400">200</span>
                 <span className="text-amber-400">+</span>
               </div>
-              <div className="text-xl text-white font-bold mb-3 tracking-tight">Projects Delivered</div>
-              <div className="text-gray-400 text-base leading-relaxed font-medium">Across web, mobile, AI, and enterprise solutions</div>
+
+              <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-4">Projects Delivered</h3>
+
+              <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-[180px]">
+                Web, Mobile, AI & Enterprise Solutions
+              </p>
+
+              {/* Bottom Accent Bar */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </GlowingCard>
-            <div className="ml-8 md:ml-12">
-              <GlowingCard innerClassName="p-14 md:p-20 flex flex-col items-center text-center h-full">
-                <div className="text-4xl font-bold mb-4">
-                  <span className="text-green-400">98</span>
-                  <span className="text-amber-400">%</span>
-                </div>
-                <div className="text-xl text-white font-bold mb-3 tracking-tight">Client Satisfaction</div>
-                <div className="text-gray-400 text-base leading-relaxed font-medium">Based on post-project surveys</div>
-              </GlowingCard>
-            </div>
+
+            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden relative" style={{ padding: '80px 40px' }}>
+              {/* Background Decorative Element */}
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+              <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 border border-amber-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-amber-500/5">
+                <ShieldCheck className="w-8 h-8 text-amber-400" />
+              </div>
+
+              <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tighter">
+                <span className="text-green-400">98</span>
+                <span className="text-amber-400">%</span>
+              </div>
+
+              <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-4">Client Satisfaction</h3>
+
+              <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-[180px]">
+                500+ Post-Project Performance Reviews
+              </p>
+
+              {/* Bottom Accent Bar */}
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </GlowingCard>
           </motion.div>
         </div>
       </div>
@@ -880,9 +928,7 @@ const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) 
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col items-center text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
-            <span className="text-sm text-gray-300">Client Success Stories</span>
-          </div>
+
 
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             <ScrollAnimatedHeading

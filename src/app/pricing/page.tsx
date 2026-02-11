@@ -98,27 +98,27 @@ export default function PricingPage() {
 
     return (
         <>
-            <div className="min-h-screen bg-[#050505]" style={{ paddingTop: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+            <div className="min-h-screen bg-[#050505] flex flex-col items-center w-full" style={{ paddingTop: '160px' }}>
                 {/* Hero Section */}
                 <section className="relative overflow-hidden" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* Background Effects */}
                     <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-[120px]" />
                     <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-amber-500/10 rounded-full blur-[120px]" />
 
-                    <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '120px 24px', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '120px' }}>
+                    <div className="w-full max-w-7xl mx-auto relative flex flex-col items-center" style={{ paddingTop: '40px', paddingBottom: '60px', paddingLeft: '40px', paddingRight: '40px' }}>
                         <motion.div
                             initial="hidden"
                             animate="visible"
                             variants={fadeInUp}
-                            className="text-center mb-16"
-                            style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
+                            className="text-center"
+                            style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '20px' }}
                         >
 
-                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{ textAlign: 'center', width: '100%' }}>
+                            <h1 className="text-4xl md:text-6xl font-bold text-white" style={{ textAlign: 'center', width: '100%', marginBottom: '24px' }}>
                                 Choose the Perfect Plan
                                 <span className="block gradient-text">for Your Business</span>
                             </h1>
-                            <p className="text-xl text-gray-400" style={{ textAlign: 'center', maxWidth: '672px', width: '100%' }}>
+                            <p className="text-lg md:text-xl text-gray-400" style={{ textAlign: 'center', maxWidth: '672px', width: '100%' }}>
                                 Flexible pricing options designed to scale with your business. No hidden fees, cancel anytime.
                             </p>
                         </motion.div>
@@ -128,9 +128,10 @@ export default function PricingPage() {
                             initial="hidden"
                             animate="visible"
                             variants={fadeInUp}
-                            className="flex items-center justify-center gap-4 mb-16"
+                            className="flex items-center justify-center gap-6"
+                            style={{ padding: '20px 40px', borderRadius: '9999px', backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', marginBottom: '48px', marginTop: '50px' }}
                         >
-                            <span className={`text-sm font-medium ${billingCycle === 'monthly' ? 'text-white' : 'text-gray-500'}`}>
+                            <span className={`text-base font-medium ${billingCycle === 'monthly' ? 'text-white' : 'text-gray-500'}`}>
                                 Monthly
                             </span>
                             <button
@@ -142,7 +143,7 @@ export default function PricingPage() {
                                         }`}
                                 />
                             </button>
-                            <span className={`text-sm font-medium ${billingCycle === 'yearly' ? 'text-white' : 'text-gray-500'}`}>
+                            <span className={`text-base font-medium ${billingCycle === 'yearly' ? 'text-white' : 'text-gray-500'}`}>
                                 Yearly <span className="text-green-400">(Save 20%)</span>
                             </span>
                         </motion.div>
@@ -154,21 +155,23 @@ export default function PricingPage() {
                                 variants={staggerContainer}
                                 initial="hidden"
                                 animate="visible"
-                                style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', width: '100%' }}
+                                className="grid grid-cols-1 md:grid-cols-3 w-full"
+                                style={{ gap: '32px' }}
                             >
                                 {pricingPlans.map((plan, index) => (
                                     <motion.div
                                         key={plan.name}
                                         variants={fadeInUp}
-                                        className={`relative overflow-hidden rounded-3xl p-10 md:p-14 transition-all duration-300 text-center ${plan.popular
+                                        className={`relative overflow-hidden rounded-3xl transition-all duration-300 text-center ${plan.popular
                                             ? 'bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-2 border-amber-500/30 shadow-2xl shadow-amber-500/10'
                                             : 'bg-white/[0.02] border border-white/10'
                                             }`}
+                                        style={{ padding: '40px' }}
                                     >
 
 
-                                        <h3 className="text-2xl font-bold text-white mb-2" style={{ textAlign: 'center' }}>{plan.name}</h3>
-                                        <p className="text-gray-400 text-sm mb-6" style={{ textAlign: 'center' }}>{plan.description}</p>
+                                        <h3 className="text-2xl font-bold text-white" style={{ textAlign: 'center', marginBottom: '8px' }}>{plan.name}</h3>
+                                        <p className="text-gray-400 text-sm" style={{ textAlign: 'center', marginBottom: '28px' }}>{plan.description}</p>
 
                                         <div
                                             className="mb-8 cursor-pointer hover:scale-105 transition-transform duration-300"
@@ -185,7 +188,7 @@ export default function PricingPage() {
                                         </div>
 
                                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                            <ul className="space-y-4 mb-8" style={{ textAlign: 'left' }}>
+                                            <ul style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
                                                 {plan.features.map((feature) => (
                                                     <li key={feature} className="flex items-start gap-3 text-gray-300">
                                                         <CheckCircle2 size={20} className={`flex-shrink-0 mt-0.5 ${plan.popular ? 'text-amber-400' : 'text-cyan-400'
@@ -198,10 +201,11 @@ export default function PricingPage() {
 
                                         <button
                                             onClick={() => setShowContactModal(true)}
-                                            className={`w-full py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] ${plan.popular
+                                            className={`w-full rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] ${plan.popular
                                                 ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/20'
                                                 : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                                                 }`}
+                                            style={{ padding: '16px 24px', fontSize: '16px' }}
                                         >
                                             Get Started
                                             <ArrowRight size={18} />
@@ -214,17 +218,17 @@ export default function PricingPage() {
                 </section>
 
                 {/* Benefits Section */}
-                <section style={{ paddingTop: '120px', paddingBottom: '120px', position: 'relative', width: '100%', marginTop: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+                <section className="relative w-full flex flex-col items-center" style={{ marginTop: '100px', paddingTop: '80px', paddingBottom: '80px' }}>
+                    <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', paddingLeft: '40px', paddingRight: '40px' }}>
                         <motion.div
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={fadeInUp}
-                            className="text-center mb-16"
-                            style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
+                            className="text-center"
+                            style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '60px' }}
                         >
-                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{ textAlign: 'center', width: '100%' }}>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white" style={{ textAlign: 'center', width: '100%', marginBottom: '16px' }}>
                                 Everything You Need to <span className="gradient-text">Succeed</span>
                             </h2>
                             <p className="text-gray-400" style={{ textAlign: 'center', maxWidth: '672px', width: '100%' }}>
@@ -237,19 +241,21 @@ export default function PricingPage() {
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true }}
-                            style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px', width: '100%' }}
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full"
+                            style={{ gap: '24px' }}
                         >
                             {benefits.map((benefit) => (
                                 <motion.div
                                     key={benefit.title}
                                     variants={fadeInUp}
-                                    className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-all duration-300 group"
+                                    className="rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-all duration-300 group"
+                                    style={{ padding: '32px' }}
                                 >
-                                    <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <div className="rounded-xl bg-cyan-500/10 flex items-center justify-center group-hover:scale-110 transition-transform" style={{ width: '56px', height: '56px', marginBottom: '20px' }}>
                                         <benefit.icon size={24} className="text-cyan-400" />
                                     </div>
-                                    <h3 className="text-lg font-semibold text-white mb-2">{benefit.title}</h3>
-                                    <p className="text-sm text-gray-400">{benefit.description}</p>
+                                    <h3 className="text-lg font-semibold text-white" style={{ marginBottom: '10px' }}>{benefit.title}</h3>
+                                    <p className="text-sm text-gray-400" style={{ lineHeight: '1.6' }}>{benefit.description}</p>
                                 </motion.div>
                             ))}
                         </motion.div>
@@ -257,72 +263,35 @@ export default function PricingPage() {
                 </section>
 
                 {/* CTA Section */}
-                <section style={{ paddingTop: '120px', paddingBottom: '120px', position: 'relative', width: '100%', marginTop: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden' }}>
-                    {/* Background Glow Effect */}
-                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '600px', height: '300px', background: 'radial-gradient(ellipse at center, rgba(0, 180, 216, 0.15) 0%, transparent 70%)', pointerEvents: 'none' }} />
-
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={fadeInUp}
-                        style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', zIndex: 1 }}
-                    >
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'white', marginBottom: '16px', textAlign: 'center' }}>
-                            Ready to <span className="gradient-text">Get Started</span>&quest;
-                        </h2>
-                        <p style={{ color: '#9ca3af', marginBottom: '40px', textAlign: 'center', maxWidth: '500px', fontSize: '1.1rem' }}>
-                            Contact our sales team for custom enterprise pricing tailored to your specific requirements
-                        </p>
-                        <div style={{ display: 'flex', flexDirection: 'row', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                            <button
-                                onClick={() => setShowContactModal(true)}
-                                style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: '8px',
-                                    padding: '16px 32px',
-                                    backgroundColor: 'white',
-                                    color: 'black',
-                                    fontWeight: '600',
-                                    borderRadius: '9999px',
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                    fontSize: '1rem',
-                                    transition: 'all 0.3s ease'
-                                }}
-                                className="hover:scale-105"
-                            >
-                                Start Your Project
-                                <ArrowRight size={18} />
+                <section className="relative overflow-hidden" style={{ background: '#050505', paddingTop: '120px', paddingBottom: '120px', marginTop: '100px', width: '100%' }}>
+                    <div
+                        className="absolute inset-0"
+                        style={{
+                            background: 'radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 60%)'
+                        }}
+                    />
+                    <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '768px', margin: '0 auto', textAlign: 'center', padding: '0 24px' }}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                        >
+                            <h2 className="text-4xl md:text-5xl font-bold text-white" style={{ marginBottom: '24px', textAlign: 'center' }}>
+                                Not Sure What You Need?
+                            </h2>
+                            <p className="text-xl text-gray-400" style={{ marginBottom: '40px', textAlign: 'center', maxWidth: '600px' }}>
+                                Let&apos;s have a conversation. We&apos;ll help you identify the right plan for your business goals.
+                            </p>
+                            <button onClick={() => setShowContactModal(true)} className="btn-primary text-lg px-8 py-4">
+                                Schedule a Free Consultation
+                                <ArrowRight size={20} />
                             </button>
-                            <Link
-                                href="/portfolio"
-                                style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: '8px',
-                                    padding: '16px 32px',
-                                    backgroundColor: 'transparent',
-                                    color: 'white',
-                                    fontWeight: '600',
-                                    borderRadius: '9999px',
-                                    border: '1px solid rgba(255,255,255,0.2)',
-                                    fontSize: '1rem',
-                                    transition: 'all 0.3s ease'
-                                }}
-                                className="hover:bg-white/10"
-                            >
-                                View Our Work
-                            </Link>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 </section>
 
                 {/* Bottom Spacing */}
-                <div style={{ height: '100px' }} />
+                <div style={{ height: '60px' }} />
             </div>
 
             {/* Contact Modal */}
@@ -332,8 +301,8 @@ export default function PricingPage() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 flex items-center justify-center p-4"
-                        style={{ zIndex: 9999 }}
+                        className="fixed inset-0 flex items-center justify-center"
+                        style={{ zIndex: 9999, padding: '16px' }}
                         onClick={() => setShowContactModal(false)}
                     >
                         <div className="absolute inset-0" style={{ backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)' }} />
@@ -343,9 +312,10 @@ export default function PricingPage() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="relative w-full max-w-md"
+                            className="relative w-full"
+                            style={{ maxWidth: '440px', maxHeight: '90vh', overflowY: 'auto' }}
                         >
-                            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 backdrop-blur-xl shadow-2xl">
+                            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 backdrop-blur-xl shadow-2xl">
                                 {/* Decorative elements */}
                                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl" />
                                 <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl" />
@@ -357,69 +327,72 @@ export default function PricingPage() {
                                     <X size={20} />
                                 </button>
 
-                                <div className="relative" style={{ padding: '48px' }}>
-                                    <div className="text-center mb-8" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                        <div style={{ width: '64px', height: '64px', borderRadius: '16px', background: 'linear-gradient(to bottom right, rgba(0, 212, 255, 0.2), rgba(255, 149, 0, 0.2))', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
-                                            <MessageCircle size={32} className="text-white" />
+                                <div className="relative" style={{ padding: '36px 32px' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '24px' }}>
+                                        <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'linear-gradient(to bottom right, rgba(0, 212, 255, 0.2), rgba(255, 149, 0, 0.2))', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+                                            <MessageCircle size={28} className="text-white" />
                                         </div>
-                                        <h3 className="text-2xl font-bold text-white mb-2">
+                                        <h3 className="text-xl font-bold text-white" style={{ marginBottom: '8px' }}>
                                             Choose Your Preferred Channel
                                         </h3>
-                                        <p className="text-gray-400 text-sm">
+                                        <p className="text-gray-400" style={{ fontSize: '14px' }}>
                                             Our sales team will get back to you shortly
                                         </p>
                                     </div>
 
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                         {/* WhatsApp */}
                                         <a
                                             href="https://wa.me/918094100513?text=Hi, I%27m interested in your pricing plans for my company."
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-4 p-4 rounded-2xl bg-green-500/10 border border-green-500/20 hover:border-green-500/40 hover:bg-green-500/15 transition-all group"
+                                            className="flex items-center rounded-xl bg-green-500/10 border border-green-500/20 hover:border-green-500/40 hover:bg-green-500/15 transition-all group"
+                                            style={{ padding: '14px', gap: '14px' }}
                                         >
-                                            <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
-                                                <FaWhatsapp size={24} className="text-green-400" />
+                                            <div className="rounded-lg bg-green-500/20 flex items-center justify-center" style={{ width: '44px', height: '44px', flexShrink: 0 }}>
+                                                <FaWhatsapp size={22} className="text-green-400" />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-semibold text-white group-hover:text-green-400 transition-colors">WhatsApp</h4>
-                                                <p className="text-sm text-gray-400">Quick chat with our team</p>
+                                                <h4 className="font-semibold text-white group-hover:text-green-400 transition-colors" style={{ fontSize: '15px', marginBottom: '2px' }}>WhatsApp</h4>
+                                                <p className="text-gray-400" style={{ fontSize: '13px' }}>Quick chat with our team</p>
                                             </div>
-                                            <ArrowRight size={20} className="text-gray-400 group-hover:text-green-400 group-hover:translate-x-1 transition-all" />
+                                            <ArrowRight size={18} className="text-gray-400 group-hover:text-green-400 group-hover:translate-x-1 transition-all" />
                                         </a>
 
                                         {/* Phone Call */}
                                         <a
                                             href="tel:+918094100513"
-                                            className="flex items-center gap-4 p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 hover:bg-cyan-500/15 transition-all group"
+                                            className="flex items-center rounded-xl bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 hover:bg-cyan-500/15 transition-all group"
+                                            style={{ padding: '14px', gap: '14px' }}
                                         >
-                                            <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center">
-                                                <Phone size={24} className="text-cyan-400" />
+                                            <div className="rounded-lg bg-cyan-500/20 flex items-center justify-center" style={{ width: '44px', height: '44px', flexShrink: 0 }}>
+                                                <Phone size={22} className="text-cyan-400" />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-semibold text-white group-hover:text-cyan-400 transition-colors">Phone Call</h4>
-                                                <p className="text-sm text-gray-400">Speak directly with sales</p>
+                                                <h4 className="font-semibold text-white group-hover:text-cyan-400 transition-colors" style={{ fontSize: '15px', marginBottom: '2px' }}>Phone Call</h4>
+                                                <p className="text-gray-400" style={{ fontSize: '13px' }}>Speak directly with sales</p>
                                             </div>
-                                            <ArrowRight size={20} className="text-gray-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+                                            <ArrowRight size={18} className="text-gray-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
                                         </a>
 
                                         {/* Email */}
                                         <a
                                             href="mailto:sales@henuos.com?subject=Pricing Inquiry&body=Hi, I%27m interested in learning more about your pricing plans."
-                                            className="flex items-center gap-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 hover:bg-amber-500/15 transition-all group"
+                                            className="flex items-center rounded-xl bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 hover:bg-amber-500/15 transition-all group"
+                                            style={{ padding: '14px', gap: '14px' }}
                                         >
-                                            <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center">
-                                                <Mail size={24} className="text-amber-400" />
+                                            <div className="rounded-lg bg-amber-500/20 flex items-center justify-center" style={{ width: '44px', height: '44px', flexShrink: 0 }}>
+                                                <Mail size={22} className="text-amber-400" />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-semibold text-white group-hover:text-amber-400 transition-colors">Email</h4>
-                                                <p className="text-sm text-gray-400">Detailed proposal via email</p>
+                                                <h4 className="font-semibold text-white group-hover:text-amber-400 transition-colors" style={{ fontSize: '15px', marginBottom: '2px' }}>Email</h4>
+                                                <p className="text-gray-400" style={{ fontSize: '13px' }}>Detailed proposal via email</p>
                                             </div>
-                                            <ArrowRight size={20} className="text-gray-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
+                                            <ArrowRight size={18} className="text-gray-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
                                         </a>
                                     </div>
 
-                                    <p className="mt-6 text-center text-xs text-gray-500">
+                                    <p style={{ marginTop: '20px', textAlign: 'center', fontSize: '12px', color: '#6b7280' }}>
                                         Average response time: Under 2 hours
                                     </p>
                                 </div>

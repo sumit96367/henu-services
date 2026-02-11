@@ -257,77 +257,81 @@ export default function InternshipSourcesPage() {
                         className="backdrop-blur-xl shadow-2xl"
                         style={{
                             marginTop: '-40px',
-                            padding: 'clamp(28px, 3vw, 38px)',
-                            borderRadius: '18px',
+                            padding: '50px 45px',
+                            borderRadius: '24px',
                             background: 'rgba(255, 255, 255, 0.04)',
                             border: '1px solid rgba(255, 255, 255, 0.08)'
                         }}
                     >
                         {/* Section Title */}
-                        <div className="text-center mb-8">
-                            <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                        <div className="text-center" style={{ marginBottom: '35px' }}>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-3">
                                 Let&apos;s Start with <span className="text-cyan-400">Your Details</span>
                             </h2>
-                            <p className="text-gray-400 text-sm">
+                            <p className="text-gray-400 text-base">
                                 Select your specialization to view curated sources and pricing
                             </p>
                         </div>
 
-                        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <form className="space-y-5" onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {/* Email */}
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                    <label className="block text-base font-bold text-gray-300" style={{ marginBottom: '10px' }}>
                                         Email *
                                     </label>
                                     <input
                                         type="email"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
                                         placeholder="your.email@example.com"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
 
                                 {/* Full Name */}
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                    <label className="block text-base font-bold text-gray-300" style={{ marginBottom: '10px' }}>
                                         Full Name *
                                     </label>
                                     <input
                                         type="text"
                                         value={formData.fullName}
                                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
                                         placeholder="John Doe"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {/* Contact */}
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                    <label className="block text-base font-bold text-gray-300" style={{ marginBottom: '10px' }}>
                                         Contact *
                                     </label>
                                     <input
                                         type="tel"
                                         value={formData.contact}
                                         onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors"
                                         placeholder="+91 98765 43210"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                 </div>
 
                                 {/* Sub-Domain Dropdown */}
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-300 mb-2">
+                                    <label className="block text-base font-bold text-gray-300" style={{ marginBottom: '10px' }}>
                                         Sub-Domain / Role *
                                     </label>
                                     <select
                                         value={formData.subDomain}
                                         onChange={(e) => handleSubDomainChange(e.target.value)}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/50 transition-colors appearance-none cursor-pointer"
+                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/50 transition-colors appearance-none cursor-pointer"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     >
                                         <option value="" className="bg-gray-900">Select a specialization</option>
                                         {data.roles.map((role) => (
@@ -341,15 +345,16 @@ export default function InternshipSourcesPage() {
 
                             {/* Query Textarea - Full Width */}
                             <div>
-                                <label className="block text-sm font-bold text-gray-300 mb-2">
+                                <label className="block text-base font-bold text-gray-300" style={{ marginBottom: '10px' }}>
                                     Any Query (Optional)
                                 </label>
                                 <textarea
                                     value={formData.query}
                                     onChange={(e) => setFormData({ ...formData, query: e.target.value })}
                                     rows={4}
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors resize-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors resize-none"
                                     placeholder="Any specific questions or requirements..."
+                                    style={{ padding: '16px 20px', fontSize: '16px' }}
                                 />
                             </div>
                         </form>
@@ -365,7 +370,7 @@ export default function InternshipSourcesPage() {
                                 transition={{ duration: 0.3 }}
                                 className="overflow-hidden"
                             >
-                                <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border border-cyan-400/30 rounded-2xl p-8">
+                                <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-xl border border-cyan-400/30 rounded-2xl" style={{ padding: '40px' }}>
                                     <h3 className="text-2xl font-bold text-white mb-2">
                                         {selectedRole!.label}
                                     </h3>
@@ -390,7 +395,8 @@ export default function InternshipSourcesPage() {
                                     {/* CTA Button */}
                                     <button
                                         disabled
-                                        className="w-full py-4 px-6 bg-white/10 border border-white/20 rounded-xl text-white font-bold opacity-50 cursor-not-allowed"
+                                        className="w-full bg-white/10 border border-white/20 rounded-xl text-white font-bold opacity-50 cursor-not-allowed text-lg"
+                                        style={{ padding: '20px' }}
                                     >
                                         Coming Soon - Backend Integration Pending
                                     </button>

@@ -125,7 +125,7 @@ export default function QueriesModal({ isOpen, onClose }: QueriesModalProps) {
                             style={{
                                 background: 'rgba(0, 0, 0, 0.6)',
                                 boxShadow: '0 0 60px rgba(0, 212, 255, 0.15)',
-                                padding: '38px'
+                                padding: '50px 45px'
                             }}
                         >
                             {/* Success Message Overlay */}
@@ -167,8 +167,8 @@ export default function QueriesModal({ isOpen, onClose }: QueriesModalProps) {
                             </button>
 
                             {/* Header */}
-                            <div className="mb-6 pb-6 border-b border-white/10">
-                                <h2 className="text-3xl font-black text-white mb-2">
+                            <div className="pb-8 border-b border-white/10" style={{ marginBottom: '35px' }}>
+                                <h2 className="text-4xl font-black text-white mb-3">
                                     Queries & Support
                                 </h2>
                                 <p className="text-cyan-400 text-lg font-semibold">
@@ -177,35 +177,37 @@ export default function QueriesModal({ isOpen, onClose }: QueriesModalProps) {
                             </div>
 
                             {/* Form */}
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                        <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                             Full Name <span className="text-red-400">*</span>
                                         </label>
                                         <input
                                             type="text"
                                             value={formData.fullName}
                                             onChange={(e) => handleChange('fullName', e.target.value)}
-                                            className={`w-full px-4 py-3 bg-white/5 border ${errors.fullName ? 'border-red-400/50' : 'border-white/10'
+                                            className={`w-full bg-white/5 border ${errors.fullName ? 'border-red-400/50' : 'border-white/10'
                                                 } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                             placeholder="John Doe"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
                                         />
                                         {errors.fullName && (
                                             <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>
                                         )}
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                        <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                             Email Address <span className="text-red-400">*</span>
                                         </label>
                                         <input
                                             type="email"
                                             value={formData.email}
                                             onChange={(e) => handleChange('email', e.target.value)}
-                                            className={`w-full px-4 py-3 bg-white/5 border ${errors.email ? 'border-red-400/50' : 'border-white/10'
+                                            className={`w-full bg-white/5 border ${errors.email ? 'border-red-400/50' : 'border-white/10'
                                                 } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                             placeholder="john@example.com"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
                                         />
                                         {errors.email && (
                                             <p className="text-red-400 text-xs mt-1">{errors.email}</p>
@@ -214,16 +216,17 @@ export default function QueriesModal({ isOpen, onClose }: QueriesModalProps) {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                    <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                         Subject <span className="text-red-400">*</span>
                                     </label>
                                     <input
                                         type="text"
                                         value={formData.subject}
                                         onChange={(e) => handleChange('subject', e.target.value)}
-                                        className={`w-full px-4 py-3 bg-white/5 border ${errors.subject ? 'border-red-400/50' : 'border-white/10'
+                                        className={`w-full bg-white/5 border ${errors.subject ? 'border-red-400/50' : 'border-white/10'
                                             } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
                                         placeholder="What's your question about?"
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                     {errors.subject && (
                                         <p className="text-red-400 text-xs mt-1">{errors.subject}</p>
@@ -231,16 +234,17 @@ export default function QueriesModal({ isOpen, onClose }: QueriesModalProps) {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                    <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
                                         Your Query <span className="text-red-400">*</span>
                                     </label>
                                     <textarea
                                         value={formData.queries}
                                         onChange={(e) => handleChange('queries', e.target.value)}
-                                        rows={6}
-                                        className={`w-full px-4 py-3 bg-white/5 border ${errors.queries ? 'border-red-400/50' : 'border-white/10'
+                                        rows={5}
+                                        className={`w-full bg-white/5 border ${errors.queries ? 'border-red-400/50' : 'border-white/10'
                                             } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors resize-none`}
                                         placeholder="Please describe your question or concern in detail..."
+                                        style={{ padding: '16px 20px', fontSize: '16px' }}
                                     />
                                     {errors.queries && (
                                         <p className="text-red-400 text-xs mt-1">{errors.queries}</p>
@@ -248,19 +252,21 @@ export default function QueriesModal({ isOpen, onClose }: QueriesModalProps) {
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="flex gap-4 pt-4">
+                                <div className="flex gap-5" style={{ paddingTop: '20px' }}>
                                     <button
                                         type="button"
                                         onClick={onClose}
                                         disabled={isProcessing}
-                                        className="flex-1 py-3 px-6 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl font-bold text-lg text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        style={{ padding: '20px' }}
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={isProcessing}
-                                        className="flex-1 py-3 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-lg text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        style={{ padding: '20px' }}
                                     >
                                         {isProcessing ? (
                                             <>

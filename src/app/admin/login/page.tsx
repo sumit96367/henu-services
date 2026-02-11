@@ -68,41 +68,41 @@ export default function AdminLoginPage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontFamily: 'system-ui, sans-serif'
+            fontFamily: 'var(--font-lora), serif'
         }}>
             <div style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '24px',
-                padding: '48px',
+                borderRadius: '28px',
+                padding: '60px',
                 width: '100%',
-                maxWidth: '420px',
+                maxWidth: '500px',
                 backdropFilter: 'blur(10px)'
             }}>
                 {/* Header */}
-                <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '40px' }}>
                     <div style={{
-                        width: '64px',
-                        height: '64px',
+                        width: '72px',
+                        height: '72px',
                         backgroundColor: '#0ea5e9',
-                        borderRadius: '16px',
+                        borderRadius: '18px',
                         display: 'inline-flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginBottom: '16px',
+                        marginBottom: '20px',
                         boxShadow: '0 0 40px rgba(14, 165, 233, 0.3)'
                     }}>
-                        <span style={{ fontSize: '32px' }}>🔒</span>
+                        <span style={{ fontSize: '36px' }}>🔒</span>
                     </div>
                     <h1 style={{
                         color: '#fff',
-                        fontSize: '28px',
+                        fontSize: '32px',
                         fontWeight: 'bold',
-                        marginBottom: '8px'
+                        marginBottom: '10px'
                     }}>
                         Admin Portal
                     </h1>
-                    <p style={{ color: '#888', fontSize: '14px' }}>
+                    <p style={{ color: '#888', fontSize: '16px' }}>
                         Secure access to dashboard
                     </p>
                 </div>
@@ -124,13 +124,13 @@ export default function AdminLoginPage() {
 
                 {/* Form */}
                 <div>
-                    <div style={{ marginBottom: '20px' }}>
+                    <div style={{ marginBottom: '24px' }}>
                         <label style={{
                             display: 'block',
                             color: '#ccc',
-                            fontSize: '14px',
+                            fontSize: '16px',
                             fontWeight: '600',
-                            marginBottom: '8px'
+                            marginBottom: '12px'
                         }}>
                             Admin ID
                         </label>
@@ -142,12 +142,12 @@ export default function AdminLoginPage() {
                             disabled={isLoading}
                             style={{
                                 width: '100%',
-                                padding: '12px 16px',
+                                padding: '16px 20px',
                                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                                borderRadius: '12px',
+                                borderRadius: '14px',
                                 color: '#fff',
-                                fontSize: '14px',
+                                fontSize: '16px',
                                 outline: 'none',
                                 boxSizing: 'border-box'
                             }}
@@ -156,13 +156,13 @@ export default function AdminLoginPage() {
                         />
                     </div>
 
-                    <div style={{ marginBottom: '24px' }}>
+                    <div style={{ marginBottom: '28px' }}>
                         <label style={{
                             display: 'block',
                             color: '#ccc',
-                            fontSize: '14px',
+                            fontSize: '16px',
                             fontWeight: '600',
-                            marginBottom: '8px'
+                            marginBottom: '12px'
                         }}>
                             Password
                         </label>
@@ -177,12 +177,12 @@ export default function AdminLoginPage() {
                             }}
                             style={{
                                 width: '100%',
-                                padding: '12px 16px',
+                                padding: '16px 20px',
                                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                                 border: '1px solid rgba(255, 255, 255, 0.1)',
-                                borderRadius: '12px',
+                                borderRadius: '14px',
                                 color: '#fff',
-                                fontSize: '14px',
+                                fontSize: '16px',
                                 outline: 'none',
                                 boxSizing: 'border-box'
                             }}
@@ -196,12 +196,12 @@ export default function AdminLoginPage() {
                         disabled={isLoading}
                         style={{
                             width: '100%',
-                            padding: '14px',
+                            padding: '20px',
                             backgroundColor: '#0ea5e9',
                             color: '#fff',
                             border: 'none',
-                            borderRadius: '12px',
-                            fontSize: '16px',
+                            borderRadius: '14px',
+                            fontSize: '18px',
                             fontWeight: 'bold',
                             cursor: isLoading ? 'not-allowed' : 'pointer',
                             opacity: isLoading ? 0.6 : 1,
@@ -227,12 +227,12 @@ export default function AdminLoginPage() {
 
                 {/* Footer */}
                 <div style={{
-                    marginTop: '24px',
-                    paddingTop: '24px',
+                    marginTop: '32px',
+                    paddingTop: '28px',
                     borderTop: '1px solid rgba(255, 255, 255, 0.1)',
                     textAlign: 'center'
                 }}>
-                    <p style={{ color: '#666', fontSize: '12px' }}>
+                    <p style={{ color: '#666', fontSize: '13px' }}>
                         Protected access. Authorized personnel only.
                     </p>
                 </div>

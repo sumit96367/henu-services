@@ -64,16 +64,19 @@ export const Navbar = () => {
                 animate={{ y: 0, opacity: 1 }}
                 className={cn(
                     "fixed z-[100] transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-white/10",
-                    isDashboard ? "md:left-[280px] md:w-[calc(100%-280px)] left-0 w-full" : "inset-x-0 w-full",
+                    isDashboard ? "md:left-[300px] md:w-[calc(100%-300px)] left-0 w-full" : "inset-x-0 w-full",
                     scrolled ? "py-4" : "py-6"
                 )}
             >
-                <div className="w-full px-6 md:px-12 flex items-center justify-between relative h-full">
+                <div className={cn(
+                    "w-full flex items-center justify-between relative h-full",
+                    isDashboard ? "px-6 md:pl-24 md:pr-12" : "px-6 md:px-12"
+                )}>
                     {/* Branding - Left */}
                     <div className="flex-shrink-0 z-10">
                         <Link href="/" className="flex items-center gap-3 group transition-all">
-                            <div className="relative w-10 h-10 flex items-center justify-center overflow-visible">
-                                <div className="relative w-10 h-10 group-hover:scale-110 transition-transform" style={{ transform: 'scale(2.4)' }}>
+                            <div className="relative w-12 h-12 flex items-center justify-center overflow-visible">
+                                <div className="relative w-12 h-12 group-hover:scale-110 transition-transform" style={{ transform: 'scale(1.8)' }}>
                                     <Image
                                         src="/logo.png"
                                         alt="Henu OS Logo"

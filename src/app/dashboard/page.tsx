@@ -33,7 +33,9 @@ import {
     Home,
     Phone,
     Key,
-    AlertTriangle
+    AlertTriangle,
+    Menu as MenuIcon,
+    X as CloseIcon
 } from 'lucide-react';
 import { db, auth } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy, updateDoc, doc, addDoc, deleteDoc, Timestamp } from 'firebase/firestore';
@@ -677,23 +679,28 @@ export default function DashboardPage() {
                 return (
                     <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="space-y-12">
                         {/* Header */}
-                        <div>
-                            <h1 className="text-3xl font-bold text-white mb-2">
+                        <div className="mb-10">
+                            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
                                 Welcome back, {user?.name || 'User'}
                             </h1>
-                            <div className="h-1 w-20 bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" />
+                            <div className="h-1.5 w-24 bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.4)]" />
                         </div>
 
                         {/* Order Status Summary */}
-                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                            <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-white/[0.01]">
-                                <div className="flex items-center gap-2">
-                                    <ClipboardList size={20} className="text-cyan-400" />
-                                    <h2 className="text-lg font-semibold text-white">Recent Orders</h2>
+                        <div
+                            className="bg-white/[0.02] border border-white/5 rounded-[32px] shadow-2xl overflow-hidden"
+                            style={{ padding: '60px' }}
+                        >
+                            <div className="flex items-center justify-between p-6 mb-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 shadow-lg">
+                                        <ClipboardList size={22} className="text-cyan-400" />
+                                    </div>
+                                    <h2 className="text-2xl font-bold text-white tracking-tight">Recent Orders</h2>
                                 </div>
                                 <button
                                     onClick={() => setActiveSection('orders')}
-                                    className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors font-medium flex items-center gap-1"
+                                    className="text-sm text-cyan-400 hover:text-cyan-300 transition-all font-bold uppercase tracking-widest flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/5 border border-cyan-500/10 hover:border-cyan-500/30"
                                 >
                                     View All <ChevronRight size={14} />
                                 </button>
@@ -708,20 +715,20 @@ export default function DashboardPage() {
                                     <table className="w-full">
                                         <thead>
                                             <tr className="text-left text-xs text-gray-500 border-b border-white/5 uppercase tracking-wider">
-                                                <th className="px-6 py-4 font-bold">Order ID</th>
-                                                <th className="px-6 py-4 font-bold">Date</th>
-                                                <th className="px-6 py-4 font-bold">Status</th>
-                                                <th className="px-6 py-4 font-bold text-right">Amount</th>
+                                                <th className="px-12 py-8 font-bold text-gray-500">Order ID</th>
+                                                <th className="px-12 py-8 font-bold text-gray-500">Date</th>
+                                                <th className="px-12 py-8 font-bold text-gray-500">Status</th>
+                                                <th className="px-12 py-8 font-bold text-gray-500 text-right">Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {orders.slice(0, 3).map((order) => (
                                                 <tr key={order.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                                                    <td className="px-6 py-5">
-                                                        <span className="text-cyan-400 font-mono text-sm">{order.id.slice(0, 8)}...</span>
+                                                    <td className="px-12 py-8">
+                                                        <span className="text-cyan-400 font-mono text-base font-bold">{order.id.slice(0, 8)}...</span>
                                                     </td>
-                                                    <td className="px-6 py-5 text-sm text-gray-400">{order.orderDate}</td>
-                                                    <td className="px-6 py-5">
+                                                    <td className="px-12 py-8 text-base text-gray-400">{order.orderDate}</td>
+                                                    <td className="px-12 py-8">
                                                         {(() => {
                                                             const colors: Record<string, string> = {
                                                                 green: "bg-green-500/10 text-green-400 border-green-500/20",
@@ -730,13 +737,13 @@ export default function DashboardPage() {
                                                                 amber: "bg-amber-500/10 text-amber-400 border-amber-500/20"
                                                             };
                                                             return (
-                                                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ${colors[order.statusColor] || colors.amber}`}>
+                                                                <span className={`px-4 py-2 rounded-full text-[12px] font-black uppercase tracking-widest border ${colors[order.statusColor] || colors.amber}`}>
                                                                     {order.status}
                                                                 </span>
                                                             );
                                                         })()}
                                                     </td>
-                                                    <td className="px-6 py-5 text-right font-medium text-white">{order.amount}</td>
+                                                    <td className="px-12 py-8 text-right font-bold text-white text-lg">{order.amount}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -772,25 +779,28 @@ export default function DashboardPage() {
                             </button>
                         </div>
 
-                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden">
+                        <div
+                            className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
+                            style={{ padding: '60px' }}
+                        >
                             {isDataLoading ? (
                                 <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
                             ) : orders.length > 0 ? (
                                 <div className="divide-y divide-white/5">
                                     {orders.map((order) => (
-                                        <div key={order.id} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-white/[0.01]">
+                                        <div key={order.id} className="p-10 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white/[0.01]">
                                             <div className="flex gap-4 items-start">
                                                 <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
                                                     <Package className="text-cyan-400" size={20} />
                                                 </div>
-                                                <div>
-                                                    <h4 className="text-white font-bold mb-1">Order #{order.id.slice(0, 8).toUpperCase()}</h4>
-                                                    <p className="text-xs text-gray-500">{order.orderDate} • {order.plan || 'Standard'} Plan</p>
+                                                <div className="flex flex-col">
+                                                    <h4 className="text-white font-bold leading-none">Order #{order.id.slice(0, 8).toUpperCase()}</h4>
+                                                    <p className="text-[11px] text-gray-500 font-medium tracking-wide leading-none transition-all" style={{ marginTop: '-4px' }}>{order.orderDate} • {order.plan || 'Standard'} Plan</p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-8 justify-between md:justify-end">
-                                                <div className="text-right">
-                                                    <p className="text-white font-bold mb-1">{order.amount}</p>
+                                                <div className="text-right flex flex-col items-end">
+                                                    <p className="text-white font-bold leading-none">{order.amount}</p>
                                                     {(() => {
                                                         const colors: Record<string, string> = {
                                                             green: "text-green-400",
@@ -799,7 +809,7 @@ export default function DashboardPage() {
                                                             amber: "text-amber-400"
                                                         };
                                                         return (
-                                                            <span className={`text-[10px] font-bold uppercase tracking-widest ${colors[order.statusColor] || colors.amber}`}>
+                                                            <span className={`text-[10px] font-bold uppercase tracking-widest leading-none ${colors[order.statusColor] || colors.amber}`} style={{ marginTop: '-4px' }}>
                                                                 {order.status}
                                                             </span>
                                                         );
@@ -830,7 +840,7 @@ export default function DashboardPage() {
 
                         <div className="flex flex-col md:flex-row" style={{ gap: '0.4cm' }}>
                             {/* Profile Picture Upload Box */}
-                            <div className="border border-cyan-500/30 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col items-center justify-center" style={{ padding: '2.5rem', width: '520px', height: '520px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 40px rgba(6, 182, 212, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4)' }}>
+                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col items-center justify-center" style={{ flex: 1, minHeight: '600px', padding: '120px 80px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
                                 {/* Background glowing orbs */}
                                 <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
                                 <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
@@ -891,16 +901,16 @@ export default function DashboardPage() {
                                             <button
                                                 type="button"
                                                 onClick={() => fileInputRef.current?.click()}
-                                                className="px-8 py-3 border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                                style={{ background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                                className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                                style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
                                             >
                                                 REPLACE
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setProfilePicture(null)}
-                                                className="px-8 py-3 border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-red-400/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
-                                                style={{ background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                                className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-red-400/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
+                                                style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
                                             >
                                                 REMOVE
                                             </button>
@@ -910,7 +920,7 @@ export default function DashboardPage() {
                             </div>
 
                             {/* Profile Form */}
-                            <div className="border border-cyan-500/30 rounded-3xl shadow-2xl relative overflow-hidden" style={{ padding: '2.5rem', width: '520px', height: '520px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 40px rgba(6, 182, 212, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4)' }}>
+                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden" style={{ flex: 1.3, minHeight: '600px', padding: '120px 90px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
                                 {/* Background glowing orbs */}
                                 <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
                                 <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
@@ -921,7 +931,7 @@ export default function DashboardPage() {
                                     <div className="absolute top-3/4 right-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
                                 </div>
 
-                                <form onSubmit={handleUpdateProfile} className="relative flex flex-col justify-between h-full">
+                                <form onSubmit={handleUpdateProfile} className="relative flex flex-col h-full">
                                     <div className="flex flex-col gap-8">
                                         <div>
                                             <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Full Name</label>
@@ -929,7 +939,8 @@ export default function DashboardPage() {
                                                 type="text"
                                                 value={editName}
                                                 onChange={(e) => setEditName(e.target.value)}
-                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                style={{ padding: '24px 32px' }}
                                                 placeholder="Your Name"
                                                 disabled={isUpdating}
                                             />
@@ -940,7 +951,8 @@ export default function DashboardPage() {
                                                 type="text"
                                                 value={editCompany}
                                                 onChange={(e) => setEditCompany(e.target.value)}
-                                                className="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                style={{ padding: '24px 32px' }}
                                                 placeholder="Company (Optional)"
                                                 disabled={isUpdating}
                                             />
@@ -951,7 +963,8 @@ export default function DashboardPage() {
                                                 type="email"
                                                 value={user?.email || ''}
                                                 disabled
-                                                className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-5 py-4 text-gray-500 text-lg cursor-not-allowed italic"
+                                                className="w-full bg-white/[0.02] border border-white/5 rounded-xl text-gray-500 text-lg cursor-not-allowed italic"
+                                                style={{ padding: '24px 32px' }}
                                             />
                                             <p className="text-xs text-gray-600 mt-3 px-1">Email cannot be changed for security reasons.</p>
                                         </div>
@@ -987,13 +1000,16 @@ export default function DashboardPage() {
                             </button>
                         </div>
 
-                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden">
+                        <div
+                            className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
+                            style={{ padding: '60px' }}
+                        >
                             {isDataLoading ? (
                                 <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
                             ) : quotes.length > 0 ? (
                                 <div className="divide-y divide-white/5">
                                     {quotes.map((quote) => (
-                                        <div key={quote.id} className="p-6 hover:bg-white/[0.01]">
+                                        <div key={quote.id} className="p-10 hover:bg-white/[0.01] transition-colors">
                                             <div className="flex justify-between items-start mb-2">
                                                 <h4 className="text-white font-bold">{quote.serviceType}</h4>
                                                 <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${quote.status === 'approved' ? 'bg-green-500/10 text-green-400' :
@@ -1046,7 +1062,7 @@ export default function DashboardPage() {
                         </div>
 
                         {(isAddingAddress || editingAddress) && (
-                            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-8 mb-6">
+                            <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-12 mb-8">
                                 <h3 className="text-xl font-bold text-white mb-6">{editingAddress ? 'Edit Address' : 'Add New Address'}</h3>
                                 <form onSubmit={editingAddress ? handleUpdateAddress : handleAddAddress} className="grid grid-cols-2 gap-4">
                                     <div>
@@ -1072,7 +1088,8 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, phone: e.target.value })
                                                 : setNewAddress({ ...newAddress, phone: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
                                         />
                                     </div>
                                     <div className="col-span-2">
@@ -1085,7 +1102,8 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, addressLine1: e.target.value })
                                                 : setNewAddress({ ...newAddress, addressLine1: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
                                         />
                                     </div>
                                     <div className="col-span-2">
@@ -1097,7 +1115,8 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, addressLine2: e.target.value })
                                                 : setNewAddress({ ...newAddress, addressLine2: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
                                         />
                                     </div>
                                     <div>
@@ -1110,7 +1129,8 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, city: e.target.value })
                                                 : setNewAddress({ ...newAddress, city: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
                                         />
                                     </div>
                                     <div>
@@ -1123,7 +1143,8 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, state: e.target.value })
                                                 : setNewAddress({ ...newAddress, state: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all placeholder:text-gray-700"
+                                            style={{ padding: '20px 32px' }}
                                         />
                                     </div>
                                     <div>
@@ -1136,7 +1157,8 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, pincode: e.target.value })
                                                 : setNewAddress({ ...newAddress, pincode: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
                                         />
                                     </div>
                                     <div className="flex items-center">
@@ -1177,7 +1199,7 @@ export default function DashboardPage() {
 
                         <div className="grid gap-4">
                             {addresses.length > 0 ? addresses.map((address) => (
-                                <div key={address.id} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.01]">
+                                <div key={address.id} className="bg-white/[0.02] border border-white/5 rounded-3xl p-10 hover:bg-white/[0.01] transition-all">
                                     <div className="flex justify-between items-start">
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3 mb-2">
@@ -1236,37 +1258,47 @@ export default function DashboardPage() {
                             <p className="text-gray-500">Update your account password</p>
                         </div>
 
-                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl" style={{ padding: '0.5cm' }}>
-                            <form onSubmit={handleChangePassword} style={{ display: 'flex', flexDirection: 'column', gap: '0.2cm' }}>
+                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl p-16 shadow-2xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)' }}>
+                            {/* Background glowing orbs */}
+                            <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl opacity-50" />
+                            <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl opacity-50" />
+
+                            <form onSubmit={handleChangePassword} style={{ display: 'flex', flexDirection: 'column', gap: '0.6cm', position: 'relative' }}>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-400 mb-2">Current Password</label>
+                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Current Password</label>
                                     <input
                                         type="password"
                                         required
                                         value={passwordForm.currentPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        style={{ padding: '24px 32px' }}
+                                        placeholder="••••••••"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-400 mb-2">New Password</label>
+                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">New Password</label>
                                     <input
                                         type="password"
                                         required
                                         value={passwordForm.newPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        style={{ padding: '24px 32px' }}
+                                        placeholder="••••••••"
                                     />
-                                    <p className="text-xs text-gray-600 mt-1">Must be at least 8 characters</p>
+                                    <p className="text-[10px] text-gray-600 uppercase tracking-widest mt-3 px-1">Min. 8 characters required</p>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-400 mb-2">Confirm New Password</label>
+                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Confirm New Password</label>
                                     <input
                                         type="password"
                                         required
                                         value={passwordForm.confirmPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white"
+                                        className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        style={{ padding: '24px 32px' }}
+                                        placeholder="••••••••"
                                     />
                                 </div>
 
@@ -1285,10 +1317,11 @@ export default function DashboardPage() {
                                 <button
                                     type="submit"
                                     disabled={isUpdating || passwordSuccess}
-                                    className="w-full py-3 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                    className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
+                                    style={{ padding: '20px 48px' }}
                                 >
-                                    {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <Key size={20} />}
-                                    {isUpdating ? 'Updating Password...' : 'Change Password'}
+                                    {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
+                                    {isUpdating ? 'Updating Password...' : 'Save Password'}
                                 </button>
                             </form>
                         </div>
@@ -1374,26 +1407,31 @@ export default function DashboardPage() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#050505', display: 'flex' }}>
+        <div className="min-h-screen bg-[#050505] flex flex-col md:flex-row dashboard-layout relative">
             {/* Mobile Menu Toggle */}
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
-                    position: 'fixed',
-                    top: '20px',
-                    left: '20px',
-                    zIndex: 1000,
+                    position: isMobileMenuOpen ? 'fixed' : 'absolute',
+                    top: isMobileMenuOpen ? '22px' : '85px',
+                    left: isMobileMenuOpen ? '216px' : '16px',
+                    zIndex: isMobileMenuOpen ? 1001 : 50,
                     display: 'none',
-                    padding: '12px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    padding: '8px',
+                    backgroundColor: isMobileMenuOpen ? 'transparent' : 'rgba(255, 255, 255, 0.08)',
+                    backdropFilter: isMobileMenuOpen ? 'none' : 'blur(12px)',
+                    border: isMobileMenuOpen ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '12px',
                     color: '#fff',
                     cursor: 'pointer',
+                    boxShadow: isMobileMenuOpen ? 'none' : '0 8px 32px rgba(0, 0, 0, 0.4)',
+                    transition: 'all 0.3s ease',
                 }}
-                className="mobile-menu-toggle"
+                className="mobile-menu-toggle hover:bg-white/10 active:scale-95"
             >
-                <span style={{ fontSize: '24px' }}>{isMobileMenuOpen ? '✕' : '☰'}</span>
+                <div className="flex items-center justify-center">
+                    {isMobileMenuOpen ? <CloseIcon size={28} /> : <MenuIcon size={22} />}
+                </div>
             </button>
 
             {/* Sidebar */}
@@ -1404,21 +1442,21 @@ export default function DashboardPage() {
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    width: '280px',
-                    backgroundColor: 'rgba(10, 10, 10, 1)',
-                    borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+                    width: '300px',
+                    backgroundColor: 'rgba(5, 5, 5, 1)',
+                    borderRight: '1px solid rgba(255, 255, 255, 0.05)',
                     display: 'flex',
                     flexDirection: 'column',
                     zIndex: 999,
                     transform: isMobileMenuOpen ? 'translateX(0)' : undefined,
                     overflowX: 'hidden',
                 }}
-                className="dashboard-sidebar"
+                className="dashboard-sidebar shadow-2xl"
             >
                 {/* User Profile Header */}
                 <div
                     style={{
-                        padding: '32px 24px',
+                        padding: '40px 28px',
                         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
                     }}
                 >
@@ -1486,6 +1524,7 @@ export default function DashboardPage() {
                         padding: '24px 0',
                         overflowY: 'auto',
                     }}
+                    className="custom-scrollbar"
                 >
                     {sidebarItems.map((item) => {
                         const active = activeSection === item.id;
@@ -1497,29 +1536,30 @@ export default function DashboardPage() {
                                     setIsMobileMenuOpen(false);
                                 }}
                                 style={{
-                                    width: 'calc(100% - 24px)',
+                                    width: 'calc(100% - 32px)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '12px',
-                                    padding: '14px 20px',
-                                    margin: '4px 12px',
-                                    borderRadius: '12px',
+                                    gap: '18px',
+                                    padding: '22px 32px',
+                                    margin: '8px 16px',
+                                    borderRadius: '20px',
                                     textDecoration: 'none',
                                     color: active ? '#fff' : '#888',
                                     backgroundColor: active
-                                        ? 'rgba(6, 182, 212, 0.1)'
+                                        ? 'rgba(6, 182, 212, 0.12)'
                                         : 'transparent',
-                                    borderLeft: active ? '3px solid #06b6d4' : '3px solid transparent',
+                                    borderLeft: active ? '4px solid #06b6d4' : '4px solid transparent',
                                     borderTop: 'none',
                                     borderRight: 'none',
                                     borderBottom: 'none',
-                                    transition: 'all 0.2s ease',
-                                    fontWeight: active ? '600' : '500',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    fontWeight: active ? '700' : '500',
                                     fontSize: '0.95rem',
                                     cursor: 'pointer',
                                     fontFamily: 'inherit',
                                     whiteSpace: 'nowrap',
-                                    overflow: 'hidden'
+                                    overflow: 'hidden',
+                                    boxShadow: active ? '0 4px 12px rgba(6, 182, 212, 0.1)' : 'none'
                                 }}
                                 onMouseEnter={(e) => {
                                     if (!active) {
@@ -1542,13 +1582,14 @@ export default function DashboardPage() {
                 </nav>
             </aside>
 
-            {/* Main Content */}
             <main
                 style={{
-                    marginLeft: '280px',
+                    marginLeft: '300px',
                     minHeight: '100vh',
-                    padding: '40px 48px',
+                    padding: '140px 120px 100px 120px',
                     flex: 1,
+                    maxWidth: '1400px',
+                    marginRight: 'auto',
                 }}
                 className="dashboard-main-content"
             >
@@ -1556,19 +1597,21 @@ export default function DashboardPage() {
             </main>
 
             {/* Mobile Overlay */}
-            {isMobileMenuOpen && (
-                <div
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        zIndex: 998,
-                        display: 'none',
-                    }}
-                    className="mobile-overlay"
-                />
-            )}
+            {
+                isMobileMenuOpen && (
+                    <div
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        style={{
+                            position: 'fixed',
+                            inset: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            zIndex: 998,
+                            display: 'none',
+                        }}
+                        className="mobile-overlay"
+                    />
+                )
+            }
 
             <style jsx>{`
                 @media (max-width: 768px) {
@@ -1583,7 +1626,7 @@ export default function DashboardPage() {
 
                     .dashboard-main-content {
                         margin-left: 0 !important;
-                        padding: 80px 24px 40px 24px !important;
+                        padding: 140px 20px 40px 20px !important;
                     }
 
                     .mobile-overlay {
@@ -1591,6 +1634,6 @@ export default function DashboardPage() {
                     }
                 }
             `}</style>
-        </div>
+        </div >
     );
 }
