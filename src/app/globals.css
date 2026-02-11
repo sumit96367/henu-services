@@ -47,8 +47,8 @@
   --color-foreground: var(--foreground);
   --color-cyan: var(--cyan);
   --color-amber: var(--amber);
-  --font-sans: "Eagle Lake", serif;
-  --font-display: "Eagle Lake", serif;
+  --font-sans: var(--font-lora), serif;
+  --font-display: var(--font-lora), serif;
   --animate-diamond-rotate: diamond-rotate 8s linear infinite;
 
   @keyframes diamond-rotate {
@@ -102,7 +102,7 @@ html.lenis body {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Eagle Lake", serif;
+  font-family: var(--font-lora), serif;
   font-weight: 400;
   font-style: normal;
   line-height: 1.9;
@@ -139,7 +139,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Eagle Lake", serif;
+  font-family: var(--font-lora), serif;
   font-weight: 400;
   font-style: normal;
   line-height: 1.2;
@@ -343,7 +343,7 @@ li {
   padding: 18px 40px;
   background: #fff;
   color: #000;
-  font-family: "Eagle Lake", serif;
+  font-family: var(--font-lora), serif;
   font-weight: 400;
   font-style: normal;
   font-size: 1.05rem;
@@ -376,7 +376,7 @@ li {
   padding: 18px 40px;
   background: transparent;
   color: #fff;
-  font-family: "Eagle Lake", serif;
+  font-family: var(--font-lora), serif;
   font-weight: 400;
   font-style: normal;
   font-size: 1.05rem;
@@ -765,7 +765,7 @@ li {
    ============================================ */
 
 .stat-value {
-  font-family: "Eagle Lake", serif;
+  font-family: var(--font-lora), serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 400;
   font-style: normal;

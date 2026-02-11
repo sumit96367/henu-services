@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk, Lora } from "next/font/google";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 import { AuthModal, AuthPopup } from "@/components/auth";
+
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const inter = Inter({
   variable: "--font-inter",
@@ -65,11 +71,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&display=swap" rel="stylesheet" />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}
-        style={{ fontFamily: "'Eagle Lake', serif", fontWeight: 400, fontStyle: 'normal' }}
+        className={`${lora.variable} ${inter.variable} ${spaceGrotesk.variable} antialiased`}
+        style={{ fontFamily: "var(--font-lora)", fontWeight: 400, fontStyle: 'normal' }}
       >
         <AuthProvider>
           <SmoothScrollProvider>

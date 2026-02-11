@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Monitor, LayoutDashboard, Users } from "lucide-react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Avoid SSR hydration issues by loading react-countup on the client.
 const CountUp = dynamic(() => import("react-countup"), { ssr: false });
@@ -94,48 +95,62 @@ function MetricStat({
     );
 }
 
+/** Image Carousel Component for Animated Images */
+function ImageCarousel({ images, name }: { images: string[]; name: string }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 3000); // Change image every 3 seconds
+
+        return () => clearInterval(interval);
+    }, [images.length]);
+
+    return (
+        <div className="relative shrink-0 w-full max-w-60 aspect-[29/35]">
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.7, ease: "easeInOut" }}
+                    className="absolute inset-0"
+                >
+                    <div className="absolute inset-0 bg-cyan-500/20 blur-2xl rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Image
+                        src={images[currentIndex]}
+                        alt={`${name} portrait ${currentIndex + 1}`}
+                        width={300}
+                        height={400}
+                        className="aspect-[29/35] h-full w-full rounded-2xl object-cover ring-1 ring-white/10 hover:scale-[1.05] transition-all duration-500 shadow-2xl relative z-10"
+                        loading="lazy"
+                        unoptimized
+                    />
+                </motion.div>
+            </AnimatePresence>
+        </div>
+    );
+}
+
 export default function Casestudies() {
     const caseStudies = [
         {
             id: 1,
             quote:
-                "HENU OS transformed our digital infrastructure. Their components are reusable, consistent, and we ship new features 40% faster.",
-            name: "Aarav Mehta",
-            role: "Frontend Engineer",
-            image:
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop",
+                "At Henu OS, we build with clarity, not noise. Every system we create is designed to scale before it is designed to sell, because real technology earns trust through performance. Our decisions are driven by data, engineered with intent, and tested in real-world conditions. We believe long-term partnerships matter more than short-term speed, and that disciplined execution is what turns vision into reliable systems.",
+            name: "Siddharth Singh",
+            role: "Founder & CEO",
+            images: [
+                "/Siddharth1.jpeg",
+                "/Siddharth2.jpeg",
+                "/Siddharth3.jpeg",
+            ],
             icon: Monitor,
             metrics: [
-                { value: "40%", label: "Faster Delivery", sub: "Feature shipping speed" },
-                { value: "95%", label: "Developer Satisfaction", sub: "Based on internal survey" },
-            ],
-        },
-        {
-            id: 2,
-            quote:
-                "The unified dashboard experience from HENU OS reduced our time spent on context switching and improved clarity across all projects.",
-            name: "Sophia Patel",
-            role: "Operations Manager",
-            image:
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop",
-            icon: LayoutDashboard,
-            metrics: [
-                { value: "3.5x", label: "Efficiency Gain", sub: "Across workflows" },
-                { value: "70%", label: "Reduced Errors", sub: "In daily reporting" },
-            ],
-        },
-        {
-            id: 3,
-            quote:
-                "The collaborative features changed the way our team communicates. Everything is more transparent, and onboarding is seamless.",
-            name: "David Liu",
-            role: "Team Lead",
-            image:
-                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop",
-            icon: Users,
-            metrics: [
-                { value: "2x", label: "Faster Onboarding", sub: "For new hires" },
-                { value: "88%", label: "Collaboration Boost", sub: "Teamwide adoption" },
+                { value: "200+", label: "Production Systems Live", sub: "Active deployments" },
+                { value: "98%", label: "Client Retention Rate", sub: "Year-over-year" },
             ],
         },
     ];
@@ -143,6 +158,7 @@ export default function Casestudies() {
     return (
         <section
             className="py-24 md:py-[120px] bg-transparent"
+            style={{ marginTop: '1cm' }}
             aria-labelledby="case-studies-heading"
         >
             <div className="container mx-auto px-6">
@@ -164,25 +180,15 @@ export default function Casestudies() {
                                             : "lg:border-r border-white/5 lg:pr-16 lg:pl-0",
                                     ].join(" ")}
                                 >
-                                    <div className="relative shrink-0">
-                                        <div className="absolute inset-0 bg-cyan-500/20 blur-2xl rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        <Image
-                                            src={study.image}
-                                            alt={`${study.name} portrait`}
-                                            width={300}
-                                            height={400}
-                                            className="aspect-[29/35] h-auto w-full max-w-60 rounded-2xl object-cover ring-1 ring-white/10 hover:scale-[1.05] transition-all duration-500 shadow-2xl relative z-10"
-                                            loading="lazy"
-                                        />
-                                    </div>
+                                    <ImageCarousel images={study.images} name={study.name} />
 
                                     <figure className="flex flex-col justify-between gap-10 text-left py-4">
                                         <blockquote className="text-left">
-                                            <h3 className="text-2xl sm:text-3xl font-bold text-white leading-[1.3] text-left">
-                                                <span className="text-cyan-400 italic font-serif text-5xl block mb-4">"</span>
-                                                {study.quote}
-                                                <span className="text-cyan-400 italic font-serif text-5xl block mt-2 text-right">"</span>
-                                            </h3>
+                                            <p className="text-xl sm:text-2xl font-medium text-gray-200 leading-relaxed text-left relative">
+                                                <span className="text-gray-400 mr-1">"</span>
+                                                {study.quote.replace(/^"|"$/g, '')}
+                                                <span className="text-gray-400 ml-1">"</span>
+                                            </p>
                                         </blockquote>
                                         <figcaption className="flex items-center gap-6 mt-4 text-left border-l-2 border-cyan-500/50 pl-6">
                                             <div className="flex flex-col gap-1">
