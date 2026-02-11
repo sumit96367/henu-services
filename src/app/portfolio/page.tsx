@@ -395,7 +395,7 @@ export default function PortfolioPage() {
                                 >
                                     {/* Card Box - PRESERVED */}
                                     <div
-                                        className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden"
+                                        className="relative bg-[#0A0A0A] border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden h-full flex flex-col items-center justify-center"
                                         style={{ padding: '1cm' }}
                                     >
                                         {/* Gradient Tracing Animation */}

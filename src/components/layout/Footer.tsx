@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown } from 'lucide-react';
+import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Facebook } from 'lucide-react';
+import { IconBrandWhatsapp, IconBrandDiscord } from '@tabler/icons-react';
 import { TextHoverEffect } from '@/components/ui/hover-footer';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -52,6 +53,9 @@ const socialLinks = [
     { icon: <Twitter size={20} />, label: "Twitter", href: "https://twitter.com/henuos" },
     { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://linkedin.com/company/henuos" },
     { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/henuos" },
+    { icon: <Facebook size={20} />, label: "Facebook", href: "https://facebook.com/henuos" },
+    { icon: <IconBrandWhatsapp size={20} />, label: "WhatsApp", href: "https://wa.me/918094100513" },
+    { icon: <IconBrandDiscord size={20} />, label: "Discord", href: "https://discord.gg/henuos" },
 ];
 
 const policyLinks = [

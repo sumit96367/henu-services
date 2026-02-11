@@ -53,7 +53,7 @@ export function MouseTrailComponent() {
 
   return (
     <>
-      <div className="mouse-trail-container fixed inset-0 pointer-events-none z-[15]" style={{ mixBlendMode: 'screen' }}>
+      <div className="mouse-trail-container fixed inset-0 pointer-events-none z-[0]" style={{ mixBlendMode: 'screen' }}>
         <div className="content" ref={contentRef}>
           {flairImages.map((src, index) => (
             <img
