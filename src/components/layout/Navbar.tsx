@@ -95,7 +95,7 @@ export const Navbar = () => {
                             <div className="relative">
                                 <MenuItem setActive={setActive} active={active} item="Services">
                                     <div className="w-[600px] text-left">
-                                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 p-6">
+                                        <div className="grid grid-cols-2 gap-x-4 gap-y-2" style={{ padding: '0.2cm' }}>
                                             <ServiceSubItem
                                                 title="Website Development"
                                                 href="/services/web-development"

@@ -33,13 +33,13 @@ const footerLinks = [
 const contactInfo = [
     {
         icon: <Mail size={18} className="text-cyan-400" />,
-        text: "hello@henuos.com",
-        href: "mailto:hello@henuos.com",
+        text: "henuosr@gmail.com",
+        href: "mailto:henuosr@gmail.com",
     },
     {
         icon: <Phone size={18} className="text-cyan-400" />,
-        text: "+91 86373 73116",
-        href: "tel:+918637373116",
+        text: "+91 8094100513",
+        href: "tel:+918094100513",
     },
     {
         icon: <MapPin size={18} className="text-cyan-400" />,
