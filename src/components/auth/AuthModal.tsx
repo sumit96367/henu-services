@@ -183,7 +183,7 @@ export const AuthModal = () => {
                     exit={{ opacity: 0, y: 20 }}
                     className="relative w-full max-w-2xl px-6"
                 >
-                    <div className={`text-center ${step === 'type-selection' ? 'mb-10' : 'mb-5'}`}>
+                    <div className={`text-center ${step === 'type-selection' ? '' : 'mb-5'}`} style={step === 'type-selection' ? { marginBottom: '0.3cm' } : {}}>
                         <h2 className={`font-bold text-white ${step === 'type-selection' ? 'text-3xl md:text-4xl mb-3' : 'text-2xl md:text-3xl mb-2'}`}>
                             {step === 'type-selection'
                                 ? (authModalMode === 'login' ? 'Welcome Back' : 'Join Henu OS')
@@ -235,14 +235,15 @@ export const AuthModal = () => {
                                     </button>
                                 </div>
 
-                                <button
-                                    onClick={() => selectedType && setStep('credentials')}
-                                    disabled={!selectedType}
-                                    className={`w-full py-4 rounded-full font-bold text-lg transition-all ${selectedType ? (selectedType === 'company' ? 'bg-cyan-500 text-white hover:bg-cyan-400 shadow-lg shadow-cyan-500/30' : 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/30') : 'bg-white/10 text-white/40 cursor-not-allowed'}`}
-                                    style={{ marginTop: '32px' }}
-                                >
-                                    Continue
-                                </button>
+                                <div className="flex justify-center" style={{ marginTop: '0.4cm', marginBottom: '0.2cm' }}>
+                                    <button
+                                        onClick={() => selectedType && setStep('credentials')}
+                                        disabled={!selectedType}
+                                        className={`w-64 py-3 min-h-[48px] rounded-full font-bold text-lg transition-all ${selectedType ? (selectedType === 'company' ? 'bg-cyan-500 text-white hover:bg-cyan-400 shadow-lg shadow-cyan-500/30' : 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/30') : 'bg-white/10 text-white/40 cursor-not-allowed'}`}
+                                    >
+                                        Continue
+                                    </button>
+                                </div>
 
                                 <div className="text-center">
                                     <p className="text-gray-400">
