@@ -78,7 +78,8 @@ export const GlobalSearch = () => {
     const [results, setResults] = useState<GroupedResults | null>(null);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const inputRef = useRef<HTMLInputElement>(null);
-    const searchRef = useRef<HTMLDivElement>(null);
+    const searchRefMobile = useRef<HTMLDivElement>(null);
+    const searchRefDesktop = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     // Debounced search
@@ -98,7 +99,10 @@ export const GlobalSearch = () => {
     // Click outside to close
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+            const isMobileClick = searchRefMobile.current && !searchRefMobile.current.contains(e.target as Node);
+            const isDesktopClick = searchRefDesktop.current && !searchRefDesktop.current.contains(e.target as Node);
+
+            if (isMobileClick && isDesktopClick) {
                 setIsOpen(false);
                 setQuery('');
             }
@@ -215,86 +219,171 @@ export const GlobalSearch = () => {
     const allResults = getAllResults();
 
     return (
-        <div ref={searchRef} className="relative">
-            <AnimatePresence mode="wait">
-                {!isOpen ? (
-                    // Search Icon
-                    <motion.button
-                        key="icon"
-                        onClick={() => setIsOpen(true)}
-                        className="p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <Search size={20} />
-                    </motion.button>
-                ) : (
-                    // Inline Search Bar
-                    <motion.div
-                        key="search-bar"
-                        className="relative"
-                        initial={{ width: 40, opacity: 0 }}
-                        animate={{ width: 400, opacity: 1 }}
-                        exit={{ width: 40, opacity: 0 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        onAnimationComplete={handleAnimationComplete}
-                    >
-                        {/* Search Input with Close Icon */}
-                        <div className="relative flex items-center">
-                            <input
-                                ref={inputRef}
-                                type="text"
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                placeholder="Search..."
-                                className="w-full pl-4 pr-10 py-2.5 bg-white/[0.03] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.05] transition-all"
-                            />
-                            <button
-                                onClick={handleClose}
-                                className="absolute right-2 p-1.5 text-gray-400 hover:text-white transition-colors rounded-md hover:bg-white/10"
-                            >
-                                <X size={16} />
-                            </button>
-                        </div>
+        <>
+            {/* MOBILE VERSION - Inline Expanding Search (hidden on md+) */}
+            <div ref={searchRefMobile} className="relative md:hidden">
+                <AnimatePresence mode="wait">
+                    {!isOpen ? (
+                        // Search Icon
+                        <motion.button
+                            key="icon"
+                            onClick={() => setIsOpen(true)}
+                            className="p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Search size={20} />
+                        </motion.button>
+                    ) : (
+                        // Inline Search Bar
+                        <motion.div
+                            key="search-bar"
+                            className="relative"
+                            initial={{ width: 40, opacity: 0 }}
+                            animate={{ width: 300, opacity: 1 }}
+                            exit={{ width: 40, opacity: 0 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                            onAnimationComplete={handleAnimationComplete}
+                        >
+                            {/* Search Input with Close Icon */}
+                            <div className="relative flex items-center">
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder="Search..."
+                                    className="w-full pl-4 pr-10 py-2.5 bg-white/[0.03] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.05] transition-all"
+                                />
+                                <button
+                                    onClick={handleClose}
+                                    className="absolute right-2 p-1.5 text-gray-400 hover:text-white transition-colors rounded-md hover:bg-white/10"
+                                >
+                                    <X size={16} />
+                                </button>
+                            </div>
 
-                        {/* Inline Results Dropdown */}
-                        <AnimatePresence>
-                            {query.trim() && hasResults && activeResults && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -5 }}
-                                    transition={{ duration: 0.15 }}
-                                    className="absolute top-full left-0 right-0 mt-2 max-h-[400px] overflow-y-auto bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[200]"
-                                >
-                                    <div className="py-2">
-                                        <ResultGroup title="Products & Features" items={activeResults.sections} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
-                                        <ResultGroup title="Pages" items={activeResults.pages} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
-                                        <ResultGroup title="Services" items={activeResults.services} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
-                                        <ResultGroup title="Software" items={activeResults.software} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
-                                        <ResultGroup title="Categories" items={activeResults.categories} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
-                                    </div>
-                                </motion.div>
-                            )}
-                            {query.trim() && !hasResults && activeResults && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -5 }}
-                                    className="absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[200]"
-                                >
-                                    <div className="py-6 px-4 text-center text-gray-400 text-sm">
-                                        No results found for &quot;{query}&quot;
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </div>
+                            {/* Inline Results Dropdown */}
+                            <AnimatePresence>
+                                {query.trim() && hasResults && activeResults && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -5 }}
+                                        transition={{ duration: 0.15 }}
+                                        className="absolute top-full left-0 right-0 mt-2 max-h-[400px] overflow-y-auto bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[200]"
+                                    >
+                                        <div className="py-2">
+                                            <ResultGroup title="Products & Features" items={activeResults.sections} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                            <ResultGroup title="Pages" items={activeResults.pages} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                            <ResultGroup title="Services" items={activeResults.services} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                            <ResultGroup title="Software" items={activeResults.software} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                            <ResultGroup title="Categories" items={activeResults.categories} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                        </div>
+                                    </motion.div>
+                                )}
+                                {query.trim() && !hasResults && activeResults && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -5 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -5 }}
+                                        className="absolute top-full left-0 right-0 mt-2 bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[200]"
+                                    >
+                                        <div className="py-6 px-4 text-center text-gray-400 text-sm">
+                                            No results found for &quot;{query}&quot;
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* DESKTOP VERSION - Dropdown Search (hidden below md) */}
+            <div ref={searchRefDesktop} className="relative hidden md:block">
+                {/* Search Icon - Always Visible */}
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="p-2 text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                >
+                    <Search size={20} />
+                </button>
+
+                {/* Dropdown Search Menu */}
+                <AnimatePresence>
+                    {isOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                            className="absolute top-full right-0 mt-2 w-[400px] max-w-[90vw] z-[200]"
+                            onAnimationComplete={handleAnimationComplete}
+                        >
+                            {/* Search Input Container */}
+                            <div className="bg-black/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden">
+                                {/* Search Input with Close Icon */}
+                                <div className="relative flex items-center p-3 border-b border-white/10">
+                                    <input
+                                        ref={inputRef}
+                                        type="text"
+                                        value={query}
+                                        onChange={(e) => setQuery(e.target.value)}
+                                        placeholder="Search..."
+                                        className="w-full pl-4 pr-10 py-2.5 bg-transparent text-white placeholder-gray-500 focus:outline-none"
+                                    />
+                                    <button
+                                        onClick={handleClose}
+                                        className="absolute right-5 p-1.5 text-gray-400 hover:text-white transition-colors rounded-md hover:bg-white/10"
+                                    >
+                                        <X size={16} />
+                                    </button>
+                                </div>
+
+                                {/* Results Section */}
+                                <AnimatePresence>
+                                    {query.trim() && hasResults && activeResults && (
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            transition={{ duration: 0.15 }}
+                                            className="max-h-[400px] overflow-y-auto"
+                                        >
+                                            <div className="py-2">
+                                                <ResultGroup title="Products & Features" items={activeResults.sections} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                                <ResultGroup title="Pages" items={activeResults.pages} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                                <ResultGroup title="Services" items={activeResults.services} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                                <ResultGroup title="Software" items={activeResults.software} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                                <ResultGroup title="Categories" items={activeResults.categories} query={query} selectedIndex={selectedIndex} allResults={allResults} onResultClick={handleResultClick} />
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                    {query.trim() && !hasResults && activeResults && (
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            className="py-6 px-4 text-center text-gray-400 text-sm"
+                                        >
+                                            No results found for &quot;{query}&quot;
+                                        </motion.div>
+                                    )}
+                                    {!query.trim() && (
+                                        <div className="py-6 px-4 text-center text-gray-500 text-sm">
+                                            Start typing to search...
+                                        </div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+        </>
     );
 };
