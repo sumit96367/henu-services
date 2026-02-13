@@ -305,7 +305,7 @@ export default function PortfolioPage() {
                         style={{ y, opacity }}
                         className="max-w-5xl w-full flex flex-col items-center text-center"
                     >
-                        <div className="flex flex-col items-center mb-6">
+                        <div className="flex flex-col items-center mb-[6px]">
                             <PremiumTextReveal text="The Henu" className="text-gray-300 text-xl md:text-3xl font-semibold" delay={0.2} />
                             <AnimatedLetterText
                                 text="Ecosystem"
@@ -318,6 +318,7 @@ export default function PortfolioPage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.8 }}
                             className="text-lg md:text-2xl text-gray-400 max-w-2xl mb-8 md:mb-16 leading-relaxed text-center"
+                            style={{ paddingTop: '15px', paddingBottom: '150px' }}
                         >
                             Explore our complete suite of products, systems, and solutions designed to transform your business.
                         </motion.p>
@@ -326,7 +327,10 @@ export default function PortfolioPage() {
             </section >
 
             {/* Categories Line - Scrolling Marquee */}
-            <section className="relative z-20 bg-transparent flex flex-col items-center px-4 md:px-8 py-16 md:py-24">
+            <section
+                className="relative z-20 bg-transparent flex flex-col items-center px-4 md:px-8"
+                style={{ paddingTop: '150px', paddingBottom: '150px' }}
+            >
                 <div className="container max-w-7xl mx-auto">
                     <div className="flex items-center gap-8">
                         {/* Label */}
@@ -346,7 +350,10 @@ export default function PortfolioPage() {
             </section >
 
             {/* Projects Grid */}
-            <section className="bg-transparent relative z-20 flex flex-col items-center px-4 md:px-8 py-16 md:py-24">
+            <section
+                className="bg-transparent relative z-20 flex flex-col items-center px-4 md:px-8"
+                style={{ paddingTop: '150px', paddingBottom: '150px' }}
+            >
                 <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <AnimatePresence mode="wait">
                         <motion.div
@@ -385,7 +392,8 @@ export default function PortfolioPage() {
                                 >
                                     {/* Card Box - PRESERVED */}
                                     <div
-                                        className="relative bg-[#0A0A0A] border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden h-full flex flex-col items-center justify-center p-8 md:p-12 lg:p-16"
+                                        className="relative bg-[#0A0A0A] border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden h-full flex flex-col items-center justify-center"
+                                        style={{ padding: '50px' }}
                                     >
                                         {/* Gradient Tracing Animation */}
                                         <motion.div
@@ -434,7 +442,10 @@ export default function PortfolioPage() {
             </section >
 
             {/* Stats Section */}
-            <section className="relative z-20 flex flex-col items-center px-4 md:px-8 py-20 md:py-32 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent">
+            <section
+                className="relative z-20 flex flex-col items-center px-4 md:px-8 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent"
+                style={{ paddingTop: '150px', paddingBottom: '150px' }}
+            >
                 <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center w-full">
                         <motion.div
@@ -473,59 +484,59 @@ export default function PortfolioPage() {
             </section >
 
             {/* Featured Projects Carousel Section */}
-            <section className="relative z-20 flex flex-col items-center px-4 md:px-8 py-20 md:py-32">
+            <section
+                className="relative z-20 flex flex-col items-center px-4 md:px-8"
+                style={{ paddingTop: '150px', paddingBottom: '150px' }}
+            >
                 <div className="w-full max-w-[1280px]">
                     <GalleryHoverCarousel heading="Featured Innovation" />
                 </div>
             </section >
 
             {/* Case Studies Section */}
-            <section className="relative z-20 flex flex-col items-center px-4 md:px-8 py-20 md:py-32">
+            <section
+                className="relative z-20 flex flex-col items-center px-4 md:px-8"
+                style={{ paddingTop: '150px', paddingBottom: '150px' }}
+            >
                 <div className="w-full max-w-[1280px]">
                     <Casestudies />
                 </div>
             </section >
 
             {/* CTA Section */}
-            <section className="relative min-h-[80vh] w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 bg-[#050505] py-24 md:py-32">
+            <section
+                className="w-full flex flex-col items-center bg-transparent relative overflow-hidden px-6 md:px-12"
+                style={{ paddingTop: '150px', paddingBottom: '150px' }}
+            >
                 {/* Background Glow */}
-                < div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                        background: 'radial-gradient(circle at center, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
-                        filter: 'blur(100px)'
-                    }}
-                />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-                < div className="relative z-10 w-full max-w-5xl flex flex-col items-center text-center" >
+                <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
+                        className="max-w-3xl mx-auto"
                     >
-                        <h2 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 md:mb-10 tracking-tighter leading-[0.9]">
-                            Ready to <br />
-                            <span className="gradient-text">Start Your Project</span>?
+                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                            Ready to <span className="gradient-text">Start Your Project</span>?
                         </h2>
-
-                        <p className="text-xl md:text-3xl text-gray-400 mb-16 max-w-3xl mx-auto leading-relaxed font-medium">
+                        <p className="text-xl text-gray-400 mb-10">
                             Let&apos;s architect the next generation of your digital presence together.
                         </p>
-
-                        <div className="flex flex-col items-center justify-center">
-                            <Link href="/contact" className="btn-primary !h-16 md:!h-20 !px-8 md:!px-12 text-lg md:text-xl group flex items-center gap-4 hover:scale-105 transition-transform duration-500">
-                                Get a Free Quote
-                                <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
+                        <div className="flex flex-wrap justify-center gap-4">
+                            <Link href="/contact" className="btn-primary group">
+                                Start a Conversation
+                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                            <Link href="https://henuos.netlify.app/" target="_blank" className="btn-secondary group">
+                                Explore Henu OS
+                                <ExternalLink className="w-4 h-4" />
                             </Link>
                         </div>
                     </motion.div>
-                </div >
-
-                {/* Decorative Elements for centering feel */}
-                < div className="absolute top-1/2 left-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-purple-500/20 to-transparent hidden xl:block" />
-                <div className="absolute top-1/2 right-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-purple-500/20 to-transparent hidden xl:block" />
-            </section >
+                </div>
+            </section>
 
             {/* Product Details Modal - HERO STYLE */}
             <AnimatePresence>
