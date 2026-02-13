@@ -165,7 +165,8 @@ const HowWeThinkSection = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-16 flex flex-col items-center text-center"
+                    className="flex flex-col items-center text-center"
+                    style={{ marginBottom: '0.1cm' }}
                 >
 
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 mx-auto">
@@ -185,17 +186,12 @@ const HowWeThinkSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                         >
-                            <GlowingCard className="h-full" innerClassName="p-8 md:p-12 bg-[#0A0A0A] border border-white/5">
-                                <div className="flex items-start gap-6">
-                                    <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20 shadow-lg shadow-cyan-500/5">
-                                        {item.icon}
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                                        <p className="text-gray-400 text-base leading-relaxed">
-                                            {item.desc}
-                                        </p>
-                                    </div>
+                            <GlowingCard className="h-full" innerClassName="bg-[#0A0A0A] border border-white/5" style={{ padding: 'calc(2rem + 0.3cm)' }}>
+                                <div>
+                                    <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                                    <p className="text-gray-400 text-base leading-relaxed">
+                                        {item.desc}
+                                    </p>
                                 </div>
                             </GlowingCard>
                         </motion.div>
@@ -364,9 +360,6 @@ const BuiltToDoSection = () => {
                             transition={{ delay: 0.1 * index }}
                             className="flex flex-col items-center text-center space-y-4"
                         >
-                            <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">
-                                {item.icon}
-                            </div>
                             <div className="space-y-2">
                                 <h3 className="text-sm font-bold text-white uppercase tracking-wider">{item.title}</h3>
                                 <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
@@ -400,7 +393,8 @@ const WhatWeDontDoSection = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-16 flex flex-col items-center text-center"
+                    className="flex flex-col items-center text-center"
+                    style={{ marginBottom: '0.1cm' }}
                 >
                     <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         What We <span className="text-red-500">Don&apos;t Do</span>
@@ -419,10 +413,7 @@ const WhatWeDontDoSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 * index }}
                         >
-                            <GlowingCard className="h-full" innerClassName="p-8 md:p-12 flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5">
-                                <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-red-500/5">
-                                    <X className="w-6 h-6 text-red-500" />
-                                </div>
+                            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '0.2cm' }}>
                                 <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-wider">{item.title}</h3>
                                 <p className="text-gray-400 text-base leading-relaxed">
                                     {item.desc}
@@ -465,7 +456,8 @@ const WhoWereBestForSection = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-16 flex flex-col items-center text-center"
+                    className="flex flex-col items-center text-center"
+                    style={{ marginBottom: '0.1cm' }}
                 >
                     <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         Who We&apos;re <span className="text-amber-400">Best For</span>
@@ -484,7 +476,7 @@ const WhoWereBestForSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                         >
-                            <GlowingCard className="h-full" innerClassName="p-8 md:p-12 flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5">
+                            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '0.2cm' }}>
                                 <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6 border border-cyan-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-cyan-500/5">
                                     {item.icon}
                                 </div>
