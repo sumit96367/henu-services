@@ -159,7 +159,10 @@ const HowWeThinkSection = () => {
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
+        <section
+            className="w-full flex flex-col items-center bg-transparent px-6 md:px-12"
+            style={{ paddingTop: '150px', paddingBottom: '150px' }}
+        >
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -172,7 +175,10 @@ const HowWeThinkSection = () => {
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 mx-auto">
                         How We <span className="gradient-text">Think</span>
                     </h2>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                    <p
+                        className="text-lg text-gray-400 max-w-2xl"
+                        style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
+                    >
                         Our approach isn&apos;t defined by process—it&apos;s shaped by principles that drive every decision we make.
                     </p>
                 </motion.div>
@@ -186,12 +192,17 @@ const HowWeThinkSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                         >
-                            <GlowingCard className="h-full" innerClassName="bg-[#0A0A0A] border border-white/5" style={{ padding: 'calc(2rem + 0.3cm)' }}>
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                                    <p className="text-gray-400 text-base leading-relaxed">
-                                        {item.desc}
-                                    </p>
+                            <GlowingCard className="h-full" innerClassName="bg-[#0A0A0A] border border-white/5" style={{ padding: '50px' }}>
+                                <div className="flex items-start gap-6">
+                                    <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center shrink-0 border border-purple-500/20 shadow-lg shadow-purple-500/5">
+                                        {item.icon}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+                                        <p className="text-gray-400 text-base leading-relaxed">
+                                            {item.desc}
+                                        </p>
+                                    </div>
                                 </div>
                             </GlowingCard>
                         </motion.div>
@@ -230,7 +241,10 @@ const BuiltToDoSection = () => {
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent relative overflow-hidden py-24 px-6 md:px-12">
+        <section
+            className="w-full flex flex-col items-center bg-transparent relative overflow-hidden px-6 md:px-12"
+            style={{ paddingTop: '150px', paddingBottom: '150px' }}
+        >
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '48px' }}>
                 {/* Header Row */}
                 <motion.div
@@ -242,7 +256,10 @@ const BuiltToDoSection = () => {
                     <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         What We&apos;re <span className="gradient-text">Built To Do</span>
                     </h2>
-                    <p className="max-w-2xl text-base md:text-lg text-gray-400 leading-relaxed mx-auto">
+                    <p
+                        className="max-w-2xl text-base md:text-lg text-gray-400 leading-relaxed"
+                        style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
+                    >
                         Core capabilities, not services. Outcomes, not deliverables. We architect systems that drive real business value.
                     </p>
                 </motion.div>
@@ -264,7 +281,7 @@ const BuiltToDoSection = () => {
                                         <SystemCoreAnimation />
                                     </div>
                                 </div>
-                                <div className="p-8 md:p-12">
+                                <div style={{ padding: '50px' }}>
                                     <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
                                         HENU <span className="gradient-text">OS</span>
                                     </h3>
@@ -291,7 +308,7 @@ const BuiltToDoSection = () => {
                     >
                         <GlowingCard innerClassName="p-0 overflow-hidden bg-[#0A0A0A] border border-white/5">
                             <div className="grid md:grid-cols-2 gap-0 items-center">
-                                <div className="p-8 md:p-12 md:order-1 order-2">
+                                <div style={{ padding: '50px' }} className="md:order-1 order-2">
                                     <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
                                         HENU <span className="gradient-text">IDE</span>
                                     </h3>
@@ -330,7 +347,7 @@ const BuiltToDoSection = () => {
                                         <AIAssistantAnimation />
                                     </div>
                                 </div>
-                                <div className="p-8 md:p-12">
+                                <div style={{ padding: '50px' }}>
                                     <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
                                         HENU <span className="gradient-text">PA+++</span>
                                     </h3>
@@ -387,7 +404,10 @@ const WhatWeDontDoSection = () => {
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
+        <section
+            className="w-full flex flex-col items-center bg-transparent px-6 md:px-12"
+            style={{ paddingTop: '150px', paddingBottom: '150px' }}
+        >
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -399,7 +419,10 @@ const WhatWeDontDoSection = () => {
                     <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         What We <span className="text-red-500">Don&apos;t Do</span>
                     </h2>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto mt-4">
+                    <p
+                        className="text-lg text-gray-400 max-w-2xl mt-4"
+                        style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
+                    >
                         Honesty over opportunity. These are the lines we draw to ensure we deliver high-quality, high-performance systems.
                     </p>
                 </motion.div>
@@ -413,7 +436,10 @@ const WhatWeDontDoSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 * index }}
                         >
-                            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '0.2cm' }}>
+                            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '50px' }}>
+                                <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-red-500/5">
+                                    <X className="w-6 h-6 text-red-500" />
+                                </div>
                                 <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-wider">{item.title}</h3>
                                 <p className="text-gray-400 text-base leading-relaxed">
                                     {item.desc}
@@ -421,9 +447,9 @@ const WhatWeDontDoSection = () => {
                             </GlowingCard>
                         </motion.div>
                     ))}
-                </div>
-            </div>
-        </section>
+                </div >
+            </div >
+        </section >
     );
 };
 
@@ -450,7 +476,10 @@ const WhoWereBestForSection = () => {
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
+        <section
+            className="w-full flex flex-col items-center bg-transparent px-6 md:px-12"
+            style={{ paddingTop: '150px', paddingBottom: '150px' }}
+        >
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -462,7 +491,10 @@ const WhoWereBestForSection = () => {
                     <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         Who We&apos;re <span className="text-indigo-400">Best For</span>
                     </h2>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto mt-4">
+                    <p
+                        className="text-lg text-gray-400 max-w-2xl mt-4"
+                        style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
+                    >
                         We work best with founders and teams who think long-term and value technical excellence.
                     </p>
                 </motion.div>
@@ -476,7 +508,7 @@ const WhoWereBestForSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                         >
-                            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '0.2cm' }}>
+                            <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '50px' }}>
                                 <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6 border border-purple-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-purple-500/5">
                                     {item.icon}
                                 </div>
@@ -487,7 +519,7 @@ const WhoWereBestForSection = () => {
                             </GlowingCard>
                         </motion.div>
                     ))}
-                </div>
+                </div >
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -499,8 +531,8 @@ const WhoWereBestForSection = () => {
                         <strong className="text-white not-italic">Not a fit?</strong> If you prioritize optics over outcomes or need work yesterday without planning—we&apos;re not the right partner.
                     </p>
                 </motion.div>
-            </div>
-        </section>
+            </div >
+        </section >
     );
 };
 
@@ -527,7 +559,10 @@ const JourneySection = () => {
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
+        <section
+            className="w-full flex flex-col items-center bg-transparent px-6 md:px-12"
+            style={{ paddingTop: '150px', paddingBottom: '150px' }}
+        >
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -538,7 +573,10 @@ const JourneySection = () => {
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         From <span className="text-purple-400">Idea</span> to <span className="text-indigo-400">System</span>
                     </h2>
-                    <p className="text-lg text-gray-400 mb-16 max-w-2xl mx-auto">
+                    <p
+                        className="text-lg text-gray-400 mb-16 max-w-2xl"
+                        style={{ textAlign: 'center', marginLeft: 'auto', marginRight: 'auto' }}
+                    >
                         We don&apos;t just build products—we help you establish technical foundations that evolve with your vision.
                     </p>
 
@@ -569,7 +607,10 @@ const JourneySection = () => {
 // ============================================
 const CTASection = () => {
     return (
-        <section className="w-full flex flex-col items-center bg-transparent relative overflow-hidden py-24 px-6 md:px-12">
+        <section
+            className="w-full flex flex-col items-center bg-transparent relative overflow-hidden px-6 md:px-12"
+            style={{ paddingTop: '150px', paddingBottom: '150px' }}
+        >
             {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
 
