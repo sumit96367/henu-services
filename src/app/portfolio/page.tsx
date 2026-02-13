@@ -16,7 +16,7 @@ import {
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { ProjectCard } from '@/components/ui/project-card';
 import { AnimatedLetterText } from '@/components/ui/potfolio-text';
-import { MouseTrailComponent } from '@/components/ui/mouse-trail';
+
 import Casestudies from '@/components/ui/case-studies';
 import GalleryHoverCarousel from '@/components/ui/gallery-hover-carousel';
 import { Spotlight } from '@/components/ui/spotlight';
@@ -35,7 +35,7 @@ const projects = [
         description: 'Comprehensive healthcare management solution with patient records, appointment scheduling, billing, inventory management, and analytics. Streamline your hospital operations with our advanced digital platform.',
         image: '/projects/hospital.jpg',
         tags: ['Healthcare', 'Management', 'Digital'],
-        color: 'from-purple-500 to-pink-500',
+        color: 'from-purple-600 to-indigo-600',
         formLink: '',
         stats: { metric: 'HMS', label: 'Solution' }
     },
@@ -46,7 +46,7 @@ const projects = [
         description: 'Complete accounting solution for businesses with GST compliance, invoicing, expense tracking, financial reports, and tax management. Simplify your financial operations with automated workflows.',
         image: '/projects/accounting.jpg',
         tags: ['Finance', 'GST', 'Invoicing'],
-        color: 'from-green-500 to-emerald-500',
+        color: 'from-indigo-600 to-violet-600',
         formLink: '',
         stats: { metric: 'Accounting', label: 'Software' }
     },
@@ -57,7 +57,7 @@ const projects = [
         description: 'All-in-one hotel management platform featuring room booking, guest management, POS integration, housekeeping, and revenue analytics. Enhance guest experiences and operational efficiency.',
         image: '/projects/hotel.jpg',
         tags: ['Hospitality', 'Booking', 'POS'],
-        color: 'from-amber-500 to-orange-500',
+        color: 'from-violet-600 to-purple-600',
         formLink: '',
         stats: { metric: 'Hotel', label: 'System' }
     },
@@ -68,7 +68,7 @@ const projects = [
         description: 'Comprehensive educational institution management with student enrollment, fee collection, attendance tracking, grade management, and parent portal. Digitize your campus operations.',
         image: '/projects/school.jpg',
         tags: ['Education', 'Fees', 'Management'],
-        color: 'from-blue-500 to-indigo-500',
+        color: 'from-purple-600 to-pink-600',
         formLink: '',
         stats: { metric: 'Education', label: 'Platform' }
     },
@@ -79,7 +79,7 @@ const projects = [
         description: 'Complete restaurant solution with table management, order processing, kitchen display, inventory tracking, and billing. Optimize your restaurant workflow and customer service.',
         image: '/projects/restaurant.jpg',
         tags: ['Restaurant', 'POS', 'Kitchen'],
-        color: 'from-red-500 to-pink-500',
+        color: 'from-pink-600 to-indigo-600',
         formLink: '',
         stats: { metric: 'Restaurant', label: 'Solution' }
     },
@@ -90,7 +90,7 @@ const projects = [
         description: 'End-to-end travel agency platform with booking management, itinerary creation, payment processing, customer management, and vendor coordination. Grow your travel business digitally.',
         image: '/projects/travel.jpg',
         tags: ['Travel', 'Booking', 'CRM'],
-        color: 'from-teal-500 to-green-500',
+        color: 'from-indigo-600 to-purple-600',
         formLink: '',
         stats: { metric: 'Travel', label: 'Platform' }
     },
@@ -101,7 +101,7 @@ const projects = [
         description: 'Advanced pharmacy software with inventory management, prescription tracking, billing, expiry alerts, and sales analytics. Ensure compliance and efficient pharmacy operations.',
         image: '/projects/pharmacy.jpg',
         tags: ['Pharmacy', 'Inventory', 'Billing'],
-        color: 'from-green-500 to-teal-500',
+        color: 'from-purple-600 to-violet-600',
         formLink: '',
         stats: { metric: 'Pharmacy', label: 'Software' }
     },
@@ -112,7 +112,7 @@ const projects = [
         description: 'Full-featured e-commerce platform with product catalog, shopping cart, payment gateway integration, order management, and customer analytics. Launch your online store with confidence.',
         image: '/projects/ecommerce.jpg',
         tags: ['E-commerce', 'Online Store', 'Payment'],
-        color: 'from-orange-500 to-red-500',
+        color: 'from-violet-600 to-pink-600',
         formLink: '',
         stats: { metric: 'E-commerce', label: 'Platform' }
     },
@@ -123,7 +123,7 @@ const projects = [
         description: 'Complete HR and employee management solution with attendance, payroll, leave management, performance tracking, and employee portal. Streamline your workforce management.',
         image: '/projects/employee.jpg',
         tags: ['HR', 'Payroll', 'Attendance'],
-        color: 'from-indigo-500 to-purple-500',
+        color: 'from-pink-600 to-purple-600',
         formLink: '',
         stats: { metric: 'HRMS', label: 'Solution' }
     },
@@ -134,7 +134,7 @@ const projects = [
         description: 'Professional invoicing and billing software with customizable templates, automatic payment reminders, expense tracking, and financial reports. Get paid faster and stay organized.',
         image: '/projects/invoicing.jpg',
         tags: ['Invoicing', 'Billing', 'Finance'],
-        color: 'from-yellow-500 to-amber-500',
+        color: 'from-purple-600 to-indigo-600',
         formLink: '',
         stats: { metric: 'Invoicing', label: 'System' }
     },
@@ -145,7 +145,7 @@ const projects = [
         description: 'Robust inventory management solution with stock tracking, purchase orders, warehouse management, supplier management, and real-time reports. Optimize your inventory control.',
         image: '/projects/inventory.jpg',
         tags: ['Inventory', 'Warehouse', 'Stock'],
-        color: 'from-pink-500 to-rose-500',
+        color: 'from-indigo-600 to-pink-600',
         formLink: '',
         stats: { metric: 'Inventory', label: 'System' }
     },
@@ -255,9 +255,6 @@ export default function PortfolioPage() {
 
     return (
         <main className="relative z-10">
-            {/* Mouse Trail Effect */}
-            <MouseTrailComponent />
-
 
             {/* Hero Section */}
             <section
@@ -280,7 +277,7 @@ export default function PortfolioPage() {
                     <motion.div
                         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(109, 40, 217, 0.15) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -292,7 +289,7 @@ export default function PortfolioPage() {
                     <motion.div
                         className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -301,7 +298,7 @@ export default function PortfolioPage() {
                         }}
                         transition={{ duration: 10, repeat: Infinity }}
                     />
-                </div>
+                </div >
 
                 <div className="container relative z-10 flex flex-col items-center justify-center">
                     <motion.div
@@ -309,30 +306,27 @@ export default function PortfolioPage() {
                         className="max-w-5xl w-full flex flex-col items-center text-center"
                     >
                         <div className="flex flex-col items-center mb-6">
-                            <PremiumTextReveal text="The Henu" className="text-gray-300 text-2xl md:text-3xl font-semibold" delay={0.2} />
+                            <PremiumTextReveal text="The Henu" className="text-gray-300 text-xl md:text-3xl font-semibold" delay={0.2} />
                             <AnimatedLetterText
                                 text="Ecosystem"
                                 letterToReplace="o"
-                                className="text-7xl md:text-9xl text-white mt-[-20px]"
+                                className="text-5xl sm:text-7xl md:text-9xl text-white mt-1 sm:mt-[-20px]"
                             />
                         </div>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.8 }}
-                            className="text-xl md:text-2xl text-gray-400 max-w-2xl mb-16 leading-relaxed text-center"
+                            className="text-lg md:text-2xl text-gray-400 max-w-2xl mb-8 md:mb-16 leading-relaxed text-center"
                         >
                             Explore our complete suite of products, systems, and solutions designed to transform your business.
                         </motion.p>
                     </motion.div>
                 </div>
-            </section>
-
-            {/* Gap after hero: 0.5cm */}
-            <div style={{ height: '0.5cm' }} />
+            </section >
 
             {/* Categories Line - Scrolling Marquee */}
-            <section className="relative z-20 bg-transparent">
+            <section className="relative z-20 bg-transparent flex flex-col items-center px-4 md:px-8 py-16 md:py-24">
                 <div className="container max-w-7xl mx-auto">
                     <div className="flex items-center gap-8">
                         {/* Label */}
@@ -349,15 +343,11 @@ export default function PortfolioPage() {
                         </div>
                     </div>
                 </div>
-            </section>
-
-            {/* Gap before projects: 0.7cm */}
-            <div style={{ height: '0.7cm' }} />
+            </section >
 
             {/* Projects Grid */}
-            <section className="section bg-transparent pt-0 relative z-20" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
-                {/* Grid Container */}
-                <div className="container max-w-7xl mx-auto">
+            <section className="bg-transparent relative z-20 flex flex-col items-center px-4 md:px-8 py-16 md:py-24">
+                <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <AnimatePresence mode="wait">
                         <motion.div
                             initial={{ opacity: 0, y: 12 }}
@@ -395,8 +385,7 @@ export default function PortfolioPage() {
                                 >
                                     {/* Card Box - PRESERVED */}
                                     <div
-                                        className="relative bg-[#0A0A0A] border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden h-full flex flex-col items-center justify-center"
-                                        style={{ padding: '1cm' }}
+                                        className="relative bg-[#0A0A0A] border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden h-full flex flex-col items-center justify-center p-8 md:p-12 lg:p-16"
                                     >
                                         {/* Gradient Tracing Animation */}
                                         <motion.div
@@ -442,57 +431,65 @@ export default function PortfolioPage() {
                         </div>
                     )}
                 </div>
-            </section>
+            </section >
 
             {/* Stats Section */}
-            <section className="py-20 relative z-20" style={{ background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 149, 0, 0.05) 100%)', paddingTop: '120px', paddingBottom: '120px' }}>
-                <div className="container">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <section className="relative z-20 flex flex-col items-center px-4 md:px-8 py-20 md:py-32 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent">
+                <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center w-full">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                         >
-                            <div className="text-5xl font-bold gradient-text mb-2">200+</div>
-                            <div className="text-gray-400">Projects Completed</div>
+                            <div className="text-3xl md:text-5xl font-bold gradient-text mb-2">200+</div>
+                            <div className="text-xs md:text-gray-400">Projects Completed</div>
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.1 }}
                         >
-                            <div className="text-5xl font-bold gradient-text mb-2">150+</div>
-                            <div className="text-gray-400">Happy Clients</div>
+                            <div className="text-3xl md:text-5xl font-bold gradient-text mb-2">150+</div>
+                            <div className="text-xs md:text-gray-400">Happy Clients</div>
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.2 }}
                         >
-                            <div className="text-5xl font-bold gradient-text mb-2">98%</div>
-                            <div className="text-gray-400">Success Rate</div>
+                            <div className="text-3xl md:text-5xl font-bold gradient-text mb-2">98%</div>
+                            <div className="text-xs md:text-gray-400">Success Rate</div>
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.3 }}
                         >
-                            <div className="text-5xl font-bold gradient-text mb-2">5.0</div>
-                            <div className="text-gray-400">Client Rating</div>
+                            <div className="text-3xl md:text-5xl font-bold gradient-text mb-2">5.0</div>
+                            <div className="text-xs md:text-gray-400">Client Rating</div>
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
-            {/* Featured Projects Carousel */}
-            <GalleryHoverCarousel heading="Featured Innovation" />
+            {/* Featured Projects Carousel Section */}
+            <section className="relative z-20 flex flex-col items-center px-4 md:px-8 py-20 md:py-32">
+                <div className="w-full max-w-[1280px]">
+                    <GalleryHoverCarousel heading="Featured Innovation" />
+                </div>
+            </section >
 
             {/* Case Studies Section */}
-            <Casestudies />
+            <section className="relative z-20 flex flex-col items-center px-4 md:px-8 py-20 md:py-32">
+                <div className="w-full max-w-[1280px]">
+                    <Casestudies />
+                </div>
+            </section >
 
             {/* CTA Section */}
-            <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-6" style={{ background: '#050505' }}>
+            <section className="relative min-h-[80vh] w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-8 bg-[#050505] py-24 md:py-32">
                 {/* Background Glow */}
-                <div
+                < div
                     className="absolute inset-0 pointer-events-none"
                     style={{
                         background: 'radial-gradient(circle at center, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
@@ -500,14 +497,14 @@ export default function PortfolioPage() {
                     }}
                 />
 
-                <div className="relative z-10 w-full max-w-5xl flex flex-col items-center text-center">
+                < div className="relative z-10 w-full max-w-5xl flex flex-col items-center text-center" >
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-6xl md:text-8xl font-black text-white mb-10 tracking-tighter leading-[0.9]">
+                        <h2 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 md:mb-10 tracking-tighter leading-[0.9]">
                             Ready to <br />
                             <span className="gradient-text">Start Your Project</span>?
                         </h2>
@@ -517,268 +514,267 @@ export default function PortfolioPage() {
                         </p>
 
                         <div className="flex flex-col items-center justify-center">
-                            <Link href="/contact" className="btn-primary !h-20 !px-12 text-xl group flex items-center gap-4 hover:scale-105 transition-transform duration-500">
+                            <Link href="/contact" className="btn-primary !h-16 md:!h-20 !px-8 md:!px-12 text-lg md:text-xl group flex items-center gap-4 hover:scale-105 transition-transform duration-500">
                                 Get a Free Quote
-                                <ArrowRight size={28} className="group-hover:translate-x-2 transition-transform" />
+                                <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
                             </Link>
                         </div>
                     </motion.div>
-                </div>
+                </div >
 
                 {/* Decorative Elements for centering feel */}
-                <div className="absolute top-1/2 left-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent hidden xl:block" />
-                <div className="absolute top-1/2 right-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent hidden xl:block" />
-            </section>
+                < div className="absolute top-1/2 left-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-purple-500/20 to-transparent hidden xl:block" />
+                <div className="absolute top-1/2 right-10 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-purple-500/20 to-transparent hidden xl:block" />
+            </section >
 
             {/* Product Details Modal - HERO STYLE */}
             <AnimatePresence>
-                {selectedProduct && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
-                        onClick={closeModal}
-                    >
+                {
+                    selectedProduct && (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="relative w-full max-w-[95vw] md:max-w-[1100px] bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden p-6 md:p-12"
-                            style={{ minHeight: '70vh' }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
+                            onClick={closeModal}
                         >
-                            {/* Gravitational Mesh Background */}
-                            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                                <GravitationalMeshBackground />
-                            </div>
-
-                            {/* Close Button */}
-                            <button
-                                onClick={closeModal}
-                                className="absolute top-6 right-6 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:rotate-90"
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="relative w-full max-w-[95vw] md:max-w-[1100px] bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/10 overflow-hidden p-6 md:p-12"
+                                style={{ minHeight: '70vh' }}
                             >
-                                <X className="w-5 h-5 text-white" />
-                            </button>
-
-                            {/* Content Container */}
-                            <div className="relative z-10 flex flex-col items-center justify-center px-12 py-16 h-full min-h-[70vh]">
-
-                                {/* 1. Hero Title Section */}
-                                <div className="text-center mb-8 max-w-[90%] mx-auto">
-                                    <motion.h1
-                                        initial={{ opacity: 0, y: -20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.1 }}
-                                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight leading-tight px-4"
-                                        style={{
-                                            wordBreak: 'normal',
-                                            overflowWrap: 'break-word',
-                                            hyphens: 'manual',
-                                            textShadow: '0 0 40px rgba(168, 85, 247, 0.3)'
-                                        }}
-                                    >
-                                        {selectedProduct.title}
-                                    </motion.h1>
-
-                                    {/* Royal Lavender Accent Underline */}
-                                    <motion.div
-                                        initial={{ scaleX: 0 }}
-                                        animate={{ scaleX: 1 }}
-                                        transition={{ delay: 0.2, duration: 0.5 }}
-                                        className="w-32 h-1.5 mx-auto bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500 rounded-full"
-                                        style={{
-                                            boxShadow: '0 0 20px rgba(168, 85, 247, 0.6)'
-                                        }}
-                                    />
+                                {/* Gravitational Mesh Background */}
+                                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                                    <GravitationalMeshBackground />
                                 </div>
 
-                                {/* 2. Description Section */}
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3 }}
-                                    className="max-w-[650px] mx-auto mb-12"
+                                {/* Close Button */}
+                                <button
+                                    onClick={closeModal}
+                                    className="absolute top-6 right-6 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:rotate-90"
                                 >
-                                    <p className="text-gray-300 text-lg md:text-xl text-center leading-relaxed font-medium">
-                                        {selectedProduct.description}
-                                    </p>
-                                </motion.div>
+                                    <X className="w-5 h-5 text-white" />
+                                </button>
 
-                                {/* 3. CTA Buttons Section */}
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.4 }}
-                                    className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full"
-                                    style={{ marginTop: '1.5rem' }}
-                                >
-                                    {/* Primary: Get-it-Now */}
-                                    <button
-                                        onClick={handleGetItNow}
-                                        className="group relative bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-bold text-xl rounded-full transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/60"
-                                        style={{ padding: '30px 60px', minWidth: '240px' }}
-                                    >
-                                        {/* Glow effect on hover */}
-                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
-                                        <span className="relative flex items-center justify-center gap-4">
-                                            <span className="text-2xl">⭐</span>
-                                            Get-it-Now
-                                        </span>
-                                    </button>
+                                {/* Content Container */}
+                                <div className="relative z-10 flex flex-col items-center justify-center px-12 py-16 h-full min-h-[70vh]">
 
-                                    {/* Secondary: Buy Now */}
-                                    <button
-                                        onClick={handleBuyNow}
-                                        className="group relative bg-transparent hover:bg-purple-500/10 text-purple-400 font-bold text-xl rounded-full border-4 border-purple-500 hover:border-purple-400 transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/40"
-                                        style={{ padding: '30px 60px', minWidth: '240px' }}
+                                    {/* 1. Hero Title Section */}
+                                    <div className="text-center mb-8 max-w-[90%] mx-auto">
+                                        <motion.h1
+                                            initial={{ opacity: 0, y: -20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.1 }}
+                                            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight leading-tight px-4"
+                                            style={{
+                                                wordBreak: 'normal',
+                                                overflowWrap: 'break-word',
+                                                hyphens: 'manual',
+                                                textShadow: '0 0 40px rgba(168, 85, 247, 0.3)'
+                                            }}
+                                        >
+                                            {selectedProduct.title}
+                                        </motion.h1>
+
+                                        {/* Royal Lavender Accent Underline */}
+                                        <motion.div
+                                            initial={{ scaleX: 0 }}
+                                            animate={{ scaleX: 1 }}
+                                            transition={{ delay: 0.2, duration: 0.5 }}
+                                            className="w-32 h-1.5 mx-auto bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500 rounded-full"
+                                            style={{
+                                                boxShadow: '0 0 20px rgba(168, 85, 247, 0.6)'
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* 2. Description Section */}
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.3 }}
+                                        className="max-w-[650px] mx-auto mb-12"
                                     >
-                                        {/* Glow effect on hover */}
-                                        <div className="absolute inset-0 bg-purple-500/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
-                                        <span className="relative flex items-center justify-center gap-4">
-                                            <ShoppingCart className="w-8 h-8" />
-                                            Buy Now
-                                        </span>
-                                    </button>
-                                </motion.div>
-                            </div>
+                                        <p className="text-gray-300 text-lg md:text-xl text-center leading-relaxed font-medium">
+                                            {selectedProduct.description}
+                                        </p>
+                                    </motion.div>
+
+                                    {/* 3. CTA Buttons Section */}
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.4 }}
+                                        className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full mt-6 md:mt-8"
+                                    >
+                                        {/* Primary: Get-it-Now */}
+                                        <button
+                                            onClick={handleGetItNow}
+                                            className="group relative bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-bold text-lg md:text-xl rounded-full transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/60 w-full sm:w-auto px-10 md:px-14 py-5 md:py-7 flex items-center justify-center gap-3"
+                                        >
+                                            {/* Glow effect on hover */}
+                                            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
+                                            <span className="relative flex items-center justify-center gap-2">
+                                                <span className="text-xl md:text-2xl">⭐</span>
+                                                Get-it-Now
+                                            </span>
+                                        </button>
+
+                                        {/* Secondary: Buy Now */}
+                                        <button
+                                            onClick={handleBuyNow}
+                                            className="group relative bg-transparent hover:bg-purple-500/10 text-purple-400 font-bold text-lg md:text-xl rounded-full border-2 md:border-4 border-purple-500 hover:border-purple-400 transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/40 w-full sm:w-auto px-10 md:px-14 py-5 md:py-7 flex items-center justify-center gap-3"
+                                        >
+                                            {/* Glow effect on hover */}
+                                            <div className="absolute inset-0 bg-purple-500/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
+                                            <span className="relative flex items-center justify-center gap-2">
+                                                <ShoppingCart className="w-6 h-6 md:w-8 md:h-8" />
+                                                Buy Now
+                                            </span>
+                                        </button>
+                                    </motion.div>
+                                </div>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )
+                }
+            </AnimatePresence >
 
             {/* Payment Requirements Dialog */}
             <AnimatePresence>
-                {showPaymentDialog && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-                        onClick={() => setShowPaymentDialog(false)}
-                    >
+                {
+                    showPaymentDialog && (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="relative w-full max-w-2xl bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto"
-                            style={{ padding: '50px 45px' }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+                            onClick={() => setShowPaymentDialog(false)}
                         >
-                            <button
-                                onClick={() => setShowPaymentDialog(false)}
-                                className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="relative w-full max-w-2xl bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto p-8 md:p-12"
                             >
-                                <X className="w-5 h-5 text-white" />
-                            </button>
+                                <button
+                                    onClick={() => setShowPaymentDialog(false)}
+                                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                >
+                                    <X className="w-5 h-5 text-white" />
+                                </button>
 
-                            <h3 className="text-3xl font-bold text-white" style={{ marginBottom: '35px' }}>Payment Requirements</h3>
+                                <h3 className="text-3xl font-bold text-white mb-8">Payment Requirements</h3>
 
-                            <form onSubmit={handlePaymentSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                                <div>
-                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Product</label>
-                                    <input
-                                        type="text"
-                                        value={paymentForm.productName}
-                                        readOnly
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
-                                        style={{ padding: '16px 20px', fontSize: '16px' }}
-                                    />
-                                </div>
+                                <form onSubmit={handlePaymentSubmit} className="flex flex-col gap-6">
+                                    <div>
+                                        <label className="block text-base font-medium text-purple-300 mb-2">Product</label>
+                                        <input
+                                            type="text"
+                                            value={paymentForm.productName}
+                                            readOnly
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
+                                        />
+                                    </div>
 
-                                <div>
-                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Full Name</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={paymentForm.name}
-                                        onChange={(e) => setPaymentForm({ ...paymentForm, name: e.target.value })}
-                                        placeholder="John Doe"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                                        style={{ padding: '16px 20px', fontSize: '16px' }}
-                                    />
-                                </div>
+                                    <div>
+                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Full Name</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={paymentForm.name}
+                                            onChange={(e) => setPaymentForm({ ...paymentForm, name: e.target.value })}
+                                            placeholder="John Doe"
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 p-4 text-base"
+                                        />
+                                    </div>
 
-                                <div>
-                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Email Address</label>
-                                    <input
-                                        type="email"
-                                        required
-                                        value={paymentForm.email}
-                                        onChange={(e) => setPaymentForm({ ...paymentForm, email: e.target.value })}
-                                        placeholder="your@email.com"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                                        style={{ padding: '16px 20px', fontSize: '16px' }}
-                                    />
-                                </div>
+                                    <div>
+                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Email Address</label>
+                                        <input
+                                            type="email"
+                                            required
+                                            value={paymentForm.email}
+                                            onChange={(e) => setPaymentForm({ ...paymentForm, email: e.target.value })}
+                                            placeholder="your@email.com"
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
+                                        />
+                                    </div>
 
-                                <div>
-                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Contact Number</label>
-                                    <input
-                                        type="tel"
-                                        required
-                                        value={paymentForm.contact}
-                                        onChange={(e) => setPaymentForm({ ...paymentForm, contact: e.target.value })}
-                                        placeholder="+1 234 567 8900"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                                        style={{ padding: '16px 20px', fontSize: '16px' }}
-                                    />
-                                </div>
+                                    <div>
+                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Contact Number</label>
+                                        <input
+                                            type="tel"
+                                            required
+                                            value={paymentForm.contact}
+                                            onChange={(e) => setPaymentForm({ ...paymentForm, contact: e.target.value })}
+                                            placeholder="+1 234 567 8900"
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
+                                        />
+                                    </div>
 
-                                <div>
-                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Payment Method</label>
-                                    <select
-                                        required
-                                        value={paymentForm.paymentMethod}
-                                        onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
-                                        style={{ padding: '16px 20px', fontSize: '16px' }}
-                                    >
-                                        <option value="" className="bg-gray-900">Select payment method</option>
-                                        <option value="credit-card" className="bg-gray-900">Credit Card</option>
-                                        <option value="debit-card" className="bg-gray-900">Debit Card</option>
-                                        <option value="upi" className="bg-gray-900">UPI</option>
-                                        <option value="net-banking" className="bg-gray-900">Net Banking</option>
-                                        <option value="wallet" className="bg-gray-900">Digital Wallet</option>
-                                    </select>
-                                </div>
+                                    <div>
+                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Payment Method</label>
+                                        <select
+                                            required
+                                            value={paymentForm.paymentMethod}
+                                            onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value })}
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
+                                        >
+                                            <option value="" className="bg-gray-900">Select payment method</option>
+                                            <option value="credit-card" className="bg-gray-900">Credit Card</option>
+                                            <option value="debit-card" className="bg-gray-900">Debit Card</option>
+                                            <option value="upi" className="bg-gray-900">UPI</option>
+                                            <option value="net-banking" className="bg-gray-900">Net Banking</option>
+                                            <option value="wallet" className="bg-gray-900">Digital Wallet</option>
+                                        </select>
+                                    </div>
 
-                                <div>
-                                    <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Additional Requirements</label>
-                                    <textarea
-                                        value={paymentForm.requirements}
-                                        onChange={(e) => setPaymentForm({ ...paymentForm, requirements: e.target.value })}
-                                        placeholder="Any specific requirements or notes..."
-                                        rows={4}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
-                                        style={{ padding: '16px 20px', fontSize: '16px' }}
-                                    />
-                                </div>
+                                    <div>
+                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Additional Requirements</label>
+                                        <textarea
+                                            value={paymentForm.requirements}
+                                            onChange={(e) => setPaymentForm({ ...paymentForm, requirements: e.target.value })}
+                                            placeholder="Any specific requirements or notes..."
+                                            rows={4}
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                                            style={{ padding: '16px 20px', fontSize: '16px' }}
+                                        />
+                                    </div>
 
-                                <div className="flex gap-5" style={{ paddingTop: '20px' }}>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPaymentDialog(false)}
-                                        className="flex-1 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors border border-white/10 font-bold text-lg"
-                                        style={{ padding: '20px' }}
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold text-lg rounded-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50"
-                                        style={{ padding: '20px' }}
-                                    >
-                                        Proceed
-                                    </button>
-                                </div>
-                            </form>
+                                    <div className="flex gap-5" style={{ paddingTop: '20px' }}>
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPaymentDialog(false)}
+                                            className="flex-1 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors border border-white/10 font-bold text-lg"
+                                            style={{ padding: '20px' }}
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold text-lg rounded-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50"
+                                            style={{ padding: '20px' }}
+                                        >
+                                            Proceed
+                                        </button>
+                                    </div>
+                                </form>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    )
+                }
+            </AnimatePresence >
 
-        </main>
+        </main >
     );
 }

@@ -142,9 +142,9 @@ export const Navbar = () => {
                                         <div className="p-4 bg-white/[0.03] border-t border-white/10 group/footer">
                                             <Link
                                                 href="/contact"
-                                                className="flex items-center justify-center gap-2 text-sm font-medium text-gray-400 group-hover/footer:text-cyan-400 transition-colors"
+                                                className="flex items-center justify-center gap-2 text-sm font-medium text-gray-400 group-hover/footer:text-purple-400 transition-colors"
                                             >
-                                                Interested&quest; <span className="font-bold text-white group-hover/footer:text-cyan-400 transition-colors">Start your project</span>
+                                                Interested&quest; <span className="font-bold text-white group-hover/footer:text-purple-400 transition-colors">Start your project</span>
                                                 <ArrowRight size={14} className="group-hover/footer:translate-x-1 transition-transform" />
                                             </Link>
                                         </div>
@@ -157,7 +157,7 @@ export const Navbar = () => {
                                 onMouseEnter={() => setActive(null)}
                                 className={cn(
                                     "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
-                                    pathname === "/portfolio" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                    pathname === "/portfolio" ? "text-purple-400" : "text-white hover:text-purple-400"
                                 )}
                             >
                                 ECOSYSTEM
@@ -167,7 +167,7 @@ export const Navbar = () => {
                                 onMouseEnter={() => setActive(null)}
                                 className={cn(
                                     "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
-                                    pathname === "/about" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                    pathname === "/about" ? "text-purple-400" : "text-white hover:text-purple-400"
                                 )}
                             >
                                 About
@@ -178,7 +178,7 @@ export const Navbar = () => {
                                     onMouseEnter={() => setActive(null)}
                                     className={cn(
                                         "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
-                                        pathname === "/pricing" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                        pathname === "/pricing" ? "text-purple-400" : "text-white hover:text-purple-400"
                                     )}
                                 >
                                     Realm
@@ -190,7 +190,7 @@ export const Navbar = () => {
                                     onMouseEnter={() => setActive(null)}
                                     className={cn(
                                         "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
-                                        pathname === "/careers" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                        pathname === "/careers" ? "text-purple-400" : "text-white hover:text-purple-400"
                                     )}
                                 >
                                     Careers
@@ -201,7 +201,7 @@ export const Navbar = () => {
                                 onMouseEnter={() => setActive(null)}
                                 className={cn(
                                     "transition-colors font-bold text-[15px] uppercase tracking-wider whitespace-nowrap",
-                                    pathname === "/contact" ? "text-cyan-400" : "text-white hover:text-cyan-400"
+                                    pathname === "/contact" ? "text-purple-400" : "text-white hover:text-purple-400"
                                 )}
                             >
                                 Contact
@@ -266,7 +266,7 @@ export const Navbar = () => {
                                     Services
                                     <ChevronDown
                                         className={cn(
-                                            "transition-transform duration-300 text-cyan-400",
+                                            "transition-transform duration-300 text-purple-400",
                                             active === 'Services' ? "rotate-180" : ""
                                         )}
                                     />
@@ -295,7 +295,7 @@ export const Navbar = () => {
                                                         key={subService.href}
                                                         href={subService.href}
                                                         onClick={() => setIsMobileMenuOpen(false)}
-                                                        className="text-lg text-gray-400 hover:text-cyan-400 py-3 px-4 rounded-xl hover:bg-white/5 transition-colors font-bold"
+                                                        className="text-lg text-gray-400 hover:text-purple-400 py-3 px-4 rounded-xl hover:bg-white/5 transition-colors font-bold"
                                                     >
                                                         {subService.title}
                                                     </Link>
@@ -311,7 +311,7 @@ export const Navbar = () => {
                                     key={link.name}
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5 hover:text-cyan-400 transition-colors"
+                                    className="text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5 hover:text-purple-400 transition-colors"
                                 >
                                     {link.name}
                                 </Link>

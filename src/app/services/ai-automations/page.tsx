@@ -118,7 +118,7 @@ export default function AIAutomationsPage() {
             heroTitle="Powerful"
             heroHighlight="AI Automations"
             heroDescription="Automate your workflows with custom HENU AI agents. Save time, cut costs, boost efficiency."
-            heroAccentColor="cyan"
+            heroAccentColor="purple"
             heroAnimation={<AIHeroAnimation />}
             features={features}
             process={process}

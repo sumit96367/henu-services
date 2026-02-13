@@ -51,28 +51,28 @@ const contactInfo = [
         title: 'Email Us',
         value: 'henuosr@gmail.com',
         link: 'mailto:henuosr@gmail.com',
-        color: 'cyan'
+        color: 'purple'
     },
     {
         icon: Phone,
         title: 'Call Us',
         value: '+91 8094100513',
         link: 'tel:+918094100513',
-        color: 'cyan'
+        color: 'purple'
     },
     {
         icon: MapPin,
         title: 'Visit Us',
         value: 'Pali, Rajasthan, India',
         link: 'https://maps.app.goo.gl/BkdhNgWXiS1KSYNk8',
-        color: 'amber'
+        color: 'indigo'
     },
     {
         icon: Clock,
         title: 'Working Hours',
         value: 'Mon - Sat: 9AM - 7PM',
         link: null,
-        color: 'amber'
+        color: 'indigo'
     }
 ];
 
@@ -213,7 +213,7 @@ export default function ContactPage() {
                     <motion.div
                         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(109, 40, 217, 0.15) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -225,7 +225,7 @@ export default function ContactPage() {
                     <motion.div
                         className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -264,7 +264,7 @@ export default function ContactPage() {
                 >
                     <div className="flex flex-col items-center gap-2">
                         <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Scroll to Explore</span>
-                        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/50 to-transparent relative overflow-hidden">
+                        <div className="w-[1px] h-12 bg-gradient-to-b from-purple-500/50 to-transparent relative overflow-hidden">
                             <motion.div
                                 animate={{ y: ["-100%", "100%"] }}
                                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -276,7 +276,7 @@ export default function ContactPage() {
             </section>
 
             {/* Contact Info Section - Refined 4-Column Grid */}
-            <section className="w-full flex flex-col items-center bg-transparent" style={{ paddingTop: '60px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+            <section className="section relative overflow-hidden bg-[#050505] py-20 md:py-32">
                 <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full">
                         {contactInfo.map((info, index) => (
@@ -293,7 +293,7 @@ export default function ContactPage() {
                                             {/* Accent Background Glow */}
                                             <div className={cn(
                                                 "absolute inset-0 rounded-[1.5rem] opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 blur-[60px]",
-                                                info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                                info.color === 'purple' ? 'bg-purple-500' : 'bg-indigo-500'
                                             )} />
 
                                             <div className="relative h-full flex flex-col items-center justify-center bg-[#050505] border border-white/5 rounded-[1.5rem] overflow-hidden group-hover/card:border-white/20 transition-all duration-500" style={{ padding: '48px 24px' }}>
@@ -304,7 +304,7 @@ export default function ContactPage() {
 
                                                 <div className={cn(
                                                     "w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-all duration-700 group-hover/card:scale-110",
-                                                    info.color === 'cyan' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_30px_rgba(0,212,255,0.1)]' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_30px_rgba(255,149,0,0.1)]'
+                                                    info.color === 'purple' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-[0_0_30px_rgba(109,40,217,0.1)]' : 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-[0_0_30px_rgba(79,70,229,0.1)]'
                                                 )}>
                                                     <info.icon size={24} />
                                                 </div>
@@ -319,7 +319,7 @@ export default function ContactPage() {
                                                 {/* Bottom Accent Bar */}
                                                 <div className={cn(
                                                     "absolute bottom-0 left-6 right-6 h-[2px] transition-all duration-700 opacity-0 group-hover/card:opacity-100",
-                                                    info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                                    info.color === 'purple' ? 'bg-purple-500' : 'bg-indigo-500'
                                                 )} />
                                             </div>
                                         </div>
@@ -328,7 +328,7 @@ export default function ContactPage() {
                                     <div className="h-full group/card relative transition-all duration-500">
                                         <div className={cn(
                                             "absolute inset-0 rounded-[1.5rem] opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 blur-[60px]",
-                                            info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                            info.color === 'purple' ? 'bg-purple-500' : 'bg-indigo-500'
                                         )} />
 
                                         <div className="relative h-full flex flex-col items-center justify-center bg-[#050505] border border-white/5 rounded-[1.5rem] overflow-hidden group-hover/card:border-white/20 transition-all duration-500" style={{ padding: '48px 24px' }}>
@@ -338,7 +338,7 @@ export default function ContactPage() {
 
                                             <div className={cn(
                                                 "w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-all duration-700 group-hover/card:scale-110",
-                                                info.color === 'cyan' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_30px_rgba(0,212,255,0.1)]' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-[0_0_30px_rgba(255,149,0,0.1)]'
+                                                info.color === 'purple' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-[0_0_30px_rgba(109,40,217,0.1)]' : 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-[0_0_30px_rgba(79,70,229,0.1)]'
                                             )}>
                                                 <info.icon size={24} />
                                             </div>
@@ -352,7 +352,7 @@ export default function ContactPage() {
 
                                             <div className={cn(
                                                 "absolute bottom-0 left-6 right-6 h-[2px] transition-all duration-700 opacity-0 group-hover/card:opacity-100",
-                                                info.color === 'cyan' ? 'bg-cyan-500' : 'bg-amber-500'
+                                                info.color === 'purple' ? 'bg-purple-500' : 'bg-indigo-500'
                                             )} />
                                         </div>
                                     </div>
@@ -364,7 +364,7 @@ export default function ContactPage() {
             </section>
 
             {/* Form Section */}
-            <section className="w-full flex flex-col items-center bg-transparent relative" id="inquiry" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+            <section className="w-full flex flex-col items-center bg-transparent relative py-24 px-6 md:px-12" id="inquiry">
                 <div style={{ width: '100%', maxWidth: '1024px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
                     <div className="flex flex-col gap-12">
 
@@ -384,15 +384,15 @@ export default function ContactPage() {
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                                 <div className="space-y-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">
-                                        <CheckCircle className="w-6 h-6 text-cyan-400" />
+                                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
+                                        <CheckCircle className="w-6 h-6 text-purple-400" />
                                     </div>
                                     <h4 className="text-white font-bold text-xl">Quick Turnaround</h4>
                                     <p className="text-gray-500">Expect a detailed response within 24 business hours.</p>
                                 </div>
                                 <div className="space-y-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
-                                        <Search className="w-6 h-6 text-amber-400" />
+                                    <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                                        <Search className="w-6 h-6 text-indigo-400" />
                                     </div>
                                     <h4 className="text-white font-bold text-xl">Expert Analysis</h4>
                                     <p className="text-gray-500">Your inquiry is reviewed by senior sector leads, not bots.</p>
@@ -416,14 +416,14 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="text-center flex flex-col items-center justify-center bg-[#0A0A0A] border border-white/5" style={{ padding: '80px' }}>
+                                        <GlowingCard className="h-full" innerClassName="text-center flex flex-col items-center justify-center !bg-black border border-white/5 p-12 md:p-20">
                                             <motion.div
                                                 initial={{ scale: 0 }}
                                                 animate={{ scale: 1 }}
                                                 transition={{ type: 'spring', duration: 0.5, delay: 0.2 }}
-                                                className="w-32 h-32 mx-auto mb-10 rounded-full bg-green-500/20 flex items-center justify-center border-4 border-green-500/20 shadow-3xl shadow-green-500/10"
+                                                className="w-32 h-32 mx-auto mb-10 rounded-full bg-purple-500/20 flex items-center justify-center border-4 border-purple-500/20 shadow-3xl shadow-purple-500/10"
                                             >
-                                                <CheckCircle className="w-16 h-16 text-green-400" />
+                                                <CheckCircle className="w-16 h-16 text-purple-400" />
                                             </motion.div>
                                             <h3 className="text-5xl font-bold text-white mb-6">Inquiry Sent!</h3>
                                             <p className="text-2xl text-gray-400 mb-12 max-w-sm leading-relaxed">
@@ -447,7 +447,7 @@ export default function ContactPage() {
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         className="h-full"
                                     >
-                                        <GlowingCard className="h-full" innerClassName="bg-[#0A0A0A] border border-white/5" style={{ padding: '64px' }}>
+                                        <GlowingCard className="h-full" innerClassName="!bg-black border border-white/5 !p-10 md:!p-16">
                                             {/* Step Indicator */}
                                             <StepIndicator currentStep={currentStep} totalSteps={2} className="mb-10" />
 
@@ -461,7 +461,7 @@ export default function ContactPage() {
                                                         transition={{ duration: 0.3 }}
                                                         className="space-y-12"
                                                     >
-                                                        <div className="space-y-12">
+                                                        <div className="space-y-16">
                                                             <div>
                                                                 <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">
                                                                     Let&apos;s Start with <span className="gradient-text">Your Details</span>
@@ -469,11 +469,11 @@ export default function ContactPage() {
                                                                 <p className="text-lg text-gray-400">Tell us who you are</p>
                                                             </div>
 
-                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 !mt-16">
                                                                 <div className="space-y-5">
                                                                     <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Full Name</label>
                                                                     <div className="relative group flex items-center">
-                                                                        <User className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                        <User className="absolute left-5 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
                                                                         <input
                                                                             required
                                                                             name="name"
@@ -481,7 +481,7 @@ export default function ContactPage() {
                                                                             value={formState.name}
                                                                             onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
                                                                             placeholder="John Doe"
-                                                                            className="w-full bg-black border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium text-sm"
+                                                                            className="w-full bg-white/5 border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all font-medium text-sm"
                                                                         />
                                                                     </div>
                                                                 </div>
@@ -489,7 +489,7 @@ export default function ContactPage() {
                                                                 <div className="space-y-5">
                                                                     <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Email Address</label>
                                                                     <div className="relative group flex items-center">
-                                                                        <Mail className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                        <Mail className="absolute left-5 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
                                                                         <input
                                                                             required
                                                                             name="email"
@@ -497,23 +497,23 @@ export default function ContactPage() {
                                                                             value={formState.email}
                                                                             onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
                                                                             placeholder="john@company.com"
-                                                                            className="w-full bg-black border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium text-sm"
+                                                                            className="w-full bg-white/5 border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all font-medium text-sm"
                                                                         />
                                                                     </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div className="flex justify-end pt-4">
+                                                            <div className="flex justify-end pt-12 md:pt-16">
                                                                 <motion.button
                                                                     whileHover={{ scale: 1.05 }}
                                                                     whileTap={{ scale: 0.95 }}
                                                                     type="button"
                                                                     onClick={handleContinue}
                                                                     disabled={!formState.name || !formState.email}
-                                                                    className="btn-primary"
+                                                                    className="btn-primary !py-3.5 !px-8 text-sm !rounded-xl font-bold uppercase tracking-widest text-[12px]"
                                                                 >
                                                                     Continue
-                                                                    <ArrowRight size={18} />
+                                                                    <ArrowRight size={14} />
                                                                 </motion.button>
                                                             </div>
                                                         </div>
@@ -561,11 +561,11 @@ export default function ContactPage() {
                                                                 Budget Range
                                                             </label>
                                                             <div className="relative group">
-                                                                <IndianRupee className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                <IndianRupee className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
                                                                 <select
                                                                     value={selectedBudgetId}
                                                                     onChange={(e) => handleBudgetSelect(e.target.value)}
-                                                                    className="w-full bg-black border border-white/10 rounded-2xl py-5 !pl-16 !pr-10 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium appearance-none cursor-pointer text-base"
+                                                                    className="w-full bg-white/5 border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all font-medium appearance-none cursor-pointer text-sm"
                                                                 >
                                                                     <option value="" disabled className="bg-[#050505]">Select your budget range...</option>
                                                                     {budgetOptions.map((budget) => (
@@ -581,10 +581,10 @@ export default function ContactPage() {
                                                         </div>
 
                                                         {/* Project Brief */}
-                                                        <div className="space-y-6 !mt-16">
+                                                        <div className="space-y-6 !mt-20">
                                                             <label className="text-xl font-bold text-gray-300 block px-1 tracking-wider uppercase text-[14px]">Project Brief</label>
                                                             <div className="relative group">
-                                                                <MessageSquare className="absolute left-6 top-6 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                                <MessageSquare className="absolute left-6 top-7 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
                                                                 <textarea
                                                                     required
                                                                     name="message"
@@ -592,7 +592,7 @@ export default function ContactPage() {
                                                                     value={formState.message}
                                                                     onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
                                                                     placeholder="Walk us through your vision, challenges, and timeline..."
-                                                                    className="w-full bg-black border border-white/10 rounded-2xl !pt-6 !pl-16 !pr-6 !pb-6 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium resize-none text-base leading-relaxed"
+                                                                    className="w-full bg-white/5 border border-white/10 rounded-xl !pt-5 !pl-14 !pr-4 !pb-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-all font-medium resize-none text-sm leading-relaxed"
                                                                 ></textarea>
                                                             </div>
                                                         </div>
@@ -614,17 +614,17 @@ export default function ContactPage() {
                                                                 whileTap={{ scale: 0.95 }}
                                                                 type="submit"
                                                                 disabled={isSubmitting || selectedServiceIds.length === 0 || !formState.message}
-                                                                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                                                                className="btn-primary !py-3.5 !px-8 text-sm !rounded-xl font-bold uppercase tracking-widest text-[12px] disabled:opacity-50 disabled:cursor-not-allowed"
                                                             >
                                                                 {isSubmitting ? (
                                                                     <span className="flex items-center gap-2">
-                                                                        <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                                                                        <div className="w-3 h-3 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                                                                         Sending...
                                                                     </span>
                                                                 ) : (
                                                                     <>
                                                                         Send Message
-                                                                        <Send className="w-4 h-4" />
+                                                                        <Send className="w-3.5 h-3.5" />
                                                                     </>
                                                                 )}
                                                             </motion.button>

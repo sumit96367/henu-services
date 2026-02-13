@@ -157,8 +157,7 @@ export default function Casestudies() {
 
     return (
         <section
-            className="py-24 md:py-[120px] bg-transparent"
-            style={{ marginTop: '1cm' }}
+            className="bg-transparent"
             aria-labelledby="case-studies-heading"
         >
             <div className="container mx-auto px-6">

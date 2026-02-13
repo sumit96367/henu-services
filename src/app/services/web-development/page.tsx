@@ -126,7 +126,7 @@ export default function WebDevelopmentPage() {
     const heroTitle = "Innovative";
     const heroHighlight = "Website Development";
     const heroDescription = "Transform your vision into high-converting websites. We craft digital experiences that drive traffic, sales, and loyalty.";
-    const heroAccentColor = "cyan";
+    const heroAccentColor = "purple";
 
     return (
         <main>

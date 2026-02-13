@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { updateEnrollmentStatusByInternalId, updatePaymentStatusByInternalId } from '@/lib/data-store';
+import { db } from '@/lib/firebase';
+import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { generateInvoicePDF } from '@/lib/invoice-generator';
 import { sendInvoiceEmail } from '@/lib/email-service';
 
@@ -18,19 +21,21 @@ export async function POST(req: NextRequest) {
             billingAddress
         } = body;
 
-        // TODO: Verify Razorpay payment signature
-        // const crypto = require('crypto');
-        // const generatedSignature = crypto
-        //     .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
-        //     .update(`${orderId}|${paymentId}`)
-        //     .digest('hex');
-        //
-        // if (generatedSignature !== signature) {
-        //     return NextResponse.json(
-        //         { error: 'Invalid payment signature' },
-        //         { status: 400 }
-        //     );
-        // }
+        // Verify Razorpay payment signature
+        const crypto = require('crypto');
+        const sign = orderId + '|' + paymentId;
+        const expectedSignature = crypto
+            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+            .update(sign.toString())
+            .digest('hex');
+
+        if (expectedSignature !== body.signature) {
+            console.error('Invalid signature:', { expectedSignature, receivedSignature: body.signature });
+            return NextResponse.json(
+                { error: 'Invalid payment signature' },
+                { status: 400 }
+            );
+        }
 
         // Generate invoice data
         const invoiceData = {
@@ -46,6 +51,31 @@ export async function POST(req: NextRequest) {
             paymentId: paymentId || `PAY_${Date.now()}`,
             billingAddress
         };
+
+        // Update status in database
+        try {
+            // 1. Update orders collection (using firestoreId if provided)
+            if (body.firestoreId) {
+                const orderRef = doc(db, 'orders', body.firestoreId);
+                await updateDoc(orderRef, {
+                    status: 'Completed',
+                    statusColor: 'green',
+                    paymentId: paymentId,
+                    updatedAt: serverTimestamp()
+                });
+            }
+
+            // 2. Update enrollments and payments
+            if (body.enrollmentId) {
+                await updateEnrollmentStatusByInternalId(body.enrollmentId, 'completed');
+            }
+            if (orderId) {
+                await updatePaymentStatusByInternalId(orderId, 'paid');
+            }
+        } catch (dbError) {
+            console.error('Database update error:', dbError);
+            // Continue even if DB update fails, as payment is verified
+        }
 
         // Generate PDF invoice
         const pdfBuffer = await generateInvoicePDF(invoiceData);

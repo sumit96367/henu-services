@@ -65,7 +65,7 @@ const HeroSection = () => {
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(109, 40, 217, 0.15) 0%, transparent 70%)',
             filter: 'blur(60px)'
           }}
           animate={{
@@ -77,7 +77,7 @@ const HeroSection = () => {
         <motion.div
           className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, transparent 70%)',
             filter: 'blur(60px)'
           }}
           animate={{
@@ -99,7 +99,7 @@ const HeroSection = () => {
 
 
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-2 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-4 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start px-2">
               <PremiumTextReveal text="Architecting Your" delay={0.3} />
               <PremiumTextReveal text="Digital Future." className="gradient-text" delay={0.8} />
             </h1>
@@ -109,7 +109,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-lg md:text-xl text-gray-400 max-w-xl mb-8"
+              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mb-8 px-4 lg:px-0"
             >
               From AI-driven development to government grants and legal compliance.
               We <span className="gradient-text font-semibold">Build, Secure, and Fund</span> your vision.
@@ -120,13 +120,13 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="flex flex-wrap justify-center lg:justify-start gap-4"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 px-4 lg:px-0"
             >
-              <Link href="/services" className="btn-primary">
+              <Link href="/services" className="btn-primary w-full sm:w-auto">
                 Start Your Project
                 <ArrowRight size={18} />
               </Link>
-              <Link href="/services" className="btn-secondary">
+              <Link href="/services" className="btn-secondary w-full sm:w-auto">
                 View Services
               </Link>
             </motion.div>
@@ -137,7 +137,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="flex-1 relative h-[400px] sm:h-[500px] lg:h-[600px] w-full"
+            className="flex-1 relative h-[300px] sm:h-[450px] lg:h-[600px] w-full"
           >
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
@@ -282,7 +282,7 @@ const HenuOSIntroductionSection = () => {
   return (
     <section className="section bg-transparent relative overflow-hidden" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       {/* Background Light Effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -294,7 +294,7 @@ const HenuOSIntroductionSection = () => {
           >
 
 
-            <h2 className="text-5xl md:text-7xl font-black text-white mb-8 leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 md:mb-8 leading-tight">
               Powering the <br />
               <span className="gradient-text">New Millennium.</span>
             </h2>
@@ -307,8 +307,8 @@ const HenuOSIntroductionSection = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 border border-cyan-500/20 shadow-[0_0_20px_rgba(0,212,255,0.1)]">
-                  <Cpu className="w-7 h-7 text-cyan-400" />
+                <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center shrink-0 border border-purple-500/20 shadow-[0_0_20px_rgba(109,40,217,0.1)]">
+                  <Cpu className="w-7 h-7 text-purple-400" />
                 </div>
                 <div className="pt-1">
                   <h4 className="text-lg font-bold text-white mb-1">AI-Native</h4>
@@ -317,8 +317,8 @@ const HenuOSIntroductionSection = () => {
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center shrink-0 border border-amber-500/20 shadow-[0_0_20px_rgba(255,149,0,0.1)]">
-                  <ShieldCheck className="w-7 h-7 text-amber-400" />
+                <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center shrink-0 border border-indigo-500/20 shadow-[0_0_20px_rgba(79,70,229,0.1)]">
+                  <ShieldCheck className="w-7 h-7 text-indigo-400" />
                 </div>
                 <div className="pt-1">
                   <h4 className="text-lg font-bold text-white mb-1">Quantum-Ready</h4>
@@ -344,7 +344,7 @@ const HenuOSIntroductionSection = () => {
             transition={{ duration: 1 }}
             className="relative"
           >
-            <div className="absolute inset-0 bg-cyan-500/20 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute inset-0 bg-indigo-500/20 blur-[100px] rounded-full pointer-events-none" />
             <GlowingCard className="relative z-10" innerClassName="p-0 overflow-hidden border-white/10 bg-[#0A0A0A] backdrop-blur-xl">
               <div className="aspect-video relative group">
                 <iframe
@@ -361,12 +361,12 @@ const HenuOSIntroductionSection = () => {
                 {/* Floating UI Elements Overlay */}
                 <div className="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-cyan-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,212,255,0.5)]">
+                    <div className="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.5)]">
                       <Zap size={20} className="text-white fill-white" />
                     </div>
                     <div>
                       <div className="text-white font-bold text-sm">SYSTEM ACTIVE</div>
-                      <div className="text-cyan-400 text-xs font-mono">LIVE FEED: ENCRYPTED</div>
+                      <div className="text-indigo-400 text-xs font-mono">LIVE FEED: ENCRYPTED</div>
                     </div>
                   </div>
                 </div>
@@ -374,7 +374,7 @@ const HenuOSIntroductionSection = () => {
             </GlowingCard>
 
             {/* Ambient secondary glow */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-500/20 blur-[60px] rounded-full" />
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-indigo-500/20 blur-[60px] rounded-full" />
           </motion.div>
         </div>
       </div>
@@ -390,56 +390,56 @@ const services = [
     id: 'web-dev',
     title: 'Website Development',
     icon: Globe,
-    color: 'cyan',
+    color: 'purple',
     visual: 'devices'
   },
   {
     id: 'backend',
     title: 'Backend Development',
     icon: Server,
-    color: 'cyan',
+    color: 'purple',
     visual: 'devices'
   },
   {
     id: 'mobile-app',
     title: 'Mobile App Development',
     icon: Smartphone,
-    color: 'cyan',
+    color: 'purple',
     visual: 'devices'
   },
   {
     id: 'ai-automation',
     title: 'AI Automations',
     icon: Bot,
-    color: 'cyan',
+    color: 'purple',
     visual: 'ai'
   },
   {
     id: 'graphic-design',
     title: 'Graphic Design',
     icon: Palette,
-    color: 'cyan',
+    color: 'purple',
     visual: 'marketing'
   },
   {
     id: 'digital-marketing',
     title: 'Digital Marketing & Ads',
     icon: Megaphone,
-    color: 'cyan',
+    color: 'purple',
     visual: 'marketing'
   },
   {
     id: 'legal',
     title: 'Legal Services',
     icon: Scale,
-    color: 'amber',
+    color: 'indigo',
     visual: 'legal'
   },
   {
     id: 'funding',
     title: 'Funding Solutions',
     icon: Coins,
-    color: 'amber',
+    color: 'indigo',
     visual: 'grants'
   },
 ];
@@ -454,17 +454,17 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
           <div className="relative w-full h-full flex items-center justify-center">
             {/* Laptop Frame */}
             <div className="relative scale-75 sm:scale-90 md:scale-100">
-              <div className="w-64 h-40 border-2 border-cyan-500/30 rounded-lg bg-gradient-to-br from-cyan-500/5 to-transparent">
-                <div className="absolute inset-2 border border-cyan-500/20 rounded">
-                  <div className="h-3 border-b border-cyan-500/20 flex items-center px-2 gap-1">
+              <div className="w-64 h-40 border-2 border-purple-500/30 rounded-lg bg-gradient-to-br from-purple-500/5 to-transparent">
+                <div className="absolute inset-2 border border-purple-500/20 rounded">
+                  <div className="h-3 border-b border-purple-500/20 flex items-center px-2 gap-1">
                     <div className="w-1.5 h-1.5 rounded-full bg-red-500/60" />
                     <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/60" />
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500/60" />
                   </div>
                   <div className="p-2 space-y-1">
-                    <div className="h-1 w-3/4 bg-cyan-500/30 rounded" />
-                    <div className="h-1 w-1/2 bg-cyan-500/20 rounded" />
-                    <div className="h-1 w-2/3 bg-cyan-500/20 rounded" />
+                    <div className="h-1 w-3/4 bg-purple-500/30 rounded" />
+                    <div className="h-1 w-1/2 bg-purple-500/20 rounded" />
+                    <div className="h-1 w-2/3 bg-purple-500/20 rounded" />
                   </div>
                 </div>
               </div>
@@ -473,16 +473,16 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
 
             {/* Mobile Frame */}
             <motion.div
-              className="absolute -right-8 top-8 w-20 h-36 border-2 border-cyan-500/30 rounded-xl bg-gradient-to-br from-cyan-500/5 to-transparent"
+              className="absolute -right-8 top-8 w-20 h-36 border-2 border-purple-500/30 rounded-xl bg-gradient-to-br from-purple-500/5 to-transparent"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
               <div className="h-full p-1">
-                <div className="h-full border border-cyan-500/20 rounded-lg p-1">
-                  <div className="w-6 h-1 bg-cyan-500/30 rounded mx-auto mb-1" />
+                <div className="h-full border border-purple-500/20 rounded-lg p-1">
+                  <div className="w-6 h-1 bg-purple-500/30 rounded mx-auto mb-1" />
                   <div className="space-y-1">
-                    <div className="h-1 w-3/4 bg-cyan-500/20 rounded" />
-                    <div className="h-1 w-1/2 bg-cyan-500/20 rounded" />
+                    <div className="h-1 w-3/4 bg-purple-500/20 rounded" />
+                    <div className="h-1 w-1/2 bg-purple-500/20 rounded" />
                   </div>
                 </div>
               </div>
@@ -496,7 +496,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
             {/* Chat Interface */}
             <div className="w-full max-w-[280px] sm:max-w-xs md:w-72 h-48 sm:h-52 md:h-56 glass rounded-xl overflow-hidden">
               <div className="h-8 border-b border-white/10 flex items-center px-4 gap-2">
-                <Bot className="w-4 h-4 text-cyan-400" />
+                <Bot className="w-4 h-4 text-purple-400" />
                 <span className="text-xs text-gray-400">AI Assistant</span>
               </div>
               <div className="p-4 space-y-3">
@@ -506,8 +506,8 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.5 }}
                 >
-                  <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                    <Bot className="w-3 h-3 text-cyan-400" />
+                  <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <Bot className="w-3 h-3 text-purple-400" />
                   </div>
                   <div className="bg-white/5 rounded-lg px-3 py-2 text-xs text-gray-300 max-w-[180px]">
                     How can I help you today?
@@ -520,7 +520,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 1, duration: 0.5 }}
                 >
-                  <div className="bg-cyan-500/20 rounded-lg px-3 py-2 text-xs text-cyan-200 max-w-[180px]">
+                  <div className="bg-purple-500/20 rounded-lg px-3 py-2 text-xs text-purple-200 max-w-[180px]">
                     Build an AI agent
                   </div>
                 </motion.div>
@@ -532,22 +532,22 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1.5 }}
                 >
-                  <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                    <Bot className="w-3 h-3 text-cyan-400" />
+                  <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center">
+                    <Bot className="w-3 h-3 text-purple-400" />
                   </div>
                   <div className="bg-white/5 rounded-lg px-3 py-2 flex gap-1">
                     <motion.div
-                      className="w-1.5 h-1.5 rounded-full bg-cyan-400"
+                      className="w-1.5 h-1.5 rounded-full bg-purple-400"
                       animate={{ opacity: [0.3, 1, 0.3] }}
                       transition={{ duration: 1, repeat: Infinity, delay: 0 }}
                     />
                     <motion.div
-                      className="w-1.5 h-1.5 rounded-full bg-cyan-400"
+                      className="w-1.5 h-1.5 rounded-full bg-purple-400"
                       animate={{ opacity: [0.3, 1, 0.3] }}
                       transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
                     />
                     <motion.div
-                      className="w-1.5 h-1.5 rounded-full bg-cyan-400"
+                      className="w-1.5 h-1.5 rounded-full bg-purple-400"
                       animate={{ opacity: [0.3, 1, 0.3] }}
                       transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
                     />
@@ -560,7 +560,7 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
                 {Array.from({ length: 5 }).map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute text-[8px] font-mono text-cyan-400 whitespace-nowrap"
+                    className="absolute text-[8px] font-mono text-purple-400 whitespace-nowrap"
                     style={{ top: `${20 + i * 20}%`, left: '-100%' }}
                     animate={{ x: ['0%', '300%'] }}
                     transition={{ duration: 8 + i * 2, repeat: Infinity, delay: i * 0.5 }}
@@ -580,34 +580,34 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
             <div className="relative scale-75 sm:scale-90 md:scale-100">
               {/* Document */}
               <motion.div
-                className="w-48 h-64 border border-amber-500/30 rounded-lg bg-gradient-to-br from-amber-500/5 to-transparent p-4"
+                className="w-48 h-64 border border-indigo-500/30 rounded-lg bg-gradient-to-br from-indigo-500/5 to-transparent p-4"
                 animate={{ rotateY: [0, 10, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <div className="space-y-2 mb-4">
-                  <div className="h-1.5 w-3/4 bg-amber-500/30 rounded" />
-                  <div className="h-1.5 w-1/2 bg-amber-500/20 rounded" />
-                  <div className="h-1.5 w-2/3 bg-amber-500/20 rounded" />
+                  <div className="h-1.5 w-3/4 bg-indigo-500/30 rounded" />
+                  <div className="h-1.5 w-1/2 bg-indigo-500/20 rounded" />
+                  <div className="h-1.5 w-2/3 bg-indigo-500/20 rounded" />
                 </div>
                 <div className="flex items-end justify-between h-24 gap-2">
                   <motion.div
-                    className="w-6 bg-gradient-to-t from-amber-500/40 to-amber-500/20 rounded-t"
+                    className="w-6 bg-gradient-to-t from-indigo-500/40 to-indigo-500/20 rounded-t"
                     animate={{ height: ['30%', '60%', '30%'] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
                   <motion.div
-                    className="w-6 bg-gradient-to-t from-amber-500/50 to-amber-500/30 rounded-t"
+                    className="w-6 bg-gradient-to-t from-indigo-500/50 to-indigo-500/30 rounded-t"
                     animate={{ height: ['50%', '80%', '50%'] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
                   />
                   <motion.div
-                    className="w-6 bg-gradient-to-t from-amber-500/60 to-amber-500/40 rounded-t"
+                    className="w-6 bg-gradient-to-t from-indigo-500/60 to-indigo-500/40 rounded-t"
                     animate={{ height: ['40%', '100%', '40%'] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
                   />
                   <motion.div
-                    className="w-6 bg-gradient-to-t from-amber-500/70 to-amber-500/50 rounded-t"
+                    className="w-6 bg-gradient-to-t from-indigo-500/70 to-indigo-500/50 rounded-t"
                     animate={{ height: ['60%', '90%', '60%'] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 0.9 }}
                   />
@@ -616,10 +616,10 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
 
               {/* Floating coins */}
               <motion.div
-                className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-xs font-bold text-white shadow-lg"
+                className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-lg"
                 animate={{ y: [0, -10, 0], rotate: [0, 360] }}
                 transition={{ duration: 4, repeat: Infinity }}
-                style={{ boxShadow: '0 0 20px rgba(255, 149, 0, 0.4)' }}
+                style={{ boxShadow: '0 0 20px rgba(79, 70, 229, 0.4)' }}
               >
                 ₹
               </motion.div>
@@ -631,9 +631,9 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative">
-              <Scale className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 text-amber-500/50" />
+              <Scale className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 text-indigo-500/50" />
               <motion.div
-                className="absolute inset-0 border-2 border-amber-500/20 rounded-full"
+                className="absolute inset-0 border-2 border-indigo-500/20 rounded-full"
                 animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.2, 0.5] }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
@@ -645,20 +645,20 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative">
-              <Megaphone className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 text-cyan-500/50" />
+              <Megaphone className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-indigo-500/50" />
               <motion.div
                 className="absolute -right-8 top-0"
                 animate={{ x: [0, 20, 0], opacity: [0, 1, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-transparent rounded" />
+                <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-transparent rounded" />
               </motion.div>
               <motion.div
                 className="absolute -right-4 top-8"
                 animate={{ x: [0, 30, 0], opacity: [0, 1, 0] }}
                 transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
               >
-                <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-transparent rounded" />
+                <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-transparent rounded" />
               </motion.div>
             </div>
           </div>
@@ -733,7 +733,7 @@ const ServiceMatrixSection = () => {
                 onClick={() => setActiveService(service)}
               >
                 <div className="flex items-center gap-4">
-                  <service.icon className={`w-6 h-6 ${activeService.id === service.id ? (service.color === 'cyan' ? 'text-cyan-400' : 'text-amber-400') : 'text-gray-500'}`} />
+                  <service.icon className={`w-6 h-6 ${activeService.id === service.id ? (service.color === 'purple' ? 'text-purple-400' : 'text-indigo-400') : 'text-gray-500'}`} />
                   <span>{service.title}</span>
                   <ChevronRight className={`w-5 h-5 ml-auto transition-all ${activeService.id === service.id ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'}`} />
                 </div>
@@ -768,8 +768,8 @@ const WhyChooseUsSection = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Why Choose <span className="text-green-400">Henu</span>{" "}
-              <span className="text-amber-400">OS</span>&quest;
+              Why Choose <span className="text-purple-400">Henu</span>{" "}
+              <span className="text-indigo-400">OS</span>&quest;
             </h2>
             <p className="text-gray-400 text-lg mb-8">
               We combine technical excellence with business acumen to deliver solutions that drive real results.
@@ -784,8 +784,8 @@ const WhyChooseUsSection = () => {
                   transition={{ delay: index * 0.1 }}
                   className="flex items-center gap-4"
                 >
-                  <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                    <Check className="w-4 h-4 text-green-400" />
+                  <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-4 h-4 text-purple-400" />
                   </div>
                   <span className="text-gray-300">{item}</span>
                 </motion.li>
@@ -801,15 +801,15 @@ const WhyChooseUsSection = () => {
           >
             <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden relative" style={{ padding: '80px 40px' }}>
               {/* Background Decorative Element */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-green-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-              <div className="w-16 h-16 rounded-2xl bg-green-500/10 flex items-center justify-center mb-8 border border-green-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-green-500/5">
-                <Zap className="w-8 h-8 text-green-400" />
+              <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-8 border border-purple-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-purple-500/5">
+                <Zap className="w-8 h-8 text-purple-400" />
               </div>
 
               <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tighter">
-                <span className="text-green-400">200</span>
-                <span className="text-amber-400">+</span>
+                <span className="text-purple-400">200</span>
+                <span className="text-indigo-400">+</span>
               </div>
 
               <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-4">Projects Delivered</h3>
@@ -819,20 +819,20 @@ const WhyChooseUsSection = () => {
               </p>
 
               {/* Bottom Accent Bar */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </GlowingCard>
 
             <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden relative" style={{ padding: '80px 40px' }}>
               {/* Background Decorative Element */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-              <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 border border-amber-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-amber-500/5">
-                <ShieldCheck className="w-8 h-8 text-amber-400" />
+              <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-8 border border-indigo-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-indigo-500/5">
+                <ShieldCheck className="w-8 h-8 text-indigo-400" />
               </div>
 
               <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tighter">
-                <span className="text-green-400">98</span>
-                <span className="text-amber-400">%</span>
+                <span className="text-purple-400">98</span>
+                <span className="text-indigo-400">%</span>
               </div>
 
               <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em] mb-4">Client Satisfaction</h3>
@@ -842,7 +842,7 @@ const WhyChooseUsSection = () => {
               </p>
 
               {/* Bottom Accent Bar */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </GlowingCard>
           </motion.div>
         </div>

@@ -55,7 +55,7 @@ export default function SitemapPage() {
             {/* Hero Section */}
             <div className="relative flex h-[40vh] w-full flex-col items-center justify-center overflow-hidden">
                 <NeuralBackground
-                    color="#818cf8"
+                    color="#a855f7"
                     trailOpacity={0.1}
                     speed={0.8}
                 />
@@ -95,7 +95,7 @@ export default function SitemapPage() {
                                                 href={link.href}
                                                 className="group flex items-center gap-3 text-lg text-gray-400 hover:text-white transition-colors"
                                             >
-                                                <span className="text-cyan-400 group-hover:translate-x-1 transition-transform">→</span>
+                                                <span className="text-purple-400 group-hover:translate-x-1 transition-transform">→</span>
                                                 <span className="leading-relaxed">{link.name}</span>
                                             </Link>
                                         ))}

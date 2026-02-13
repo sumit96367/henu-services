@@ -33,17 +33,17 @@ const footerLinks = [
 
 const contactInfo = [
     {
-        icon: <Mail size={18} className="text-cyan-400" />,
+        icon: <Mail size={18} className="text-purple-400" />,
         text: "henuosr@gmail.com",
         href: "mailto:henuosr@gmail.com",
     },
     {
-        icon: <Phone size={18} className="text-cyan-400" />,
+        icon: <Phone size={18} className="text-purple-400" />,
         text: "+91 8094100513",
         href: "tel:+918094100513",
     },
     {
-        icon: <MapPin size={18} className="text-cyan-400" />,
+        icon: <MapPin size={18} className="text-purple-400" />,
         text: "India",
     },
 ];
@@ -112,7 +112,7 @@ export const Footer = () => {
             <div
                 className="absolute inset-0 z-0 opacity-40 lg:opacity-100"
                 style={{
-                    background: "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0, 212, 255, 0.08) 0%, transparent 60%)",
+                    background: "radial-gradient(ellipse 80% 50% at 50% 100%, rgba(109, 40, 217, 0.08) 0%, transparent 60%)",
                 }}
             />
 
@@ -177,8 +177,8 @@ export const Footer = () => {
                                         </Link>
                                         {link.pulse && (
                                             <span className="flex h-2 w-2 relative">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
                                             </span>
                                         )}
                                     </li>
@@ -213,7 +213,7 @@ export const Footer = () => {
                                 {contactInfo.map((info, idx) => (
                                     <li key={idx}>
                                         {info.href ? (
-                                            <a href={info.href} className="flex items-center gap-3 text-gray-400 hover:text-cyan-400 transition-all">
+                                            <a href={info.href} className="flex items-center gap-3 text-gray-400 hover:text-purple-400 transition-all">
                                                 <div className="p-2 rounded-lg bg-white/5">
                                                     {info.icon}
                                                 </div>
@@ -241,7 +241,7 @@ export const Footer = () => {
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                                className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-purple-500 hover:text-white transition-all duration-300"
                                 aria-label={social.label}
                             >
                                 {social.icon}
@@ -305,8 +305,8 @@ export const Footer = () => {
                                         </Link>
                                         {link.pulse && (
                                             <span className="flex h-2 w-2 relative">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
                                             </span>
                                         )}
                                     </li>
@@ -358,8 +358,8 @@ export const Footer = () => {
                                 {contactInfo.map((info, idx) => (
                                     <li key={idx}>
                                         {info.href ? (
-                                            <a href={info.href} className="flex items-center gap-5 text-gray-400 hover:text-cyan-400 transition-all group">
-                                                <div className="p-3.5 rounded-xl bg-white/5 group-hover:bg-cyan-500/10 transition-colors">
+                                            <a href={info.href} className="flex items-center gap-5 text-gray-400 hover:text-purple-400 transition-all group">
+                                                <div className="p-3.5 rounded-xl bg-white/5 group-hover:bg-purple-500/10 transition-colors">
                                                     {info.icon}
                                                 </div>
                                                 <span className="text-sm xl:text-lg font-medium tracking-wide break-all">{info.text}</span>
@@ -388,7 +388,7 @@ export const Footer = () => {
                                     href={social.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-white transition-all duration-300"
+                                    className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-purple-500 hover:text-white transition-all duration-300"
                                     aria-label={social.label}
                                 >
                                     {social.icon}

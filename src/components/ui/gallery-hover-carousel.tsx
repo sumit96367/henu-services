@@ -85,7 +85,7 @@ export default function GalleryHoverCarousel({
     };
 
     return (
-        <section className="py-32 md:py-48 bg-transparent">
+        <section className="bg-transparent">
             <div className="container mx-auto px-6">
                 <div className="mb-12 flex flex-col justify-between md:mb-16 md:flex-row md:items-end lg:mb-20">
                     <div className="max-w-2xl">

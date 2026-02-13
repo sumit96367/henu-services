@@ -125,7 +125,7 @@ export default function ServicesPage() {
                     <motion.div
                         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(109, 40, 217, 0.15) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -137,7 +137,7 @@ export default function ServicesPage() {
                     <motion.div
                         className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -157,8 +157,8 @@ export default function ServicesPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="flex flex-col items-center justify-center text-center w-full max-w-7xl mx-auto"
                     >
-                        <div className="flex flex-col items-center justify-center mb-12 w-full">
-                            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white leading-tight tracking-tighter text-center flex flex-col items-center w-full">
+                        <div className="flex flex-col items-center justify-center mb-8 md:mb-12 w-full">
+                            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white leading-tight tracking-tighter text-center flex flex-col items-center w-full">
                                 <PremiumTextReveal text="Our" className="justify-center" />
                                 <span className="gradient-text block">
                                     <PremiumTextReveal text="Services" delay={0.2} className="justify-center" />
@@ -181,7 +181,7 @@ export default function ServicesPage() {
                 >
                     <div className="flex flex-col items-center gap-2">
                         <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Scroll to Explore</span>
-                        <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/50 to-transparent relative overflow-hidden">
+                        <div className="w-[1px] h-12 bg-gradient-to-b from-purple-500/50 to-transparent relative overflow-hidden">
                             <motion.div
                                 animate={{ y: ["-100%", "100%"] }}
                                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -193,7 +193,7 @@ export default function ServicesPage() {
             </section>
 
             {/* Services Showcase Grid */}
-            <div className="w-full" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
+            <div className="w-full py-20 md:py-32">
                 <GalleryHoverGrid
                     heading="Our Expertise"
                     items={[
@@ -244,11 +244,11 @@ export default function ServicesPage() {
             </div>
 
             {/* CTA Section */}
-            <section className="section relative overflow-hidden" style={{ background: '#050505', paddingTop: '120px', paddingBottom: '120px' }}>
+            <section className="section relative overflow-hidden bg-[#050505] py-20 md:py-32">
                 <div
                     className="absolute inset-0"
                     style={{
-                        background: 'radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 60%)'
+                        background: 'radial-gradient(ellipse at center, rgba(109, 40, 217, 0.1) 0%, transparent 60%)'
                     }}
                 />
                 <div className="container relative z-10 text-center">

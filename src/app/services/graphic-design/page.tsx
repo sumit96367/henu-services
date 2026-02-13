@@ -125,8 +125,8 @@ export default function GraphicDesignPage() {
         <main className="relative">
             <GraphicDesignHero />
 
-            <ServiceFeatures features={features} accentColor="cyan" />
-            <ServiceProcess process={process} accentColor="cyan" />
+            <ServiceFeatures features={features} accentColor="purple" />
+            <ServiceProcess process={process} accentColor="purple" />
 
             {technologies && technologies.length > 0 && (
                 <ServiceTechnologies technologies={technologies} />
@@ -137,7 +137,7 @@ export default function GraphicDesignPage() {
             <ServiceCTA
                 title="Standout Designs"
                 description="Make your brand unforgettable. Let's design!"
-                accentColor="cyan"
+                accentColor="purple"
             />
         </main>
     );

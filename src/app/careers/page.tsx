@@ -118,15 +118,15 @@ export default function CareersPage() {
         if (internship.category === 'queries') {
             setQueriesModalOpen(true);
         } else {
-            setSelectedInternship(internship);
-            setModalOpen(true);
+            // Directly redirect to Razorpay Store Page as per user request
+            window.location.href = 'https://pages.razorpay.com/stores/henuos';
         }
     };
 
     return (
         <main className="relative z-10">
             {/* Hero Section - Full Screen */}
-            <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+            <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 md:pt-32">
                 {/* Starfield Background */}
                 <StarfieldCanvas />
 
@@ -139,7 +139,7 @@ export default function CareersPage() {
                     <motion.div
                         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(109, 40, 217, 0.15) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -151,7 +151,7 @@ export default function CareersPage() {
                     <motion.div
                         className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
                         style={{
-                            background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                            background: 'radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, transparent 70%)',
                             filter: 'blur(60px)'
                         }}
                         animate={{
@@ -169,7 +169,7 @@ export default function CareersPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="text-7xl md:text-9xl font-black uppercase tracking-wider mb-8 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent"
+                            className="text-7xl md:text-9xl font-black uppercase tracking-wider mb-8 bg-gradient-to-r from-purple-400 via-indigo-500 to-purple-600 bg-clip-text text-transparent"
                         >
                             Internship Opportunity
                         </motion.h1>
@@ -198,10 +198,10 @@ export default function CareersPage() {
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="group relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-10 md:p-14 hover:bg-white/[0.06] hover:border-cyan-400/50 transition-all duration-300 flex flex-col"
+                                    className="group relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-10 md:p-14 hover:bg-white/[0.06] hover:border-purple-400/50 transition-all duration-300 flex flex-col"
                                 >
                                     {/* Gradient overlay on hover */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
 
                                     {/* Content */}
                                     <div className="relative z-10 flex flex-col flex-1">
@@ -218,7 +218,7 @@ export default function CareersPage() {
                                         </div>
 
                                         {/* Title */}
-                                        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors text-center">
+                                        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors text-center">
                                             {internship.title}
                                         </h3>
 
@@ -233,7 +233,7 @@ export default function CareersPage() {
                                                 // Only "Submit Query" button for queries card
                                                 <button
                                                     onClick={() => handleGetItNow(internship)}
-                                                    className="flex-1 h-11 flex items-center justify-center px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300"
+                                                    className="flex-1 h-11 flex items-center justify-center px-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all duration-300"
                                                 >
                                                     SUBMIT QUERY
                                                 </button>
@@ -246,13 +246,13 @@ export default function CareersPage() {
                                                         rel="noopener noreferrer"
                                                         className="flex-1 flex"
                                                     >
-                                                        <button className="w-full h-11 flex items-center justify-center px-4 bg-white/5 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/50 rounded-xl text-sm font-bold text-white hover:text-cyan-400 transition-all duration-300">
+                                                        <button className="w-full h-11 flex items-center justify-center px-4 bg-white/5 hover:bg-purple-500/10 border border-white/10 hover:border-purple-400/50 rounded-xl text-sm font-bold text-white hover:text-purple-400 transition-all duration-300">
                                                             VIEW SOURCES
                                                         </button>
                                                     </a>
                                                     <button
                                                         onClick={() => handleGetItNow(internship)}
-                                                        className="flex-1 h-11 flex items-center justify-center px-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all duration-300"
+                                                        className="flex-1 h-11 flex items-center justify-center px-4 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-400 hover:to-indigo-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all duration-300"
                                                     >
                                                         GET IT NOW
                                                     </button>

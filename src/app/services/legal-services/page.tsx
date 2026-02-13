@@ -117,7 +117,7 @@ export default function LegalServicesPage() {
             heroTitle="Comprehensive"
             heroHighlight="Legal Services"
             heroDescription="Navigate business compliance effortlessly. From registration to annual filings—India-focused expertise."
-            heroAccentColor="amber"
+            heroAccentColor="indigo"
             heroAnimation={<LegalHeroAnimation />}
             features={features}
             process={process}

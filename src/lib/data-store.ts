@@ -268,7 +268,7 @@ export async function updatePaymentStatus(
     status: PaymentRecord['status']
 ): Promise<void> {
     try {
-        const paymentRef = doc(db, 'payments', status);
+        const paymentRef = doc(db, 'payments', paymentId);
         await updateDoc(paymentRef, { status });
     } catch (error) {
         console.error('Error updating payment status:', error);
@@ -318,5 +318,49 @@ export function exportToCSV(
         ]);
 
         return [headers, ...rows].map(row => row.join(',')).join('\n');
+    }
+}
+
+/**
+ * Update enrollment status by its internal enrollmentId
+ */
+export async function updateEnrollmentStatusByInternalId(
+    enrollmentId: string,
+    status: EnrollmentRecord['status']
+): Promise<void> {
+    try {
+        const enrollmentsRef = collection(db, 'enrollments');
+        const q = query(enrollmentsRef, where('id', '==', enrollmentId));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const docRef = doc(db, 'enrollments', querySnapshot.docs[0].id);
+            await updateDoc(docRef, { status });
+        }
+    } catch (error) {
+        console.error('Error updating enrollment status by internal ID:', error);
+        throw error;
+    }
+}
+
+/**
+ * Update payment status by its internal orderId
+ */
+export async function updatePaymentStatusByInternalId(
+    orderId: string,
+    status: PaymentRecord['status']
+): Promise<void> {
+    try {
+        const paymentsRef = collection(db, 'payments');
+        const q = query(paymentsRef, where('orderId', '==', orderId));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const docRef = doc(db, 'payments', querySnapshot.docs[0].id);
+            await updateDoc(docRef, { status });
+        }
+    } catch (error) {
+        console.error('Error updating payment status by internal ID:', error);
+        throw error;
     }
 }

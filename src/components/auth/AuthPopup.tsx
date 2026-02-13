@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
-import { X, LogIn, UserPlus, Sparkles } from 'lucide-react';
+import { X, LogIn, UserPlus } from 'lucide-react';
 
 export const AuthPopup = () => {
     const { isAuthenticated, setShowAuthModal, setAuthModalMode } = useAuth();
@@ -87,16 +88,10 @@ export const AuthPopup = () => {
                         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0a0a0a] to-[#151515] border border-white/10 shadow-2xl">
                             {/* Animated gradient background */}
                             <div className="absolute inset-0 opacity-40">
-                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-cyan-500/20 via-transparent to-amber-500/20 animate-pulse" />
+                                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/20 via-transparent to-indigo-500/20 animate-pulse" />
                             </div>
 
-                            {/* Sparkle decorations */}
-                            <div className="absolute text-cyan-400 animate-bounce-subtle" style={{ top: '24px', left: '32px' }}>
-                                <Sparkles size={20} />
-                            </div>
-                            <div className="absolute text-amber-400 animate-bounce-subtle delay-200" style={{ top: '48px', right: '48px' }}>
-                                <Sparkles size={16} />
-                            </div>
+
 
                             {/* Close button */}
                             <button
@@ -106,14 +101,30 @@ export const AuthPopup = () => {
                                 <X size={18} />
                             </button>
 
-                            <div className="relative text-center" style={{ padding: '48px 32px 32px 32px' }}>
-                                {/* Icon */}
-                                <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-amber-500/20 border border-white/10 flex items-center justify-center">
+                            <div className="relative flex flex-col items-center text-center" style={{ padding: '32px 32px 32px 32px' }}>
+                                {/* Logo */}
+                                <div className="w-56 h-40 -mb-4 relative flex items-center justify-center">
+                                    {/* Logo Glow */}
+                                    <div className="absolute inset-0 bg-purple-500/10 blur-[80px] rounded-full" />
+
                                     <motion.div
-                                        animate={{ rotate: [0, 10, -10, 0] }}
-                                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                                        animate={{
+                                            scale: [1, 1.05, 1],
+                                        }}
+                                        transition={{
+                                            duration: 6,
+                                            repeat: Infinity,
+                                            ease: "easeInOut"
+                                        }}
+                                        className="relative w-48 h-48 z-10"
                                     >
-                                        <Sparkles size={32} className="text-white" />
+                                        <Image
+                                            src="/logo.png"
+                                            alt="Henu OS Logo"
+                                            fill
+                                            className="object-contain"
+                                            priority
+                                        />
                                     </motion.div>
                                 </div>
 
@@ -126,21 +137,18 @@ export const AuthPopup = () => {
                                 </p>
 
                                 {/* Buttons */}
-                                <div className="flex flex-col">
+                                <div className="flex flex-col gap-3 w-full">
                                     <button
                                         onClick={handleSignIn}
-                                        className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-semibold flex items-center justify-center gap-2 hover:from-cyan-400 hover:to-cyan-500 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-cyan-500/20"
+                                        className="w-full py-4 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-base flex items-center justify-center gap-2.5 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
                                     >
                                         <LogIn size={18} />
                                         Sign In
                                     </button>
 
-                                    {/* Spacer */}
-                                    <div style={{ height: '24px' }}></div>
-
                                     <button
                                         onClick={handleSignUp}
-                                        className="w-full py-3.5 rounded-xl bg-white/5 border border-white/10 text-white font-semibold flex items-center justify-center gap-2 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
+                                        className="w-full py-4 rounded-full bg-white/[0.04] border border-purple-500/20 text-white/90 font-bold text-base flex items-center justify-center gap-2.5 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-white transition-all duration-300"
                                     >
                                         <UserPlus size={18} />
                                         Create Account
