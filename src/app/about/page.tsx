@@ -437,9 +437,6 @@ const WhatWeDontDoSection = () => {
                             transition={{ delay: 0.1 * index }}
                         >
                             <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '50px' }}>
-                                <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-red-500/5">
-                                    <X className="w-6 h-6 text-red-500" />
-                                </div>
                                 <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-wider">{item.title}</h3>
                                 <p className="text-gray-400 text-base leading-relaxed">
                                     {item.desc}
