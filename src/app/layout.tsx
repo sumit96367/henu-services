@@ -78,6 +78,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <SmoothScrollProvider>
+            <div className="nebula-bg" />
             <Navbar />
             <div className="relative">
               {children}

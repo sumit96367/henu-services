@@ -116,7 +116,7 @@ export default function FundingSolutionsPage() {
             heroTitle="Strategic"
             heroHighlight="Funding Solutions"
             heroDescription="Fuel your growth with tailored funding strategies. Government grants to investor pitches."
-            heroAccentColor="amber"
+            heroAccentColor="indigo"
             heroAnimation={<FundingHeroAnimation />}
             features={features}
             process={process}

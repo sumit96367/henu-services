@@ -163,7 +163,7 @@ export default function MobileAppDevelopmentPage() {
     const heroTitle = "Innovative";
     const heroHighlight = "Mobile App Development";
     const heroDescription = "Transform your ideas into powerful mobile experiences. We build apps that users love and businesses rely on.";
-    const heroAccentColor = "cyan";
+    const heroAccentColor = "purple";
 
     return (
         <main>

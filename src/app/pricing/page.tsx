@@ -48,7 +48,7 @@ const pricingPlans = [
             'Document Templates'
         ],
         popular: false,
-        color: 'cyan'
+        color: 'purple'
     },
     {
         name: 'Professional',
@@ -64,7 +64,7 @@ const pricingPlans = [
             'Custom Contract Drafting'
         ],
         popular: true,
-        color: 'amber'
+        color: 'indigo'
     },
     {
         name: 'Enterprise',
@@ -102,8 +102,8 @@ export default function PricingPage() {
                 {/* Hero Section */}
                 <section className="relative overflow-hidden" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     {/* Background Effects */}
-                    <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-[120px]" />
-                    <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-amber-500/10 rounded-full blur-[120px]" />
+                    <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-[120px]" />
+                    <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-500/10 rounded-full blur-[120px]" />
 
                     <div className="w-full max-w-7xl mx-auto relative flex flex-col items-center" style={{ paddingTop: '40px', paddingBottom: '60px', paddingLeft: '40px', paddingRight: '40px' }}>
                         <motion.div
@@ -139,7 +139,7 @@ export default function PricingPage() {
                                 className="relative w-16 h-8 rounded-full bg-white/10 border border-white/20 transition-colors"
                             >
                                 <div
-                                    className={`absolute top-1 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-400 to-amber-400 transition-all duration-300 ${billingCycle === 'yearly' ? 'left-9' : 'left-1'
+                                    className={`absolute top-1 w-6 h-6 rounded-full bg-gradient-to-r from-purple-400 to-indigo-400 transition-all duration-300 ${billingCycle === 'yearly' ? 'left-9' : 'left-1'
                                         }`}
                                 />
                             </button>
@@ -163,7 +163,7 @@ export default function PricingPage() {
                                         key={plan.name}
                                         variants={fadeInUp}
                                         className={`relative overflow-hidden rounded-3xl transition-all duration-300 text-center ${plan.popular
-                                            ? 'bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-2 border-amber-500/30 shadow-2xl shadow-amber-500/10'
+                                            ? 'bg-gradient-to-br from-indigo-500/10 to-indigo-500/5 border-2 border-indigo-500/30 shadow-2xl shadow-indigo-500/10'
                                             : 'bg-white/[0.02] border border-white/10'
                                             }`}
                                         style={{ padding: '40px' }}
@@ -191,7 +191,7 @@ export default function PricingPage() {
                                             <ul style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
                                                 {plan.features.map((feature) => (
                                                     <li key={feature} className="flex items-start gap-3 text-gray-300">
-                                                        <CheckCircle2 size={20} className={`flex-shrink-0 mt-0.5 ${plan.popular ? 'text-amber-400' : 'text-cyan-400'
+                                                        <CheckCircle2 size={20} className={`flex-shrink-0 mt-0.5 ${plan.popular ? 'text-indigo-400' : 'text-purple-400'
                                                             }`} />
                                                         {feature}
                                                     </li>
@@ -202,7 +202,7 @@ export default function PricingPage() {
                                         <button
                                             onClick={() => setShowContactModal(true)}
                                             className={`w-full rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] ${plan.popular
-                                                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/20'
+                                                ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 text-black shadow-lg shadow-indigo-500/20'
                                                 : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                                                 }`}
                                             style={{ padding: '16px 24px', fontSize: '16px' }}
@@ -248,11 +248,11 @@ export default function PricingPage() {
                                 <motion.div
                                     key={benefit.title}
                                     variants={fadeInUp}
-                                    className="rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/20 transition-all duration-300 group"
+                                    className="rounded-2xl bg-white/[0.02] border border-white/5 hover:border-purple-500/20 transition-all duration-300 group"
                                     style={{ padding: '32px' }}
                                 >
-                                    <div className="rounded-xl bg-cyan-500/10 flex items-center justify-center group-hover:scale-110 transition-transform" style={{ width: '56px', height: '56px', marginBottom: '20px' }}>
-                                        <benefit.icon size={24} className="text-cyan-400" />
+                                    <div className="rounded-xl bg-purple-500/10 flex items-center justify-center group-hover:scale-110 transition-transform" style={{ width: '56px', height: '56px', marginBottom: '20px' }}>
+                                        <benefit.icon size={24} className="text-purple-400" />
                                     </div>
                                     <h3 className="text-lg font-semibold text-white" style={{ marginBottom: '10px' }}>{benefit.title}</h3>
                                     <p className="text-sm text-gray-400" style={{ lineHeight: '1.6' }}>{benefit.description}</p>
@@ -267,7 +267,7 @@ export default function PricingPage() {
                     <div
                         className="absolute inset-0"
                         style={{
-                            background: 'radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1) 0%, transparent 60%)'
+                            background: 'radial-gradient(ellipse at center, rgba(109, 40, 217, 0.1) 0%, transparent 60%)'
                         }}
                     />
                     <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '768px', margin: '0 auto', textAlign: 'center', padding: '0 24px' }}>
@@ -317,8 +317,8 @@ export default function PricingPage() {
                         >
                             <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/10 backdrop-blur-xl shadow-2xl">
                                 {/* Decorative elements */}
-                                <div className="absolute -top-20 -right-20 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl" />
-                                <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl" />
+                                <div className="absolute -top-20 -right-20 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl" />
+                                <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl" />
 
                                 <button
                                     onClick={() => setShowContactModal(false)}
@@ -329,7 +329,7 @@ export default function PricingPage() {
 
                                 <div className="relative" style={{ padding: '36px 32px' }}>
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '24px' }}>
-                                        <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'linear-gradient(to bottom right, rgba(0, 212, 255, 0.2), rgba(255, 149, 0, 0.2))', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+                                        <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'linear-gradient(to bottom right, rgba(109, 40, 217, 0.2), rgba(79, 70, 229, 0.2))', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
                                             <MessageCircle size={28} className="text-white" />
                                         </div>
                                         <h3 className="text-xl font-bold text-white" style={{ marginBottom: '8px' }}>
@@ -362,33 +362,33 @@ export default function PricingPage() {
                                         {/* Phone Call */}
                                         <a
                                             href="tel:+918094100513"
-                                            className="flex items-center rounded-xl bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 hover:bg-cyan-500/15 transition-all group"
+                                            className="flex items-center rounded-xl bg-purple-500/10 border border-purple-500/20 hover:border-purple-500/40 hover:bg-purple-500/15 transition-all group"
                                             style={{ padding: '14px', gap: '14px' }}
                                         >
-                                            <div className="rounded-lg bg-cyan-500/20 flex items-center justify-center" style={{ width: '44px', height: '44px', flexShrink: 0 }}>
-                                                <Phone size={22} className="text-cyan-400" />
+                                            <div className="rounded-lg bg-purple-500/20 flex items-center justify-center" style={{ width: '44px', height: '44px', flexShrink: 0 }}>
+                                                <Phone size={22} className="text-purple-400" />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-semibold text-white group-hover:text-cyan-400 transition-colors" style={{ fontSize: '15px', marginBottom: '2px' }}>Phone Call</h4>
+                                                <h4 className="font-semibold text-white group-hover:text-purple-400 transition-colors" style={{ fontSize: '15px', marginBottom: '2px' }}>Phone Call</h4>
                                                 <p className="text-gray-400" style={{ fontSize: '13px' }}>Speak directly with sales</p>
                                             </div>
-                                            <ArrowRight size={18} className="text-gray-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+                                            <ArrowRight size={18} className="text-gray-400 group-hover:text-purple-400 group-hover:translate-x-1 transition-all" />
                                         </a>
 
                                         {/* Email */}
                                         <a
                                             href="mailto:sales@henuos.com?subject=Pricing Inquiry&body=Hi, I%27m interested in learning more about your pricing plans."
-                                            className="flex items-center rounded-xl bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 hover:bg-amber-500/15 transition-all group"
+                                            className="flex items-center rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:border-indigo-500/40 hover:bg-indigo-500/15 transition-all group"
                                             style={{ padding: '14px', gap: '14px' }}
                                         >
-                                            <div className="rounded-lg bg-amber-500/20 flex items-center justify-center" style={{ width: '44px', height: '44px', flexShrink: 0 }}>
-                                                <Mail size={22} className="text-amber-400" />
+                                            <div className="rounded-lg bg-indigo-500/20 flex items-center justify-center" style={{ width: '44px', height: '44px', flexShrink: 0 }}>
+                                                <Mail size={22} className="text-indigo-400" />
                                             </div>
                                             <div className="flex-1">
-                                                <h4 className="font-semibold text-white group-hover:text-amber-400 transition-colors" style={{ fontSize: '15px', marginBottom: '2px' }}>Email</h4>
+                                                <h4 className="font-semibold text-white group-hover:text-indigo-400 transition-colors" style={{ fontSize: '15px', marginBottom: '2px' }}>Email</h4>
                                                 <p className="text-gray-400" style={{ fontSize: '13px' }}>Detailed proposal via email</p>
                                             </div>
-                                            <ArrowRight size={18} className="text-gray-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
+                                            <ArrowRight size={18} className="text-gray-400 group-hover:text-indigo-400 group-hover:translate-x-1 transition-all" />
                                         </a>
                                     </div>
 

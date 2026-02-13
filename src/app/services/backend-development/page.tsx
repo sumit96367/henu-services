@@ -131,8 +131,8 @@ export default function BackendDevelopmentPage() {
                 description="Power your app with rock-solid servers, AI intelligence, and seamless scalability. Built on HENU OS for ultimate reliability."
             />
 
-            <ServiceFeatures features={features} accentColor="cyan" />
-            <ServiceProcess process={process} accentColor="cyan" />
+            <ServiceFeatures features={features} accentColor="purple" />
+            <ServiceProcess process={process} accentColor="purple" />
 
             {technologies && technologies.length > 0 && (
                 <ServiceTechnologies technologies={technologies} />
@@ -143,7 +143,7 @@ export default function BackendDevelopmentPage() {
             <ServiceCTA
                 title="Scale Your Backend"
                 description="Unlock speed and reliability. Contact us now!"
-                accentColor="cyan"
+                accentColor="purple"
             />
         </main>
     );

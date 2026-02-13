@@ -683,7 +683,7 @@ export default function DashboardPage() {
                             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
                                 Welcome back, {user?.name || 'User'}
                             </h1>
-                            <div className="h-1.5 w-24 bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.4)]" />
+                            <div className="h-1.5 w-24 bg-gradient-to-r from-purple-600 to-indigo-500 rounded-full shadow-[0_0_15px_rgba(109,40,217,0.4)]" />
                         </div>
 
                         {/* Order Status Summary */}
@@ -693,14 +693,14 @@ export default function DashboardPage() {
                         >
                             <div className="flex items-center justify-between p-6 mb-4">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 shadow-lg">
-                                        <ClipboardList size={22} className="text-cyan-400" />
+                                    <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20 shadow-lg">
+                                        <ClipboardList size={22} className="text-purple-400" />
                                     </div>
                                     <h2 className="text-2xl font-bold text-white tracking-tight">Recent Orders</h2>
                                 </div>
                                 <button
                                     onClick={() => setActiveSection('orders')}
-                                    className="text-sm text-cyan-400 hover:text-cyan-300 transition-all font-bold uppercase tracking-widest flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/5 border border-cyan-500/10 hover:border-cyan-500/30"
+                                    className="text-sm text-purple-400 hover:text-purple-300 transition-all font-bold uppercase tracking-widest flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-500/5 border border-purple-500/10 hover:border-purple-500/30"
                                 >
                                     View All <ChevronRight size={14} />
                                 </button>
@@ -725,7 +725,7 @@ export default function DashboardPage() {
                                             {orders.slice(0, 3).map((order) => (
                                                 <tr key={order.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
                                                     <td className="px-12 py-8">
-                                                        <span className="text-cyan-400 font-mono text-base font-bold">{order.id.slice(0, 8)}...</span>
+                                                        <span className="text-purple-400 font-mono text-base font-bold">{order.id.slice(0, 8)}...</span>
                                                     </td>
                                                     <td className="px-12 py-8 text-base text-gray-400">{order.orderDate}</td>
                                                     <td className="px-12 py-8">
@@ -1407,7 +1407,7 @@ export default function DashboardPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#050505] flex flex-col md:flex-row dashboard-layout relative">
+        <div className="min-h-screen bg-background flex flex-col md:flex-row dashboard-layout relative">
             {/* Mobile Menu Toggle */}
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -1443,7 +1443,8 @@ export default function DashboardPage() {
                     top: 0,
                     bottom: 0,
                     width: '300px',
-                    backgroundColor: 'rgba(5, 5, 5, 1)',
+                    backgroundColor: 'rgba(2, 2, 5, 0.95)',
+                    backdropFilter: 'blur(20px)',
                     borderRight: '1px solid rgba(255, 255, 255, 0.05)',
                     display: 'flex',
                     flexDirection: 'column',
@@ -1546,9 +1547,9 @@ export default function DashboardPage() {
                                     textDecoration: 'none',
                                     color: active ? '#fff' : '#888',
                                     backgroundColor: active
-                                        ? 'rgba(6, 182, 212, 0.12)'
+                                        ? 'rgba(109, 40, 217, 0.15)'
                                         : 'transparent',
-                                    borderLeft: active ? '4px solid #06b6d4' : '4px solid transparent',
+                                    borderLeft: active ? '4px solid #6D28D9' : '4px solid transparent',
                                     borderTop: 'none',
                                     borderRight: 'none',
                                     borderBottom: 'none',
@@ -1559,7 +1560,7 @@ export default function DashboardPage() {
                                     fontFamily: 'inherit',
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
-                                    boxShadow: active ? '0 4px 12px rgba(6, 182, 212, 0.1)' : 'none'
+                                    boxShadow: active ? '0 4px 12px rgba(109, 40, 217, 0.15)' : 'none'
                                 }}
                                 onMouseEnter={(e) => {
                                     if (!active) {

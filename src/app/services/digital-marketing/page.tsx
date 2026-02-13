@@ -152,17 +152,17 @@ export default function DigitalMarketingPage() {
             {
                 value: '500%',
                 label: 'Average ROAS',
-                icon: <Target className="h-5 w-5 text-cyan-400" />,
+                icon: <Target className="h-5 w-5 text-purple-400" />,
             },
             {
                 value: '₹1Cr+',
                 label: 'Monthly Managed Spend',
-                icon: <Zap className="h-5 w-5 text-amber-400" />,
+                icon: <Zap className="h-5 w-5 text-indigo-400" />,
             },
             {
                 value: '98%',
                 label: 'Client Retention',
-                icon: <Users className="h-5 w-5 text-cyan-400" />,
+                icon: <Users className="h-5 w-5 text-purple-400" />,
             },
         ],
         images: [
@@ -188,8 +188,8 @@ export default function DigitalMarketingPage() {
                 />
             </div>
 
-            <ServiceFeatures features={features} accentColor="cyan" />
-            <ServiceProcess process={process} accentColor="cyan" />
+            <ServiceFeatures features={features} accentColor="purple" />
+            <ServiceProcess process={process} accentColor="purple" />
 
             {technologies && technologies.length > 0 && (
                 <ServiceTechnologies technologies={technologies} />
@@ -200,7 +200,7 @@ export default function DigitalMarketingPage() {
             <ServiceCTA
                 title="Dominate Digital"
                 description="Grow your audience today. Let's campaign!"
-                accentColor="cyan"
+                accentColor="purple"
             />
         </main>
     );

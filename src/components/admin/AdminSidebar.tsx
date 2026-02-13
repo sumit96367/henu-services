@@ -70,12 +70,12 @@ export default function AdminSidebar() {
             >
                 {/* Header */}
                 <div className="p-6 border-b border-white/10">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/50">
+                    <div className="flex items-center gap-3 group cursor-default">
+                        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/50 group-hover:scale-110 transition-all duration-300">
                             <Shield className="w-6 h-6 text-white" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-black text-white">Admin Panel</h2>
+                            <h2 className="text-lg font-black text-white group-hover:text-cyan-400 transition-colors">Admin Panel</h2>
                             <p className="text-xs text-gray-400">Henu Services</p>
                         </div>
                     </div>

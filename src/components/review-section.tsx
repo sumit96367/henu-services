@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Send, User, MessageSquare, CheckCircle2, Users, Briefcase } from 'lucide-react';
+import { Star, Send, User, MessageSquare, CheckCircle2, Users, Briefcase, ArrowRight } from 'lucide-react';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 
@@ -58,7 +58,7 @@ export const ReviewSection = ({ onReviewSubmitted }: { onReviewSubmitted: (revie
     return (
         <section className="section bg-transparent relative overflow-hidden" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             {/* Background elements */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="container relative z-10">
                 <div className="grid lg:grid-cols-2 gap-16 items-start">
@@ -100,61 +100,64 @@ export const ReviewSection = ({ onReviewSubmitted }: { onReviewSubmitted: (revie
                                         exit={{ opacity: 0, scale: 0.9 }}
                                         className="text-center py-15 px-10"
                                     >
-                                        <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/30">
-                                            <CheckCircle2 className="w-8 h-8 text-green-400" />
+                                        <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-purple-500/30">
+                                            <CheckCircle2 className="w-8 h-8 text-purple-400" />
                                         </div>
                                         <h3 className="text-xl font-bold text-white mb-3">Review Published!</h3>
                                         <p className="text-sm text-gray-400 max-w-sm mx-auto">Thank you for sharing your experience.</p>
                                     </motion.div>
                                 ) : (
                                     <form key="form" ref={formRef} onSubmit={handleSubmit} className="space-y-12 !p-10">
-                                        <div className="grid sm:grid-cols-2 gap-8">
+                                        <div className="grid sm:grid-cols-2 gap-10">
                                             <div className="space-y-4">
-                                                <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Full Name</label>
+                                                <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Full Name</label>
                                                 <div className="relative group flex items-center">
-                                                    <User className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                    <User className="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
                                                     <input
                                                         required
                                                         name="name"
                                                         type="text"
                                                         placeholder="John Doe"
-                                                        className="w-full bg-white/5 border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium text-sm"
+                                                        className="w-full bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-purple-500/50 transition-all font-medium"
+                                                        style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
                                                     />
                                                 </div>
                                             </div>
                                             <div className="space-y-4">
-                                                <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Company / Role</label>
+                                                <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Company / Role</label>
                                                 <div className="relative group flex items-center">
-                                                    <Briefcase className="absolute left-4 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                    <Briefcase className="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
                                                     <input
                                                         required
                                                         name="role"
                                                         type="text"
                                                         placeholder="CEO, TechStart"
-                                                        className="w-full bg-white/5 border border-white/10 rounded-xl !py-4 !pl-14 !pr-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium text-sm"
+                                                        className="w-full bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-purple-500/50 transition-all font-medium"
+                                                        style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
                                                     />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="space-y-4 !mt-10" id="experience-section">
-                                            <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">How was your experience?</label>
+                                        <div className="space-y-4 !mt-12">
+                                            <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">How was your experience?</label>
                                             <div className="relative group">
-                                                <MessageSquare className="absolute left-4 top-5 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                <MessageSquare className="absolute left-6 top-7 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
                                                 <textarea
                                                     required
                                                     name="review"
                                                     rows={4}
                                                     placeholder="What did you build with us? How did it help your business?"
-                                                    className="w-full bg-white/5 border border-white/10 rounded-xl !pt-5 !pl-14 !pr-4 !pb-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all font-medium resize-none text-sm leading-relaxed"
+                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-purple-500/50 transition-all font-medium resize-none leading-relaxed"
+                                                    style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
                                                 ></textarea>
                                             </div>
                                         </div>
 
-                                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8 pt-4 border-t border-white/5">
-                                            <div className="space-y-5">
-                                                <label className="text-sm font-bold text-gray-500 uppercase tracking-[0.2em] block">Rating</label>
-                                                <div className="flex items-center gap-1.5">
+                                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-10 pt-10 border-t border-white/5">
+                                            <div className="space-y-6">
+                                                <label className="block text-xs font-black text-gray-500 uppercase tracking-[0.25em] ml-1">Overall Rating</label>
+                                                <div className="flex items-center gap-2">
                                                     {[1, 2, 3, 4, 5].map((star) => (
                                                         <button
                                                             key={star}
@@ -165,8 +168,8 @@ export const ReviewSection = ({ onReviewSubmitted }: { onReviewSubmitted: (revie
                                                             className="transition-transform active:scale-95 hover:scale-110"
                                                         >
                                                             <Star
-                                                                className={`w-6 h-6 transition-all ${(hoverRating || rating) >= star
-                                                                    ? 'text-amber-400 fill-amber-400 shadow-amber-400/20'
+                                                                className={`w-7 h-7 transition-all ${(hoverRating || rating) >= star
+                                                                    ? 'text-purple-400 fill-purple-400'
                                                                     : 'text-white/10 fill-transparent'
                                                                     }`}
                                                             />
@@ -178,18 +181,18 @@ export const ReviewSection = ({ onReviewSubmitted }: { onReviewSubmitted: (revie
                                             <button
                                                 disabled={isSubmitting || rating === 0}
                                                 type="submit"
-                                                className="btn-primary group disabled:opacity-50 disabled:cursor-not-allowed !py-3.5 !px-8 text-sm !rounded-xl"
+                                                className="btn-primary w-full sm:w-auto disabled:opacity-50"
                                             >
                                                 {isSubmitting ? (
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                                        Publishing...
+                                                        <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                                                        <span>Processing</span>
                                                     </div>
                                                 ) : (
-                                                    <div className="flex items-center gap-2 font-bold uppercase tracking-widest text-[12px]">
+                                                    <>
                                                         Publish Review
-                                                        <Send className="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                                                    </div>
+                                                        <ArrowRight size={18} />
+                                                    </>
                                                 )}
                                             </button>
                                         </div>

@@ -1,9 +1,11 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CreditCard, Smartphone, CheckCircle2, Loader2 } from 'lucide-react';
-import { useState } from 'react';
+import { X, CreditCard, Smartphone, CheckCircle2, Loader2, MapPin, Zap, User, Mail, Briefcase, Globe, ShieldCheck, Lock } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useAuth } from '@/context/AuthContext';
+import { loadRazorpayScript } from '@/lib/razorpay';
 
 // COMPLETE Domain to sub-domain mapping (as per requirements)
 const domainSubDomainMap: Record<string, string[]> = {
@@ -119,6 +121,25 @@ export default function EnrollmentModal({
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [showSuccess, setShowSuccess] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.paddingRight = 'var(--scrollbar-width, 0px)';
+        } else {
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        };
+    }, [isOpen]);
 
     const subDomains = domainSubDomainMap[domainCategory] || [];
 
@@ -148,41 +169,6 @@ export default function EnrollmentModal({
             newErrors.billingAddress = 'Billing address is required';
         }
 
-        if (!formData.paymentMethod) {
-            newErrors.paymentMethod = 'Please select a payment method';
-        }
-
-        // Validate payment-specific fields
-        if (formData.paymentMethod === 'card') {
-            if (!formData.cardNumber.trim()) {
-                newErrors.cardNumber = 'Card number is required';
-            } else if (!/^\d{16}$/.test(formData.cardNumber.replace(/\s/g, ''))) {
-                newErrors.cardNumber = 'Invalid card number';
-            }
-
-            if (!formData.cardholderName.trim()) {
-                newErrors.cardholderName = 'Cardholder name is required';
-            }
-
-            if (!formData.expiryDate.trim()) {
-                newErrors.expiryDate = 'Expiry date is required';
-            } else if (!/^\d{2}\/\d{2}$/.test(formData.expiryDate)) {
-                newErrors.expiryDate = 'Format: MM/YY';
-            }
-
-            if (!formData.cvv.trim()) {
-                newErrors.cvv = 'CVV is required';
-            } else if (!/^\d{3,4}$/.test(formData.cvv)) {
-                newErrors.cvv = 'Invalid CVV';
-            }
-        } else if (formData.paymentMethod === 'upi') {
-            if (!formData.upiId.trim()) {
-                newErrors.upiId = 'UPI ID is required';
-            } else if (!/^[\w.-]+@[\w.-]+$/.test(formData.upiId)) {
-                newErrors.upiId = 'Invalid UPI ID format';
-            }
-        }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -195,13 +181,14 @@ export default function EnrollmentModal({
         }
 
         setIsProcessing(true);
+        setErrors({});
 
         try {
-            // TODO: Replace with actual Razorpay/Stripe payment API call
-            const amount = formData.plan === 'basic' ? 1499 : 2999;
+            // 1. Determine Amount
+            const amount = formData.plan === 'premium' ? 2999 : 1499;
 
-            // Simulate API call to create payment order
-            const response = await fetch('/api/payment/create-order', {
+            // 3. Create Order via Backend API
+            const orderResponse = await fetch('/api/payment/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -213,47 +200,29 @@ export default function EnrollmentModal({
                     amount,
                     paymentMethod: formData.paymentMethod,
                     billingAddress: formData.billingAddress,
-                    userId: user?.id,
-                    userType: user?.userType,
-                    companyName: user?.companyName
-                })
+                    domainCategory,
+                    userId: user?.id, // Using id from Auth Context
+                    userType: 'personal'
+                }),
             });
 
-            if (!response.ok) {
-                throw new Error('Payment initiation failed');
-            }
+            const orderData = await orderResponse.json();
+            if (!orderResponse.ok) throw new Error(orderData.error || 'Failed to initialize order');
 
-            const data = await response.json();
+            // 4. Redirect to Razorpay Store Page
+            // Passing pre-fill data as query parameters (supported by some Razorpay pages)
+            const razorpayStoreUrl = `https://pages.razorpay.com/stores/henuos?name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}&enrollment_id=${orderData.enrollmentId}`;
 
-            // For now, simulate successful payment
-            // In production, this would trigger Razorpay/Stripe modal
+            // Record initiation in local state then redirect
+            setShowSuccess(true);
             setTimeout(() => {
-                setIsProcessing(false);
-                setShowSuccess(true);
-
-                setTimeout(() => {
-                    setShowSuccess(false);
-                    onClose();
-                    // Reset form
-                    setFormData({
-                        fullName: '',
-                        email: '',
-                        subDomain: '',
-                        plan: '',
-                        billingAddress: '',
-                        paymentMethod: '',
-                        cardNumber: '',
-                        cardholderName: '',
-                        expiryDate: '',
-                        cvv: '',
-                        upiId: ''
-                    });
-                }, 2500);
+                window.location.href = razorpayStoreUrl;
             }, 2000);
 
-        } catch (error) {
+        } catch (error: any) {
+            console.error('Submission error:', error);
+            setErrors({ submit: error.message || 'An unexpected error occurred. Please try again.' });
             setIsProcessing(false);
-            alert('Payment failed. Please try again.');
         }
     };
 
@@ -279,441 +248,314 @@ export default function EnrollmentModal({
         }
     };
 
-    return (
+    if (!mounted) return null;
+
+    return createPortal(
         <AnimatePresence>
             {isOpen && (
-                <>
-                    {/* Backdrop */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[9999] overflow-y-auto overscroll-contain bg-[#020205]/98 backdrop-blur-2xl p-4 md:p-8 flex justify-center items-start scroll-smooth"
+                    data-lenis-prevent
+                    onClick={onClose}
+                >
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
-                    />
-
-                    {/* Modal */}
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            transition={{ type: 'spring', duration: 0.5 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="pointer-events-auto relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl"
-                            style={{
-                                background: 'rgba(0, 0, 0, 0.6)',
-                                boxShadow: '0 0 60px rgba(0, 212, 255, 0.15)',
-                                padding: '50px 45px'
-                            }}
-                        >
-                            {/* Success Message Overlay */}
-                            <AnimatePresence>
-                                {showSuccess && (
+                        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="relative my-auto w-full max-w-4xl border border-white/10 rounded-[2rem] shadow-[0_0_100px_rgba(0,0,0,0.9)] overflow-hidden"
+                        style={{
+                            background: '#0a0a0f',
+                        }}
+                    >
+                        {/* Success Message Overlay */}
+                        <AnimatePresence>
+                            {showSuccess && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="absolute inset-0 bg-black/95 backdrop-blur-xl z-10 flex items-center justify-center rounded-3xl"
+                                >
                                     <motion.div
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        className="absolute inset-0 bg-black/95 backdrop-blur-xl z-10 flex items-center justify-center rounded-3xl"
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ delay: 0.2, type: 'spring' }}
+                                        className="text-center"
                                     >
-                                        <motion.div
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ delay: 0.2, type: 'spring' }}
-                                            className="text-center"
-                                        >
-                                            <CheckCircle2
-                                                className="w-20 h-20 text-green-400 mx-auto mb-4"
-                                                strokeWidth={1.5}
-                                            />
-                                            <h3 className="text-2xl font-bold text-white mb-2">
-                                                Payment Successful!
-                                            </h3>
-                                            <p className="text-gray-400">
-                                                Invoice has been sent to your email.
-                                            </p>
-                                        </motion.div>
+                                        <CheckCircle2
+                                            className="w-20 h-20 text-green-400 mx-auto mb-4"
+                                            strokeWidth={1.5}
+                                        />
+                                        <h3 className="text-2xl font-bold text-white mb-2">
+                                            Payment Successful!
+                                        </h3>
+                                        <p className="text-gray-400">
+                                            Invoice has been sent to your email.
+                                        </p>
                                     </motion.div>
-                                )}
-                            </AnimatePresence>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                            {/* Close Button */}
-                            <button
-                                onClick={onClose}
-                                className="absolute top-6 right-6 p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all group"
-                            >
-                                <X className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-                            </button>
+                        {/* Close Button */}
+                        <button
+                            onClick={onClose}
+                            className="absolute top-8 right-8 p-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all group z-20"
+                        >
+                            <X className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors" />
+                        </button>
 
-                            {/* Header */}
-                            <div className="pb-8 border-b border-white/10" style={{ marginBottom: '35px' }}>
-                                <h2 className="text-4xl font-black text-white mb-3">
-                                    Internship Enrollment
-                                </h2>
-                                <p className="text-cyan-400 text-lg font-semibold">
-                                    {domainTitle}
-                                </p>
-                            </div>
+                        {/* Header */}
+                        <div className="pt-24 pb-10 md:pt-32 md:pb-12 px-10 md:px-12 border-b border-white/5 bg-white/[0.01]">
+                            <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
+                                Internship <span className="gradient-text">Enrollment</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg font-medium opacity-80">
+                                {domainTitle}
+                            </p>
+                        </div>
+
+                        <div className="p-10 md:p-12">
 
                             {/* Form */}
-                            <form onSubmit={handleSubmit} className="space-y-8">
+                            <form onSubmit={handleSubmit} className="space-y-12">
                                 {/* 1. USER DETAILS */}
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                        <span className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-sm">1</span>
+                                <div className="space-y-10">
+                                    <h3 className="text-2xl font-bold text-white flex items-center gap-4">
+                                        <span className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400 text-xl font-black">01</span>
                                         User Details
                                     </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                Full Name <span className="text-red-400">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                value={formData.fullName}
-                                                onChange={(e) => handleChange('fullName', e.target.value)}
-                                                className={`w-full bg-white/5 border ${errors.fullName ? 'border-red-400/50' : 'border-white/10'
-                                                    } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
-                                                placeholder="John Doe"
-                                                style={{ padding: '16px 20px', fontSize: '16px' }}
-                                            />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                        <div className="space-y-4">
+                                            <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Full Name</label>
+                                            <div className="relative group flex items-center">
+                                                <User className="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                <input
+                                                    type="text"
+                                                    value={formData.fullName}
+                                                    onChange={(e) => handleChange('fullName', e.target.value)}
+                                                    className={`w-full bg-white/5 border ${errors.fullName ? 'border-red-500/50' : 'border-white/10'} rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all font-medium`}
+                                                    style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
+                                                    placeholder="John Doe"
+                                                />
+                                            </div>
                                             {errors.fullName && (
-                                                <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>
+                                                <p className="text-red-400 text-sm font-medium mt-3 ml-2">{errors.fullName}</p>
                                             )}
                                         </div>
-                                        <div>
-                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                Email Address <span className="text-red-400">*</span>
-                                            </label>
-                                            <input
-                                                type="email"
-                                                value={formData.email}
-                                                onChange={(e) => handleChange('email', e.target.value)}
-                                                className={`w-full bg-white/5 border ${errors.email ? 'border-red-400/50' : 'border-white/10'
-                                                    } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
-                                                placeholder="john@example.com"
-                                                style={{ padding: '16px 20px', fontSize: '16px' }}
-                                            />
+                                        <div className="space-y-4">
+                                            <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Email Address</label>
+                                            <div className="relative group flex items-center">
+                                                <Mail className="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-cyan-400 transition-colors z-10" />
+                                                <input
+                                                    type="email"
+                                                    value={formData.email}
+                                                    onChange={(e) => handleChange('email', e.target.value)}
+                                                    className={`w-full bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-white/10'} rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all font-medium`}
+                                                    style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
+                                                    placeholder="john@example.com"
+                                                />
+                                            </div>
                                             {errors.email && (
-                                                <p className="text-red-400 text-xs mt-1">{errors.email}</p>
+                                                <p className="text-red-400 text-sm font-medium mt-3 ml-2">{errors.email}</p>
                                             )}
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* 2. INTERNSHIP SELECTION */}
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                        <span className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-sm">2</span>
+                                <div className="space-y-10">
+                                    <h3 className="text-2xl font-bold text-white flex items-center gap-4 mt-20">
+                                        <span className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-400/20 flex items-center justify-center text-purple-400 text-xl font-black">02</span>
                                         Internship Selection
                                     </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                Domain
-                                            </label>
-                                            <input
-                                                type="text"
-                                                value={domainTitle}
-                                                readOnly
-                                                className="w-full bg-white/5 border border-white/10 rounded-xl text-gray-400 cursor-not-allowed"
-                                                style={{ padding: '16px 20px', fontSize: '16px' }}
-                                            />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                        <div className="space-y-4">
+                                            <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Domain</label>
+                                            <div className="relative group flex items-center">
+                                                <Globe className="absolute left-6 w-5 h-5 text-gray-400 transition-colors z-10" />
+                                                <input
+                                                    type="text"
+                                                    value={domainTitle}
+                                                    readOnly
+                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl text-gray-500 cursor-not-allowed font-medium"
+                                                    style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
+                                                />
+                                            </div>
                                         </div>
-                                        <div>
-                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                Sub-Domain / Role <span className="text-red-400">*</span>
-                                            </label>
-                                            <select
-                                                value={formData.subDomain}
-                                                onChange={(e) => handleChange('subDomain', e.target.value)}
-                                                className={`w-full bg-white/5 border ${errors.subDomain ? 'border-red-400/50' : 'border-white/10'
-                                                    } rounded-xl text-white focus:outline-none focus:border-cyan-400/50 transition-colors appearance-none cursor-pointer max-h-48 overflow-y-auto`}
-                                                style={{ padding: '16px 20px', fontSize: '16px', minHeight: '56px' }}
-                                            >
-                                                <option value="" className="bg-gray-900">Select a role</option>
-                                                {subDomains.map((role) => (
-                                                    <option key={role} value={role} className="bg-gray-900 py-2">
-                                                        {role}
-                                                    </option>
-                                                ))}
-                                            </select>
+                                        <div className="space-y-4">
+                                            <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Sub-Domain / Role</label>
+                                            <div className="relative group flex items-center">
+                                                <Briefcase className="absolute left-6 w-5 h-5 text-gray-400 group-focus-within:text-purple-400 transition-colors z-10" />
+                                                <select
+                                                    value={formData.subDomain}
+                                                    onChange={(e) => handleChange('subDomain', e.target.value)}
+                                                    className={`w-full bg-white/5 border ${errors.subDomain ? 'border-red-500/50' : 'border-white/10'} rounded-2xl text-white focus:outline-none focus:border-purple-500/50 transition-all appearance-none cursor-pointer font-medium`}
+                                                    style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
+                                                >
+                                                    <option value="" className="bg-[#0a0a0f]">Select a role</option>
+                                                    {subDomains.map((role) => (
+                                                        <option key={role} value={role} className="bg-[#0a0a0f] py-4">
+                                                            {role}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </div>
+                                            </div>
                                             {errors.subDomain && (
-                                                <p className="text-red-400 text-xs mt-1">{errors.subDomain}</p>
+                                                <p className="text-red-400 text-sm font-medium mt-3 ml-2">{errors.subDomain}</p>
                                             )}
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* 3. PRICING */}
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                        <span className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-sm">3</span>
-                                        Pricing
+                                <div className="space-y-10">
+                                    <h3 className="text-2xl font-bold text-white flex items-center gap-4 mt-20">
+                                        <span className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-400/20 flex items-center justify-center text-orange-400 text-xl font-black">03</span>
+                                        Pricing Plan
                                     </h3>
-                                    <div className="space-y-3">
-                                        <label className={`block p-4 rounded-xl border ${formData.plan === 'basic' ? 'border-cyan-400 bg-cyan-500/10' : 'border-white/10 bg-white/5'
-                                            } cursor-pointer transition-all hover:border-cyan-400/50`}>
-                                            <div className="flex items-center gap-3">
-                                                <input
-                                                    type="radio"
-                                                    name="plan"
-                                                    value="basic"
-                                                    checked={formData.plan === 'basic'}
-                                                    onChange={(e) => handleChange('plan', e.target.value)}
-                                                    className="w-4 h-4 text-cyan-500 focus:ring-cyan-400"
-                                                />
-                                                <div className="flex-1">
-                                                    <div className="flex items-center justify-between">
-                                                        <span className="font-bold text-white">BASIC</span>
-                                                        <span className="text-xl font-black text-cyan-400">₹1,499</span>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <label className={`group relative p-8 rounded-2xl border-2 transition-all cursor-pointer flex flex-col gap-4 ${formData.plan === 'basic' ? 'border-orange-500 bg-orange-500/[0.05]' : 'border-white/5 bg-white/[0.02] hover:border-white/20'
+                                            }`}>
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${formData.plan === 'basic' ? 'border-orange-500 bg-orange-500' : 'border-white/20'}`}>
+                                                        {formData.plan === 'basic' && <div className="w-2 h-2 rounded-full bg-white" />}
                                                     </div>
+                                                    <span className="font-bold text-white uppercase tracking-wider text-sm">Basic</span>
                                                 </div>
+                                                <span className="text-2xl font-black text-white italic">₹1,499</span>
                                             </div>
+                                            <p className="text-gray-400 text-sm leading-relaxed">
+                                                Curated resources and initial guidance for your career journey.
+                                            </p>
+                                            <input type="radio" name="plan" value="basic" checked={formData.plan === 'basic'} onChange={(e) => handleChange('plan', e.target.value)} className="hidden" />
                                         </label>
-                                        <label className={`block p-4 rounded-xl border ${formData.plan === 'premium' ? 'border-cyan-400 bg-cyan-500/10' : 'border-white/10 bg-white/5'
-                                            } cursor-pointer transition-all hover:border-cyan-400/50`}>
-                                            <div className="flex items-center gap-3">
-                                                <input
-                                                    type="radio"
-                                                    name="plan"
-                                                    value="premium"
-                                                    checked={formData.plan === 'premium'}
-                                                    onChange={(e) => handleChange('plan', e.target.value)}
-                                                    className="w-4 h-4 text-cyan-500 focus:ring-cyan-400"
-                                                />
-                                                <div className="flex-1">
-                                                    <div className="flex items-center justify-between">
-                                                        <span className="font-bold text-white">PREMIUM</span>
-                                                        <span className="text-xl font-black text-cyan-400">₹2,999</span>
+
+                                        <label className={`group relative p-8 rounded-2xl border-2 transition-all cursor-pointer flex flex-col gap-4 ${formData.plan === 'premium' ? 'border-orange-500 bg-orange-500/[0.05]' : 'border-white/5 bg-white/[0.02] hover:border-white/20'
+                                            }`}>
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${formData.plan === 'premium' ? 'border-orange-500 bg-orange-500' : 'border-white/20'}`}>
+                                                        {formData.plan === 'premium' && <div className="w-2 h-2 rounded-full bg-white" />}
                                                     </div>
+                                                    <span className="font-bold text-white uppercase tracking-wider text-sm">Premium</span>
                                                 </div>
+                                                <span className="text-2xl font-black text-white italic">₹2,999</span>
                                             </div>
+                                            <p className="text-gray-400 text-sm leading-relaxed">
+                                                Mentorship, live projects, and priority certification for maximum impact.
+                                            </p>
+                                            <input type="radio" name="plan" value="premium" checked={formData.plan === 'premium'} onChange={(e) => handleChange('plan', e.target.value)} className="hidden" />
                                         </label>
-                                        {errors.plan && (
-                                            <p className="text-red-400 text-xs mt-1">{errors.plan}</p>
-                                        )}
-                                        <p className="text-xs text-gray-400 mt-2">
-                                            Includes curated sources, mentorship access, structured roadmap, and certification.
-                                        </p>
                                     </div>
+                                    {errors.plan && (
+                                        <p className="text-red-400 text-sm font-medium mt-4 px-1">{errors.plan}</p>
+                                    )}
                                 </div>
 
                                 {/* 4. BILLING ADDRESS */}
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                        <span className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-sm">4</span>
+                                <div className="space-y-10">
+                                    <h3 className="text-2xl font-bold text-white flex items-center gap-4 mt-20">
+                                        <span className="w-12 h-12 rounded-2xl bg-green-500/10 border border-green-400/20 flex items-center justify-center text-green-400 text-xl font-black">04</span>
                                         Billing Address
                                     </h3>
-                                    <div>
-                                        <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                            Billing Address <span className="text-red-400">*</span>
-                                        </label>
-                                        <textarea
-                                            value={formData.billingAddress}
-                                            onChange={(e) => handleChange('billingAddress', e.target.value)}
-                                            rows={3}
-                                            className={`w-full bg-white/5 border ${errors.billingAddress ? 'border-red-400/50' : 'border-white/10'
-                                                } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors resize-none`}
-                                            placeholder="Enter your complete billing address"
-                                            style={{ padding: '16px 20px', fontSize: '16px' }}
-                                        />
+                                    <div className="space-y-4">
+                                        <label className="block text-xs font-black text-gray-400 uppercase tracking-[0.2em] ml-2">Complete Address</label>
+                                        <div className="relative group">
+                                            <MapPin className="absolute left-6 top-7 w-5 h-5 text-gray-400 group-focus-within:text-green-400 transition-colors z-10" />
+                                            <textarea
+                                                value={formData.billingAddress}
+                                                onChange={(e) => handleChange('billingAddress', e.target.value)}
+                                                rows={4}
+                                                className={`w-full bg-white/5 border ${errors.billingAddress ? 'border-red-500/50' : 'border-white/10'} rounded-2xl text-white placeholder:text-gray-600 focus:outline-none focus:border-green-500/50 transition-all font-medium resize-none leading-relaxed`}
+                                                style={{ padding: '24px 28px 24px 64px', fontSize: '16px' }}
+                                                placeholder="Flat/House No., Building, Street, Area/Locality, City, State, Pincode"
+                                            ></textarea>
+                                        </div>
                                         {errors.billingAddress && (
-                                            <p className="text-red-400 text-xs mt-1">{errors.billingAddress}</p>
+                                            <p className="text-red-400 text-sm font-medium mt-3 ml-2">{errors.billingAddress}</p>
                                         )}
                                     </div>
                                 </div>
 
-                                {/* 5. PAYMENT METHOD */}
-                                <div>
-                                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                        <span className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-sm">5</span>
-                                        Payment Method
+                                {/* 5. SECURE CHECKOUT */}
+                                <div className="space-y-10">
+                                    <h3 className="text-2xl font-bold text-white flex items-center gap-4 mt-20">
+                                        <span className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 text-xl font-black tracking-tighter">05</span>
+                                        Secure Checkout
                                     </h3>
-                                    <div className="space-y-3">
-                                        <label className={`block p-4 rounded-xl border ${formData.paymentMethod === 'card' ? 'border-cyan-400 bg-cyan-500/10' : 'border-white/10 bg-white/5'
-                                            } cursor-pointer transition-all hover:border-cyan-400/50`}>
-                                            <div className="flex items-center gap-3">
-                                                <input
-                                                    type="radio"
-                                                    name="paymentMethod"
-                                                    value="card"
-                                                    checked={formData.paymentMethod === 'card'}
-                                                    onChange={(e) => handleChange('paymentMethod', e.target.value)}
-                                                    className="w-4 h-4 text-cyan-500 focus:ring-cyan-400"
-                                                />
-                                                <CreditCard className="w-5 h-5 text-cyan-400" />
-                                                <span className="font-semibold text-white">Credit / Debit Card</span>
-                                            </div>
-                                        </label>
 
-                                        {/* Card Payment Fields */}
-                                        <AnimatePresence>
-                                            {formData.paymentMethod === 'card' && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, height: 0 }}
-                                                    animate={{ opacity: 1, height: 'auto' }}
-                                                    exit={{ opacity: 0, height: 0 }}
-                                                    className="mt-4 space-y-3 overflow-hidden"
-                                                >
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                                        <div className="md:col-span-2">
-                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                                Card Number <span className="text-red-400">*</span>
-                                                            </label>
-                                                            <input
-                                                                type="text"
-                                                                value={formData.cardNumber}
-                                                                onChange={(e) => handleChange('cardNumber', e.target.value)}
-                                                                maxLength={19}
-                                                                className={`w-full bg-white/5 border ${errors.cardNumber ? 'border-red-400/50' : 'border-white/10'
-                                                                    } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
-                                                                placeholder="1234 5678 9012 3456"
-                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
-                                                            />
-                                                            {errors.cardNumber && (
-                                                                <p className="text-red-400 text-xs mt-1">{errors.cardNumber}</p>
-                                                            )}
-                                                        </div>
-                                                        <div className="md:col-span-2">
-                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                                Cardholder Name <span className="text-red-400">*</span>
-                                                            </label>
-                                                            <input
-                                                                type="text"
-                                                                value={formData.cardholderName}
-                                                                onChange={(e) => handleChange('cardholderName', e.target.value)}
-                                                                className={`w-full bg-white/5 border ${errors.cardholderName ? 'border-red-400/50' : 'border-white/10'
-                                                                    } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
-                                                                placeholder="JOHN DOE"
-                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
-                                                            />
-                                                            {errors.cardholderName && (
-                                                                <p className="text-red-400 text-xs mt-1">{errors.cardholderName}</p>
-                                                            )}
-                                                        </div>
-                                                        <div>
-                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                                Expiry Date <span className="text-red-400">*</span>
-                                                            </label>
-                                                            <input
-                                                                type="text"
-                                                                value={formData.expiryDate}
-                                                                onChange={(e) => handleChange('expiryDate', e.target.value)}
-                                                                className={`w-full bg-white/5 border ${errors.expiryDate ? 'border-red-400/50' : 'border-white/10'
-                                                                    } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
-                                                                placeholder="MM/YY"
-                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
-                                                            />
-                                                            {errors.expiryDate && (
-                                                                <p className="text-red-400 text-xs mt-1">{errors.expiryDate}</p>
-                                                            )}
-                                                        </div>
-                                                        <div>
-                                                            <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                                CVV <span className="text-red-400">*</span>
-                                                            </label>
-                                                            <input
-                                                                type="password"
-                                                                value={formData.cvv}
-                                                                onChange={(e) => handleChange('cvv', e.target.value)}
-                                                                maxLength={4}
-                                                                className={`w-full bg-white/5 border ${errors.cvv ? 'border-red-400/50' : 'border-white/10'
-                                                                    } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
-                                                                placeholder="123"
-                                                                style={{ padding: '16px 20px', fontSize: '16px' }}
-                                                            />
-                                                            {errors.cvv && (
-                                                                <p className="text-red-400 text-xs mt-1">{errors.cvv}</p>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-
-                                        <label className={`block p-4 rounded-xl border ${formData.paymentMethod === 'upi' ? 'border-cyan-400 bg-cyan-500/10' : 'border-white/10 bg-white/5'
-                                            } cursor-pointer transition-all hover:border-cyan-400/50`}>
-                                            <div className="flex items-center gap-3">
-                                                <input
-                                                    type="radio"
-                                                    name="paymentMethod"
-                                                    value="upi"
-                                                    checked={formData.paymentMethod === 'upi'}
-                                                    onChange={(e) => handleChange('paymentMethod', e.target.value)}
-                                                    className="w-4 h-4 text-cyan-500 focus:ring-cyan-400"
-                                                />
-                                                <Smartphone className="w-5 h-5 text-cyan-400" />
-                                                <span className="font-semibold text-white">UPI</span>
-                                            </div>
-                                        </label>
-
-                                        {/* UPI Payment Field */}
-                                        <AnimatePresence>
-                                            {formData.paymentMethod === 'upi' && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, height: 0 }}
-                                                    animate={{ opacity: 1, height: 'auto' }}
-                                                    exit={{ opacity: 0, height: 0 }}
-                                                    className="mt-4 overflow-hidden"
-                                                >
-                                                    <label className="block text-base font-semibold text-gray-300" style={{ marginBottom: '10px' }}>
-                                                        UPI ID <span className="text-red-400">*</span>
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        value={formData.upiId}
-                                                        onChange={(e) => handleChange('upiId', e.target.value)}
-                                                        className={`w-full bg-white/5 border ${errors.upiId ? 'border-red-400/50' : 'border-white/10'
-                                                            } rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400/50 transition-colors`}
-                                                        placeholder="yourname@upi"
-                                                        style={{ padding: '16px 20px', fontSize: '16px' }}
-                                                    />
-                                                    {errors.upiId && (
-                                                        <p className="text-red-400 text-xs mt-1">{errors.upiId}</p>
-                                                    )}
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-
-                                        {errors.paymentMethod && (
-                                            <p className="text-red-400 text-xs mt-1">{errors.paymentMethod}</p>
-                                        )}
+                                    <div className="p-10 rounded-[3rem] bg-blue-500/[0.03] border border-blue-500/10 flex flex-col md:flex-row items-center gap-10">
+                                        <div className="w-24 h-24 rounded-[2rem] bg-blue-500/10 flex items-center justify-center">
+                                            <ShieldCheck className="w-12 h-12 text-blue-400" />
+                                        </div>
+                                        <div className="flex-1 space-y-4 text-center md:text-left">
+                                            <h4 className="text-xl font-bold text-white uppercase tracking-wider">Henu OS Secure Payments</h4>
+                                            <p className="text-gray-400 leading-relaxed max-w-lg">
+                                                You are being redirected to our official Razorpay Store for a safe and encrypted transaction.
+                                                All major credit/debit cards, UPI, and net banking are supported.
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-4 px-6 py-3 rounded-2xl bg-white/5 border border-white/10">
+                                            <Lock className="w-4 h-4 text-green-400" />
+                                            <span className="text-xs font-black text-gray-300 uppercase tracking-widest">PCI-DSS Compliant</span>
+                                        </div>
                                     </div>
                                 </div>
+
+                                {/* Error Message */}
+                                {errors.submit && (
+                                    <div className="p-6 rounded-[2rem] bg-red-500/10 border border-red-500/20 text-red-400 text-base font-bold flex items-center gap-4 mt-12">
+                                        <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]" />
+                                        {errors.submit}
+                                    </div>
+                                )}
 
                                 {/* Action Buttons */}
-                                <div className="flex gap-5" style={{ paddingTop: '20px' }}>
+                                <div className="flex flex-col sm:flex-row gap-8 pt-16">
                                     <button
                                         type="button"
                                         onClick={onClose}
                                         disabled={isProcessing}
-                                        className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl font-bold text-lg text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                        style={{ padding: '20px' }}
+                                        className="flex-1 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 rounded-3xl font-black text-lg text-gray-400 hover:text-white transition-all disabled:opacity-50 py-8 uppercase tracking-[0.25em] flex items-center justify-center"
                                     >
-                                        Cancel
+                                        Cancel Request
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={isProcessing}
-                                        className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-lg text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                                        style={{ padding: '20px' }}
+                                        className="flex-[2] bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:brightness-110 rounded-3xl font-black text-xl text-white shadow-[0_30px_60px_rgba(6,182,212,0.3)] hover:shadow-[0_40px_80px_rgba(6,182,212,0.5)] transition-all disabled:opacity-50 flex items-center justify-center gap-6 py-8 uppercase tracking-[0.3em] relative overflow-hidden group"
                                     >
-                                        {isProcessing ? (
-                                            <>
-                                                <Loader2 className="w-5 h-5 animate-spin" />
-                                                Processing...
-                                            </>
-                                        ) : (
-                                            'Pay & Enroll'
+                                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                                        <span className="relative z-10">
+                                            {isProcessing ? 'Initializing Secure Flow...' : 'Complete Enrollment'}
+                                        </span>
+                                        {!isProcessing && (
+                                            <Zap className="w-8 h-8 relative z-10 group-hover:animate-bounce" />
                                         )}
+                                        {isProcessing && <Loader2 className="w-8 h-8 animate-spin relative z-10" />}
                                     </button>
                                 </div>
                             </form>
-                        </motion.div>
-                    </div>
-                </>
-            )}
-        </AnimatePresence>
+                        </div>
+                    </motion.div>
+                </motion.div>
+
+            )
+            }
+        </AnimatePresence >,
+        document.body
     );
 }
+

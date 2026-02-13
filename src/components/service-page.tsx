@@ -45,7 +45,7 @@ interface ServicePageProps {
     heroTitle: string;
     heroHighlight: string;
     heroDescription: string;
-    heroAccentColor: 'cyan' | 'amber';
+    heroAccentColor: 'purple' | 'indigo';
     heroAnimation?: ReactNode;
 
     // Features
@@ -79,7 +79,7 @@ export const ServiceHero = ({
     title: string;
     highlight: string;
     description: string;
-    accentColor: 'cyan' | 'amber';
+    accentColor: 'purple' | 'indigo';
     animation?: ReactNode;
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -91,8 +91,8 @@ export const ServiceHero = ({
     const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-    const gradientClass = accentColor === 'cyan' ? 'gradient-text-tech' : 'gradient-text-legal';
-    const glowColor = accentColor === 'cyan' ? 'rgba(0, 212, 255, 0.15)' : 'rgba(255, 149, 0, 0.15)';
+    const gradientClass = accentColor === 'purple' ? 'gradient-text' : 'gradient-text-legal';
+    const glowColor = accentColor === 'purple' ? 'rgba(109, 40, 217, 0.15)' : 'rgba(79, 70, 229, 0.15)';
 
     return (
         <section
@@ -121,21 +121,6 @@ export const ServiceHero = ({
                     transition={{ duration: 8, repeat: Infinity }}
                 />
             </div>
-
-            {/* Animation on the right side (absolute positioned, no box) */}
-            {animation && (
-                <div
-                    className="animation-container"
-                    style={{
-                        pointerEvents: 'none',
-                        willChange: 'transform, opacity',
-                        opacity: 1,
-                        visibility: 'visible'
-                    }}
-                >
-                    {animation}
-                </div>
-            )}
 
             <motion.div
                 style={{ y, opacity }}
@@ -192,6 +177,21 @@ export const ServiceHero = ({
                 </div>
             </motion.div>
 
+            {/* Animation section (Absolute on desktop, relative on mobile to avoid overlap) */}
+            {animation && (
+                <div
+                    className="animation-container"
+                    style={{
+                        pointerEvents: 'none',
+                        willChange: 'transform, opacity',
+                        opacity: 1,
+                        visibility: 'visible'
+                    }}
+                >
+                    {animation}
+                </div>
+            )}
+
             {/* Responsive Animation Styles */}
             <style jsx>{`
                 .animation-container {
@@ -211,25 +211,27 @@ export const ServiceHero = ({
                 /* Tablet and Mobile (< 1024px) */
                 @media (max-width: 1023px) {
                     .animation-container {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%) scale(0.7);
+                        position: relative;
                         width: 100%;
-                        height: 300px;
-                        overflow: visible;
-                        opacity: 0.3;
+                        height: 350px;
+                        margin-top: 40px;
+                        margin-bottom: -40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         z-index: 0;
+                        opacity: 0.5;
+                        transform: scale(0.8);
                     }
                 }
                 
                 /* Small Mobile (< 768px) */
                 @media (max-width: 767px) {
                     .animation-container {
-                        transform: translate(-50%, -50%) scale(0.9);
-                        height: 380px;
-                        margin-top: 40px;
-                        opacity: 0.25;
+                        height: 320px;
+                        margin-top: 20px;
+                        transform: scale(0.75);
+                        opacity: 0.4;
                     }
                     
                     /* Reduce blur on mobile for performance */
@@ -247,7 +249,7 @@ export const ServiceHero = ({
 // ============================================
 
 
-export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFeature[]; accentColor: 'cyan' | 'amber' }) => {
+export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFeature[]; accentColor: 'purple' | 'indigo' }) => {
     return (
         <section className="section bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
             <div className="container">
@@ -282,19 +284,19 @@ export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFe
 // ============================================
 
 
-export const ServiceProcess = ({ process, accentColor }: { process: ServiceProcess[]; accentColor: 'cyan' | 'amber' }) => {
+export const ServiceProcess = ({ process, accentColor }: { process: ServiceProcess[]; accentColor: 'purple' | 'indigo' }) => {
     // Transform process steps into StickyScroll content format
     const stickyContent = process.map((step, index) => {
-        const gradients = accentColor === 'cyan'
+        const gradients = accentColor === 'purple'
             ? [
-                "linear-gradient(to bottom right, rgb(6 182 212), rgb(16 185 129))",
-                "linear-gradient(to bottom right, rgb(34 211 238), rgb(59 130 246))",
-                "linear-gradient(to bottom right, rgb(56 189 248), rgb(99 102 241))"
+                "linear-gradient(to bottom right, #6D28D9, #4F46E5)",
+                "linear-gradient(to bottom right, #4F46E5, #0EA5E9)",
+                "linear-gradient(to bottom right, #6D28D9, #0EA5E9)"
             ]
             : [
-                "linear-gradient(to bottom right, rgb(251 146 60), rgb(234 179 8))",
-                "linear-gradient(to bottom right, rgb(249 115 22), rgb(239 68 68))",
-                "linear-gradient(to bottom right, rgb(245 158 11), rgb(217 119 6))"
+                "linear-gradient(to bottom right, #4F46E5, #0EA5E9)",
+                "linear-gradient(to bottom right, #0EA5E9, #06B6D4)",
+                "linear-gradient(to bottom right, #4F46E5, #06B6D4)"
             ];
 
         return {
@@ -380,9 +382,9 @@ export const ServiceTechnologies = ({ technologies }: { technologies: ServiceTec
 // ============================================
 // CTA SECTION
 // ============================================
-export const ServiceCTA = ({ title, description, accentColor }: { title: string; description: string; accentColor: 'cyan' | 'amber' }) => {
-    const glowColor = accentColor === 'cyan' ? 'rgba(0, 212, 255, 0.2)' : 'rgba(255, 149, 0, 0.2)';
-    const gradientClass = accentColor === 'cyan' ? 'gradient-text-tech' : 'gradient-text-legal';
+export const ServiceCTA = ({ title, description, accentColor }: { title: string; description: string; accentColor: 'purple' | 'indigo' }) => {
+    const glowColor = accentColor === 'purple' ? 'rgba(109, 40, 217, 0.2)' : 'rgba(79, 70, 229, 0.2)';
+    const gradientClass = accentColor === 'purple' ? 'gradient-text' : 'gradient-text-legal';
 
     return (
         <section className="section relative overflow-hidden bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>

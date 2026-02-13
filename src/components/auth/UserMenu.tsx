@@ -47,15 +47,15 @@ export const UserMenu = () => {
         >
             {/* Avatar */}
             <div className={`w-8 h-8 rounded-full flex items-center justify-center overflow-hidden ${!user?.profilePicture ? (user?.userType === 'company'
-                ? 'bg-gradient-to-br from-cyan-500 to-cyan-600'
-                : 'bg-gradient-to-br from-amber-500 to-amber-600') : ''
+                ? 'bg-gradient-to-br from-purple-500 to-purple-600'
+                : 'bg-gradient-to-br from-indigo-500 to-indigo-600') : ''
                 }`}>
                 {user?.profilePicture ? (
                     <img src={user.profilePicture} alt={user.name} className="w-full h-full object-cover" />
                 ) : user?.userType === 'company' ? (
-                    <Building2 size={16} className="text-black" />
+                    <Building2 size={16} className="text-white" />
                 ) : (
-                    <User size={16} className="text-black" />
+                    <User size={16} className="text-white" />
                 )}
             </div>
 

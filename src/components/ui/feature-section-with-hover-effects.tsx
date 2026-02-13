@@ -12,13 +12,13 @@ export interface FeatureItem {
 
 interface FeaturesSectionProps {
     features: FeatureItem[];
-    accentColor?: 'cyan' | 'amber';
+    accentColor?: 'purple' | 'indigo';
     className?: string;
 }
 
 export function FeaturesSectionWithHoverEffects({
     features,
-    accentColor = 'cyan',
+    accentColor = 'purple',
     className
 }: FeaturesSectionProps) {
     return (
@@ -51,16 +51,16 @@ const Feature = ({
     description: string;
     icon: ReactNode;
     index: number;
-    accentColor: 'cyan' | 'amber';
+    accentColor: 'purple' | 'indigo';
 }) => {
     // Determine the hover accent color based on accentColor prop
-    const hoverColorClass = accentColor === 'cyan'
-        ? 'group-hover/feature:bg-cyan-500'
-        : 'group-hover/feature:bg-amber-500';
+    const hoverColorClass = accentColor === 'purple'
+        ? 'group-hover/feature:bg-purple-500'
+        : 'group-hover/feature:bg-indigo-500';
 
-    const iconHoverColorClass = accentColor === 'cyan'
-        ? 'group-hover/feature:text-cyan-500'
-        : 'group-hover/feature:text-amber-500';
+    const iconHoverColorClass = accentColor === 'purple'
+        ? 'group-hover/feature:text-purple-500'
+        : 'group-hover/feature:text-indigo-500';
 
     return (
         <div

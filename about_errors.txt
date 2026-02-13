@@ -1,8 +1,0 @@
-﻿
-E:\henu-website\henu-app\src\app\about\page.tsx
-  247:32  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
-  560:67  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
-  794:75  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
-
-Γ£û 3 problems (3 errors, 0 warnings)
-

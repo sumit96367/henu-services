@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth, UserType } from '@/context/AuthContext';
 import {
@@ -165,8 +166,8 @@ export const AuthModal = () => {
             >
                 {/* Background decorations */}
                 <div className="absolute inset-0 overflow-hidden">
-                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px]" />
+                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px]" />
+                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px]" />
                 </div>
 
                 {/* Close button */}
@@ -183,7 +184,39 @@ export const AuthModal = () => {
                     exit={{ opacity: 0, y: 20 }}
                     className="relative w-full max-w-2xl px-6"
                 >
-                    <div className={`text-center ${step === 'type-selection' ? '' : 'mb-5'}`} style={step === 'type-selection' ? { marginBottom: '0.3cm' } : {}}>
+                    <div className="flex flex-col items-center text-center">
+                        {/* Logo */}
+                        <div className="w-56 h-32 -mb-4 relative flex items-center justify-center group">
+                            {/* Logo Glow */}
+                            <div className="absolute inset-0 bg-purple-500/10 blur-[80px] rounded-full" />
+
+                            <motion.div
+                                animate={{
+                                    scale: [1, 1.05, 1],
+                                }}
+                                whileHover={{ 
+                                    scale: 1.15,
+                                    filter: "drop-shadow(0 0 30px rgba(109, 40, 217, 0.8))"
+                                }}
+                                transition={{
+                                    duration: 6,
+                                    repeat: Infinity,
+                                    ease: "easeInOut",
+                                    scale: { duration: 6, repeat: Infinity }, // for the pulse
+                                    filter: { duration: 0.3 } // for the hover
+                                }}
+                                className="relative w-48 h-48 z-10 cursor-pointer"
+                            >
+                                <Image
+                                    src="/logo.png"
+                                    alt="Henu OS Logo"
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                />
+                            </motion.div>
+                        </div>
+
                         <h2 className={`font-bold text-white ${step === 'type-selection' ? 'text-3xl md:text-4xl mb-3' : 'text-2xl md:text-3xl mb-2'}`}>
                             {step === 'type-selection'
                                 ? (authModalMode === 'login' ? 'Welcome Back' : 'Join Henu OS')
@@ -210,11 +243,11 @@ export const AuthModal = () => {
                                 <div className="grid grid-cols-2 gap-6">
                                     <button
                                         onClick={() => setSelectedType('company')}
-                                        className={`relative rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'company' ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/10 hover:border-white/20'}`}
+                                        className={`relative rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'company' ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:border-white/20'}`}
                                         style={{ padding: 'max(37.8px, 1.5rem)' }}
                                     >
                                         <div className="mb-auto">
-                                            <Building2 size={32} className={selectedType === 'company' ? 'text-cyan-400' : 'text-gray-400'} />
+                                            <Building2 size={32} className={selectedType === 'company' ? 'text-purple-400' : 'text-gray-400'} />
                                         </div>
                                         <div className="mt-6">
                                             <h3 className={`text-lg font-semibold ${selectedType === 'company' ? 'text-white' : 'text-gray-300'}`}>Company / Organization</h3>
@@ -224,10 +257,10 @@ export const AuthModal = () => {
 
                                     <button
                                         onClick={() => setSelectedType('personal')}
-                                        className={`relative rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'personal' ? 'border-amber-500 bg-amber-500/10' : 'border-white/10 hover:border-white/20'}`}
+                                        className={`relative rounded-2xl border-2 transition-all duration-200 text-left min-h-[200px] flex flex-col bg-white/[0.03] backdrop-blur-sm ${selectedType === 'personal' ? 'border-indigo-500 bg-indigo-500/10' : 'border-white/10 hover:border-white/20'}`}
                                         style={{ padding: 'max(37.8px, 1.5rem)' }}
                                     >
-                                        <User size={32} className={selectedType === 'personal' ? 'text-amber-400' : 'text-gray-400'} />
+                                        <User size={32} className={selectedType === 'personal' ? 'text-indigo-400' : 'text-gray-400'} />
                                         <div className="mt-6">
                                             <h3 className={`text-lg font-semibold ${selectedType === 'personal' ? 'text-white' : 'text-gray-300'}`}>Personal Account</h3>
                                             <p className="text-sm text-gray-500 mt-1">For freelancers & individuals</p>
@@ -239,7 +272,7 @@ export const AuthModal = () => {
                                     <button
                                         onClick={() => selectedType && setStep('credentials')}
                                         disabled={!selectedType}
-                                        className={`w-64 py-3 min-h-[48px] rounded-full font-bold text-lg transition-all ${selectedType ? (selectedType === 'company' ? 'bg-cyan-500 text-white hover:bg-cyan-400 shadow-lg shadow-cyan-500/30' : 'bg-amber-500 text-black hover:bg-amber-400 shadow-lg shadow-amber-500/30') : 'bg-white/10 text-white/40 cursor-not-allowed'}`}
+                                        className={`w-64 py-3 min-h-[48px] rounded-full font-bold text-lg transition-all ${selectedType ? (selectedType === 'company' ? 'bg-purple-600 text-white hover:bg-purple-500 shadow-lg shadow-purple-500/30' : 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-lg shadow-indigo-500/30') : 'bg-white/10 text-white/40 cursor-not-allowed'}`}
                                     >
                                         Continue
                                     </button>
@@ -248,7 +281,7 @@ export const AuthModal = () => {
                                 <div className="text-center">
                                     <p className="text-gray-400">
                                         {authModalMode === 'login' ? "Don't have an account?" : 'Already have an account?'}
-                                        <button onClick={switchMode} className="ml-2 text-cyan-400 hover:underline">
+                                        <button onClick={switchMode} className="ml-2 text-purple-400 hover:underline">
                                             {authModalMode === 'login' ? 'Sign Up' : 'Log In'}
                                         </button>
                                     </p>
@@ -263,21 +296,23 @@ export const AuthModal = () => {
                                 className="w-full flex flex-col items-center"
                             >
                                 <div className="w-full max-w-md">
-                                    <button onClick={handleBack} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors" style={{ marginBottom: '14px' }}>
+                                    <button onClick={handleBack} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors" style={{ marginBottom: '28px' }}>
                                         <ArrowLeft size={16} /> <span className="text-sm">Back</span>
                                     </button>
 
                                     {/* Auth Method Toggle */}
-                                    <div className="flex bg-white/5 p-1 rounded-xl border border-white/10" style={{ marginBottom: '16px' }}>
+                                    <div className="flex bg-white/5 p-1.5 rounded-2xl border border-white/10" style={{ marginBottom: '16px' }}>
                                         <button
                                             onClick={() => setAuthMethod('email')}
-                                            className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${authMethod === 'email' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                            className={`flex-1 text-sm font-semibold rounded-xl transition-all ${authMethod === 'email' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                            style={{ padding: '14px 0' }}
                                         >
                                             Email
                                         </button>
                                         <button
                                             onClick={() => setAuthMethod('phone')}
-                                            className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${authMethod === 'phone' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                            className={`flex-1 text-sm font-semibold rounded-xl transition-all ${authMethod === 'phone' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+                                            style={{ padding: '14px 0' }}
                                         >
                                             Phone
                                         </button>
@@ -288,29 +323,29 @@ export const AuthModal = () => {
                                             {authModalMode === 'signup' && (
                                                 <>
                                                     {selectedType === 'company' && (
-                                                        <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                        <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
                                                             <Building2 size={20} className="text-gray-500" />
                                                             <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="Company Name" className="flex-1 bg-transparent text-white outline-none text-base" />
                                                         </div>
                                                     )}
-                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
                                                         <User size={20} className="text-gray-500" />
                                                         <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                                     </div>
                                                 </>
                                             )}
-                                            <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                            <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
                                                 <Mail size={20} className="text-gray-500" />
                                                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                             </div>
-                                            <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                            <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
                                                 <Lock size={20} className="text-gray-500" />
                                                 <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-gray-500 hover:text-white">
                                                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                                 </button>
                                             </div>
-                                            <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500 hover:bg-cyan-600' : 'bg-amber-500 text-black hover:bg-amber-600'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
+                                            <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base text-white flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-indigo-600 hover:bg-indigo-700'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
                                                 {isLoading ? <Loader2 className="animate-spin" /> : (authModalMode === 'login' ? 'Sign In' : 'Create Account')}
                                             </button>
                                         </form>
@@ -318,22 +353,22 @@ export const AuthModal = () => {
                                         <div className="space-y-4">
                                             {verificationStep === 'input' ? (
                                                 <form onSubmit={handlePhoneRequest} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
                                                         <Smartphone size={20} className="text-gray-500" />
                                                         <input type="tel" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} placeholder="+91 99999 99999" className="flex-1 bg-transparent text-white outline-none text-base" required />
                                                     </div>
                                                     <div id="recaptcha-container"></div>
-                                                    <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500' : 'bg-amber-500 text-black'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
+                                                    <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base text-white flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-purple-600' : 'bg-indigo-600'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
                                                         {isLoading ? <Loader2 className="animate-spin" /> : 'Send Code'}
                                                     </button>
                                                 </form>
                                             ) : (
                                                 <form onSubmit={handlePhoneVerify} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-cyan-500/50" style={{ height: '50px' }}>
+                                                    <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
                                                         <Lock size={20} className="text-gray-500" />
                                                         <input type="text" value={otp} onChange={e => setOtp(e.target.value)} placeholder="6-digit OTP" className="flex-1 bg-transparent text-white outline-none text-center tracking-widest text-base" required maxLength={6} />
                                                     </div>
-                                                    <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-cyan-500' : 'bg-amber-500 text-black'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
+                                                    <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base text-white flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-purple-600' : 'bg-indigo-600'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
                                                         {isLoading ? <Loader2 className="animate-spin" /> : 'Verify & Continue'}
                                                     </button>
                                                 </form>

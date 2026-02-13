@@ -5,41 +5,47 @@
    ============================================ */
 
 :root {
-  /* Core Colors - Dark Theme */
-  --background: #050505;
-  --background-secondary: #0A0A0A;
-  --background-tertiary: #111111;
+  /* Core Colors - Midnight Nebula Theme */
+  --background: #020205;
+  --background-secondary: #050510;
+  --background-tertiary: #0a0a1a;
   --foreground: #ffffff;
-  --foreground-muted: #a1a1aa;
-  --foreground-subtle: #555555;
+  --foreground-muted: #94a3b8;
+  --foreground-subtle: #475569;
 
   /* shadcn compatible tokens */
-  --card: #0A0A0A;
+  --card: #050510;
   --card-foreground: #ffffff;
-  --muted-foreground: #a1a1aa;
+  --muted-foreground: #94a3b8;
 
-  /* Brand Colors */
-  --cyan: #00D4FF;
-  --cyan-light: #00E5FF;
-  --cyan-dark: #007AFF;
-  --amber: #FF9500;
-  --amber-light: #FFB340;
-  --amber-dark: #E68600;
+  /* Brand Colors - Nebula Palette */
+  --nebula-purple: #6D28D9;
+  --nebula-indigo: #4F46E5;
+  --nebula-pink: #D946EF;
+  --nebula-violet: #8B5CF6;
+
+  /* Legacy mapping for compatibility - Overridden for Midnight Nebula */
+  --cyan: #8B5CF6;
+  /* Violet */
+  --amber: #6366f1;
+  /* Indigo */
 
   /* Gradient Colors */
-  --gradient-tech: linear-gradient(135deg, #00D4FF 0%, #007AFF 100%);
-  --gradient-legal: linear-gradient(135deg, #FF9500 0%, #FFB340 100%);
-  --gradient-mixed: linear-gradient(90deg, #00D4FF 0%, #FF9500 100%);
+  --gradient-nebula: linear-gradient(135deg, #6D28D9 0%, #4F46E5 100%);
+  --gradient-cosmic: linear-gradient(135deg, #4F46E5 0%, #8B5CF6 100%);
+  --gradient-tech: var(--gradient-cosmic);
+  --gradient-legal: linear-gradient(135deg, #6366f1 0%, #4F46E5 100%);
 
-  /* Glass Effect */
-  --glass-background: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  /* Glass Effect - Crystal Focus */
+  --glass-background: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  --glass-blur: 40px;
 
-  /* Neon Glow */
-  --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.2);
-  --glow-amber: 0 0 20px rgba(255, 149, 0, 0.4), 0 0 40px rgba(255, 149, 0, 0.2);
-  --glow-white: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.1);
+  /* Neon Glows */
+  --glow-purple: 0 0 30px rgba(109, 40, 217, 0.4), 0 0 60px rgba(109, 40, 217, 0.2);
+  --glow-indigo: 0 0 30px rgba(79, 70, 229, 0.4), 0 0 60px rgba(79, 70, 229, 0.2);
+  --glow-cyan: 0 0 30px rgba(6, 182, 212, 0.3), 0 0 60px rgba(6, 182, 212, 0.1);
 }
 
 @theme inline {
@@ -125,7 +131,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--cyan), var(--amber));
+  background: linear-gradient(180deg, var(--nebula-purple), var(--nebula-blue));
   border-radius: 3px;
 }
 
@@ -148,18 +154,20 @@ h6 {
 }
 
 h1 {
-  font-size: clamp(2rem, 8vw, 5rem);
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.25rem, 10vw, 5rem);
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+  line-height: 1.1;
 }
 
 h2 {
-  font-size: clamp(1.75rem, 5vw, 3.5rem);
-  margin-bottom: 1.25rem;
+  font-size: clamp(1.75rem, 6vw, 3.5rem);
+  margin-bottom: clamp(0.75rem, 2.5vw, 1.25rem);
+  line-height: 1.2;
 }
 
 h3 {
-  font-size: clamp(1.25rem, 3vw, 2rem);
-  margin-bottom: 1rem;
+  font-size: clamp(1.25rem, 4vw, 2.25rem);
+  margin-bottom: 0.75rem;
 }
 
 p {
@@ -172,10 +180,10 @@ p:last-child {
 }
 
 .heading-hero {
-  font-size: clamp(3rem, 10vw, 6rem);
+  font-size: clamp(2.5rem, 12vw, 6.5rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  letter-spacing: -0.04em;
+  line-height: 1;
   margin-bottom: 1.5rem;
 }
 
@@ -200,7 +208,7 @@ li {
 
 /* Gradient Text - Cyan to Amber */
 .gradient-text {
-  background: linear-gradient(90deg, var(--cyan) 0%, var(--amber) 100%);
+  background: linear-gradient(90deg, var(--nebula-purple) 0%, var(--nebula-indigo) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -227,18 +235,24 @@ li {
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 0 40px;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 32px;
+  }
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 20px;
+    padding: 0 24px;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 16px;
+    padding: 0 20px;
   }
 }
 
@@ -255,9 +269,15 @@ li {
   }
 }
 
-/* Policy Box - 1cm Internal Padding */
+/* Policy Box - Internal Padding */
 .policy-box-padding {
-  padding: 1cm;
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .policy-box-padding {
+    padding: 2.5rem;
+  }
 }
 
 /* Policy CTA Button - Prominent Primary Button */
@@ -269,14 +289,16 @@ li {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: white;
-  color: #000;
+  background: var(--gradient-nebula);
+  color: #fff;
   border: none;
+  box-shadow: 0 10px 30px -10px rgba(109, 40, 217, 0.5);
 }
 
 .policy-cta-button:hover {
-  background: #f0f0f0;
+  background: var(--gradient-cosmic);
   transform: translateY(-2px);
+  box-shadow: 0 15px 40px -10px rgba(79, 70, 229, 0.6);
 }
 
 @media (max-width: 768px) {
@@ -316,19 +338,19 @@ li {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.015);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 24px;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(0, 212, 255, 0.2);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(109, 40, 217, 0.3);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
 }
 
 /* ============================================
@@ -423,9 +445,9 @@ li {
   right: 0;
   height: 50%;
   background-image:
-    linear-gradient(transparent 0%, rgba(0, 212, 255, 0.03) 100%),
-    linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(transparent 0%, rgba(79, 70, 229, 0.03) 100%),
+    linear-gradient(rgba(79, 70, 229, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 70, 229, 0.05) 1px, transparent 1px);
   background-size: 100% 100%, 80px 80px, 80px 80px;
   transform: perspective(500px) rotateX(60deg);
   transform-origin: bottom center;
@@ -804,7 +826,7 @@ li {
 }
 
 .accordion-trigger:hover {
-  color: var(--cyan);
+  color: var(--nebula-purple);
 }
 
 .accordion-content {
@@ -875,11 +897,11 @@ li {
 
 .holographic {
   background: linear-gradient(135deg,
-      rgba(0, 212, 255, 0.1) 0%,
-      rgba(255, 149, 0, 0.05) 50%,
-      rgba(0, 212, 255, 0.1) 100%);
+      rgba(109, 40, 217, 0.1) 0%,
+      rgba(79, 70, 229, 0.05) 50%,
+      rgba(109, 40, 217, 0.1) 100%);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  border: 1px solid rgba(109, 40, 217, 0.2);
   border-radius: 16px;
 }
 
@@ -900,13 +922,13 @@ li {
 .neural-node {
   width: 8px;
   height: 8px;
-  background: var(--cyan);
+  background: var(--nebula-purple);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--cyan), 0 0 20px rgba(0, 212, 255, 0.5);
+  box-shadow: 0 0 10px var(--nebula-purple), 0 0 20px rgba(109, 40, 217, 0.5);
 }
 
 .neural-connection {
-  stroke: rgba(0, 212, 255, 0.3);
+  stroke: rgba(109, 40, 217, 0.3);
   stroke-width: 1;
 }
 
@@ -932,7 +954,7 @@ li {
 }
 
 .footer-link:hover {
-  color: var(--cyan);
+  color: var(--nebula-purple);
 }
 
 .social-icon {
@@ -949,9 +971,9 @@ li {
 }
 
 .social-icon:hover {
-  background: var(--cyan);
-  border-color: var(--cyan);
-  color: #000;
+  background: var(--nebula-purple);
+  border-color: var(--nebula-purple);
+  color: #fff;
   transform: translateY(-3px);
 }
 
@@ -1051,6 +1073,45 @@ li {
 
 .animate-fifth {
   animation: moveInCircle 20s ease infinite;
+}
+
+/* ============================================
+   MIDNIGHT NEBULA SPECIALTIES
+   ============================================ */
+
+.nebula-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(109, 40, 217, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(79, 70, 229, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 60%);
+  filter: blur(80px);
+}
+
+.crystal-panel {
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow:
+    0 10px 40px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 20px rgba(109, 40, 217, 0.6);
+}
+
+.text-glow-indigo {
+  text-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
+}
+
+.neon-border-purple {
+  border: 1px solid rgba(109, 40, 217, 0.3);
+  box-shadow: 0 0 15px rgba(109, 40, 217, 0.1);
 }
 
 /* ============================================

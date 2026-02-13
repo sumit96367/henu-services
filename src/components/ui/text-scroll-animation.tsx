@@ -27,7 +27,7 @@ const CharacterV1 = ({
 
     return (
         <motion.span
-            className={cn("inline-block text-cyan-400", isSpace && "w-4")}
+            className={cn("inline-block text-purple-400", isSpace && "w-4")}
             style={{ x, rotateX }}
         >
             {char}
@@ -169,9 +169,9 @@ const IconScrollAnimation = ({
         >
             {title && (
                 <p className="flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-white">
-                    <Bracket className="h-12 text-cyan-400" />
+                    <Bracket className="h-12 text-purple-400" />
                     <span className="font-medium">{title}</span>
-                    <Bracket className="h-12 scale-x-[-1] text-cyan-400" />
+                    <Bracket className="h-12 scale-x-[-1] text-purple-400" />
                 </p>
             )}
 
@@ -222,7 +222,7 @@ const ScrollAnimationDemo = () => {
             <main className="w-full bg-[#050505]">
                 {/* Scroll indicator */}
                 <div className="absolute left-1/2 top-22 z-10 grid -translate-x-1/2 content-start justify-items-center gap-6 text-center text-white">
-                    <span className="relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-[#050505] after:to-cyan-400 after:content-['']">
+                    <span className="relative max-w-[12ch] text-xs uppercase leading-tight opacity-40 after:absolute after:left-1/2 after:top-full after:h-16 after:w-px after:bg-gradient-to-b after:from-[#050505] after:to-purple-400 after:content-['']">
                         Scroll to see more
                     </span>
                 </div>
@@ -254,9 +254,9 @@ const ScrollAnimationDemo = () => {
                     className="relative -mt-[100vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-[#050505] p-[2vw]"
                 >
                     <p className="flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-white">
-                        <Bracket className="h-12 text-cyan-400" />
+                        <Bracket className="h-12 text-purple-400" />
                         <span className="font-medium">integrate with your fav tech stack</span>
-                        <Bracket className="h-12 scale-x-[-1] text-cyan-400" />
+                        <Bracket className="h-12 scale-x-[-1] text-purple-400" />
                     </p>
 
                     <div className="flex flex-wrap items-center justify-center gap-8">
@@ -278,9 +278,9 @@ const ScrollAnimationDemo = () => {
                     className="relative -mt-[95vh] box-border flex h-[210vh] flex-col items-center justify-center gap-[2vw] overflow-hidden bg-[#050505] p-[2vw]"
                 >
                     <p className="flex items-center justify-center gap-3 text-2xl font-medium tracking-tight text-white">
-                        <Bracket className="h-12 text-cyan-400" />
+                        <Bracket className="h-12 text-purple-400" />
                         <span className="font-medium">integrate with your fav tech stack</span>
-                        <Bracket className="h-12 scale-x-[-1] text-cyan-400" />
+                        <Bracket className="h-12 scale-x-[-1] text-purple-400" />
                     </p>
 
                     <div className="flex flex-wrap items-center justify-center gap-8" style={{ perspective: "500px" }}>

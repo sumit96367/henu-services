@@ -58,7 +58,7 @@ const AboutHero = () => {
                 <motion.div
                     className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
                     style={{
-                        background: 'radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(109, 40, 217, 0.15) 0%, transparent 70%)',
                         filter: 'blur(60px)'
                     }}
                     animate={{
@@ -70,7 +70,7 @@ const AboutHero = () => {
                 <motion.div
                     className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full"
                     style={{
-                        background: 'radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)',
+                        background: 'radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, transparent 70%)',
                         filter: 'blur(60px)'
                     }}
                     animate={{
@@ -89,7 +89,7 @@ const AboutHero = () => {
                     {/* Badge */}
 
 
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full">
+                    <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 leading-[1.1] tracking-tighter text-center flex flex-col items-center w-full">
                         <PremiumTextReveal text="We Build Systems" className="w-full justify-center" />
                         <span className="gradient-text block w-full text-center">
                             <PremiumTextReveal text="That Matter" delay={0.2} className="w-full justify-center" />
@@ -118,7 +118,7 @@ const AboutHero = () => {
             >
                 <div className="flex flex-col items-center gap-2">
                     <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">Scroll to Explore</span>
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-cyan-500/50 to-transparent relative overflow-hidden">
+                    <div className="w-[1px] h-12 bg-gradient-to-b from-purple-500/50 to-transparent relative overflow-hidden">
                         <motion.div
                             animate={{ y: ["-100%", "100%"] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -137,29 +137,29 @@ const AboutHero = () => {
 const HowWeThinkSection = () => {
     const principles = [
         {
-            icon: <Cpu className="w-8 h-8 text-cyan-400" />,
+            icon: <Cpu className="w-8 h-8 text-purple-400" />,
             title: "Systems Over Features",
             desc: "We don&apos;t add features—we architect systems designed to evolve. Every decision considers scalability, maintainability, and how components interact over time."
         },
         {
-            icon: <Focus className="w-8 h-8 text-cyan-400" />,
+            icon: <Focus className="w-8 h-8 text-purple-400" />,
             title: "Clarity First",
             desc: "Simple is hard. We prioritize clear interfaces, straightforward logic, and intentional design over clever abstraction. If it&apos;s confusing, it&apos;s wrong."
         },
         {
-            icon: <Layers className="w-8 h-8 text-cyan-400" />,
+            icon: <Layers className="w-8 h-8 text-purple-400" />,
             title: "Engineering-Led Decisions",
             desc: "Technical constraints inform our choices—not the other way around. We build what works, even if it means saying no to trends or surface-level requests."
         },
         {
-            icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
+            icon: <TrendingUp className="w-8 h-8 text-purple-400" />,
             title: "Long-Term Product Vision",
             desc: "We&apos;re not building for next quarter. Every system is designed for years of iteration, growth, and continuous refinement alongside your ambitions."
         }
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -208,41 +208,41 @@ const HowWeThinkSection = () => {
 const BuiltToDoSection = () => {
     const capabilities = [
         {
-            icon: <Zap className="w-5 h-5 text-cyan-400" />,
+            icon: <Zap className="w-5 h-5 text-purple-400" />,
             title: "Product Engineering",
             desc: "Full-stack systems designed to scale with your ambition. Web, mobile, backend—architected as unified platforms."
         },
         {
-            icon: <MousePointer2 className="w-5 h-5 text-cyan-400" />,
+            icon: <MousePointer2 className="w-5 h-5 text-purple-400" />,
             title: "Experience Architecture",
             desc: "Interfaces built for precision and purpose. Every interaction is deliberate, every layout optimized for clarity."
         },
         {
-            icon: <Sparkles className="w-5 h-5 text-cyan-400" />,
+            icon: <Sparkles className="w-5 h-5 text-purple-400" />,
             title: "Applied AI & Automation",
             desc: "Intelligent systems that remove friction. From autonomous agents to workflow automation, we build AI that works."
         },
         {
-            icon: <Gauge className="w-5 h-5 text-cyan-400" />,
+            icon: <Gauge className="w-5 h-5 text-purple-400" />,
             title: "Performance Optimization",
             desc: "Speed matters. Load times, response rates, database efficiency—we obsess over milliseconds because results matter."
         }
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent relative overflow-hidden" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+        <section className="w-full flex flex-col items-center bg-transparent relative overflow-hidden py-24 px-6 md:px-12">
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '48px' }}>
                 {/* Header Row */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="relative z-10 flex flex-col items-center text-center gap-6 mb-16"
+                    className="relative z-10 flex flex-col items-center text-center gap-6 mb-12 md:mb-16"
                 >
-                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
+                    <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         What We&apos;re <span className="gradient-text">Built To Do</span>
                     </h2>
-                    <p className="max-w-2xl text-lg text-gray-400 leading-relaxed mx-auto">
+                    <p className="max-w-2xl text-base md:text-lg text-gray-400 leading-relaxed mx-auto">
                         Core capabilities, not services. Outcomes, not deliverables. We architect systems that drive real business value.
                     </p>
                 </motion.div>
@@ -259,20 +259,20 @@ const BuiltToDoSection = () => {
                         <GlowingCard innerClassName="p-0 overflow-hidden bg-[#0A0A0A] border border-white/5">
                             <div className="grid md:grid-cols-2 gap-0 items-center">
                                 <div className="relative h-80 md:h-96">
-                                    <div className="absolute inset-0 bg-cyan-500/10 blur-[80px]" />
+                                    <div className="absolute inset-0 bg-purple-500/10 blur-[80px]" />
                                     <div className="relative z-10 w-full h-full p-8">
                                         <SystemCoreAnimation />
                                     </div>
                                 </div>
-                                <div style={{ padding: '48px' }}>
-                                    <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight" style={{ marginBottom: '20px' }}>
+                                <div className="p-8 md:p-12">
+                                    <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
                                         HENU <span className="gradient-text">OS</span>
                                     </h3>
-                                    <p className="text-base md:text-lg text-gray-300 leading-relaxed" style={{ marginBottom: '32px' }}>
+                                    <p className="text-sm md:text-lg text-gray-300 leading-relaxed mb-8">
                                         The core ecosystem that powers Henu&apos;s digital products. The foundational operating layer for automation, scalability, and system-level intelligence.
                                     </p>
-                                    <div style={{ marginTop: '24px' }}>
-                                        <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                    <div className="mt-6">
+                                        <Link href="https://henuos.netlify.app/" className="btn-primary group w-full sm:w-auto">
                                             Explore Henu OS
                                             <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </Link>
@@ -291,15 +291,15 @@ const BuiltToDoSection = () => {
                     >
                         <GlowingCard innerClassName="p-0 overflow-hidden bg-[#0A0A0A] border border-white/5">
                             <div className="grid md:grid-cols-2 gap-0 items-center">
-                                <div style={{ padding: '48px' }} className="md:order-1 order-2">
-                                    <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight" style={{ marginBottom: '20px' }}>
+                                <div className="p-8 md:p-12 md:order-1 order-2">
+                                    <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
                                         HENU <span className="gradient-text">IDE</span>
                                     </h3>
-                                    <p className="text-base md:text-lg text-gray-300 leading-relaxed" style={{ marginBottom: '32px' }}>
+                                    <p className="text-sm md:text-lg text-gray-300 leading-relaxed mb-8">
                                         A next-generation development environment that combines a clean coding workspace with an integrated voice assistant for faster, smarter coding.
                                     </p>
-                                    <div style={{ marginTop: '24px' }}>
-                                        <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                    <div className="mt-6">
+                                        <Link href="https://henuos.netlify.app/" className="btn-primary group w-full sm:w-auto">
                                             Explore Henu IDE
                                             <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </Link>
@@ -325,20 +325,20 @@ const BuiltToDoSection = () => {
                         <GlowingCard innerClassName="p-0 overflow-hidden bg-[#0A0A0A] border border-white/5">
                             <div className="grid md:grid-cols-2 gap-0 items-center">
                                 <div className="relative h-80 md:h-96">
-                                    <div className="absolute inset-0 bg-blue-500/10 blur-[80px]" />
+                                    <div className="absolute inset-0 bg-indigo-500/10 blur-[80px]" />
                                     <div className="relative z-10 w-full h-full p-8">
                                         <AIAssistantAnimation />
                                     </div>
                                 </div>
-                                <div style={{ padding: '48px' }}>
-                                    <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight" style={{ marginBottom: '20px' }}>
+                                <div className="p-8 md:p-12">
+                                    <h3 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
                                         HENU <span className="gradient-text">PA+++</span>
                                     </h3>
-                                    <p className="text-base md:text-lg text-gray-300 leading-relaxed" style={{ marginBottom: '32px' }}>
+                                    <p className="text-sm md:text-lg text-gray-300 leading-relaxed mb-8">
                                         An intelligent personal assistant that simplifies daily digital tasks through natural interaction, adapting over time to reduce decision fatigue.
                                     </p>
-                                    <div style={{ marginTop: '24px' }}>
-                                        <Link href="https://henuos.netlify.app/" className="btn-primary group">
+                                    <div className="mt-6">
+                                        <Link href="https://henuos.netlify.app/" className="btn-primary group w-full sm:w-auto">
                                             Explore Henu PA+++
                                             <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </Link>
@@ -364,11 +364,11 @@ const BuiltToDoSection = () => {
                                 <h3 className="text-sm font-bold text-white uppercase tracking-wider">{item.title}</h3>
                                 <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
                             </div>
-                        </motion.div>
+                        </motion.div >
                     ))}
-                </div>
-            </div>
-        </section>
+                </div >
+            </div >
+        </section >
     );
 };
 
@@ -387,7 +387,7 @@ const WhatWeDontDoSection = () => {
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -396,7 +396,7 @@ const WhatWeDontDoSection = () => {
                     className="flex flex-col items-center text-center"
                     style={{ marginBottom: '0.1cm' }}
                 >
-                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
+                    <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tighter">
                         What We <span className="text-red-500">Don&apos;t Do</span>
                     </h2>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto mt-4">
@@ -433,24 +433,24 @@ const WhatWeDontDoSection = () => {
 const WhoWereBestForSection = () => {
     const audiences = [
         {
-            icon: <Users className="w-8 h-8 text-cyan-400" />,
+            icon: <Users className="w-8 h-8 text-purple-400" />,
             title: "Technical Founders",
             desc: "You understand the importance of engineering decisions and want a partner who speaks your language—not someone who just executes tickets."
         },
         {
-            icon: <Lightbulb className="w-8 h-8 text-cyan-400" />,
+            icon: <Lightbulb className="w-8 h-8 text-purple-400" />,
             title: "Product-Driven Teams",
             desc: "You care about craft, performance, and building something that lasts. You're not looking for shortcuts—you're building a competitive advantage."
         },
         {
-            icon: <TrendingUp className="w-8 h-8 text-cyan-400" />,
+            icon: <TrendingUp className="w-8 h-8 text-purple-400" />,
             title: "Growth Companies",
             desc: "You've proven the concept. Now you need systems that scale, technical debt resolved, and infrastructure that supports rapid expansion."
         }
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -459,8 +459,8 @@ const WhoWereBestForSection = () => {
                     className="flex flex-col items-center text-center"
                     style={{ marginBottom: '0.1cm' }}
                 >
-                    <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
-                        Who We&apos;re <span className="text-amber-400">Best For</span>
+                    <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-tighter">
+                        Who We&apos;re <span className="text-indigo-400">Best For</span>
                     </h2>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto mt-4">
                         We work best with founders and teams who think long-term and value technical excellence.
@@ -477,7 +477,7 @@ const WhoWereBestForSection = () => {
                             transition={{ delay: index * 0.1 }}
                         >
                             <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5" style={{ padding: '0.2cm' }}>
-                                <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6 border border-cyan-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-cyan-500/5">
+                                <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6 border border-purple-500/20 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-purple-500/5">
                                     {item.icon}
                                 </div>
                                 <h3 className="text-2xl font-black text-white mb-4 uppercase tracking-tight">{item.title}</h3>
@@ -527,7 +527,7 @@ const JourneySection = () => {
     ];
 
     return (
-        <section className="w-full flex flex-col items-center bg-transparent" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+        <section className="w-full flex flex-col items-center bg-transparent py-24 px-6 md:px-12">
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -536,7 +536,7 @@ const JourneySection = () => {
                     className="max-w-4xl mx-auto text-center"
                 >
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                        From <span className="text-cyan-400">Idea</span> to <span className="text-amber-400">System</span>
+                        From <span className="text-purple-400">Idea</span> to <span className="text-indigo-400">System</span>
                     </h2>
                     <p className="text-lg text-gray-400 mb-16 max-w-2xl mx-auto">
                         We don&apos;t just build products—we help you establish technical foundations that evolve with your vision.
@@ -552,7 +552,7 @@ const JourneySection = () => {
                                 transition={{ delay: 0.1 * index }}
                                 className="relative flex flex-col items-center"
                             >
-                                <div className="text-5xl font-black text-cyan-500/20 mb-4">{step.number}</div>
+                                <div className="text-5xl font-black text-purple-500/20 mb-4">{step.number}</div>
                                 <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
                                 <p className="text-gray-400 leading-relaxed mx-auto max-w-xs">{step.desc}</p>
                             </motion.div>
@@ -569,9 +569,9 @@ const JourneySection = () => {
 // ============================================
 const CTASection = () => {
     return (
-        <section className="w-full flex flex-col items-center bg-transparent relative overflow-hidden" style={{ paddingTop: '100px', paddingBottom: '100px', paddingLeft: '40px', paddingRight: '40px' }}>
+        <section className="w-full flex flex-col items-center bg-transparent relative overflow-hidden py-24 px-6 md:px-12">
             {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                 <motion.div
