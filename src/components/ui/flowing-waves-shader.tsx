@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 const InteractiveWaveShader = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const materialRef = useRef<THREE.ShaderMaterial | null>(null);
 
     // React state to control shader uniforms
