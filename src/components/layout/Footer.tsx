@@ -126,9 +126,9 @@ export const Footer = () => {
                 <div className="lg:hidden space-y-8">
                     {/* Brand section - centered on mobile */}
                     <div className="flex flex-col items-center text-center space-y-4">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 group">
                             <div className="relative w-16 h-16 flex items-center justify-center overflow-visible">
-                                <div className="relative w-16 h-16" style={{ transform: 'scale(1.5)' }}>
+                                <div className="relative w-16 h-16 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(1.5)' }}>
                                     <Image
                                         src="/logo.png"
                                         alt="Henu OS Logo"
@@ -262,9 +262,9 @@ export const Footer = () => {
 
                         {/* Brand section */}
                         <div className="flex-1 flex flex-col space-y-6 md:space-y-8 w-full min-w-[320px]">
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                                 <div className="relative w-24 h-24 flex items-center justify-center overflow-visible">
-                                    <div className="relative w-24 h-24" style={{ transform: 'scale(2.15)' }}>
+                                    <div className="relative w-24 h-24 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_30px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(2.15)' }}>
                                         <Image
                                             src="/logo.png"
                                             alt="Henu OS Logo"

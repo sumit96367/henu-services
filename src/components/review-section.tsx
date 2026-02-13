@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Send, User, MessageSquare, CheckCircle2, Users, Briefcase } from 'lucide-react';
+import { Star, Send, User, MessageSquare, CheckCircle2, Users, Briefcase, ArrowRight } from 'lucide-react';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 
@@ -181,17 +181,17 @@ export const ReviewSection = ({ onReviewSubmitted }: { onReviewSubmitted: (revie
                                             <button
                                                 disabled={isSubmitting || rating === 0}
                                                 type="submit"
-                                                className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:brightness-110 rounded-2xl font-black text-xs text-white shadow-[0_20px_40px_rgba(168,85,247,0.2)] transition-all disabled:opacity-50 flex items-center justify-center gap-4 py-6 px-10 uppercase tracking-[0.3em] group"
+                                                className="btn-primary w-full sm:w-auto disabled:opacity-50"
                                             >
                                                 {isSubmitting ? (
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                        <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                                                         <span>Processing</span>
                                                     </div>
                                                 ) : (
                                                     <>
                                                         Publish Review
-                                                        <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                                        <ArrowRight size={18} />
                                                     </>
                                                 )}
                                             </button>

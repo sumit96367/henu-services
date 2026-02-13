@@ -186,20 +186,26 @@ export const AuthModal = () => {
                 >
                     <div className="flex flex-col items-center text-center">
                         {/* Logo */}
-                        <div className="w-56 h-32 -mb-4 relative flex items-center justify-center">
+                        <div className="w-56 h-32 -mb-4 relative flex items-center justify-center group">
                             {/* Logo Glow */}
                             <div className="absolute inset-0 bg-purple-500/10 blur-[80px] rounded-full" />
 
                             <motion.div
                                 animate={{
-                                    scale: [1, 1.08, 1],
+                                    scale: [1, 1.05, 1],
+                                }}
+                                whileHover={{ 
+                                    scale: 1.15,
+                                    filter: "drop-shadow(0 0 30px rgba(109, 40, 217, 0.8))"
                                 }}
                                 transition={{
                                     duration: 6,
                                     repeat: Infinity,
-                                    ease: "easeInOut"
+                                    ease: "easeInOut",
+                                    scale: { duration: 6, repeat: Infinity }, // for the pulse
+                                    filter: { duration: 0.3 } // for the hover
                                 }}
-                                className="relative w-48 h-48 z-10"
+                                className="relative w-48 h-48 z-10 cursor-pointer"
                             >
                                 <Image
                                     src="/logo.png"

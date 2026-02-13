@@ -103,7 +103,7 @@ export const AuthPopup = () => {
 
                             <div className="relative flex flex-col items-center text-center" style={{ padding: '32px 32px 32px 32px' }}>
                                 {/* Logo */}
-                                <div className="w-56 h-40 -mb-4 relative flex items-center justify-center">
+                                <div className="w-56 h-40 -mb-4 relative flex items-center justify-center group">
                                     {/* Logo Glow */}
                                     <div className="absolute inset-0 bg-purple-500/10 blur-[80px] rounded-full" />
 
@@ -116,7 +116,7 @@ export const AuthPopup = () => {
                                             repeat: Infinity,
                                             ease: "easeInOut"
                                         }}
-                                        className="relative w-48 h-48 z-10"
+                                        className="relative w-48 h-48 z-10 transition-all duration-500 group-hover:drop-shadow-[0_0_30px_rgba(109, 40, 217, 0.7)]"
                                     >
                                         <Image
                                             src="/logo.png"

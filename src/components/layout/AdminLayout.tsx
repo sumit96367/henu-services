@@ -121,6 +121,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                         padding: "32px 24px",
                         borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
                     }}
+                    className="group cursor-default"
                 >
                     <h1
                         style={{
@@ -131,11 +132,13 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                             WebkitTextFillColor: "transparent",
                             backgroundClip: "text",
                             marginBottom: "4px",
+                            transition: "all 0.3s ease",
                         }}
+                        className="group-hover:[text-shadow:0_0_12px_rgba(109,40,217,0.8)]"
                     >
                         Henu OS
                     </h1>
-                    <p style={{ fontSize: "0.875rem", color: "#888" }}>Admin Portal</p>
+                    <p style={{ fontSize: "0.875rem", color: "#888" }} className="group-hover:text-gray-300 transition-colors">Admin Portal</p>
                 </div>
 
                 {/* Navigation */}
