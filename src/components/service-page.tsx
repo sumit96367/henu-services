@@ -303,11 +303,16 @@ export const ServiceProcess = ({ process, accentColor }: { process: ServiceProce
             title: `${step.step}. ${step.title}`,
             description: step.description,
             content: step.image ? (
-                <div className="h-full w-full relative">
+                <div className="h-64 w-64 md:h-72 md:w-72 relative rounded-2xl overflow-hidden">
                     <img
                         src={step.image}
                         alt={step.title}
                         className="h-full w-full object-cover"
+                        crossOrigin="anonymous"
+                        onError={(e) => {
+                            console.error(`Failed to load image for step ${step.step}:`, step.image);
+                            e.currentTarget.style.display = 'none';
+                        }}
                     />
                 </div>
             ) : (

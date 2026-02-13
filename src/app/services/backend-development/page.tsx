@@ -55,7 +55,7 @@ const process = [
         step: 1,
         title: 'Architecture Design',
         description: 'Planning rock-solid backend structures with AI intelligence and scalability at the core.',
-        image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2030&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop'
     },
     {
         step: 2,

@@ -1271,7 +1271,7 @@ export default function DashboardPage() {
                                         required
                                         value={passwordForm.currentPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
                                         style={{ padding: '24px 32px' }}
                                         placeholder="••••••••"
                                     />
@@ -1283,7 +1283,7 @@ export default function DashboardPage() {
                                         required
                                         value={passwordForm.newPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
                                         style={{ padding: '24px 32px' }}
                                         placeholder="••••••••"
                                     />
@@ -1296,7 +1296,7 @@ export default function DashboardPage() {
                                         required
                                         value={passwordForm.confirmPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
                                         style={{ padding: '24px 32px' }}
                                         placeholder="••••••••"
                                     />
@@ -1317,7 +1317,7 @@ export default function DashboardPage() {
                                 <button
                                     type="submit"
                                     disabled={isUpdating || passwordSuccess}
-                                    className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
+                                    className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-none hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
                                     style={{ padding: '20px 48px' }}
                                 >
                                     {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
