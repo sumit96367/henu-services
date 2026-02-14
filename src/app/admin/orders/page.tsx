@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { db } from "@/lib/firebase";
 import { collection, query, orderBy, getDocs, doc, updateDoc, serverTimestamp } from "firebase/firestore";
@@ -40,7 +40,7 @@ interface Order {
     type?: string;
 }
 
-export default function AdminOrdersPage() {
+function AdminOrdersContent() {
     const searchParams = useSearchParams();
     const filterType = searchParams.get("type"); // 'internship_enrollment' or 'service_inquiry'
 
@@ -253,5 +253,17 @@ export default function AdminOrdersPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function AdminOrdersPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-[#050505] flex items-center justify-center">
+                <Loader2 className="w-10 h-10 text-cyan-500 animate-spin" />
+            </div>
+        }>
+            <AdminOrdersContent />
+        </Suspense>
     );
 }
