@@ -103,11 +103,11 @@ export const Footer = () => {
 
     return (
         <footer className={cn(
-            "bg-[#0a0a0c] relative overflow-hidden rounded-3xl transition-all duration-300 mb-10 mt-32",
+            "bg-[#0a0a0c] relative overflow-hidden rounded-3xl transition-all duration-300 mb-10 mt-64",
             isDashboard
                 ? "z-[1001] md:ml-[310px] md:mr-8 mx-6"
                 : "z-20 mx-6 sm:mx-16 lg:mx-24"
-        )}>
+        )} style={{ marginTop: '0px' }}>
             {/* Background glow effect - reduced on mobile */}
             <div
                 className="absolute inset-0 z-0 opacity-40 lg:opacity-100"
@@ -118,9 +118,9 @@ export const Footer = () => {
 
             {/* Main content */}
             <div className={cn(
-                "px-6 sm:px-12 lg:px-16 pt-16 lg:pt-40 pb-12 pb-[env(safe-area-inset-bottom,1rem)] relative z-10",
+                "px-6 sm:px-12 lg:px-16 pt-32 lg:pt-60 pb-12 pb-[env(safe-area-inset-bottom,1rem)] relative z-10",
                 isDashboard ? "w-full" : "container mx-auto"
-            )}>
+            )} style={{ paddingTop: '50px' }}>
 
                 {/* MOBILE LAYOUT (<lg) */}
                 <div className="lg:hidden space-y-8">

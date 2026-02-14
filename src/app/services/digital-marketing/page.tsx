@@ -58,37 +58,37 @@ const process = [
         step: 1,
         title: 'Audience Research',
         description: 'Identifying your ideal customers and their pain points to craft targeted messaging.',
-        image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop'
+        image: '/images/services/digital-marketing/step-1.png'
     },
     {
         step: 2,
         title: 'Campaign Strategy',
         description: 'Developing a comprehensive roadmap across paid and organic channels for maximum impact.',
-        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'
+        image: '/images/services/digital-marketing/step-2.png'
     },
     {
         step: 3,
         title: 'Creative Production',
         description: 'Designing eye-catching ads and content that resonate with your target audience.',
-        image: 'https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=2071&auto=format&fit=crop'
+        image: '/images/services/digital-marketing/step-3.png'
     },
     {
         step: 4,
         title: 'Launch & A/B Testing',
         description: 'Deploying campaigns and testing variations to find the most efficient growth path.',
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop'
+        image: '/images/services/digital-marketing/step-4.png'
     },
     {
         step: 5,
         title: 'Analytics & Reporting',
         description: 'Transparent tracking of results with detailed insights and actionable data.',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop'
+        image: '/images/services/digital-marketing/step-5.png'
     },
     {
         step: 6,
         title: 'Scale & Refine',
         description: 'Scaling winning campaigns and continuously refining strategies for long-term dominance.',
-        image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop'
+        image: '/images/services/digital-marketing/step-6.png'
     }
 ];
 

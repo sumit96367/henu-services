@@ -55,37 +55,37 @@ const process = [
         step: 1,
         title: 'Architecture Design',
         description: 'Planning rock-solid backend structures with AI intelligence and scalability at the core.',
-        image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop'
+        image: '/images/services/backend-development/step-1.png'
     },
     {
         step: 2,
         title: 'API Development',
         description: 'Building high-performance APIs that power your web and mobile experiences seamlessly.',
-        image: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=2066&auto=format&fit=crop'
+        image: '/images/services/backend-development/step-2.png'
     },
     {
         step: 3,
         title: 'Database Setup',
         description: 'Configuring optimized data storage solutions for reliability and lightning-fast access.',
-        image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=2121&auto=format&fit=crop'
+        image: '/images/services/backend-development/step-3.png'
     },
     {
         step: 4,
         title: 'Security Implementation',
         description: 'Hardening your infrastructure with enterprise-grade security protocols and encryption.',
-        image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop'
+        image: '/images/services/backend-development/step-4.png'
     },
     {
         step: 5,
         title: 'Performance Tuning',
         description: 'Continuous optimization to ensure your backend handles growth without breaking a sweat.',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop'
+        image: '/images/services/backend-development/step-5.png'
     },
     {
         step: 6,
         title: 'Deployment & Monitoring',
         description: 'Deploying on HENU OS with real-time monitoring to ensure 99.9% uptime and reliability.',
-        image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop'
+        image: '/images/services/backend-development/step-6.png'
     }
 ];
 

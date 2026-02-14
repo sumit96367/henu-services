@@ -75,37 +75,37 @@ const process = [
         step: 1,
         title: 'Requirement Analysis',
         description: 'Deep dive into your app idea, target users, and business objectives to define the perfect scope.',
-        image: 'https://picsum.photos/seed/mobile-req/800/600'
+        image: '/images/services/mobile-app-development/step-1.png'
     },
     {
         step: 2,
         title: 'UI/UX Design',
         description: 'Creating intuitive, beautiful interfaces following Apple and Google design guidelines.',
-        image: 'https://picsum.photos/seed/mobile-ux/800/600'
+        image: '/images/services/mobile-app-development/step-2.png'
     },
     {
         step: 3,
         title: 'Development Sprints',
         description: 'Agile development with bi-weekly deliverables so you can track progress constantly.',
-        image: 'https://picsum.photos/seed/mobile-dev/800/600'
+        image: '/images/services/mobile-app-development/step-3.png'
     },
     {
         step: 4,
         title: 'Integration & Testing',
         description: 'API integrations, third-party services, and comprehensive testing on real devices.',
-        image: 'https://picsum.photos/seed/mobile-test/800/600'
+        image: '/images/services/mobile-app-development/step-4.png'
     },
     {
         step: 5,
         title: 'App Store Submission',
         description: 'We handle the entire submission process to Apple App Store and Google Play Store.',
-        image: 'https://picsum.photos/seed/mobile-store/800/600'
+        image: '/images/services/mobile-app-development/step-5.png'
     },
     {
         step: 6,
         title: 'Post-Launch Support',
         description: 'Bug fixes, updates, and feature enhancements to keep your app competitive.',
-        image: 'https://picsum.photos/seed/mobile-support/800/600'
+        image: '/images/services/mobile-app-development/step-6.png'
     }
 ];
 

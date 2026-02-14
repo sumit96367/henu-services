@@ -13,11 +13,30 @@ import { FAQ } from '@/components/ui/faq-section';
 import { FeaturesSectionWithHoverEffects } from '@/components/ui/feature-section-with-hover-effects';
 import { StickyScroll } from '@/components/ui/sticky-scroll-reveal';
 import { BrandScroller, BrandScrollerReverse } from '@/components/ui/brand-scroller';
+import Image from 'next/image';
+import { useState } from 'react';
 
 export interface ServiceFAQ {
     question: string;
     answer: string;
 }
+
+// Helper component for images with error handling
+const SafeImage = ({ src, alt, step }: { src: string; alt: string; step: number }) => {
+    const [error, setError] = useState(false);
+
+    if (error) return null;
+
+    return (
+        <img
+            src={src}
+            alt={alt}
+            className="h-full w-full object-cover"
+            onError={() => setError(true)}
+            loading="lazy"
+        />
+    );
+};
 
 // ============================================
 // TYPES
@@ -303,17 +322,16 @@ export const ServiceProcess = ({ process, accentColor }: { process: ServiceProce
             title: `${step.step}. ${step.title}`,
             description: step.description,
             content: step.image ? (
-                <div className="h-64 w-64 md:h-72 md:w-72 relative rounded-2xl overflow-hidden">
-                    <img
+                <div className="h-64 w-64 md:h-72 md:w-72 relative rounded-2xl overflow-hidden bg-white/5 flex items-center justify-center">
+                    <SafeImage
                         src={step.image}
                         alt={step.title}
-                        className="h-full w-full object-cover"
-                        crossOrigin="anonymous"
-                        onError={(e) => {
-                            console.error(`Failed to load image for step ${step.step}:`, step.image);
-                            e.currentTarget.style.display = 'none';
-                        }}
+                        step={step.step}
                     />
+                    {/* Fallback step number if image takes too long or fails */}
+                    <div className="absolute inset-0 flex items-center justify-center -z-10 bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent">
+                        <span className="text-8xl font-black text-white/10">{step.step}</span>
+                    </div>
                 </div>
             ) : (
                 <div

@@ -4,6 +4,7 @@ import { motion, type Variants } from 'framer-motion';
 import { Button, type ButtonProps } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import React from 'react';
+import Image from 'next/image';
 
 // Define the props for reusability
 interface StatProps {
@@ -164,21 +165,21 @@ const HeroSection = ({ title, subtitle, actions, stats, images, className }: Her
                         style={{ transformOrigin: 'bottom center' }}
                         variants={imageVariants}
                     >
-                        <img src={images[0]} alt="Marketing Campaign" className="h-full w-full rounded-xl object-cover" />
+                        <Image src={images[0]} alt="Marketing Campaign" fill className="rounded-xl object-cover p-2" sizes="(max-width: 640px) 192px, 256px" />
                     </motion.div>
                     <motion.div
                         className="absolute right-0 top-1/3 h-40 w-40 rounded-2xl bg-white/5 border border-white/10 p-2 shadow-2xl sm:h-56 sm:w-56"
                         style={{ transformOrigin: 'left center' }}
                         variants={imageVariants}
                     >
-                        <img src={images[1]} alt="Data Analytics" className="h-full w-full rounded-xl object-cover" />
+                        <Image src={images[1]} alt="Data Analytics" fill className="rounded-xl object-cover p-2" sizes="(max-width: 640px) 160px, 224px" />
                     </motion.div>
                     <motion.div
                         className="absolute bottom-0 left-0 h-32 w-32 rounded-2xl bg-white/5 border border-white/10 p-2 shadow-2xl sm:h-48 sm:w-48"
                         style={{ transformOrigin: 'top right' }}
                         variants={imageVariants}
                     >
-                        <img src={images[2]} alt="Strategy Meeting" className="h-full w-full rounded-xl object-cover" />
+                        <Image src={images[2]} alt="Strategy Meeting" fill className="rounded-xl object-cover p-2" sizes="(max-width: 640px) 128px, 192px" />
                     </motion.div>
                 </motion.div>
             </div>
