@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[functions]
+  # Increase function timeout for complex operations
+  node_bundler = "esbuild"
+  
+[build.environment]
+  # Use Node 20 for Next.js 16
+  NODE_VERSION = "20"
