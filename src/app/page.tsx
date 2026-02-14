@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
@@ -27,15 +27,19 @@ import { SplineScene } from '@/components/ui/splite';
 import { Spotlight } from '@/components/ui/spotlight';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
+import { TiltCard } from '@/components/ui/tilt-card';
+import { useInView } from 'framer-motion';
 import { ReviewSection, Review } from '@/components/review-section';
 import { TestimonialsColumn, Testimonial } from '@/components/ui/testimonials-columns';
 import { CharacterV1 } from '@/components/ui/text-scroll-animation';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 
 // ============================================
 // HERO SECTION WITH 3D SPLINE
 // ============================================
 const HeroSection = () => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -90,18 +94,23 @@ const HeroSection = () => {
 
       {/* Main Content - Split Layout */}
       <div className="container relative z-10 mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center min-h-[calc(100vh-100px)] gap-8 lg:gap-0">
+        {/* PHYSICAL SPACER FOR MOBILE - BRUTE FORCE */}
+        <div className="h-[200px] md:hidden w-full" />
+
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-0 pt-0 lg:pt-0 min-h-[calc(100vh-280px)]">
           {/* Left Content */}
           <motion.div
             style={{ y, opacity }}
-            className="flex-1 text-center lg:text-left pt-24 lg:pt-0"
+            className="flex-1 text-center lg:text-left"
           >
-
-
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-4 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start px-2">
-              <PremiumTextReveal text="Architecting Your" delay={0.3} />
-              <PremiumTextReveal text="Digital Future." className="gradient-text" delay={0.8} />
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-[1.2] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start px-2">
+              <span className="block mb-2 text-white">
+                <PremiumTextReveal text="Architecting Your" delay={0.3} />
+              </span>
+              <span className="block">
+                <PremiumTextReveal text="Digital Future." className="gradient-text" delay={0.8} />
+              </span>
             </h1>
 
             {/* Subheading */}
@@ -109,7 +118,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mb-8 px-4 lg:px-0"
+              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mb-12 px-4 lg:px-0 mx-auto lg:mx-0"
             >
               From AI-driven development to government grants and legal compliance.
               We <span className="gradient-text font-semibold">Build, Secure, and Fund</span> your vision.
@@ -137,7 +146,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="flex-1 relative h-[300px] sm:h-[450px] lg:h-[600px] w-full"
+            className="flex-1 relative h-[350px] sm:h-[450px] lg:h-[600px] w-full"
           >
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
@@ -171,59 +180,57 @@ const HeroSection = () => {
 // STATS SECTION
 // ============================================
 const stats = [
-  { label: 'Funding Secured', value: '$50M+', desc: 'Government grants & equity.' },
-  { label: 'Digital Products', value: '200+', desc: 'Web, Mobile & AI Agents.' },
-  { label: 'Success Rate', value: '98%', desc: 'Legal registration & compliance.' },
-  { label: 'Client Satisfaction', value: '5.0', desc: 'Across all service sectors.' },
+  { label: 'Projects Completed', value: '200+', desc: 'Across Web, Mobile & AI.' },
+  { label: 'Happy Clients', value: '150+', desc: 'Global business partners.' },
+  { label: 'Success Rate', value: '98%', desc: 'Legal & technical excellence.' },
+  { label: 'Client Rating', value: '5.0', desc: 'Post-project satisfaction.' },
 ];
+
+const CountUp = ({ end, decimals = 0, suffix = "" }: { end: number; decimals?: number; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      let startTime = 0;
+      const duration = 2000; // 2 seconds
+
+      const animate = (currentTime: number) => {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        setCount(easeOutQuart * end);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }
+  }, [isInView, end]);
+
+  return (
+    <span ref={ref}>
+      {count.toLocaleString(undefined, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}
+      {suffix}
+    </span>
+  );
+};
 
 // Scroll animated heading component
 const ScrollAnimatedHeading = ({ text, className }: { text: string; className?: string }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.95', 'start 0.15']
-  });
-
-  const words = text.split(" ");
-  let charCounter = 0;
-  const totalChars = text.length;
-  const centerIndex = Math.floor(totalChars / 2);
 
   return (
-    <div ref={ref} className={cn("flex flex-wrap justify-center", className)} style={{ perspective: "500px" }}>
-      {words.map((word, wordIndex) => {
-        const wordChars = word.split("");
-        const element = (
-          <span key={wordIndex} className="inline-block whitespace-nowrap">
-            {wordChars.map((char) => {
-              const element = (
-                <CharacterV1
-                  key={charCounter}
-                  char={char}
-                  index={charCounter}
-                  centerIndex={centerIndex}
-                  scrollYProgress={scrollYProgress}
-                />
-              );
-              charCounter++;
-              return element;
-            })}
-            {/* Add space after the word except for the last word */}
-            {wordIndex < words.length - 1 && (
-              <CharacterV1
-                key={charCounter}
-                char=" "
-                index={charCounter}
-                centerIndex={centerIndex}
-                scrollYProgress={scrollYProgress}
-              />
-            )}
-            {wordIndex < words.length - 1 && charCounter++ && null}
-          </span>
-        );
-        return element;
-      })}
+    <div ref={ref} className={cn("flex flex-wrap justify-center text-center", className)}>
+      <span className="inline-block">
+        {text}
+      </span>
     </div>
   );
 };
@@ -234,17 +241,24 @@ const StatsSection = () => {
   return (
     <section
       ref={ref}
-      className="section relative bg-transparent"
-      style={{ paddingTop: '120px', paddingBottom: '120px' }}
+      className="section relative bg-transparent overflow-hidden"
+      style={{ paddingTop: '150px', paddingBottom: '150px' }}
     >
-      <div className="container">
+      {/* Background Elements from Portfolio */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="horizon-grid opacity-30" />
+        <div className="grid-background opacity-20" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <ScrollAnimatedHeading
               text="Impact by the Numbers"
               className="inline-block text-4xl md:text-5xl font-bold"
@@ -252,22 +266,30 @@ const StatsSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className="h-full"
-            >
-              <GlowingCard innerClassName="text-center p-8 md:p-12 lg:p-16 h-full flex flex-col items-center justify-center bg-[#0A0A0A] border border-white/5">
-                <div className="stat-value gradient-text mb-4 text-3xl md:text-4xl lg:text-5xl font-extrabold">{stat.value}</div>
-                <div className="text-white font-bold text-sm md:text-base lg:text-lg uppercase tracking-widest mb-2 md:mb-3">{stat.label}</div>
-                <div className="text-gray-500 text-xs md:text-sm lg:text-base leading-relaxed">{stat.desc}</div>
-              </GlowingCard>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          {stats.map((stat, index) => {
+            const numValue = parseFloat(stat.value.replace(/[^0-9.]/g, ''));
+            const suffix = stat.value.replace(/[0-9.]/g, '');
+
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="flex flex-col items-center justify-center text-center"
+              >
+                <div className="stat-value font-black mb-2 text-4xl md:text-6xl lg:text-7xl">
+                  <span className="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">
+                    <CountUp end={numValue} suffix={suffix} decimals={stat.value.includes('.') ? 1 : 0} />
+                  </span>
+                </div>
+                <div className="text-white/80 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-2">{stat.label}</div>
+                <div className="text-gray-500 text-[10px] md:text-xs leading-relaxed max-w-[150px]">{stat.desc}</div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -954,6 +976,7 @@ const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) 
 
 
 export default function HomePage() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [allTestimonials, setAllTestimonials] = useState(initialTestimonials);
 
   const handleReviewSubmitted = (review: Review) => {

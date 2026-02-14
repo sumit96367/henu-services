@@ -3,7 +3,9 @@
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu as MenuIcon, X as CloseIcon } from "lucide-react";
+import { Menu as MenuIcon, X as CloseIcon, LogOut } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Spotlight } from "@/components/ui/spotlight";
 
 interface NavItem {
     name: string;
@@ -63,54 +65,65 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
         <div
             style={{
                 minHeight: "100vh",
-                backgroundColor: "#000",
+                backgroundColor: "transparent",
                 color: "#fff",
                 fontFamily: "var(--font-lora), serif",
                 position: "relative",
                 display: "flex",
+                overflow: "hidden"
             }}
         >
+            {/* Background elements to match home page */}
+            <div className="absolute inset-0 pointer-events-none -z-10">
+                <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+                <div className="horizon-grid opacity-30" />
+                <div className="grid-background opacity-20" />
+            </div>
             {/* Mobile Menu Toggle */}
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
-                    position: isMobileMenuOpen ? "fixed" : "absolute",
-                    top: "22px",
-                    left: isMobileMenuOpen ? "216px" : "16px",
-                    zIndex: isMobileMenuOpen ? 1001 : 50,
-                    display: "none",
-                    padding: "8px",
-                    backgroundColor: isMobileMenuOpen ? "transparent" : "rgba(255, 255, 255, 0.08)",
-                    backdropFilter: isMobileMenuOpen ? "none" : "blur(12px)",
-                    border: isMobileMenuOpen ? "none" : "1px solid rgba(255, 255, 255, 0.1)",
+                    position: "absolute",
+                    top: "140px",
+                    left: "20px",
+                    zIndex: 50,
+                    display: isMobileMenuOpen ? "none" : "flex",
+                    padding: "10px",
+                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
                     borderRadius: "12px",
                     color: "#fff",
                     cursor: "pointer",
-                    boxShadow: isMobileMenuOpen ? "none" : "0 8px 32px rgba(0, 0, 0, 0.4)",
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
                     transition: "all 0.3s ease",
+                    alignItems: "center",
+                    justifyContent: "center"
                 }}
-                className="mobile-menu-toggle hover:bg-white/10 active:scale-95"
+                className={cn(
+                    "mobile-menu-toggle hover:bg-white/10 active:scale-95",
+                    isMobileMenuOpen ? "hidden" : "flex md:hidden"
+                )}
             >
-                <div className="flex items-center justify-center">
-                    {isMobileMenuOpen ? <CloseIcon size={28} /> : <MenuIcon size={22} />}
-                </div>
+                <MenuIcon size={24} />
             </button>
 
             {/* Sidebar */}
             <aside
                 data-lenis-prevent
                 style={{
-                    position: "absolute",
+                    position: "fixed",
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    width: "280px",
-                    backgroundColor: "rgba(10, 10, 10, 1)",
-                    borderRight: "1px solid rgba(255, 255, 255, 0.08)",
+                    width: "min(300px, 80vw)",
+                    backgroundColor: "rgba(2, 2, 5, 0.95)",
+                    backdropFilter: "blur(20px)",
+                    borderRight: "1px solid rgba(255, 255, 255, 0.05)",
                     display: "flex",
                     flexDirection: "column",
                     zIndex: 999,
-                    transform: isMobileMenuOpen ? "translateX(0)" : undefined,
+                    transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                     overflowX: "hidden",
                 }}
                 className="admin-sidebar"
@@ -118,11 +131,19 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                 {/* Logo/Header */}
                 <div
                     style={{
-                        padding: "32px 24px",
+                        padding: "40px 28px",
                         borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+                        position: "relative",
                     }}
                     className="group cursor-default"
                 >
+                    {/* Mobile Close Button inside Sidebar */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="md:hidden absolute top-6 right-6 p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                    >
+                        <CloseIcon size={24} />
+                    </button>
                     <h1
                         style={{
                             fontSize: "1.5rem",
@@ -157,20 +178,24 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                                 href={item.path}
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 style={{
+                                    width: "calc(100% - 32px)",
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: "12px",
-                                    padding: "14px 24px",
-                                    margin: "4px 12px",
-                                    borderRadius: "12px",
-                                    textDecoration: "none",
-                                    color: active ? "#fff" : "#888",
+                                    gap: "18px",
+                                    padding: "22px 32px",
+                                    margin: "8px 16px",
+                                    borderRadius: "20px",
+                                    cursor: "pointer",
                                     backgroundColor: active
-                                        ? "rgba(6, 182, 212, 0.1)"
+                                        ? "rgba(109, 40, 217, 0.15)"
                                         : "transparent",
-                                    borderLeft: active ? "3px solid #06b6d4" : "3px solid transparent",
-                                    transition: "all 0.2s ease",
-                                    fontWeight: active ? "600" : "500",
+                                    color: active ? "#fff" : "#888",
+                                    borderLeft: active ? "4px solid #6D28D9" : "4px solid transparent",
+                                    borderTop: "none",
+                                    borderRight: "none",
+                                    borderBottom: "none",
+                                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                    fontWeight: active ? "700" : "500",
                                     fontSize: "0.95rem",
                                 }}
                                 onMouseEnter={(e) => {
@@ -192,61 +217,58 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                             </Link>
                         );
                     })}
-                </nav>
 
-                {/* Logout Button */}
-                <div
-                    style={{
-                        padding: "24px",
-                        borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-                    }}
-                >
-                    <button
-                        onClick={handleLogout}
-                        disabled={isLoggingOut}
-                        style={{
-                            width: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "8px",
-                            padding: "12px",
-                            backgroundColor: "rgba(239, 68, 68, 0.1)",
-                            border: "1px solid rgba(239, 68, 68, 0.3)",
-                            borderRadius: "12px",
-                            color: "#ef4444",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
-                            cursor: isLoggingOut ? "not-allowed" : "pointer",
-                            opacity: isLoggingOut ? 0.6 : 1,
-                            transition: "all 0.2s ease",
-                        }}
-                        onMouseEnter={(e) => {
-                            if (!isLoggingOut) {
-                                e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.2)";
-                                e.currentTarget.style.borderColor = "rgba(239, 68, 68, 0.5)";
-                            }
-                        }}
-                        onMouseLeave={(e) => {
-                            if (!isLoggingOut) {
-                                e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
-                                e.currentTarget.style.borderColor = "rgba(239, 68, 68, 0.3)";
-                            }
-                        }}
-                    >
-                        <span style={{ fontSize: "18px" }}>🚪</span>
-                        <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
-                    </button>
-                </div>
+                    {/* Logout Button moved inside nav area to be closer */}
+                    <div className="mt-4 pt-4 border-t border-white/5">
+                        <button
+                            onClick={handleLogout}
+                            disabled={isLoggingOut}
+                            style={{
+                                width: "calc(100% - 32px)",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "18px",
+                                padding: "20px 32px",
+                                margin: "4px 16px",
+                                borderRadius: "20px",
+                                cursor: isLoggingOut ? "not-allowed" : "pointer",
+                                backgroundColor: "rgba(239, 68, 68, 0.05)",
+                                color: "#ef4444",
+                                border: "1px solid rgba(239, 68, 68, 0.1)",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                fontWeight: "600",
+                                fontSize: "0.95rem",
+                                opacity: isLoggingOut ? 0.6 : 1,
+                            }}
+                            onMouseEnter={(e) => {
+                                if (!isLoggingOut) {
+                                    e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.15)";
+                                    e.currentTarget.style.color = "#ff5f5f";
+                                }
+                            }}
+                            onMouseLeave={(e) => {
+                                if (!isLoggingOut) {
+                                    e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.05)";
+                                    e.currentTarget.style.color = "#ef4444";
+                                }
+                            }}
+                        >
+                            <LogOut size={20} />
+                            <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+                        </button>
+                    </div>
+                </nav>
             </aside>
 
             {/* Main Content */}
             <main
                 style={{
-                    marginLeft: "280px",
+                    marginLeft: "300px",
                     minHeight: "100vh",
-                    padding: "40px 48px",
+                    padding: "240px max(24px, 5%) 40px max(24px, 5%)",
                     flex: 1,
+                    maxWidth: "1400px",
+                    marginRight: "auto",
                 }}
                 className="admin-main-content"
             >
@@ -254,19 +276,21 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             </main>
 
             {/* Mobile Overlay */}
-            {isMobileMenuOpen && (
-                <div
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    style={{
-                        position: "fixed",
-                        inset: 0,
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        zIndex: 998,
-                        display: "none",
-                    }}
-                    className="mobile-overlay"
-                />
-            )}
+            {
+                isMobileMenuOpen && (
+                    <div
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        style={{
+                            position: "fixed",
+                            inset: 0,
+                            backgroundColor: "rgba(0, 0, 0, 0.5)",
+                            zIndex: 998,
+                            display: "none",
+                        }}
+                        className="mobile-overlay"
+                    />
+                )
+            }
 
             <style jsx>{`
                 @media (max-width: 768px) {
@@ -275,13 +299,13 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                   }
 
                   .admin-sidebar {
-                    transform: translateX(${isMobileMenuOpen ? "0" : "-100%"});
+                    transform: ${isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)"} !important;
                     transition: transform 0.3s ease;
                   }
 
                   .admin-main-content {
                     margin-left: 0 !important;
-                    padding: 140px 20px 40px 20px !important;
+                    padding: 300px 20px 40px 20px !important;
                   }
 
                   .mobile-overlay {
@@ -289,6 +313,6 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                   }
                 }
               `}</style>
-        </div>
+        </div >
     );
 }
