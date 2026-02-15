@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Globe, Send, Users } from 'lucide-react';
+import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Globe, Send, Users, Facebook } from 'lucide-react';
 import { IconBrandWhatsapp, IconBrandDiscord, IconBrandTelegram } from '@tabler/icons-react';
 import { TextHoverEffect } from '@/components/ui/hover-footer';
 import { useState } from 'react';
@@ -58,6 +58,7 @@ const socialLinks = [
     { icon: <Send size={20} />, label: "WhatsApp Community", href: "https://chat.whatsapp.com/F4Krdv2DxPa8J84ZaG1iUe" },
     { icon: <Twitter size={20} />, label: "Twitter", href: "https://x.com/HenuOs13178" },
     { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/henuos/" },
+    { icon: <Facebook size={20} />, label: "Facebook", href: "https://www.facebook.com/share/1ZCPYkVQSF/" },
     { icon: <Users size={20} />, label: "Community", href: "https://siddsingh.mystrikingly.com/" },
 ];
 

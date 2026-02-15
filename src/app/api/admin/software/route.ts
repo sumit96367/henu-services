@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         ensureDataFile();
 
         const body = await request.json();
-        const { name, description, category, tags, formLink, image } = body;
+        const { name, description, category, tags, formLink, paymentLink, image } = body;
 
         // Validation
         if (!name || !description || !category) {
@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
             tags: tags || ["Custom", "Software", "Solution"],
             color: "from-cyan-500 to-blue-500", // Keep for backward compatibility
             formLink: formLink || "",
+            paymentLink: paymentLink || "",
             stats: {
                 metric: name.split(" ")[0],
                 label: "Software"
@@ -99,7 +100,7 @@ export async function PUT(request: NextRequest) {
         ensureDataFile();
 
         const body = await request.json();
-        const { id, name, description, category, tags, formLink } = body;
+        const { id, name, description, category, tags, formLink, paymentLink } = body;
 
         // Validation
         if (!id || !name || !description) {
@@ -143,6 +144,7 @@ export async function PUT(request: NextRequest) {
             category: category || jsonData.software[softwareIndex].category,
             tags: tags || jsonData.software[softwareIndex].tags,
             formLink: formLink !== undefined ? formLink : jsonData.software[softwareIndex].formLink || "",
+            paymentLink: paymentLink !== undefined ? paymentLink : jsonData.software[softwareIndex].paymentLink || "",
         };
 
         jsonData.software[softwareIndex] = updatedSoftware;

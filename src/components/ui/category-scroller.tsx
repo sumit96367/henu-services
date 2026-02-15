@@ -12,7 +12,7 @@ export const CategoryScroller = ({ categories }: { categories: string[] }) => {
                     >
                         {categories.map((category, index) => (
                             <div key={`${i}-${index}`} className="flex items-center">
-                                <p className="text-[20px] font-medium text-white/60 whitespace-nowrap tracking-wide">
+                                <p className="text-[20px] font-medium text-white/90 whitespace-nowrap tracking-wide">
                                     {category}
                                 </p>
                             </div>

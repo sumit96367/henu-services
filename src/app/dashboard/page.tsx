@@ -643,6 +643,8 @@ export default function DashboardPage() {
         if (id === 'logout') {
             logout();
             router.push('/');
+        } else if (id === 'quotes') {
+            router.push('/dashboard/quotes');
         } else {
             setActiveSection(id);
         }

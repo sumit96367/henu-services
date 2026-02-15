@@ -30,6 +30,7 @@ import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { ReviewSection, Review } from '@/components/review-section';
 import { TestimonialsColumn, Testimonial } from '@/components/ui/testimonials-columns';
 import { CharacterV1 } from '@/components/ui/text-scroll-animation';
+import { CategoryScroller } from '@/components/ui/category-scroller';
 
 
 // ============================================
@@ -44,6 +45,20 @@ const HeroSection = () => {
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  // Service categories for the scroller
+  const serviceCategories = [
+    'Web Development',
+    'Mobile Apps',
+    'AI Automation',
+    'Backend Systems',
+    'Graphic Design',
+    'Digital Marketing',
+    'Legal Services',
+    'Funding Solutions',
+    'Cloud Infrastructure',
+    'UX/UI Design'
+  ];
 
   return (
     <section

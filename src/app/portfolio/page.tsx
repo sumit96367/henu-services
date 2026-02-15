@@ -173,6 +173,38 @@ export default function PortfolioPage() {
     // Dynamic categories extracted from all projects
     const [categories, setCategories] = useState<string[]>([]);
 
+    // Category filter state
+    const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
+    // Define filter categories
+    const filterCategories = [
+        'All',
+        'Healthcare & Services',
+        'Management Services',
+        'Enterprise & Institutional',
+        'Digital Commerce & Retail',
+        'Business & Finance',
+        'Others'
+    ];
+
+    // Map project categories to filter categories
+    const getCategoryGroup = (projectCategory: string): string => {
+        const categoryMap: Record<string, string> = {
+            'Healthcare Retail': 'Healthcare & Services',
+            'Hospitality & Services': 'Management Services',
+            'Enterprise & Institutional': 'Enterprise & Institutional',
+            'Digital Commerce': 'Digital Commerce & Retail',
+            'Business & Finance': 'Business & Finance',
+            'Custom': 'Others',
+        };
+        return categoryMap[projectCategory] || 'Others';
+    };
+
+    // Filter projects based on selected category
+    const filteredProjects = selectedCategory === 'All'
+        ? allProjects
+        : allProjects.filter(project => getCategoryGroup(project.category) === selectedCategory);
+
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -317,127 +349,184 @@ export default function PortfolioPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.8 }}
-                            className="text-lg md:text-2xl text-gray-400 max-w-2xl mb-8 md:mb-16 leading-relaxed text-center"
-                            style={{ paddingTop: '15px', paddingBottom: '150px' }}
+                            className="text-lg md:text-2xl text-gray-400 max-w-2xl mb-8 md:mb-12 leading-relaxed text-center"
+                            style={{ paddingTop: '15px', paddingBottom: '20px' }}
                         >
                             Explore our complete suite of products, systems, and solutions designed to transform your business.
                         </motion.p>
+
+                        {/* Categories Scroller - Inside Hero Section */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.9, duration: 0.8 }}
+                            className="w-full max-w-4xl mb-16"
+                        >
+                            <div className="flex items-center gap-4 bg-white/5 border border-purple-500/20 rounded-xl px-6 py-4">
+                                {/* Label for desktop */}
+                                <div className="hidden md:block text-purple-400 font-bold text-sm uppercase tracking-[0.15em] whitespace-nowrap">
+                                    Categories
+                                </div>
+
+                                {/* Separator for desktop */}
+                                <div className="hidden md:block h-5 w-px bg-purple-500/30" />
+
+                                {/* Category Scroller */}
+                                <div className="flex-1 overflow-hidden">
+                                    <CategoryScroller categories={categories} />
+                                </div>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 </div>
             </section >
 
-            {/* Categories Line - Scrolling Marquee */}
+            {/* Projects Grid with Category Sidebar */}
             <section
-                className="relative z-20 bg-transparent flex flex-col items-center px-4 md:px-8"
+                className="bg-transparent relative z-20 px-4 md:px-8"
                 style={{ paddingTop: '150px', paddingBottom: '150px' }}
             >
-                <div className="container max-w-7xl mx-auto">
-                    <div className="flex items-center gap-8">
-                        {/* Label */}
-                        <div className="text-white/80 font-bold text-[18px] uppercase tracking-[0.2em] whitespace-nowrap">
-                            CATEGORIES
-                        </div>
+                <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto' }}>
 
-                        {/* Separator */}
-                        <div className="h-6 w-px bg-white/15" />
-
-                        {/* Category Scroller - Animated Marquee */}
-                        <div className="flex-1 overflow-hidden">
-                            <CategoryScroller categories={categories} />
+                    {/* Mobile Category Filter - Horizontal Scroll */}
+                    <div className="lg:hidden mb-8 -mx-4 px-4">
+                        <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+                            {filterCategories.map((category) => (
+                                <button
+                                    key={category}
+                                    onClick={() => setSelectedCategory(category)}
+                                    className={`
+                                        px-6 py-3 rounded-full text-sm font-semibold whitespace-nowrap snap-start
+                                        transition-all duration-300 border-2
+                                        ${selectedCategory === category
+                                            ? 'bg-purple-500 text-white border-purple-500 shadow-lg shadow-purple-500/30'
+                                            : 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white'
+                                        }
+                                    `}
+                                >
+                                    {category}
+                                </button>
+                            ))}
                         </div>
                     </div>
-                </div>
-            </section >
 
-            {/* Projects Grid */}
-            <section
-                className="bg-transparent relative z-20 flex flex-col items-center px-4 md:px-8"
-                style={{ paddingTop: '150px', paddingBottom: '150px' }}
-            >
-                <div style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3, ease: 'easeOut' }}
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                        >
-                            {allProjects.map((project, index) => (
+                    {/* Desktop Layout: Sidebar + Grid */}
+                    <div className="flex gap-8 items-start">
+
+                        {/* Sticky Category Sidebar - Desktop Only */}
+                        <aside className="hidden lg:block w-64 shrink-0">
+                            <div className="sticky top-24">
+                                <h3 className="text-white font-bold text-lg mb-4 px-2">Category</h3>
+                                <nav className="space-y-2">
+                                    {filterCategories.map((category) => (
+                                        <button
+                                            key={category}
+                                            onClick={() => setSelectedCategory(category)}
+                                            className={`
+                                                w-full text-left px-4 py-3 rounded-xl text-base font-medium
+                                                transition-all duration-300
+                                                ${selectedCategory === category
+                                                    ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20'
+                                                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                }
+                                            `}
+                                        >
+                                            {category}
+                                        </button>
+                                    ))}
+                                </nav>
+                            </div>
+                        </aside>
+
+                        {/* Projects Grid */}
+                        <div className="flex-1">
+                            <AnimatePresence mode="wait">
                                 <motion.div
-                                    key={project.id}
-                                    // Premium scroll animations with blur + scale
-                                    initial={{
-                                        opacity: 0,
-                                        x: index % 2 === 0 ? -60 : 60,  // Alternating left/right
-                                        scale: 0.8,  // Start smaller
-                                        filter: "blur(10px)"  // Start blurred
-                                    }}
-                                    whileInView={{
-                                        opacity: 1,
-                                        x: 0,
-                                        scale: 1,  // Scale to normal
-                                        filter: "blur(0px)"  // Clear blur
-                                    }}
-                                    viewport={{
-                                        once: true,
-                                        margin: "-50px"
-                                    }}
-                                    transition={{
-                                        duration: 0.7,
-                                        ease: [0.22, 0.61, 0.36, 1],
-                                        delay: index * 0.1
-                                    }}
-                                    onClick={() => openModal(project)}
-                                    className="relative group cursor-pointer"
+                                    key={selectedCategory}
+                                    initial={{ opacity: 0, y: 12 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -12 }}
+                                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6"
                                 >
-                                    {/* Card Box - PRESERVED */}
-                                    <div
-                                        className="relative bg-[#0A0A0A] border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden h-full flex flex-col items-center justify-center"
-                                        style={{ padding: '50px' }}
-                                    >
-                                        {/* Gradient Tracing Animation */}
+                                    {filteredProjects.map((project, index) => (
                                         <motion.div
-                                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-8"
-                                            initial={{ opacity: 0 }}
-                                            animate={{
-                                                opacity: [0, 1, 1, 0]
+                                            key={project.id}
+                                            // Premium scroll animations with blur + scale
+                                            initial={{
+                                                opacity: 0,
+                                                x: index % 2 === 0 ? -60 : 60,  // Alternating left/right
+                                                scale: 0.8,  // Start smaller
+                                                filter: "blur(10px)"  // Start blurred
+                                            }}
+                                            whileInView={{
+                                                opacity: 1,
+                                                x: 0,
+                                                scale: 1,  // Scale to normal
+                                                filter: "blur(0px)"  // Clear blur
+                                            }}
+                                            viewport={{
+                                                once: true,
+                                                margin: "-50px"
                                             }}
                                             transition={{
-                                                delay: index * 2,
-                                                duration: 2,
-                                                repeat: Infinity,
-                                                repeatDelay: (allProjects.length - 1) * 2,
-                                                times: [0, 0.1, 0.9, 1]
+                                                duration: 0.7,
+                                                ease: [0.22, 0.61, 0.36, 1],
+                                                delay: index * 0.1
                                             }}
+                                            onClick={() => openModal(project)}
+                                            className="relative group cursor-pointer"
                                         >
-                                            <GradientTracing
-                                                width={1500}
-                                                height={80}
-                                                path="M0,40 Q375,10 750,40 T1500,40"
-                                                gradientColors={["#A855F7", "#EC4899", "#A855F7"]}
-                                                animationDuration={2}
-                                                strokeWidth={4}
-                                            />
+                                            {/* Card Box - PRESERVED */}
+                                            <div
+                                                className="relative bg-[#0A0A0A] border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/[0.05] hover:border-purple-500/20 overflow-hidden h-full flex flex-col items-center justify-center"
+                                                style={{ padding: '50px' }}
+                                            >
+                                                {/* Gradient Tracing Animation */}
+                                                <motion.div
+                                                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-8"
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{
+                                                        opacity: [0, 1, 1, 0]
+                                                    }}
+                                                    transition={{
+                                                        delay: index * 2,
+                                                        duration: 2,
+                                                        repeat: Infinity,
+                                                        repeatDelay: (filteredProjects.length - 1) * 2,
+                                                        times: [0, 0.1, 0.9, 1]
+                                                    }}
+                                                >
+                                                    <GradientTracing
+                                                        width={1500}
+                                                        height={80}
+                                                        path="M0,40 Q375,10 750,40 T1500,40"
+                                                        gradientColors={["#A855F7", "#EC4899", "#A855F7"]}
+                                                        animationDuration={2}
+                                                        strokeWidth={4}
+                                                    />
+                                                </motion.div>
+
+                                                {/* Software Title - CENTER ALIGNED */}
+                                                <h3 className="text-3xl font-black text-white mb-3 group-hover:text-purple-400 transition-colors tracking-tight leading-tight uppercase text-center">
+                                                    {project.title}
+                                                </h3>
+
+                                                {/* Accent Underline - PRESERVED */}
+                                                <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto" />
+                                            </div>
                                         </motion.div>
-
-                                        {/* Software Title - CENTER ALIGNED */}
-                                        <h3 className="text-3xl font-black text-white mb-3 group-hover:text-purple-400 transition-colors tracking-tight leading-tight uppercase text-center">
-                                            {project.title}
-                                        </h3>
-
-                                        {/* Accent Underline - PRESERVED */}
-                                        <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto" />
-                                    </div>
+                                    ))}
                                 </motion.div>
-                            ))}
-                        </motion.div>
-                    </AnimatePresence>
+                            </AnimatePresence>
 
-                    {allProjects.length === 0 && (
-                        <div className="text-center py-40">
-                            <p className="text-2xl text-gray-500 font-medium">No projects found.</p>
+                            {filteredProjects.length === 0 && (
+                                <div className="text-center py-40">
+                                    <p className="text-2xl text-gray-500 font-medium">No projects found in this category.</p>
+                                </div>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </section >
 

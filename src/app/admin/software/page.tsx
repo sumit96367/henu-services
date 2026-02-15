@@ -11,6 +11,7 @@ export default function AddSoftwarePage() {
         category: "",
         tags: "",
         formLink: "",
+        paymentLink: "",
         image: "/projects/custom.jpg",
     });
     const [showSuccess, setShowSuccess] = useState(false);
@@ -48,6 +49,7 @@ export default function AddSoftwarePage() {
                     category: formData.category,
                     tags: tagsArray.slice(0, 3), // Max 3 tags
                     formLink: formData.formLink,
+                    paymentLink: formData.paymentLink,
                     image: formData.image,
                 }),
             });
@@ -70,6 +72,7 @@ export default function AddSoftwarePage() {
                 category: "",
                 tags: "",
                 formLink: "",
+                paymentLink: "",
                 image: "/projects/custom.jpg",
             });
 
@@ -363,6 +366,51 @@ export default function AddSoftwarePage() {
                                 setFormData({ ...formData, formLink: e.target.value })
                             }
                             placeholder="https://forms.google.com/your-form-link"
+                            style={{
+                                width: "100%",
+                                padding: "14px 18px",
+                                backgroundColor: "rgba(255, 255, 255, 0.03)",
+                                border: "1px solid rgba(255, 255, 255, 0.1)",
+                                borderRadius: "12px",
+                                color: "#fff",
+                                fontSize: "1rem",
+                                outline: "none",
+                                transition: "all 0.2s ease",
+                            }}
+                            onFocus={(e) => {
+                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
+                                e.currentTarget.style.backgroundColor =
+                                    "rgba(255, 255, 255, 0.05)";
+                            }}
+                            onBlur={(e) => {
+                                e.currentTarget.style.borderColor =
+                                    "rgba(255, 255, 255, 0.1)";
+                                e.currentTarget.style.backgroundColor =
+                                    "rgba(255, 255, 255, 0.03)";
+                            }}
+                        />
+                    </div>
+
+                    {/* Payment Link */}
+                    <div style={{ marginBottom: "40px" }}>
+                        <label
+                            style={{
+                                display: "block",
+                                marginBottom: "12px",
+                                fontSize: "1rem",
+                                fontWeight: "600",
+                                color: "#fff",
+                            }}
+                        >
+                            Payment Link <span style={{ color: "#888", fontWeight: "400", fontSize: "0.875rem" }}>(optional - add later)</span>
+                        </label>
+                        <input
+                            type="url"
+                            value={formData.paymentLink}
+                            onChange={(e) =>
+                                setFormData({ ...formData, paymentLink: e.target.value })
+                            }
+                            placeholder="https://payment-gateway.com/your-payment-link"
                             style={{
                                 width: "100%",
                                 padding: "14px 18px",
