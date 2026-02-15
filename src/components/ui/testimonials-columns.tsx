@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { GlowingCard } from "./glowing-card";
 
@@ -41,7 +42,7 @@ export const TestimonialsColumn = (props: {
                                 >
                                     <p className="text-gray-300 text-sm leading-relaxed">{text}</p>
                                     <div className="flex items-center gap-4 mt-10">
-                                        <img
+                                        <Image
                                             width={44}
                                             height={44}
                                             src={image || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff`}

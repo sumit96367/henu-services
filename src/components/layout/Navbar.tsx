@@ -9,7 +9,6 @@ import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
 import { UserMenu } from '@/components/auth';
 import { useAuth } from '@/context/AuthContext';
-import { GlobalSearch } from '@/components/ui/GlobalSearch';
 import {
     Menu as MenuIcon,
     X,
@@ -44,9 +43,10 @@ export const Navbar = () => {
         setIsMobileMenuOpen(false);
     }, [pathname]);
 
-    const { userType } = useAuth();
+    const { userType, isAuthenticated } = useAuth();
 
     const navLinks = [
+        ...(isAuthenticated ? [{ name: 'Dashboard', href: '/dashboard' }] : []),
         { name: 'Services', href: '/services' },
         { name: 'Ecosystem', href: '/portfolio' },
         { name: 'About', href: '/about' },
@@ -63,7 +63,7 @@ export const Navbar = () => {
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 className={cn(
-                    "fixed z-[100] transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-white/10",
+                    "fixed z-[100] transition-all duration-300 bg-black/60 backdrop-blur-sm md:backdrop-blur-md border-b border-white/10",
                     isDashboard ? "md:left-[300px] md:w-[calc(100%-300px)] left-0 w-full" : "inset-x-0 w-full",
                     scrolled ? "py-4" : "py-6"
                 )}
@@ -211,8 +211,6 @@ export const Navbar = () => {
 
                     {/* Search, User Menu & Mobile Toggle - Right */}
                     <div className="flex items-center gap-3">
-                        {/* Global Search */}
-                        <GlobalSearch />
 
                         {/* User Menu (Desktop) */}
                         <div className="hidden md:block">
@@ -318,9 +316,11 @@ export const Navbar = () => {
                             ))}
 
                             {/* Mobile Auth Buttons */}
-                            <div className="pt-6 mt-4 border-t border-white/10">
-                                <UserMenu />
-                            </div>
+                            {!isAuthenticated && (
+                                <div className="pt-8 mt-4 border-t border-white/10">
+                                    <UserMenu className="w-full py-4 px-6 bg-white/[0.03] hover:bg-white/[0.08]" />
+                                </div>
+                            )}
                         </nav>
                     </motion.div>
                 )}

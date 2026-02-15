@@ -41,6 +41,9 @@ import { db, auth } from '@/lib/firebase';
 import { collection, query, where, getDocs, orderBy, updateDoc, doc, addDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import CircularWaveShader from '@/components/ui/circular-wave-shader';
+import { Spotlight } from '@/components/ui/spotlight';
+import { cn } from '@/lib/utils';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -141,6 +144,7 @@ interface Address {
 }
 
 export default function DashboardPage() {
+    const isMobile = useMediaQuery("(max-width: 768px)");
     const { user, isAuthenticated, isLoading: authLoading, logout } = useAuth();
     const router = useRouter();
     const [mounted, setMounted] = useState(false);
@@ -691,7 +695,7 @@ export default function DashboardPage() {
                         {/* Order Status Summary */}
                         <div
                             className="bg-white/[0.02] border border-white/5 rounded-[32px] shadow-2xl overflow-hidden"
-                            style={{ padding: '60px' }}
+                            style={{ padding: 'max(20px, 4%)' }}
                         >
                             <div className="flex items-center justify-between p-6 mb-4">
                                 <div className="flex items-center gap-4">
@@ -717,20 +721,20 @@ export default function DashboardPage() {
                                     <table className="w-full">
                                         <thead>
                                             <tr className="text-left text-xs text-gray-500 border-b border-white/5 uppercase tracking-wider">
-                                                <th className="px-12 py-8 font-bold text-gray-500">Order ID</th>
-                                                <th className="px-12 py-8 font-bold text-gray-500">Date</th>
-                                                <th className="px-12 py-8 font-bold text-gray-500">Status</th>
-                                                <th className="px-12 py-8 font-bold text-gray-500 text-right">Amount</th>
+                                                <th className="px-4 md:px-12 py-6 md:py-8 font-bold text-gray-500">Order ID</th>
+                                                <th className="px-4 md:px-12 py-6 md:py-8 font-bold text-gray-500">Date</th>
+                                                <th className="px-4 md:px-12 py-6 md:py-8 font-bold text-gray-500">Status</th>
+                                                <th className="px-4 md:px-12 py-6 md:py-8 font-bold text-gray-500 text-right">Amount</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {orders.slice(0, 3).map((order) => (
                                                 <tr key={order.id} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                                                    <td className="px-12 py-8">
-                                                        <span className="text-purple-400 font-mono text-base font-bold">{order.id.slice(0, 8)}...</span>
+                                                    <td className="px-4 md:px-12 py-6 md:py-8">
+                                                        <span className="text-purple-400 font-mono text-sm md:text-base font-bold">{order.id.slice(0, 8)}...</span>
                                                     </td>
-                                                    <td className="px-12 py-8 text-base text-gray-400">{order.orderDate}</td>
-                                                    <td className="px-12 py-8">
+                                                    <td className="px-4 md:px-12 py-6 md:py-8 text-sm md:text-base text-gray-400">{order.orderDate}</td>
+                                                    <td className="px-4 md:px-12 py-6 md:py-8">
                                                         {(() => {
                                                             const colors: Record<string, string> = {
                                                                 green: "bg-green-500/10 text-green-400 border-green-500/20",
@@ -745,7 +749,7 @@ export default function DashboardPage() {
                                                             );
                                                         })()}
                                                     </td>
-                                                    <td className="px-12 py-8 text-right font-bold text-white text-lg">{order.amount}</td>
+                                                    <td className="px-4 md:px-12 py-6 md:py-8 text-right font-bold text-white text-base md:text-lg">{order.amount}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -783,7 +787,7 @@ export default function DashboardPage() {
 
                         <div
                             className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
-                            style={{ padding: '60px' }}
+                            style={{ padding: 'max(20px, 4%)' }}
                         >
                             {isDataLoading ? (
                                 <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
@@ -1408,32 +1412,42 @@ export default function DashboardPage() {
         }
     };
 
+
     return (
-        <div className="min-h-screen bg-background flex flex-col md:flex-row dashboard-layout relative">
+        <div className="min-h-screen bg-transparent flex flex-col md:flex-row dashboard-layout relative overflow-hidden">
+            {/* Background elements to match home page */}
+            <div className="absolute inset-0 pointer-events-none -z-10">
+                <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+                <div className="horizon-grid opacity-30" />
+                <div className="grid-background opacity-20" />
+            </div>
             {/* Mobile Menu Toggle */}
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
-                    position: isMobileMenuOpen ? 'fixed' : 'absolute',
-                    top: isMobileMenuOpen ? '22px' : '85px',
-                    left: isMobileMenuOpen ? '216px' : '16px',
-                    zIndex: isMobileMenuOpen ? 1001 : 50,
-                    display: 'none',
-                    padding: '8px',
-                    backgroundColor: isMobileMenuOpen ? 'transparent' : 'rgba(255, 255, 255, 0.08)',
-                    backdropFilter: isMobileMenuOpen ? 'none' : 'blur(12px)',
-                    border: isMobileMenuOpen ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
+                    position: 'absolute',
+                    top: '140px',
+                    left: '20px',
+                    zIndex: 50,
+                    display: isMobileMenuOpen ? 'none' : 'flex',
+                    padding: '10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
                     borderRadius: '12px',
                     color: '#fff',
                     cursor: 'pointer',
-                    boxShadow: isMobileMenuOpen ? 'none' : '0 8px 32px rgba(0, 0, 0, 0.4)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
                     transition: 'all 0.3s ease',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}
-                className="mobile-menu-toggle hover:bg-white/10 active:scale-95"
+                className={cn(
+                    "mobile-menu-toggle hover:bg-white/10 active:scale-95",
+                    isMobileMenuOpen ? "hidden" : "flex md:hidden"
+                )}
             >
-                <div className="flex items-center justify-center">
-                    {isMobileMenuOpen ? <CloseIcon size={28} /> : <MenuIcon size={22} />}
-                </div>
+                <MenuIcon size={24} />
             </button>
 
             {/* Sidebar */}
@@ -1444,14 +1458,14 @@ export default function DashboardPage() {
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    width: '300px',
+                    width: 'min(300px, 80vw)',
                     backgroundColor: 'rgba(2, 2, 5, 0.95)',
                     backdropFilter: 'blur(20px)',
                     borderRight: '1px solid rgba(255, 255, 255, 0.05)',
                     display: 'flex',
                     flexDirection: 'column',
                     zIndex: 999,
-                    transform: isMobileMenuOpen ? 'translateX(0)' : undefined,
+                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     overflowX: 'hidden',
                 }}
                 className="dashboard-sidebar shadow-2xl"
@@ -1461,8 +1475,16 @@ export default function DashboardPage() {
                     style={{
                         padding: '40px 28px',
                         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                        position: 'relative',
                     }}
                 >
+                    {/* Mobile Close Button inside Sidebar */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="md:hidden absolute top-6 right-6 p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                    >
+                        <CloseIcon size={24} />
+                    </button>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                         <div
                             style={{
@@ -1589,7 +1611,7 @@ export default function DashboardPage() {
                 style={{
                     marginLeft: '300px',
                     minHeight: '100vh',
-                    padding: '140px 120px 100px 120px',
+                    padding: '240px max(24px, 5%) 100px max(24px, 5%)',
                     flex: 1,
                     maxWidth: '1400px',
                     marginRight: 'auto',
@@ -1623,13 +1645,13 @@ export default function DashboardPage() {
                     }
 
                     .dashboard-sidebar {
-                        transform: ${isMobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)'};
+                        transform: ${isMobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)'} !important;
                         transition: transform 0.3s ease;
                     }
 
                     .dashboard-main-content {
                         margin-left: 0 !important;
-                        padding: 140px 20px 40px 20px !important;
+                        padding: 300px 20px 40px 20px !important;
                     }
 
                     .mobile-overlay {

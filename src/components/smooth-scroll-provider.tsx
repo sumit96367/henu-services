@@ -11,6 +11,11 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     const lenisRef = useRef<Lenis | null>(null);
 
     useEffect(() => {
+        // Only run Lenis on desktop
+        if (typeof window !== 'undefined' && window.matchMedia("(max-width: 768px)").matches) {
+            return;
+        }
+
         // Initialize Lenis
         lenisRef.current = new Lenis({
             duration: 1.2, // Scroll duration

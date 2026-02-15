@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
@@ -27,16 +27,19 @@ import { SplineScene } from '@/components/ui/splite';
 import { Spotlight } from '@/components/ui/spotlight';
 import { GlowingCard } from '@/components/ui/glowing-card';
 import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
+import { TiltCard } from '@/components/ui/tilt-card';
+import { useInView } from 'framer-motion';
 import { ReviewSection, Review } from '@/components/review-section';
 import { TestimonialsColumn, Testimonial } from '@/components/ui/testimonials-columns';
 import { CharacterV1 } from '@/components/ui/text-scroll-animation';
-import { CategoryScroller } from '@/components/ui/category-scroller';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 
 // ============================================
 // HERO SECTION WITH 3D SPLINE
 // ============================================
 const HeroSection = () => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -45,20 +48,6 @@ const HeroSection = () => {
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  // Service categories for the scroller
-  const serviceCategories = [
-    'Web Development',
-    'Mobile Apps',
-    'AI Automation',
-    'Backend Systems',
-    'Graphic Design',
-    'Digital Marketing',
-    'Legal Services',
-    'Funding Solutions',
-    'Cloud Infrastructure',
-    'UX/UI Design'
-  ];
 
   return (
     <section
@@ -105,18 +94,23 @@ const HeroSection = () => {
 
       {/* Main Content - Split Layout */}
       <div className="container relative z-10 mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center min-h-[calc(100vh-100px)] gap-8 lg:gap-0">
+        {/* PHYSICAL SPACER FOR MOBILE - BRUTE FORCE */}
+        <div className="h-[200px] md:hidden w-full" />
+
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-0 pt-0 lg:pt-0 min-h-[calc(100vh-280px)]">
           {/* Left Content */}
           <motion.div
             style={{ y, opacity }}
-            className="flex-1 text-center lg:text-left pt-24 lg:pt-0"
+            className="flex-1 text-center lg:text-left"
           >
-
-
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black text-white mb-4 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start px-2">
-              <PremiumTextReveal text="Architecting Your" delay={0.3} />
-              <PremiumTextReveal text="Digital Future." className="gradient-text" delay={0.8} />
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-[1.2] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start px-2">
+              <span className="block mb-2 text-white">
+                <PremiumTextReveal text="Architecting Your" delay={0.3} />
+              </span>
+              <span className="block">
+                <PremiumTextReveal text="Digital Future." className="gradient-text" delay={0.8} />
+              </span>
             </h1>
 
             {/* Subheading */}
@@ -124,7 +118,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mb-8 px-5 sm:px-6 lg:px-0"
+              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mb-12 px-4 lg:px-0 mx-auto lg:mx-0"
             >
               From AI-driven development to government grants and legal compliance.
               We <span className="gradient-text font-semibold">Build, Secure, and Fund</span> your vision.
@@ -135,7 +129,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 px-5 sm:px-6 lg:px-0"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 px-4 lg:px-0"
             >
               <Link href="/services" className="btn-primary w-full sm:w-auto">
                 Start Your Project
@@ -152,7 +146,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="flex-1 relative h-[300px] sm:h-[450px] lg:h-[600px] w-full"
+            className="flex-1 relative h-[350px] sm:h-[450px] lg:h-[600px] w-full"
           >
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
@@ -186,59 +180,57 @@ const HeroSection = () => {
 // STATS SECTION
 // ============================================
 const stats = [
-  { label: 'Funding Secured', value: '$50M+', desc: 'Government grants & equity.' },
-  { label: 'Digital Products', value: '200+', desc: 'Web, Mobile & AI Agents.' },
-  { label: 'Success Rate', value: '98%', desc: 'Legal registration & compliance.' },
-  { label: 'Client Satisfaction', value: '5.0', desc: 'Across all service sectors.' },
+  { label: 'Projects Completed', value: '200+', desc: 'Across Web, Mobile & AI.' },
+  { label: 'Happy Clients', value: '150+', desc: 'Global business partners.' },
+  { label: 'Success Rate', value: '98%', desc: 'Legal & technical excellence.' },
+  { label: 'Client Rating', value: '5.0', desc: 'Post-project satisfaction.' },
 ];
+
+const CountUp = ({ end, decimals = 0, suffix = "" }: { end: number; decimals?: number; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      let startTime = 0;
+      const duration = 2000; // 2 seconds
+
+      const animate = (currentTime: number) => {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        setCount(easeOutQuart * end);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }
+  }, [isInView, end]);
+
+  return (
+    <span ref={ref}>
+      {count.toLocaleString(undefined, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}
+      {suffix}
+    </span>
+  );
+};
 
 // Scroll animated heading component
 const ScrollAnimatedHeading = ({ text, className }: { text: string; className?: string }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.95', 'start 0.15']
-  });
-
-  const words = text.split(" ");
-  let charCounter = 0;
-  const totalChars = text.length;
-  const centerIndex = Math.floor(totalChars / 2);
 
   return (
-    <div ref={ref} className={cn("flex flex-wrap justify-center", className)} style={{ perspective: "500px" }}>
-      {words.map((word, wordIndex) => {
-        const wordChars = word.split("");
-        const element = (
-          <span key={wordIndex} className="inline-block whitespace-nowrap">
-            {wordChars.map((char) => {
-              const element = (
-                <CharacterV1
-                  key={charCounter}
-                  char={char}
-                  index={charCounter}
-                  centerIndex={centerIndex}
-                  scrollYProgress={scrollYProgress}
-                />
-              );
-              charCounter++;
-              return element;
-            })}
-            {/* Add space after the word except for the last word */}
-            {wordIndex < words.length - 1 && (
-              <CharacterV1
-                key={charCounter}
-                char=" "
-                index={charCounter}
-                centerIndex={centerIndex}
-                scrollYProgress={scrollYProgress}
-              />
-            )}
-            {wordIndex < words.length - 1 && charCounter++ && null}
-          </span>
-        );
-        return element;
-      })}
+    <div ref={ref} className={cn("flex flex-wrap justify-center text-center", className)}>
+      <span className="inline-block">
+        {text}
+      </span>
     </div>
   );
 };
@@ -249,17 +241,24 @@ const StatsSection = () => {
   return (
     <section
       ref={ref}
-      className="section relative bg-transparent"
-      style={{ paddingTop: '120px', paddingBottom: '120px' }}
+      className="section relative bg-transparent overflow-hidden"
+      style={{ paddingTop: '150px', paddingBottom: '150px' }}
     >
-      <div className="container">
+      {/* Background Elements from Portfolio */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="horizon-grid opacity-30" />
+        <div className="grid-background opacity-20" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <ScrollAnimatedHeading
               text="Impact by the Numbers"
               className="inline-block text-4xl md:text-5xl font-bold"
@@ -267,22 +266,30 @@ const StatsSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-6 sm:gap-8">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className="h-full"
-            >
-              <GlowingCard innerClassName="text-center p-8 md:p-12 lg:p-16 h-full flex flex-col items-center justify-center bg-[#0A0A0A] border border-white/5">
-                <div className="stat-value gradient-text mb-4 text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold">{stat.value}</div>
-                <div className="text-white font-bold text-sm md:text-base lg:text-lg uppercase tracking-widest mb-2 md:mb-3">{stat.label}</div>
-                <div className="text-gray-500 text-xs md:text-sm lg:text-base leading-relaxed">{stat.desc}</div>
-              </GlowingCard>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          {stats.map((stat, index) => {
+            const numValue = parseFloat(stat.value.replace(/[^0-9.]/g, ''));
+            const suffix = stat.value.replace(/[0-9.]/g, '');
+
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="flex flex-col items-center justify-center text-center"
+              >
+                <div className="stat-value font-black mb-2 text-4xl md:text-6xl lg:text-7xl">
+                  <span className="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">
+                    <CountUp end={numValue} suffix={suffix} decimals={stat.value.includes('.') ? 1 : 0} />
+                  </span>
+                </div>
+                <div className="text-white/80 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-2">{stat.label}</div>
+                <div className="text-gray-500 text-[10px] md:text-xs leading-relaxed max-w-[150px]">{stat.desc}</div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -300,7 +307,7 @@ const HenuOSIntroductionSection = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -309,7 +316,7 @@ const HenuOSIntroductionSection = () => {
           >
 
 
-            <h2 className="text-3xl sm:text-4xl md:text-7xl font-black text-white mb-6 md:mb-8 leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 md:mb-8 leading-tight">
               Powering the <br />
               <span className="gradient-text">New Millennium.</span>
             </h2>
@@ -320,7 +327,7 @@ const HenuOSIntroductionSection = () => {
               modular architecture, it serves as the ultimate foundation for digital excellence.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center shrink-0 border border-purple-500/20 shadow-[0_0_20px_rgba(109,40,217,0.1)]">
                   <Cpu className="w-7 h-7 text-purple-400" />
@@ -406,21 +413,21 @@ const services = [
     title: 'Website Development',
     icon: Globe,
     color: 'purple',
-    visual: 'devices'
+    visual: 'website'
   },
   {
     id: 'backend',
     title: 'Backend Development',
     icon: Server,
     color: 'purple',
-    visual: 'devices'
+    visual: 'backend'
   },
   {
     id: 'mobile-app',
     title: 'Mobile App Development',
     icon: Smartphone,
     color: 'purple',
-    visual: 'devices'
+    visual: 'mobile-app'
   },
   {
     id: 'ai-automation',
@@ -434,14 +441,14 @@ const services = [
     title: 'Graphic Design',
     icon: Palette,
     color: 'purple',
-    visual: 'marketing'
+    visual: 'graphic-design'
   },
   {
     id: 'digital-marketing',
     title: 'Digital Marketing & Ads',
     icon: Megaphone,
     color: 'purple',
-    visual: 'marketing'
+    visual: 'digital-marketing'
   },
   {
     id: 'legal',
@@ -462,45 +469,161 @@ const services = [
 
 
 const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   const renderVisual = () => {
     switch (service.visual) {
-      case 'devices':
+      case 'website':
+        // Website Development: Browser window with animated page loading
         return (
           <div className="relative w-full h-full flex items-center justify-center">
-            {/* Laptop Frame */}
-            <div className="relative scale-75 sm:scale-90 md:scale-100">
-              <div className="w-64 h-40 border-2 border-purple-500/30 rounded-lg bg-gradient-to-br from-purple-500/5 to-transparent">
-                <div className="absolute inset-2 border border-purple-500/20 rounded">
-                  <div className="h-3 border-b border-purple-500/20 flex items-center px-2 gap-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-500/60" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/60" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500/60" />
-                  </div>
-                  <div className="p-2 space-y-1">
-                    <div className="h-1 w-3/4 bg-purple-500/30 rounded" />
-                    <div className="h-1 w-1/2 bg-purple-500/20 rounded" />
-                    <div className="h-1 w-2/3 bg-purple-500/20 rounded" />
-                  </div>
-                </div>
-              </div>
-              <div className="h-3 w-32 mx-auto bg-gradient-to-b from-gray-700/50 to-gray-800/50 rounded-b-lg" />
-            </div>
-
-            {/* Mobile Frame */}
             <motion.div
-              className="absolute -right-8 top-8 w-20 h-36 border-2 border-purple-500/30 rounded-xl bg-gradient-to-br from-purple-500/5 to-transparent"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
+              className="w-72 h-48 border-2 border-purple-500/30 rounded-xl bg-gradient-to-br from-purple-500/10 to-transparent overflow-hidden"
+              initial={isMobile ? {} : { scale: 0.8, opacity: 0 }}
+              animate={isMobile ? {} : { scale: 1, opacity: 1 }}
+              transition={isMobile ? {} : { duration: 0.6, type: "spring" }}
             >
-              <div className="h-full p-1">
-                <div className="h-full border border-purple-500/20 rounded-lg p-1">
-                  <div className="w-6 h-1 bg-purple-500/30 rounded mx-auto mb-1" />
-                  <div className="space-y-1">
-                    <div className="h-1 w-3/4 bg-purple-500/20 rounded" />
-                    <div className="h-1 w-1/2 bg-purple-500/20 rounded" />
-                  </div>
+              {/* Browser Chrome */}
+              <div className="h-8 border-b border-purple-500/20 flex items-center px-3 gap-2 bg-white/5">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                </div>
+                <div className="flex-1 h-5 bg-white/5 rounded flex items-center px-2">
+                  <Globe className="w-3 h-3 text-purple-400/50" />
                 </div>
               </div>
+
+              {/* Page Content with Animations */}
+              <div className="p-4 space-y-3">
+                <motion.div
+                  className="h-6 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded"
+                  animate={isMobile ? {} : { width: ["60%", "80%", "60%"] }}
+                  transition={isMobile ? {} : { duration: 3, repeat: Infinity }}
+                />
+                <div className="space-y-2">
+                  <motion.div
+                    className="h-2 bg-purple-500/20 rounded"
+                    animate={isMobile ? {} : { width: ["70%", "90%", "70%"] }}
+                    transition={isMobile ? {} : { duration: 2.5, repeat: Infinity, delay: 0.2 }}
+                  />
+                  <motion.div
+                    className="h-2 bg-purple-500/15 rounded"
+                    animate={isMobile ? {} : { width: ["50%", "70%", "50%"] }}
+                    transition={isMobile ? {} : { duration: 2.8, repeat: Infinity, delay: 0.4 }}
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        );
+
+      case 'backend':
+        // Backend Development: Server with data flow animation
+        return (
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative">
+              {/* Server Icon */}
+              <motion.div
+                className="w-24 h-32 border-2 border-purple-500/30 rounded-lg bg-gradient-to-b from-purple-500/10 to-purple-500/5 relative"
+                animate={isMobile ? {} : { scale: [1, 1.05, 1] }}
+                transition={isMobile ? {} : { duration: 2, repeat: Infinity }}
+              >
+                {/* Server Lights */}
+                <div className="absolute top-3 left-3 flex flex-col gap-2">
+                  <motion.div
+                    className="w-2 h-2 rounded-full bg-green-500"
+                    animate={isMobile ? {} : { opacity: [1, 0.3, 1] }}
+                    transition={isMobile ? {} : { duration: 1.5, repeat: Infinity }}
+                  />
+                  <motion.div
+                    className="w-2 h-2 rounded-full bg-blue-500"
+                    animate={isMobile ? {} : { opacity: [0.3, 1, 0.3] }}
+                    transition={isMobile ? {} : { duration: 1.5, repeat: Infinity, delay: 0.5 }}
+                  />
+                </div>
+
+                {/* Server Lines */}
+                <div className="absolute inset-0 flex flex-col justify-center px-3 gap-1">
+                  <div className="h-0.5 w-full bg-purple-500/20 rounded" />
+                  <div className="h-0.5 w-full bg-purple-500/20 rounded" />
+                  <div className="h-0.5 w-full bg-purple-500/20 rounded" />
+                </div>
+              </motion.div>
+
+              {/* Data Packets Floating */}
+              <motion.div
+                className="absolute -top-8 left-1/2 -translate-x-1/2 w-4 h-4 bg-purple-500/40 rounded-sm"
+                animate={isMobile ? {} : {
+                  y: [0, -20, 0],
+                  opacity: [0, 1, 0]
+                }}
+                transition={isMobile ? {} : { duration: 2, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-4 h-4 bg-pink-500/40 rounded-sm"
+                animate={isMobile ? {} : {
+                  y: [0, 20, 0],
+                  opacity: [0, 1, 0]
+                }}
+                transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 1 }}
+              />
+            </div>
+          </div>
+        );
+
+      case 'mobile-app':
+        // Mobile App: Phone with swipe animation
+        return (
+          <div className="relative w-full h-full flex items-center justify-center">
+            <motion.div
+              className="w-32 h-64 border-4 border-purple-500/30 rounded-[2rem] bg-gradient-to-br from-purple-500/10 to-pink-500/5 relative overflow-hidden"
+              initial={isMobile ? {} : { rotateY: -30, opacity: 0 }}
+              animate={isMobile ? {} : { rotateY: 0, opacity: 1 }}
+              transition={isMobile ? {} : { duration: 0.8 }}
+              style={{ perspective: 1000 }}
+            >
+              {/* Phone Notch */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-black/50 rounded-full" />
+
+              {/* Screen Content */}
+              <div className="mt-8 p-3 space-y-3">
+                {/* App Cards Sliding */}
+                <motion.div
+                  className="h-16 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-xl flex items-center justify-center"
+                  animate={isMobile ? {} : {
+                    x: [-100, 0, 0, -100],
+                    opacity: [0, 1, 1, 0]
+                  }}
+                  transition={isMobile ? {} : {
+                    duration: 4,
+                    repeat: Infinity,
+                    times: [0, 0.2, 0.8, 1]
+                  }}
+                >
+                  <Smartphone className="w-6 h-6 text-white/60" />
+                </motion.div>
+
+                <motion.div
+                  className="h-16 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-xl flex items-center justify-center"
+                  animate={isMobile ? {} : {
+                    x: [100, 0, 0, 100],
+                    opacity: [0, 1, 1, 0]
+                  }}
+                  transition={isMobile ? {} : {
+                    duration: 4,
+                    repeat: Infinity,
+                    times: [0, 0.2, 0.8, 1],
+                    delay: 2
+                  }}
+                >
+                  <Smartphone className="w-6 h-6 text-white/60" />
+                </motion.div>
+              </div>
+
+              {/* Home Indicator */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-1 bg-white/20 rounded-full" />
             </motion.div>
           </div>
         );
@@ -656,7 +779,124 @@ const ServiceVisual = ({ service }: { service: typeof services[0] }) => {
           </div>
         );
 
+      case 'graphic-design':
+        // Graphic Design: Color palette with swatches
+        return (
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative">
+              {/* Palette Board */}
+              <motion.div
+                className="w-48 h-56 border-2 border-purple-500/30 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 p-4 relative"
+                initial={isMobile ? {} : { scale: 0.9, rotate: -10, opacity: 0 }}
+                animate={isMobile ? {} : { scale: 1, rotate: 0, opacity: 1 }}
+                transition={isMobile ? {} : { duration: 0.7, type: "spring" }}
+              >
+                {/* Color Swatches */}
+                <div className="grid grid-cols-3 gap-3">
+                  <motion.div
+                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500 to-pink-500"
+                    animate={isMobile ? {} : { rotate: [0, 5, 0], scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 0 }}
+                  />
+                  <motion.div
+                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500"
+                    animate={isMobile ? {} : { rotate: [0, -5, 0], scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 0.2 }}
+                  />
+                  <motion.div
+                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-yellow-500 to-orange-500"
+                    animate={isMobile ? {} : { rotate: [0, 5, 0], scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 0.4 }}
+                  />
+                  <motion.div
+                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500"
+                    animate={isMobile ? {} : { rotate: [0, -5, 0], scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 0.6 }}
+                  />
+                  <motion.div
+                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-violet-500"
+                    animate={isMobile ? {} : { rotate: [0, 5, 0], scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 0.8 }}
+                  />
+                  <motion.div
+                    className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-500 to-rose-500"
+                    animate={isMobile ? {} : { rotate: [0, -5, 0], scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 1 }}
+                  />
+                </div>
+
+                {/* Brush Icon */}
+                <motion.div
+                  className="absolute -top-6 -right-6 w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-purple-500/30"
+                  animate={isMobile ? {} : { rotate: [0, 15, 0] }}
+                  transition={isMobile ? {} : { duration: 3, repeat: Infinity }}
+                >
+                  <Palette className="w-8 h-8 text-purple-400" />
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        );
+
+      case 'digital-marketing':
+        // Digital Marketing: Ad campaign with metrics
+        return (
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative">
+              {/* Ad Billboard */}
+              <motion.div
+                className="w-64 h-40 border-2 border-purple-500/30 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 p-4 overflow-hidden"
+                initial={isMobile ? {} : { opacity: 0, y: 20 }}
+                animate={isMobile ? {} : { opacity: 1, y: 0 }}
+                transition={isMobile ? {} : { duration: 0.6 }}
+              >
+                {/* Megaphone */}
+                <div className="absolute top-4 left-4">
+                  <Megaphone className="w-10 h-10 text-purple-400/70" />
+                </div>
+
+                {/* Animated Metrics */}
+                <div className="absolute bottom-4 right-4 space-y-2">
+                  <motion.div
+                    className="flex items-center gap-2 bg-green-500/20 px-3 py-1 rounded-full"
+                    animate={isMobile ? {} : { scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity }}
+                  >
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="text-xs text-green-400 font-bold">+45% CTR</span>
+                  </motion.div>
+                  <motion.div
+                    className="flex items-center gap-2 bg-blue-500/20 px-3 py-1 rounded-full"
+                    animate={isMobile ? {} : { scale: [1, 1.1, 1] }}
+                    transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 0.5 }}
+                  >
+                    <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                    <span className="text-xs text-blue-400 font-bold">2.5K Reach</span>
+                  </motion.div>
+                </div>
+
+                {/* Sound Waves */}
+                <motion.div
+                  className="absolute -right-8 top-8"
+                  animate={isMobile ? {} : { x: [0, 20, 0], opacity: [0, 1, 0] }}
+                  transition={isMobile ? {} : { duration: 2, repeat: Infinity }}
+                >
+                  <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-transparent rounded" />
+                </motion.div>
+                <motion.div
+                  className="absolute -right-4 top-12"
+                  animate={isMobile ? {} : { x: [0, 30, 0], opacity: [0, 1, 0] }}
+                  transition={isMobile ? {} : { duration: 2, repeat: Infinity, delay: 0.3 }}
+                >
+                  <div className="w-20 h-1 bg-gradient-to-r from-purple-500 to-transparent rounded" />
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
+        );
+
       case 'marketing':
+        // Fallback marketing animation (if still needed)
         return (
           <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative">
@@ -711,10 +951,10 @@ const ServiceMatrixSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             <ScrollAnimatedHeading
               text="360° Business Solutions"
-              className="inline-block text-3xl sm:text-4xl md:text-5xl font-bold"
+              className="inline-block text-4xl md:text-5xl font-bold"
             />
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-center">
@@ -722,7 +962,7 @@ const ServiceMatrixSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Right - Visual Preview - Shows FIRST on mobile */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
@@ -776,13 +1016,13 @@ const WhyChooseUsSection = () => {
   return (
     <section className="section bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Why Choose <span className="text-purple-400">Henu</span>{" "}
               <span className="text-indigo-400">OS</span>&quest;
             </h2>
@@ -812,7 +1052,7 @@ const WhyChooseUsSection = () => {
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full"
           >
             <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden relative" style={{ padding: '80px 40px' }}>
               {/* Background Decorative Element */}
@@ -969,6 +1209,7 @@ const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) 
 
 
 export default function HomePage() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [allTestimonials, setAllTestimonials] = useState(initialTestimonials);
 
   const handleReviewSubmitted = (review: Review) => {
