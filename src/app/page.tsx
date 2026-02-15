@@ -99,7 +99,7 @@ const HeroSection = () => {
 
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-4 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start px-2">
+            <h1 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black text-white mb-4 leading-[1.1] tracking-tighter text-center lg:text-left flex flex-col items-center lg:items-start px-2">
               <PremiumTextReveal text="Architecting Your" delay={0.3} />
               <PremiumTextReveal text="Digital Future." className="gradient-text" delay={0.8} />
             </h1>
@@ -109,7 +109,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mb-8 px-4 lg:px-0"
+              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl mb-8 px-5 sm:px-6 lg:px-0"
             >
               From AI-driven development to government grants and legal compliance.
               We <span className="gradient-text font-semibold">Build, Secure, and Fund</span> your vision.
@@ -120,7 +120,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 px-4 lg:px-0"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 px-5 sm:px-6 lg:px-0"
             >
               <Link href="/services" className="btn-primary w-full sm:w-auto">
                 Start Your Project
@@ -252,7 +252,7 @@ const StatsSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-6 sm:gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -262,7 +262,7 @@ const StatsSection = () => {
               className="h-full"
             >
               <GlowingCard innerClassName="text-center p-8 md:p-12 lg:p-16 h-full flex flex-col items-center justify-center bg-[#0A0A0A] border border-white/5">
-                <div className="stat-value gradient-text mb-4 text-3xl md:text-4xl lg:text-5xl font-extrabold">{stat.value}</div>
+                <div className="stat-value gradient-text mb-4 text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-extrabold">{stat.value}</div>
                 <div className="text-white font-bold text-sm md:text-base lg:text-lg uppercase tracking-widest mb-2 md:mb-3">{stat.label}</div>
                 <div className="text-gray-500 text-xs md:text-sm lg:text-base leading-relaxed">{stat.desc}</div>
               </GlowingCard>
@@ -285,7 +285,7 @@ const HenuOSIntroductionSection = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -294,7 +294,7 @@ const HenuOSIntroductionSection = () => {
           >
 
 
-            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 md:mb-8 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-7xl font-black text-white mb-6 md:mb-8 leading-tight">
               Powering the <br />
               <span className="gradient-text">New Millennium.</span>
             </h2>
@@ -305,7 +305,7 @@ const HenuOSIntroductionSection = () => {
               modular architecture, it serves as the ultimate foundation for digital excellence.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center shrink-0 border border-purple-500/20 shadow-[0_0_20px_rgba(109,40,217,0.1)]">
                   <Cpu className="w-7 h-7 text-purple-400" />
@@ -696,10 +696,10 @@ const ServiceMatrixSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
             <ScrollAnimatedHeading
               text="360° Business Solutions"
-              className="inline-block text-4xl md:text-5xl font-bold"
+              className="inline-block text-3xl sm:text-4xl md:text-5xl font-bold"
             />
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-center">
@@ -707,7 +707,7 @@ const ServiceMatrixSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Right - Visual Preview - Shows FIRST on mobile */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
@@ -761,13 +761,13 @@ const WhyChooseUsSection = () => {
   return (
     <section className="section bg-transparent" style={{ paddingTop: '120px', paddingBottom: '120px' }}>
       <div className="container">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
               Why Choose <span className="text-purple-400">Henu</span>{" "}
               <span className="text-indigo-400">OS</span>&quest;
             </h2>
@@ -797,7 +797,7 @@ const WhyChooseUsSection = () => {
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
           >
             <GlowingCard className="h-full" innerClassName="flex flex-col items-center text-center group bg-[#0A0A0A] border border-white/5 hover:border-white/10 transition-all duration-500 overflow-hidden relative" style={{ padding: '80px 40px' }}>
               {/* Background Decorative Element */}

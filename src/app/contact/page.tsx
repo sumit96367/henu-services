@@ -241,7 +241,7 @@ export default function ContactPage() {
                     className="relative z-10 w-full flex flex-col items-center justify-center px-6"
                 >
                     <div className="max-w-5xl w-full mx-auto flex flex-col items-center text-center">
-                        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full uppercase">
+                        <h1 className="text-4xl md:text-6xl lg:text-9xl font-black text-white mb-8 leading-[1.0] tracking-tighter text-center flex flex-col items-center w-full uppercase">
                             <PremiumTextReveal text="Ready to" className="w-full justify-center" />
                             <span className="gradient-text block w-full text-center">
                                 <PremiumTextReveal text="Build Something" delay={0.2} className="w-full justify-center" />
@@ -278,7 +278,7 @@ export default function ContactPage() {
             {/* Contact Info Section - Refined 4-Column Grid */}
             <section className="section relative overflow-hidden bg-[#050505] py-20 md:py-32">
                 <div style={{ width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full">
                         {contactInfo.map((info, index) => (
                             <motion.div
                                 key={info.title}
@@ -382,7 +382,7 @@ export default function ContactPage() {
                                 Our consultants are ready to dive deep into your requirements and provide a strategic roadmap tailored for your business.
                             </p>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                 <div className="space-y-4">
                                     <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
                                         <CheckCircle className="w-6 h-6 text-purple-400" />
@@ -469,7 +469,7 @@ export default function ContactPage() {
                                                                 <p className="text-lg text-gray-400">Tell us who you are</p>
                                                             </div>
 
-                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 !mt-16">
+                                                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 !mt-16">
                                                                 <div className="space-y-5">
                                                                     <label className="text-lg font-bold text-gray-300 block px-1 tracking-wider uppercase text-[13px]">Full Name</label>
                                                                     <div className="relative group flex items-center">
@@ -540,7 +540,7 @@ export default function ContactPage() {
                                                             <label className="text-xl font-bold text-gray-300 block px-1 tracking-wider uppercase text-[14px]">
                                                                 Service Aspect *
                                                             </label>
-                                                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                                                 {serviceOptions.map((service) => (
                                                                     <SelectableCard
                                                                         key={service.id}
