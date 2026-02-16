@@ -44,6 +44,7 @@ import CircularWaveShader from '@/components/ui/circular-wave-shader';
 import { Spotlight } from '@/components/ui/spotlight';
 import { cn } from '@/lib/utils';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import SettingsInterface from '@/components/SettingsInterface';
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -671,15 +672,20 @@ export default function DashboardPage() {
         switch (activeSection) {
             case 'settings':
                 return (
-                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
-                        <h1 className="text-3xl font-bold text-white mb-8 text-center md:text-left">Settings</h1>
-                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl p-12 text-center">
-                            <Lock size={48} className="mx-auto text-indigo-400 mb-4" />
-                            <h2 className="text-xl font-bold text-white mb-2">Account Settings</h2>
-                            <p className="text-gray-500 mb-6">Manage your preferences, security, and notifications</p>
-                            <p className="text-sm text-gray-600">Settings interface coming soon</p>
-                        </div>
-                    </motion.div>
+                    <SettingsInterface
+                        user={user}
+                        editName={editName}
+                        editCompany={editCompany}
+                        profilePicture={profilePicture}
+                        fileInputRef={fileInputRef}
+                        handleImageUpload={handleImageUpload}
+                        setEditName={setEditName}
+                        setEditCompany={setEditCompany}
+                        setActiveSection={setActiveSection}
+                        orders={orders}
+                        quotes={quotes}
+                        addresses={addresses}
+                    />
                 );
             case 'account':
                 return (
@@ -839,8 +845,8 @@ export default function DashboardPage() {
                                                 </div>
                                                 <div>
                                                     <span className={`px-2 py-1 rounded-full text-xs font-bold ${quote.status === 'approved' ? 'bg-green-500/20 text-green-400' :
-                                                            quote.status === 'rejected' ? 'bg-red-500/20 text-red-400' :
-                                                                'bg-amber-500/20 text-amber-400'
+                                                        quote.status === 'rejected' ? 'bg-red-500/20 text-red-400' :
+                                                            'bg-amber-500/20 text-amber-400'
                                                         }`}>
                                                         {quote.status}
                                                     </span>
