@@ -98,8 +98,8 @@ export const TextHoverEffect = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 strokeWidth="0.3"
-                className="fill-transparent stroke-[#6D28D9] font-[helvetica] text-7xl font-bold 
-        dark:stroke-[#6D28D999]"
+                className="fill-transparent stroke-rose-400 lg:stroke-[#6D28D9] font-[helvetica] text-7xl font-bold 
+        dark:stroke-rose-400 dark:lg:stroke-[#6D28D999]"
                 initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
                 whileInView={{
                     strokeDashoffset: 0,
