@@ -756,7 +756,7 @@ export default function DashboardPage() {
                     <div className="space-y-8">
                         {/* Header */}
                         <div className="mb-10 pt-4 md:pt-0 text-center md:text-left">
-                            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
+                            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight" style={{ marginTop: isMobile ? '60px' : '0' }}>
                                 Welcome back, {user?.name || 'User'}
                             </h1>
                             <div className="h-1.5 w-24 bg-gradient-to-r from-purple-600 to-indigo-500 rounded-full shadow-[0_0_15px_rgba(109,40,217,0.4)] mx-auto md:mx-0" />
@@ -897,7 +897,7 @@ export default function DashboardPage() {
                                                 style={{ padding: '32px' }}
                                             >
                                                 <div className="flex gap-6 items-start">
-                                                    <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                    <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg mx-auto">
                                                         <Package className="text-cyan-400" size={18} />
                                                     </div>
                                                     <div className="flex flex-col">
@@ -957,7 +957,7 @@ export default function DashboardPage() {
                                                 style={{ padding: '32px' }}
                                             >
                                                 <div className="flex gap-6 items-start">
-                                                    <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                    <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg mx-auto">
                                                         <FileText size={18} className="text-purple-400" />
                                                     </div>
                                                     <div className="flex flex-col">
@@ -1028,7 +1028,7 @@ export default function DashboardPage() {
                                             style={{ padding: '60px' }}
                                         >
                                             <div className="flex gap-6 items-start">
-                                                <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg mx-auto">
                                                     <Package className="text-cyan-400" size={18} />
                                                 </div>
                                                 <div className="flex flex-col">
@@ -1268,7 +1268,7 @@ export default function DashboardPage() {
                                             className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group p-10 md:p-14"
                                         >
                                             <div className="flex gap-6 items-start">
-                                                <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg mx-auto">
                                                     <FileText className="text-purple-400" size={18} />
                                                 </div>
                                                 <div className="flex flex-col">
@@ -1325,16 +1325,17 @@ export default function DashboardPage() {
             case 'addresses':
                 return (
                     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-                        <div className="mb-8 flex items-center justify-between">
-                            <div>
-                                <h1 className="text-3xl font-bold text-white mb-2">My Addresses</h1>
+                        <div className={`mb-8 flex ${isMobile ? 'flex-col items-start gap-6' : 'items-center justify-between'}`}>
+                            <div className="w-full">
+                                <h1 className="text-3xl font-bold text-white mb-2" style={{ marginTop: isMobile ? '60px' : '0' }}>My Addresses</h1>
                                 <p className="text-gray-500">Manage your shipping addresses</p>
                             </div>
                             <div className="flex gap-3">
                                 {!isAddingAddress && !editingAddress && (
                                     <button
                                         onClick={() => setIsAddingAddress(true)}
-                                        className="flex items-center gap-2 px-4 py-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors"
+                                        className="flex items-center gap-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors whitespace-nowrap"
+                                        style={{ padding: isMobile ? '16px 24px' : '20px 32px' }}
                                     >
                                         <Plus size={16} /> Add Address
                                     </button>
@@ -1349,11 +1350,22 @@ export default function DashboardPage() {
                         </div>
 
                         {(isAddingAddress || editingAddress) && (
-                            <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-12 mb-8">
-                                <h3 className="text-xl font-bold text-white mb-6">{editingAddress ? 'Edit Address' : 'Add New Address'}</h3>
-                                <form onSubmit={editingAddress ? handleUpdateAddress : handleAddAddress} className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-bold text-gray-400 mb-2">Full Name</label>
+                            <div
+                                className="bg-white/[0.02] border border-white/5 rounded-[32px] md:rounded-[40px] mb-8 md:mb-12"
+                                style={{ padding: isMobile ? '40px' : '80px' }}
+                            >
+                                <h3
+                                    className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter"
+                                    style={{ marginBottom: isMobile ? '40px' : '60px' }}
+                                >
+                                    {editingAddress ? 'Edit Address' : 'Add New Address'}
+                                </h3>
+                                <form
+                                    onSubmit={editingAddress ? handleUpdateAddress : handleAddAddress}
+                                    className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10"
+                                >
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <label className="block text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest pl-1">Full Name</label>
                                         <input
                                             type="text"
                                             required
@@ -1362,12 +1374,12 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, name: e.target.value })
                                                 : setNewAddress({ ...newAddress, name: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                            style={{ padding: '20px 32px' }}
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all text-sm md:text-base font-medium"
+                                            style={{ padding: isMobile ? '18px 24px' : '22px 32px' }}
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-gray-400 mb-2">Phone</label>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <label className="block text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest pl-1">Phone</label>
                                         <input
                                             type="tel"
                                             required
@@ -1376,12 +1388,12 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, phone: e.target.value })
                                                 : setNewAddress({ ...newAddress, phone: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                            style={{ padding: '20px 32px' }}
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all text-sm md:text-base font-medium"
+                                            style={{ padding: isMobile ? '18px 24px' : '22px 32px' }}
                                         />
                                     </div>
-                                    <div className="col-span-2">
-                                        <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 1</label>
+                                    <div className="col-span-1 md:col-span-2" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <label className="block text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest pl-1">Address Line 1</label>
                                         <input
                                             type="text"
                                             required
@@ -1390,12 +1402,12 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, addressLine1: e.target.value })
                                                 : setNewAddress({ ...newAddress, addressLine1: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                            style={{ padding: '20px 32px' }}
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all text-sm md:text-base font-medium"
+                                            style={{ padding: isMobile ? '18px 24px' : '22px 32px' }}
                                         />
                                     </div>
-                                    <div className="col-span-2">
-                                        <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 2 (Optional)</label>
+                                    <div className="col-span-1 md:col-span-2" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <label className="block text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest pl-1">Address Line 2 (Optional)</label>
                                         <input
                                             type="text"
                                             value={editingAddress ? (editingAddress.addressLine2 || '') : newAddress.addressLine2}
@@ -1403,12 +1415,12 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, addressLine2: e.target.value })
                                                 : setNewAddress({ ...newAddress, addressLine2: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                            style={{ padding: '20px 32px' }}
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all text-sm md:text-base font-medium"
+                                            style={{ padding: isMobile ? '18px 24px' : '22px 32px' }}
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-gray-400 mb-2">City</label>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <label className="block text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest pl-1">City</label>
                                         <input
                                             type="text"
                                             required
@@ -1417,12 +1429,12 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, city: e.target.value })
                                                 : setNewAddress({ ...newAddress, city: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                            style={{ padding: '20px 32px' }}
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all text-sm md:text-base font-medium"
+                                            style={{ padding: isMobile ? '18px 24px' : '22px 32px' }}
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-gray-400 mb-2">State</label>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <label className="block text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest pl-1">State</label>
                                         <input
                                             type="text"
                                             required
@@ -1431,12 +1443,12 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, state: e.target.value })
                                                 : setNewAddress({ ...newAddress, state: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all placeholder:text-gray-700"
-                                            style={{ padding: '20px 32px' }}
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all placeholder:text-gray-700 text-sm md:text-base font-medium"
+                                            style={{ padding: isMobile ? '18px 24px' : '22px 32px' }}
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-gray-400 mb-2">Pincode</label>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                        <label className="block text-xs md:text-sm font-bold text-gray-400 uppercase tracking-widest pl-1">Pincode</label>
                                         <input
                                             type="text"
                                             required
@@ -1445,37 +1457,46 @@ export default function DashboardPage() {
                                                 ? setEditingAddress({ ...editingAddress, pincode: e.target.value })
                                                 : setNewAddress({ ...newAddress, pincode: e.target.value })
                                             }
-                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                            style={{ padding: '20px 32px' }}
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all text-sm md:text-base font-medium"
+                                            style={{ padding: isMobile ? '18px 24px' : '22px 32px' }}
                                         />
                                     </div>
-                                    <div className="flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            id="isDefault"
-                                            checked={editingAddress ? editingAddress.isDefault : newAddress.isDefault}
-                                            onChange={(e) => editingAddress
-                                                ? setEditingAddress({ ...editingAddress, isDefault: e.target.checked })
-                                                : setNewAddress({ ...newAddress, isDefault: e.target.checked })
-                                            }
-                                            className="mr-2"
-                                        />
-                                        <label htmlFor="isDefault" className="text-sm text-gray-400">Set as default address</label>
+                                    <div className="col-span-1 md:col-span-2 flex items-center">
+                                        <div className="flex items-center gap-4 cursor-pointer p-1" onClick={() => {
+                                            const newState = !(editingAddress ? editingAddress.isDefault : newAddress.isDefault);
+                                            if (editingAddress) setEditingAddress({ ...editingAddress, isDefault: newState });
+                                            else setNewAddress({ ...newAddress, isDefault: newState });
+                                        }}>
+                                            <input
+                                                type="checkbox"
+                                                id="isDefault"
+                                                checked={editingAddress ? editingAddress.isDefault : newAddress.isDefault}
+                                                onChange={(e) => editingAddress
+                                                    ? setEditingAddress({ ...editingAddress, isDefault: e.target.checked })
+                                                    : setNewAddress({ ...newAddress, isDefault: e.target.checked })
+                                                }
+                                                className="w-5 h-5 accent-cyan-500 rounded cursor-pointer"
+                                            />
+                                            <label htmlFor="isDefault" className="text-xs md:text-sm font-bold text-gray-300 uppercase tracking-wider cursor-pointer select-none">Set as default address</label>
+                                        </div>
                                     </div>
-                                    <div className="col-span-2 flex gap-4 mt-2">
+                                    <div className="col-span-1 md:col-span-2 flex flex-col md:flex-row gap-4 md:gap-8 mt-4 md:mt-8">
                                         <button
                                             type="submit"
                                             disabled={isUpdating}
-                                            className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-cyan-500 text-black font-bold rounded-2xl hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="flex-1 flex items-center justify-center gap-3 bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-black rounded-2xl hover:shadow-[0_0_40px_rgba(6,182,212,0.4)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-widest group relative overflow-hidden text-sm md:text-lg p-4 md:p-6"
                                         >
-                                            {isUpdating ? (
-                                                <Loader2 className="animate-spin" size={20} />
-                                            ) : (
-                                                <>
-                                                    <CheckCircle2 size={20} />
-                                                    {editingAddress ? 'Update Address' : 'Save Address'}
-                                                </>
-                                            )}
+                                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                            <div className="relative flex items-center gap-3">
+                                                {isUpdating ? (
+                                                    <Loader2 className="animate-spin" size={24} />
+                                                ) : (
+                                                    <>
+                                                        <CheckCircle2 className="group-hover:scale-110 transition-transform w-[18px] h-[18px] md:w-6 md:h-6" />
+                                                        {editingAddress ? 'Update Address' : 'Save Address'}
+                                                    </>
+                                                )}
+                                            </div>
                                         </button>
                                         <button
                                             type="button"
@@ -1483,9 +1504,9 @@ export default function DashboardPage() {
                                                 setIsAddingAddress(false);
                                                 setEditingAddress(null);
                                             }}
-                                            className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-gray-300 font-bold rounded-2xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:text-white transition-all"
+                                            className="flex-1 flex items-center justify-center gap-3 bg-white/[0.03] text-gray-400 font-bold rounded-2xl border border-white/10 hover:bg-white/[0.08] hover:border-white/20 hover:text-white transition-all duration-300 uppercase tracking-widest group text-sm md:text-lg p-4 md:p-6"
                                         >
-                                            <CloseIcon size={20} />
+                                            <CloseIcon className="group-hover:rotate-90 transition-transform duration-300 w-[18px] h-[18px] md:w-6 md:h-6" />
                                             Cancel
                                         </button>
                                     </div>
@@ -1495,20 +1516,20 @@ export default function DashboardPage() {
 
                         <div className="grid gap-4">
                             {addresses.length > 0 ? addresses.map((address) => (
-                                <div key={address.id} className="bg-white/[0.02] border border-white/5 rounded-3xl p-10 hover:bg-white/[0.01] transition-all">
+                                <div key={address.id} className="bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.01] transition-all" style={{ padding: '60px' }}>
                                     <div className="flex justify-between items-start">
                                         <div className="flex-1">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <h4 className="text-white font-bold">{address.name}</h4>
+                                            <div className="flex items-center gap-3 mb-6">
+                                                <h4 className="text-white font-bold text-xl tracking-tight">{address.name}</h4>
                                                 {address.isDefault && (
-                                                    <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 text-xs rounded-full font-bold">DEFAULT</span>
+                                                    <span className="px-3 py-1 bg-cyan-500/20 text-cyan-400 text-[10px] uppercase tracking-wider rounded-full font-black border border-cyan-500/20">DEFAULT</span>
                                                 )}
                                             </div>
-                                            <p className="text-sm text-gray-400 mb-1">{address.phone}</p>
-                                            <p className="text-sm text-gray-400">
-                                                {address.addressLine1}{address.addressLine2 && `, ${address.addressLine2}`}<br />
-                                                {address.city}, {address.state} - {address.pincode}
-                                            </p>
+                                            <p className="text-base text-gray-400 font-medium mb-4 tracking-wide">{address.phone}</p>
+                                            <div className="text-base text-gray-500 leading-relaxed font-medium space-y-1">
+                                                <p>{address.addressLine1}{address.addressLine2 && `, ${address.addressLine2}`}</p>
+                                                <p>{address.city}, {address.state} - {address.pincode}</p>
+                                            </div>
                                         </div>
                                         <div className="flex gap-2">
                                             {!address.isDefault && (
@@ -1554,7 +1575,7 @@ export default function DashboardPage() {
                             <p className="text-gray-500">Update your account password</p>
                         </div>
 
-                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl p-16 shadow-2xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)' }}>
+                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)', padding: isMobile ? '32px' : '64px' }}>
                             {/* Background glowing orbs */}
                             <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl opacity-50" />
                             <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl opacity-50" />
@@ -1568,7 +1589,7 @@ export default function DashboardPage() {
                                         value={passwordForm.currentPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
                                         className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                        style={{ padding: '24px 32px' }}
+                                        style={{ padding: isMobile ? '18px 24px' : '24px 32px' }}
                                         placeholder="••••••••"
                                     />
                                 </div>
@@ -1580,7 +1601,7 @@ export default function DashboardPage() {
                                         value={passwordForm.newPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
                                         className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                        style={{ padding: '24px 32px' }}
+                                        style={{ padding: isMobile ? '18px 24px' : '24px 32px' }}
                                         placeholder="••••••••"
                                     />
                                     <p className="text-[10px] text-gray-600 uppercase tracking-widest mt-3 px-1">Min. 8 characters required</p>
@@ -1593,7 +1614,7 @@ export default function DashboardPage() {
                                         value={passwordForm.confirmPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
                                         className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                        style={{ padding: '24px 32px' }}
+                                        style={{ padding: isMobile ? '18px 24px' : '24px 32px' }}
                                         placeholder="••••••••"
                                     />
                                 </div>
@@ -1614,7 +1635,7 @@ export default function DashboardPage() {
                                     type="submit"
                                     disabled={isUpdating || passwordSuccess}
                                     className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-none hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
-                                    style={{ padding: '20px 48px' }}
+                                    style={{ padding: isMobile ? '16px 32px' : '20px 48px' }}
                                 >
                                     {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
                                     {isUpdating ? 'Updating Password...' : 'Save Password'}
@@ -1632,11 +1653,11 @@ export default function DashboardPage() {
                             <p className="text-gray-500">Temporarily deactivate your account</p>
                         </div>
 
-                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl p-8">
+                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl" style={{ padding: isMobile ? '32px' : '48px' }}>
                             {!showDeactivateConfirm ? (
                                 <div className="text-center">
-                                    <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
-                                        <AlertTriangle className="w-8 h-8 text-red-400" />
+                                    <div className="rounded-full bg-red-500/10 flex items-center justify-center" style={{ width: '64px', height: '64px', margin: '0 auto 24px auto' }}>
+                                        <AlertTriangle className="text-red-400" style={{ width: '32px', height: '32px' }} />
                                     </div>
                                     <h3 className="text-xl font-bold text-white mb-3">Deactivate Your Account?</h3>
                                     <p className="text-gray-400 mb-6 leading-relaxed">
@@ -1645,13 +1666,15 @@ export default function DashboardPage() {
                                     <div className="space-y-3">
                                         <button
                                             onClick={() => setShowDeactivateConfirm(true)}
-                                            className="w-full py-3 bg-red-500/20 text-red-400 font-bold rounded-lg hover:bg-red-500/30 transition-colors border border-red-500/30"
+                                            className="w-full bg-red-500/20 text-red-400 font-bold rounded-lg hover:bg-red-500/30 transition-colors border border-red-500/30"
+                                            style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
                                             Continue to Deactivation
                                         </button>
                                         <button
                                             onClick={() => setActiveSection('account')}
-                                            className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                            className="w-full bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                            style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
                                             Cancel
                                         </button>
@@ -1667,14 +1690,16 @@ export default function DashboardPage() {
                                         <button
                                             onClick={handleDeactivateAccount}
                                             disabled={isUpdating}
-                                            className="w-full py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                            className="w-full bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                            style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
                                             {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <UserX size={20} />}
                                             {isUpdating ? 'Deactivating...' : 'Yes, Deactivate Account'}
                                         </button>
                                         <button
                                             onClick={() => setShowDeactivateConfirm(false)}
-                                            className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                            className="w-full bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                            style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
                                             No, Keep Account Active
                                         </button>

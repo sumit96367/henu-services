@@ -28,6 +28,8 @@ import { cn } from '@/lib/utils';
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+import { useMediaQuery } from '@/hooks/use-media-query';
+
 interface SettingsProps {
     user: any;
     editName: string;
@@ -57,6 +59,7 @@ export default function SettingsInterface({
     quotes,
     addresses
 }: SettingsProps) {
+    const isMobile = useMediaQuery("(max-width: 768px)");
     const [activeTab, setActiveTab] = useState('notifications');
     const [phone, setPhone] = useState('');
     const [notificationSettings, setNotificationSettings] = useState({
@@ -164,7 +167,10 @@ export default function SettingsInterface({
             </div>
 
             {/* Settings Content */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-[1cm]">
+            <div
+                className="bg-white/[0.02] border border-white/5 rounded-2xl"
+                style={{ padding: isMobile ? '24px' : '40px' }}
+            >
 
 
                 {/* Notifications Tab */}
@@ -175,22 +181,22 @@ export default function SettingsInterface({
                             <p className="text-gray-400 text-sm">Manage how you receive updates and alerts</p>
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="border border-white/5 rounded-xl overflow-hidden">
                             {[
                                 { key: 'orderUpdates', label: 'Order Updates', icon: Package, description: 'Get notified about order status changes' },
                                 { key: 'quoteStatus', label: 'Quote Status', icon: FileText, description: 'Receive updates on quote approvals' },
                                 { key: 'securityAlerts', label: 'Security Alerts', icon: Shield, description: 'Important account security notifications' },
                                 { key: 'smsNotifications', label: 'SMS Notifications', icon: Smartphone, description: 'Receive notifications via SMS' },
                                 { key: 'marketing', label: 'Marketing Emails', icon: Mail, description: 'Promotional offers and product updates' }
-                            ].map(item => (
-                                <div key={item.key} className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl border border-white/5 hover:bg-white/[0.04] transition-all">
+                            ].map((item, index) => (
+                                <div key={item.key} className={`flex items-center justify-between bg-white/[0.02] hover:bg-white/[0.04] transition-all ${index !== 4 ? 'border-b border-white/5' : ''}`} style={{ padding: '15px 24px', margin: 0 }}>
                                     <div className="flex items-center gap-4">
                                         <div className="w-10 h-10 rounded-lg bg-purple-600/10 flex items-center justify-center">
                                             <item.icon size={20} className="text-purple-400" />
                                         </div>
-                                        <div>
-                                            <p className="font-semibold text-white">{item.label}</p>
-                                            <p className="text-sm text-gray-400">{item.description}</p>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                            <p className="font-semibold text-white" style={{ margin: 0, lineHeight: '1.2' }}>{item.label}</p>
+                                            <p className="text-sm text-gray-400" style={{ margin: 0, lineHeight: '1.2' }}>{item.description}</p>
                                         </div>
                                     </div>
                                     <label className="relative inline-block w-12 h-6 cursor-pointer">
@@ -221,7 +227,7 @@ export default function SettingsInterface({
                         </div>
 
                         <div className="space-y-4">
-                            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+                            <div className="bg-white/[0.02] rounded-xl border border-white/5" style={{ padding: isMobile ? '24px' : '32px' }}>
                                 <div className="flex items-start justify-between">
                                     <div className="flex gap-4">
                                         <div className="w-12 h-12 rounded-lg bg-amber-600/10 flex items-center justify-center flex-shrink-0">
@@ -241,7 +247,7 @@ export default function SettingsInterface({
 
 
 
-                            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+                            <div className="bg-white/[0.02] rounded-xl border border-white/5" style={{ padding: isMobile ? '24px' : '32px' }}>
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 rounded-lg bg-cyan-600/10 flex items-center justify-center flex-shrink-0">
                                         <Clock size={24} className="text-cyan-400" />
@@ -266,7 +272,7 @@ export default function SettingsInterface({
                         </div>
 
                         <div className="space-y-4">
-                            <div className="p-4 bg-white/[0.02] rounded-xl border border-white/5">
+                            <div className="bg-white/[0.02] rounded-xl border border-white/5" style={{ padding: isMobile ? '24px' : '32px' }}>
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <p className="font-semibold text-white">Data Sharing</p>
@@ -288,7 +294,7 @@ export default function SettingsInterface({
                                 </div>
                             </div>
 
-                            <div className="p-6 bg-white/[0.02] rounded-xl border border-white/5">
+                            <div className="bg-white/[0.02] rounded-xl border border-white/5" style={{ padding: isMobile ? '24px' : '32px' }}>
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 rounded-lg bg-cyan-600/10 flex items-center justify-center flex-shrink-0">
                                         <Download size={24} className="text-cyan-400" />
@@ -326,7 +332,8 @@ export default function SettingsInterface({
                                 <select
                                     value={preferences.language}
                                     onChange={(e) => setPreferences({ ...preferences, language: e.target.value })}
-                                    className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50 hover:bg-white/[0.05] [&>option]:bg-black [&>option]:text-white"
+                                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50 hover:bg-white/[0.05] [&>option]:bg-black [&>option]:text-white"
+                                    style={{ padding: isMobile ? '16px' : '20px' }}
                                 >
                                     <option value="en">English</option>
                                     <option value="hi">Hindi</option>
@@ -339,7 +346,8 @@ export default function SettingsInterface({
                                 <select
                                     value={preferences.timezone}
                                     onChange={(e) => setPreferences({ ...preferences, timezone: e.target.value })}
-                                    className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50 hover:bg-white/[0.05] [&>option]:bg-black [&>option]:text-white"
+                                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50 hover:bg-white/[0.05] [&>option]:bg-black [&>option]:text-white"
+                                    style={{ padding: isMobile ? '16px' : '20px' }}
                                 >
                                     <option value="Asia/Kolkata">IST (Asia/Kolkata)</option>
                                     <option value="America/New_York">EST (America/New_York)</option>
@@ -353,9 +361,10 @@ export default function SettingsInterface({
                                 <select
                                     value={preferences.currency}
                                     onChange={(e) => setPreferences({ ...preferences, currency: e.target.value })}
-                                    className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50 hover:bg-white/[0.05] [&>option]:bg-black [&>option]:text-white"
+                                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50 hover:bg-white/[0.05] [&>option]:bg-black [&>option]:text-white"
+                                    style={{ padding: isMobile ? '16px' : '20px' }}
                                 >
-                                    <option value="INR">â‚¹ INR - Indian Rupee</option>
+                                    <option value="INR">₹ INR - Indian Rupee</option>
                                     <option value="USD">$ USD - US Dollar</option>
                                     <option value="EUR">€ EUR - Euro</option>
                                     <option value="GBP">£ GBP - British Pound</option>
@@ -368,7 +377,8 @@ export default function SettingsInterface({
                                     <select
                                         value={preferences.theme}
                                         disabled
-                                        className="w-full px-4 py-3 bg-white/[0.01] border border-white/5 rounded-xl text-gray-500 cursor-not-allowed"
+                                        className="w-full bg-white/[0.01] border border-white/5 rounded-xl text-gray-500 cursor-not-allowed"
+                                        style={{ padding: isMobile ? '16px' : '20px' }}
                                     >
                                         <option value="dark">Dark (Default)</option>
                                         <option value="light">Light</option>
@@ -387,7 +397,8 @@ export default function SettingsInterface({
                     <button
                         onClick={handleSaveSettings}
                         disabled={isUpdating}
-                        className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-xl font-bold transition-all flex items-center gap-2"
+                        className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded-xl font-bold transition-all flex items-center gap-2"
+                        style={{ padding: isMobile ? '16px 32px' : '20px 48px' }}
                     >
                         {isUpdating ? (
                             <>
