@@ -124,9 +124,9 @@ interface Quote {
     email: string;
     serviceType: string;
     description: string;
-    amount?: string;
-    status: 'pending' | 'approved' | 'rejected';
-    createdAt: Timestamp | Date;
+    amount?: string | number;
+    status: string;
+    createdAt: any;
 }
 
 // Interface for addresses
@@ -203,14 +203,22 @@ export default function DashboardPage() {
     }, [isAuthenticated, authLoading, router, mounted]);
 
     useEffect(() => {
-        if (user) {
-            setEditName(user.name || '');
-            setEditCompany(user.companyName || '');
-            setProfilePicture(user.profilePicture || null);
-            fetchUserOrders();
-            fetchUserQuotes();
-            fetchUserAddresses();
-        }
+        const fetchAllData = async () => {
+            if (user) {
+                setEditName(user.name || '');
+                setEditCompany(user.companyName || '');
+                setProfilePicture(user.profilePicture || null);
+
+                setIsDataLoading(true);
+                await Promise.all([
+                    fetchUserOrders(),
+                    fetchUserQuotes(),
+                    fetchUserAddresses()
+                ]);
+                setIsDataLoading(false);
+            }
+        };
+        fetchAllData();
     }, [user]);
 
     // Lock scroll when mobile menu is open
@@ -227,7 +235,6 @@ export default function DashboardPage() {
 
     const fetchUserOrders = async () => {
         if (!user) return;
-        setIsDataLoading(true);
         try {
             const ordersRef = collection(db, 'orders');
 
@@ -296,8 +303,6 @@ export default function DashboardPage() {
             setOrders(finalOrders);
         } catch (error) {
             console.error("Error fetching orders:", error);
-        } finally {
-            setIsDataLoading(false);
         }
     };
 
@@ -314,23 +319,52 @@ export default function DashboardPage() {
         if (!user) return;
         try {
             const quotesRef = collection(db, 'queries');
-            const q = query(quotesRef, where('email', '==', user.email), orderBy('timestamp', 'desc'));
-            const snapshot = await getDocs(q);
 
-            const fetchedQuotes = snapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    email: data.email || '',
-                    serviceType: data.domain || data.subDomain || 'General Query',
-                    description: data.queries || '',
-                    amount: data.amount || undefined,
-                    status: data.status || 'pending',
-                    createdAt: data.timestamp || data.createdAt
-                } as Quote;
+            // Triple-query pattern for exhaustive lookup
+            const qById = query(quotesRef, where('userId', '==', user.id));
+            const qByEmail = query(quotesRef, where('email', '==', user.email));
+            const qByEmailLower = query(quotesRef, where('email', '==', user.email.toLowerCase()));
+
+            const [snapshotById, snapshotByEmail, snapshotByEmailLower] = await Promise.all([
+                getDocs(qById),
+                getDocs(qByEmail),
+                getDocs(qByEmailLower)
+            ]);
+
+            const quoteMap = new Map<string, Quote>();
+
+            const processSnapshot = (snapshot: any) => {
+                snapshot.forEach((doc: any) => {
+                    const data = doc.data();
+                    quoteMap.set(doc.id, {
+                        id: doc.id,
+                        email: data.email || '',
+                        serviceType: data.projectTitle || data.domain || data.subDomain || 'General Query',
+                        description: data.queries || data.description || '',
+                        amount: data.amount,
+                        status: data.status || 'Pending',
+                        createdAt: data.timestamp || data.createdAt || new Date()
+                    });
+                });
+            };
+
+            processSnapshot(snapshotById);
+            processSnapshot(snapshotByEmail);
+            processSnapshot(snapshotByEmailLower);
+
+            const sortedQuotes = Array.from(quoteMap.values()).sort((a, b) => {
+                const getTime = (date: any) => {
+                    if (!date) return 0;
+                    if (typeof date.toMillis === 'function') return date.toMillis();
+                    if (date.seconds) return date.seconds * 1000;
+                    if (date instanceof Date) return date.getTime();
+                    if (typeof date === 'string') return new Date(date).getTime();
+                    return 0;
+                };
+                return getTime(b.createdAt) - getTime(a.createdAt);
             });
 
-            setQuotes(fetchedQuotes);
+            setQuotes(sortedQuotes);
         } catch (error) {
             console.error('Error fetching quotes:', error);
         }
@@ -340,15 +374,45 @@ export default function DashboardPage() {
         if (!user) return;
         try {
             const addressesRef = collection(db, 'addresses');
-            const q = query(addressesRef, where('userId', '==', user.id), orderBy('createdAt', 'desc'));
-            const snapshot = await getDocs(q);
 
-            const fetchedAddresses = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            } as Address));
+            // Triple-query pattern
+            const qById = query(addressesRef, where('userId', '==', user.id));
+            const qByEmail = query(addressesRef, where('email', '==', user.email));
+            const qByEmailLower = query(addressesRef, where('email', '==', user.email.toLowerCase()));
 
-            setAddresses(fetchedAddresses);
+            const [snapshotById, snapshotByEmail, snapshotByEmailLower] = await Promise.all([
+                getDocs(qById),
+                getDocs(qByEmail),
+                getDocs(qByEmailLower)
+            ]);
+
+            const addressMap = new Map<string, Address>();
+
+            const processSnapshot = (snapshot: any) => {
+                snapshot.forEach((doc: any) => {
+                    addressMap.set(doc.id, {
+                        id: doc.id,
+                        ...doc.data()
+                    } as Address);
+                });
+            };
+
+            processSnapshot(snapshotById);
+            processSnapshot(snapshotByEmail);
+            processSnapshot(snapshotByEmailLower);
+
+            const sortedAddresses = Array.from(addressMap.values()).sort((a, b) => {
+                const getSeconds = (date: any) => {
+                    if (!date) return 0;
+                    if (date.seconds) return date.seconds;
+                    if (date instanceof Date) return date.getTime() / 1000;
+                    if (typeof date === 'string') return new Date(date).getTime() / 1000;
+                    return 0;
+                };
+                return getSeconds((b as any).createdAt) - getSeconds((a as any).createdAt);
+            });
+
+            setAddresses(sortedAddresses);
         } catch (error) {
             console.error('Error fetching addresses:', error);
         }
@@ -438,6 +502,7 @@ export default function DashboardPage() {
             const addressData = {
                 ...newAddress,
                 userId: user.id,
+                email: user.email,
                 createdAt: Timestamp.now(),
                 updatedAt: Timestamp.now()
             };
@@ -649,8 +714,6 @@ export default function DashboardPage() {
         if (id === 'logout') {
             logout();
             router.push('/');
-        } else if (id === 'quotes') {
-            router.push('/dashboard/quotes');
         } else {
             setActiveSection(id);
         }
@@ -831,7 +894,7 @@ export default function DashboardPage() {
                                         orders.slice(0, 3).map((order) => (
                                             <div key={order.id}
                                                 className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
-                                                style={{ padding: '15px' }}
+                                                style={{ padding: '32px' }}
                                             >
                                                 <div className="flex gap-6 items-start">
                                                     <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
@@ -889,16 +952,19 @@ export default function DashboardPage() {
                                 <div className="space-y-8">
                                     {quotes.length > 0 ? (
                                         quotes.slice(0, 3).map((quote) => (
-                                            <div key={quote.id} className="flex items-center justify-between p-10 bg-white/[0.03] border border-white/5 rounded-2xl hover:bg-white/[0.06] transition-all group">
-                                                <div className="flex items-center gap-5">
-                                                    <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                                                        <FileText size={24} className="text-amber-400" />
+                                            <div key={quote.id}
+                                                className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
+                                                style={{ padding: '32px' }}
+                                            >
+                                                <div className="flex gap-6 items-start">
+                                                    <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                        <FileText size={18} className="text-purple-400" />
                                                     </div>
-                                                    <div className="flex flex-col items-start justify-center">
-                                                        <div className="text-base font-black text-white" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
+                                                    <div className="flex flex-col">
+                                                        <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
                                                             {quote.serviceType}
                                                         </div>
-                                                        <div className="text-[10px] text-gray-500 font-medium line-clamp-1 max-w-[220px]" style={{ marginTop: '2px' }}>
+                                                        <div className="text-[10px] text-gray-500 font-medium line-clamp-1 max-w-[220px]" style={{ marginTop: '4px' }}>
                                                             {quote.description}
                                                         </div>
                                                     </div>
@@ -911,6 +977,15 @@ export default function DashboardPage() {
                                                         }`}>
                                                         {quote.status}
                                                     </span>
+                                                <div className="flex items-center justify-start md:justify-end">
+                                                    <div className="text-left md:text-right flex flex-col items-start md:items-end">
+                                                        <span className={`text-[10px] font-bold uppercase tracking-[0.2em] leading-none ${quote.status === 'approved' ? 'text-green-400' :
+                                                            quote.status === 'rejected' ? 'text-red-400' :
+                                                                'text-amber-400'
+                                                            }`} style={{ marginTop: '0' }}>
+                                                            {quote.status}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))
@@ -955,11 +1030,11 @@ export default function DashboardPage() {
                             {isDataLoading ? (
                                 <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
                             ) : orders.length > 0 ? (
-                                <div className="space-y-10">
+                                <div className="space-y-12">
                                     {orders.map((order) => (
                                         <div key={order.id}
                                             className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
-                                            style={{ padding: '15px' }}
+                                            style={{ padding: '60px' }}
                                         >
                                             <div className="flex gap-6 items-start">
                                                 <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
@@ -996,10 +1071,12 @@ export default function DashboardPage() {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="p-20 text-center">
-                                    <Package size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
-                                    <h3 className="text-white font-bold">No orders found</h3>
-                                    <p className="text-gray-500 text-sm mt-1">You haven&apos;t placed any orders with us yet.</p>
+                                <div className="text-center p-8 md:p-[60px]">
+                                    <div className="w-24 h-24 mx-auto mb-8 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shadow-2xl">
+                                        <Package size={40} className="text-cyan-400 opacity-60" strokeWidth={1} />
+                                    </div>
+                                    <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No orders found</h3>
+                                    <p className="text-gray-500 text-lg font-medium">You haven&apos;t placed any orders with us yet.</p>
                                 </div>
                             )}
                         </div>
@@ -1160,48 +1237,94 @@ export default function DashboardPage() {
             case 'quotes':
                 return (
                     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-                        <div className="mb-8 flex items-center justify-between">
-                            <div>
-                                <h1 className="text-3xl font-bold text-white mb-2">My Quotes</h1>
-                                <p className="text-gray-500">View and manage your quote requests</p>
+                        <div className="mb-12">
+                            <div className="flex justify-end w-full mb-8">
+                                <button
+                                    onClick={() => setActiveSection('account')}
+                                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
+                                >
+                                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                                    <span className="font-black tracking-[0.2em] uppercase text-[10px]">Back</span>
+                                </button>
                             </div>
-                            <button
-                                onClick={() => setActiveSection('account')}
-                                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
-                            >
-                                <ArrowLeft size={16} /> Back
-                            </button>
+
+                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                                <div className="flex flex-col items-center md:items-start gap-2">
+                                    <h1 className="text-4xl font-black text-white uppercase tracking-tighter">My Quotes</h1>
+                                    <p className="text-gray-500 font-medium text-[13px] text-center md:text-left">Track and manage your bespoke quote requests and project valuations</p>
+                                    <div className="h-1 w-16 bg-purple-500/40 rounded-full mt-1" />
+                                </div>
+                                <button
+                                    onClick={() => router.push('/dashboard/request-quote')}
+                                    className="btn-primary mt-4 md:mt-0"
+                                >
+                                    <span>New Quote Request</span>
+                                    <Plus size={18} />
+                                </button>
+                            </div>
                         </div>
 
                         <div
                             className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
-                            style={{ padding: '60px' }}
+                            style={{ padding: 'max(20px, 4%)' }}
                         >
                             {isDataLoading ? (
-                                <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
+                                <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-purple-500" /></div>
                             ) : quotes.length > 0 ? (
-                                <div className="divide-y divide-white/5">
+                                <div className="space-y-12">
                                     {quotes.map((quote) => (
-                                        <div key={quote.id} className="p-10 hover:bg-white/[0.01] transition-colors">
-                                            <div className="flex justify-between items-start mb-2">
-                                                <h4 className="text-white font-bold">{quote.serviceType}</h4>
-                                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${quote.status === 'approved' ? 'bg-green-500/10 text-green-400' :
-                                                    quote.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
-                                                        'bg-amber-500/10 text-amber-400'
-                                                    }`}>{quote.status}</span>
+                                        <div key={quote.id}
+                                            className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group p-10 md:p-14"
+                                        >
+                                            <div className="flex gap-6 items-start">
+                                                <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                    <FileText className="text-purple-400" size={18} />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
+                                                        {quote.serviceType}
+                                                    </div>
+                                                    <div className="flex items-center gap-2" style={{ marginTop: '8px' }}>
+                                                        <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider bg-white/5 px-1.5 py-0.5 rounded-md">#{quote.id.slice(0, 8).toUpperCase()}</span>
+                                                        <span className="w-1 h-1 rounded-full bg-gray-700" />
+                                                        <span className="text-[10px] text-gray-500 font-medium">
+                                                            {(() => {
+                                                                const date = quote.createdAt;
+                                                                if (!date) return 'Recently';
+                                                                if (date instanceof Date) return date.toLocaleDateString();
+                                                                if (date && typeof date.toDate === 'function') return date.toDate().toLocaleDateString();
+                                                                if (date && typeof date.seconds === 'number') return new Date(date.seconds * 1000).toLocaleDateString();
+                                                                return 'Recently';
+                                                            })()}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <p className="text-sm text-gray-400 mb-2">{quote.description}</p>
-                                            <p className="text-xs text-gray-600">
-                                                {quote.createdAt instanceof Timestamp ? quote.createdAt.toDate().toLocaleDateString() : quote.createdAt instanceof Date ? quote.createdAt.toLocaleDateString() : 'Recently'}
-                                            </p>
+                                            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 justify-between md:justify-end">
+                                                <div className="text-left md:text-right flex flex-col items-start md:items-end">
+                                                    <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${(() => {
+                                                        const s = quote.status.toLowerCase();
+                                                        if (s.includes('pending') || s === 'quotation') return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                                                        if (s.includes('approved') || s.includes('completed')) return 'bg-green-500/10 text-green-400 border-green-500/20';
+                                                        if (s.includes('rejected')) return 'bg-red-500/10 text-red-400 border-red-500/20';
+                                                        if (s.includes('cancelled')) return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+                                                        if (s.includes('review')) return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+                                                        return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+                                                    })()}`}>
+                                                        {quote.status}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <div className="p-20 text-center">
-                                    <FileText size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
-                                    <h3 className="text-white font-bold">No quotes found</h3>
-                                    <p className="text-gray-500 text-sm mt-1">You haven&apos;t submitted any quote requests yet.</p>
+                                <div className="text-center p-8 md:p-[60px]">
+                                    <div className="w-24 h-24 mx-auto mb-8 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-2xl">
+                                        <FileText size={40} className="text-purple-400 opacity-60" strokeWidth={1} />
+                                    </div>
+                                    <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No quotes found</h3>
+                                    <p className="text-gray-500 text-lg font-medium">You haven&apos;t submitted any quote requests yet.</p>
                                 </div>
                             )}
                         </div>
@@ -1827,7 +1950,7 @@ export default function DashboardPage() {
 
                     .dashboard-main-content {
                         margin-left: 0 !important;
-                        padding: 140px 20px 40px 20px !important;
+                        padding: 100px 20px 40px 20px !important;
                     }
 
                     .mobile-overlay {
