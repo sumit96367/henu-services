@@ -72,8 +72,12 @@ export const Navbar = () => {
                     "w-full flex items-center justify-between relative h-full",
                     isDashboard ? "px-6 md:pl-24 md:pr-12" : "px-6 md:px-12"
                 )}>
-                    {/* Branding - Left */}
-                    <div className="flex-shrink-0 z-10">
+                    {/* Branding - Left on mobile (closed), Center on mobile (menu open) */}
+                    <div className={cn(
+                        "flex-shrink-0 z-10 transition-all duration-300",
+                        "md:static md:translate-x-0",
+                        isMobileMenuOpen ? "md:hidden absolute left-1/2 -translate-x-1/2" : ""
+                    )}>
                         <Link href="/" className="flex items-center gap-3 group transition-all">
                             <div className="relative w-12 h-12 flex items-center justify-center overflow-visible">
                                 <div className="relative w-12 h-12 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(1.8)' }}>
@@ -238,48 +242,25 @@ export const Navbar = () => {
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
                         className="fixed inset-0 z-[200] md:hidden bg-black/98 backdrop-blur-3xl flex flex-col overflow-y-auto"
                     >
-                        {/* Mobile Header inside Overlay */}
-                        <div className="flex items-center justify-between p-6 border-b border-white/5 sticky top-0 bg-black/50 backdrop-blur-xl z-20">
+                        {/* Mobile Header inside Overlay - Centered HENUOS */}
+                        <div className="flex items-center justify-center p-6 border-b border-white/5 sticky top-0 bg-black/50 backdrop-blur-xl z-20 relative">
                             <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 group">
-                                <div className="relative w-8 h-8 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(109, 40, 217, 0.7)]">
-                                    <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+                                <div className="relative w-12 h-12 flex items-center justify-center overflow-visible">
+                                    <div className="relative w-12 h-12 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(1.5)' }}>
+                                        <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+                                    </div>
                                 </div>
-                                <span className="text-lg font-bold text-white tracking-tight">Henu OS</span>
+                                <span className="text-xl font-bold text-white tracking-tight">Henu OS</span>
                             </Link>
                             <button
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+                                className="p-2 text-white hover:bg-white/10 rounded-lg transition-colors absolute right-6"
                             >
                                 <X size={28} />
                             </button>
                         </div>
 
                         <nav className="flex flex-col p-8 space-y-4">
-                            {/* Dashboard Card (if authenticated) - Prominent at top */}
-                            {isAuthenticated && (
-                                <Link
-                                    href="/dashboard"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="relative group mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all p-6"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                            <svg className="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            </svg>
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="text-xl font-black text-white uppercase tracking-wide">My Dashboard</h3>
-                                            <p className="text-sm text-purple-300 font-medium">View your account & orders</p>
-                                        </div>
-                                        <svg className="w-6 h-6 text-purple-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                    {/* Subtle glow effect */}
-                                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </Link>
-                            )}
 
                             {/* Services Mobile Accordion */}
                             <div className="flex flex-col">
@@ -340,6 +321,34 @@ export const Navbar = () => {
                                     {link.name}
                                 </Link>
                             ))}
+
+                            {/* Dashboard Card (if authenticated) - After Contact with gap */}
+                            {isAuthenticated && (
+                                <div className="pt-8">
+                                    <Link
+                                        href="/dashboard"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="relative group overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all p-6 block"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <svg className="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                            </div>
+                                            <div className="flex-1">
+                                                <h3 className="text-xl font-black text-white uppercase tracking-wide">My Dashboard</h3>
+                                                <p className="text-sm text-purple-300 font-medium">View your account & orders</p>
+                                            </div>
+                                            <svg className="w-6 h-6 text-purple-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </div>
+                                        {/* Subtle glow effect */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                </div>
+                            )}
 
                             {/* Mobile Auth Buttons */}
                             {!isAuthenticated && (
