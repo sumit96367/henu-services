@@ -757,7 +757,7 @@ export default function DashboardPage() {
                                 <p className="text-xl font-black text-white tracking-tight uppercase" style={{ lineHeight: 1.2 }}>
                                     {(() => {
                                         try {
-                                            const d = user?.createdAt?.toDate ? user.createdAt.toDate() : new Date(user?.createdAt || Date.now());
+                                            const d = user?.createdAt ? new Date(user.createdAt) : new Date();
                                             return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
                                         } catch {
                                             return 'Recently';
