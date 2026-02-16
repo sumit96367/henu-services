@@ -255,6 +255,32 @@ export const Navbar = () => {
                         </div>
 
                         <nav className="flex flex-col p-8 space-y-4">
+                            {/* Dashboard Card (if authenticated) - Prominent at top */}
+                            {isAuthenticated && (
+                                <Link
+                                    href="/dashboard"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="relative group mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all p-6"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                            <svg className="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </div>
+                                        <div className="flex-1">
+                                            <h3 className="text-xl font-black text-white uppercase tracking-wide">My Dashboard</h3>
+                                            <p className="text-sm text-purple-300 font-medium">View your account & orders</p>
+                                        </div>
+                                        <svg className="w-6 h-6 text-purple-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                    {/* Subtle glow effect */}
+                                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </Link>
+                            )}
+
                             {/* Services Mobile Accordion */}
                             <div className="flex flex-col">
                                 <button
@@ -304,7 +330,7 @@ export const Navbar = () => {
                                 </AnimatePresence>
                             </div>
 
-                            {navLinks.filter(l => l.name !== 'Services').map((link) => (
+                            {navLinks.filter(l => l.name !== 'Services' && l.name !== 'Dashboard').map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}

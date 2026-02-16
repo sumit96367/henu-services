@@ -963,11 +963,11 @@ const ServiceMatrixSection = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Right - Visual Preview - Shows FIRST on mobile */}
+          {/* Right - Visual Preview - HIDDEN on mobile, visible desktop only */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="h-64 sm:h-80 lg:h-96 order-1 lg:order-2"
+            className="h-64 sm:h-80 lg:h-96 order-1 lg:order-2 hidden md:block"
           >
             <GlowingCard className="h-full" innerClassName="h-full flex items-center justify-center overflow-hidden p-8 md:p-16 bg-[#0A0A0A] border border-white/5">
               <ServiceVisual service={activeService} />
