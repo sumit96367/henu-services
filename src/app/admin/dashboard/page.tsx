@@ -79,9 +79,9 @@ export default function AdminDashboardPage() {
             <div
                 style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "24px",
-                    marginBottom: "64px",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "40px",
+                    marginBottom: "80px",
                 }}
             >
                 {cards.map((card, index) => (
@@ -89,46 +89,47 @@ export default function AdminDashboardPage() {
                         key={index}
                         href={card.href}
                         style={{
-                            backgroundColor: "rgba(255, 255, 255, 0.03)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "20px",
-                            padding: "32px",
+                            backgroundColor: "rgba(255, 255, 255, 0.04)",
+                            border: "1px solid rgba(255, 255, 255, 0.12)",
+                            borderRadius: "32px",
+                            padding: "40px",
                             cursor: "pointer",
-                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                            backdropFilter: "blur(10px)",
+                            transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                            backdropFilter: "blur(40px)",
                             textDecoration: "none",
                             color: "inherit",
-                            display: "block",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            minHeight: "280px",
+                            boxShadow: "0 30px 60px -12px rgba(0, 0, 0, 0.5)"
                         }}
                         onMouseOver={(e) => {
-                            e.currentTarget.style.transform = "translateY(-4px) scale(1.02)";
-                            e.currentTarget.style.backgroundColor =
-                                "rgba(255, 255, 255, 0.05)";
-                            e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.4)";
-                            e.currentTarget.style.boxShadow =
-                                "0 20px 60px rgba(6, 182, 212, 0.2)";
+                            e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+                            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.07)";
+                            e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
+                            e.currentTarget.style.boxShadow = "0 30px 80px rgba(6, 182, 212, 0.15)";
                         }}
                         onMouseOut={(e) => {
                             e.currentTarget.style.transform = "translateY(0) scale(1)";
-                            e.currentTarget.style.backgroundColor =
-                                "rgba(255, 255, 255, 0.03)";
-                            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                            e.currentTarget.style.boxShadow = "none";
+                            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.04)";
+                            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.12)";
+                            e.currentTarget.style.boxShadow = "0 30px 60px -12px rgba(0, 0, 0, 0.5)";
                         }}
                     >
                         {/* Icon */}
                         <div
                             style={{
-                                width: "64px",
-                                height: "64px",
+                                width: "56px",
+                                height: "56px",
                                 borderRadius: "16px",
                                 background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                fontSize: "32px",
-                                marginBottom: "20px",
-                                boxShadow: "0 8px 24px rgba(6, 182, 212, 0.2)",
+                                fontSize: "28px",
+                                marginBottom: "24px",
+                                boxShadow: "0 10px 25px rgba(6, 182, 212, 0.3)",
                             }}
                         >
                             {card.icon}
@@ -137,10 +138,12 @@ export default function AdminDashboardPage() {
                         {/* Title */}
                         <h3
                             style={{
-                                fontSize: "1.375rem",
-                                fontWeight: "bold",
-                                marginBottom: "8px",
+                                fontSize: "1.5rem",
+                                fontWeight: "900",
+                                marginBottom: "12px",
                                 color: "#fff",
+                                letterSpacing: "-0.02em",
+                                textTransform: "uppercase"
                             }}
                         >
                             {card.title}
@@ -150,8 +153,9 @@ export default function AdminDashboardPage() {
                         <p
                             style={{
                                 fontSize: "0.95rem",
-                                color: "#888",
-                                lineHeight: "1.6",
+                                color: "rgba(255, 255, 255, 0.6)",
+                                lineHeight: "1.5",
+                                fontWeight: "500"
                             }}
                         >
                             {card.description}
