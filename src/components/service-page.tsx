@@ -165,7 +165,7 @@ export const ServiceHero = ({
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-bold text-white mb-2 leading-tight"
+                        className="text-3xl sm:text-4xl md:text-7xl font-bold text-white mb-2 leading-tight"
                     >
                         {title} <span className={gradientClass}>{highlight}</span>
                     </motion.h1>
@@ -174,7 +174,7 @@ export const ServiceHero = ({
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-gray-400 mb-6 max-w-2xl"
+                        className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 max-w-2xl"
                     >
                         {description}
                     </motion.p>
@@ -185,7 +185,7 @@ export const ServiceHero = ({
                         transition={{ delay: 0.3 }}
                         className="flex flex-wrap gap-4"
                     >
-                        <Link href="/contact" className="btn-primary">
+                        <Link href="/contact" className="btn-primary w-full sm:w-auto">
                             Start Your Project
                             <ArrowRight size={18} />
                         </Link>
@@ -279,7 +279,7 @@ export const ServiceFeatures = ({ features, accentColor }: { features: ServiceFe
                     className="mb-12 space-y-4 text-center"
                 >
 
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
                         What We <span className="gradient-text">Offer</span>
                     </h2>
                     <p className="max-w-[52ch] text-gray-400 pb-8">
@@ -354,7 +354,7 @@ export const ServiceProcess = ({ process, accentColor }: { process: ServiceProce
                     viewport={{ once: true }}
                     className="flex flex-col items-center text-center mb-8"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
                         Our <span className="gradient-text">Process</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl text-center">
@@ -388,7 +388,7 @@ export const ServiceTechnologies = ({ technologies }: { technologies: ServiceTec
                     viewport={{ once: true }}
                     className="flex flex-col items-center text-center mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
                         Technologies We <span className="gradient-text">Use</span>
                     </h2>
                 </motion.div>
@@ -426,14 +426,14 @@ export const ServiceCTA = ({ title, description, accentColor }: { title: string;
                     viewport={{ once: true }}
                     className="max-w-4xl mx-auto flex flex-col items-center text-center w-full"
                 >
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                         Ready to <span className={gradientClass}>{title}</span>?
                     </h2>
                     <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl">
                         {description}
                     </p>
                     <div className="flex flex-wrap justify-center items-center gap-6">
-                        <Link href="/contact" className="btn-primary text-lg px-8 py-4">
+                        <Link href="/contact" className="btn-primary text-lg px-8 py-4 w-full sm:w-auto">
                             Start Your Project
                             <ArrowRight size={20} />
                         </Link>

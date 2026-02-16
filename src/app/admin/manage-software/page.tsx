@@ -27,6 +27,7 @@ interface Software {
     tags: string[];
     color: string;
     formLink?: string;
+    paymentLink?: string;
 }
 
 export default function ManageSoftwarePage() {
@@ -41,7 +42,8 @@ export default function ManageSoftwarePage() {
         description: '',
         category: '',
         tags: '',
-        formLink: ''
+        formLink: '',
+        paymentLink: ''
     });
     const [notification, setNotification] = useState<{
         type: 'success' | 'error';
@@ -77,7 +79,8 @@ export default function ManageSoftwarePage() {
             description: software.description,
             category: software.category || '',
             tags: software.tags.join(', '),
-            formLink: software.formLink || ''
+            formLink: software.formLink || '',
+            paymentLink: software.paymentLink || ''
         });
     };
 
@@ -99,7 +102,8 @@ export default function ManageSoftwarePage() {
                     description: editForm.description,
                     category: editForm.category,
                     tags: tagsArray,
-                    formLink: editForm.formLink
+                    formLink: editForm.formLink,
+                    paymentLink: editForm.paymentLink
                 }),
             });
 
@@ -398,6 +402,20 @@ export default function ManageSoftwarePage() {
                                             value={editForm.formLink}
                                             onChange={(e) => setEditForm({ ...editForm, formLink: e.target.value })}
                                             placeholder="https://forms.google.com/your-form-link"
+                                            className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-lg text-white text-base placeholder-gray-500 focus:outline-none focus:border-cyan-500/50"
+                                        />
+                                    </div>
+
+                                    {/* Payment Link */}
+                                    <div>
+                                        <label className="block text-base font-medium text-gray-300 mb-3">
+                                            Payment Link
+                                        </label>
+                                        <input
+                                            type="url"
+                                            value={editForm.paymentLink}
+                                            onChange={(e) => setEditForm({ ...editForm, paymentLink: e.target.value })}
+                                            placeholder="https://payment-gateway.com/your-payment-link"
                                             className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-lg text-white text-base placeholder-gray-500 focus:outline-none focus:border-cyan-500/50"
                                         />
                                     </div>

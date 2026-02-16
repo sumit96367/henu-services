@@ -229,6 +229,42 @@ li {
 }
 
 /* ============================================
+   MOBILE TYPOGRAPHY SCALING
+   ============================================ */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 6vw, 2.25rem);
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    font-size: clamp(1.125rem, 4vw, 1.75rem);
+  }
+
+  .heading-hero {
+    font-size: clamp(2rem, 10vw, 4rem);
+    line-height: 1.1;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* Ensure images are responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ============================================
    LAYOUT
    ============================================ */
 

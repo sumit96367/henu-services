@@ -151,7 +151,7 @@ const StickyCard = ({
 
                         <div
                             className={cn(
-                                "flex h-64 w-64 md:h-72 md:w-72 rounded-2xl overflow-hidden items-center justify-center shadow-2xl shrink-0 bg-white/5 backdrop-blur-md border border-white/10",
+                                "hidden md:flex h-64 w-64 md:h-72 md:w-72 rounded-2xl overflow-hidden items-center justify-center shadow-2xl shrink-0 bg-white/5 backdrop-blur-md border border-white/10",
                                 contentClassName
                             )}
                         >

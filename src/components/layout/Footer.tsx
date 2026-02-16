@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Facebook } from 'lucide-react';
-import { IconBrandWhatsapp, IconBrandDiscord } from '@tabler/icons-react';
+import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Globe, Send, Users, Facebook } from 'lucide-react';
+import { IconBrandWhatsapp, IconBrandDiscord, IconBrandTelegram } from '@tabler/icons-react';
 import { TextHoverEffect } from '@/components/ui/hover-footer';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -49,13 +49,17 @@ const contactInfo = [
 ];
 
 const socialLinks = [
-    { icon: <Instagram size={20} />, label: "Instagram", href: "https://instagram.com/henuos" },
-    { icon: <Twitter size={20} />, label: "Twitter", href: "https://twitter.com/henuos" },
-    { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://linkedin.com/company/henuos" },
-    { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/henuos" },
-    { icon: <Facebook size={20} />, label: "Facebook", href: "https://facebook.com/henuos" },
+    { icon: <Globe size={20} />, label: "HENU OS", href: "https://henuos.netlify.app/" },
+    { icon: <Linkedin size={20} />, label: "LinkedIn", href: "https://www.linkedin.com/company/henuos/" },
+    { icon: <Github size={20} />, label: "GitHub", href: "https://github.com/henu-os" },
+    { icon: <IconBrandDiscord size={20} />, label: "Discord", href: "https://discord.gg/hgcFGEFd8p" },
+    { icon: <IconBrandTelegram size={20} />, label: "Telegram", href: "https://t.me/+VjtCzFe7ooM5Y2Jl" },
     { icon: <IconBrandWhatsapp size={20} />, label: "WhatsApp", href: "https://wa.me/918094100513" },
-    { icon: <IconBrandDiscord size={20} />, label: "Discord", href: "https://discord.gg/henuos" },
+    { icon: <Send size={20} />, label: "WhatsApp Community", href: "https://chat.whatsapp.com/F4Krdv2DxPa8J84ZaG1iUe" },
+    { icon: <Twitter size={20} />, label: "Twitter", href: "https://x.com/HenuOs13178" },
+    { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/henuos/" },
+    { icon: <Facebook size={20} />, label: "Facebook", href: "https://www.facebook.com/share/1ZCPYkVQSF/" },
+    { icon: <Users size={20} />, label: "Community", href: "https://siddsingh.mystrikingly.com/" },
 ];
 
 const policyLinks = [
