@@ -123,9 +123,9 @@ interface Quote {
     email: string;
     serviceType: string;
     description: string;
-    amount?: string;
-    status: 'pending' | 'approved' | 'rejected';
-    createdAt: Timestamp | Date;
+    amount?: string | number;
+    status: string;
+    createdAt: any;
 }
 
 // Interface for addresses
@@ -202,14 +202,22 @@ export default function DashboardPage() {
     }, [isAuthenticated, authLoading, router, mounted]);
 
     useEffect(() => {
-        if (user) {
-            setEditName(user.name || '');
-            setEditCompany(user.companyName || '');
-            setProfilePicture(user.profilePicture || null);
-            fetchUserOrders();
-            fetchUserQuotes();
-            fetchUserAddresses();
-        }
+        const fetchAllData = async () => {
+            if (user) {
+                setEditName(user.name || '');
+                setEditCompany(user.companyName || '');
+                setProfilePicture(user.profilePicture || null);
+
+                setIsDataLoading(true);
+                await Promise.all([
+                    fetchUserOrders(),
+                    fetchUserQuotes(),
+                    fetchUserAddresses()
+                ]);
+                setIsDataLoading(false);
+            }
+        };
+        fetchAllData();
     }, [user]);
 
     // Lock scroll when mobile menu is open
@@ -226,7 +234,6 @@ export default function DashboardPage() {
 
     const fetchUserOrders = async () => {
         if (!user) return;
-        setIsDataLoading(true);
         try {
             const ordersRef = collection(db, 'orders');
 
@@ -295,8 +302,6 @@ export default function DashboardPage() {
             setOrders(finalOrders);
         } catch (error) {
             console.error("Error fetching orders:", error);
-        } finally {
-            setIsDataLoading(false);
         }
     };
 
@@ -313,23 +318,52 @@ export default function DashboardPage() {
         if (!user) return;
         try {
             const quotesRef = collection(db, 'queries');
-            const q = query(quotesRef, where('email', '==', user.email), orderBy('timestamp', 'desc'));
-            const snapshot = await getDocs(q);
 
-            const fetchedQuotes = snapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    email: data.email || '',
-                    serviceType: data.domain || data.subDomain || 'General Query',
-                    description: data.queries || '',
-                    amount: data.amount || undefined,
-                    status: data.status || 'pending',
-                    createdAt: data.timestamp || data.createdAt
-                } as Quote;
+            // Triple-query pattern for exhaustive lookup
+            const qById = query(quotesRef, where('userId', '==', user.id));
+            const qByEmail = query(quotesRef, where('email', '==', user.email));
+            const qByEmailLower = query(quotesRef, where('email', '==', user.email.toLowerCase()));
+
+            const [snapshotById, snapshotByEmail, snapshotByEmailLower] = await Promise.all([
+                getDocs(qById),
+                getDocs(qByEmail),
+                getDocs(qByEmailLower)
+            ]);
+
+            const quoteMap = new Map<string, Quote>();
+
+            const processSnapshot = (snapshot: any) => {
+                snapshot.forEach((doc: any) => {
+                    const data = doc.data();
+                    quoteMap.set(doc.id, {
+                        id: doc.id,
+                        email: data.email || '',
+                        serviceType: data.projectTitle || data.domain || data.subDomain || 'General Query',
+                        description: data.queries || data.description || '',
+                        amount: data.amount,
+                        status: data.status || 'Pending',
+                        createdAt: data.timestamp || data.createdAt || new Date()
+                    });
+                });
+            };
+
+            processSnapshot(snapshotById);
+            processSnapshot(snapshotByEmail);
+            processSnapshot(snapshotByEmailLower);
+
+            const sortedQuotes = Array.from(quoteMap.values()).sort((a, b) => {
+                const getTime = (date: any) => {
+                    if (!date) return 0;
+                    if (typeof date.toMillis === 'function') return date.toMillis();
+                    if (date.seconds) return date.seconds * 1000;
+                    if (date instanceof Date) return date.getTime();
+                    if (typeof date === 'string') return new Date(date).getTime();
+                    return 0;
+                };
+                return getTime(b.createdAt) - getTime(a.createdAt);
             });
 
-            setQuotes(fetchedQuotes);
+            setQuotes(sortedQuotes);
         } catch (error) {
             console.error('Error fetching quotes:', error);
         }
@@ -339,15 +373,45 @@ export default function DashboardPage() {
         if (!user) return;
         try {
             const addressesRef = collection(db, 'addresses');
-            const q = query(addressesRef, where('userId', '==', user.id), orderBy('createdAt', 'desc'));
-            const snapshot = await getDocs(q);
 
-            const fetchedAddresses = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            } as Address));
+            // Triple-query pattern
+            const qById = query(addressesRef, where('userId', '==', user.id));
+            const qByEmail = query(addressesRef, where('email', '==', user.email));
+            const qByEmailLower = query(addressesRef, where('email', '==', user.email.toLowerCase()));
 
-            setAddresses(fetchedAddresses);
+            const [snapshotById, snapshotByEmail, snapshotByEmailLower] = await Promise.all([
+                getDocs(qById),
+                getDocs(qByEmail),
+                getDocs(qByEmailLower)
+            ]);
+
+            const addressMap = new Map<string, Address>();
+
+            const processSnapshot = (snapshot: any) => {
+                snapshot.forEach((doc: any) => {
+                    addressMap.set(doc.id, {
+                        id: doc.id,
+                        ...doc.data()
+                    } as Address);
+                });
+            };
+
+            processSnapshot(snapshotById);
+            processSnapshot(snapshotByEmail);
+            processSnapshot(snapshotByEmailLower);
+
+            const sortedAddresses = Array.from(addressMap.values()).sort((a, b) => {
+                const getSeconds = (date: any) => {
+                    if (!date) return 0;
+                    if (date.seconds) return date.seconds;
+                    if (date instanceof Date) return date.getTime() / 1000;
+                    if (typeof date === 'string') return new Date(date).getTime() / 1000;
+                    return 0;
+                };
+                return getSeconds((b as any).createdAt) - getSeconds((a as any).createdAt);
+            });
+
+            setAddresses(sortedAddresses);
         } catch (error) {
             console.error('Error fetching addresses:', error);
         }
@@ -437,6 +501,7 @@ export default function DashboardPage() {
             const addressData = {
                 ...newAddress,
                 userId: user.id,
+                email: user.email,
                 createdAt: Timestamp.now(),
                 updatedAt: Timestamp.now()
             };
@@ -1194,8 +1259,7 @@ export default function DashboardPage() {
                                 <div className="space-y-12">
                                     {quotes.map((quote) => (
                                         <div key={quote.id}
-                                            className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
-                                            style={{ padding: '60px' }}
+                                            className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group p-10 md:p-14"
                                         >
                                             <div className="flex gap-6 items-start">
                                                 <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
@@ -1209,17 +1273,29 @@ export default function DashboardPage() {
                                                         <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider bg-white/5 px-1.5 py-0.5 rounded-md">#{quote.id.slice(0, 8).toUpperCase()}</span>
                                                         <span className="w-1 h-1 rounded-full bg-gray-700" />
                                                         <span className="text-[10px] text-gray-500 font-medium">
-                                                            {quote.createdAt instanceof Timestamp ? quote.createdAt.toDate().toLocaleDateString() : quote.createdAt instanceof Date ? quote.createdAt.toLocaleDateString() : 'Recently'}
+                                                            {(() => {
+                                                                const date = quote.createdAt;
+                                                                if (!date) return 'Recently';
+                                                                if (date instanceof Date) return date.toLocaleDateString();
+                                                                if (date && typeof date.toDate === 'function') return date.toDate().toLocaleDateString();
+                                                                if (date && typeof date.seconds === 'number') return new Date(date.seconds * 1000).toLocaleDateString();
+                                                                return 'Recently';
+                                                            })()}
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 justify-between md:justify-end">
                                                 <div className="text-left md:text-right flex flex-col items-start md:items-end">
-                                                    <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${quote.status === 'approved' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
-                                                        quote.status === 'rejected' ? 'bg-red-500/10 text-red-400 border border-red-500/20' :
-                                                            'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                                                        }`}>
+                                                    <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${(() => {
+                                                        const s = quote.status.toLowerCase();
+                                                        if (s.includes('pending') || s === 'quotation') return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                                                        if (s.includes('approved') || s.includes('completed')) return 'bg-green-500/10 text-green-400 border-green-500/20';
+                                                        if (s.includes('rejected')) return 'bg-red-500/10 text-red-400 border-red-500/20';
+                                                        if (s.includes('cancelled')) return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+                                                        if (s.includes('review')) return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+                                                        return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+                                                    })()}`}>
                                                         {quote.status}
                                                     </span>
                                                 </div>

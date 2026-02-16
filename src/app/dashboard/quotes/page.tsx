@@ -101,33 +101,58 @@ export default function QuotesPage() {
 
         setIsLoading(true);
         try {
-            // Fetch from Firebase directly (similar to existing dashboard implementation)
-            const { collection, query, where, getDocs, orderBy } = await import('firebase/firestore');
+            const { collection, query, where, getDocs } = await import('firebase/firestore');
             const { db } = await import('@/lib/firebase');
 
             const quotesRef = collection(db, 'queries');
-            const q = query(
-                quotesRef,
-                where('email', '==', user.email),
-                orderBy('timestamp', 'desc')
-            );
-            const snapshot = await getDocs(q);
 
-            const fetchedQuotes: Quote[] = snapshot.docs.map(doc => {
-                const data = doc.data();
-                return {
-                    id: doc.id,
-                    serviceType: data.domain || data.subDomain || 'General Query',
-                    projectTitle: data.projectTitle || data.domain,
-                    description: data.queries || data.description || '',
-                    status: data.status || 'pending',
-                    createdAt: data.timestamp || data.createdAt || new Date(),
-                    amount: data.amount,
-                    email: data.email,
+            // Dual-query pattern for maximum visibility
+            const qById = query(quotesRef, where('userId', '==', user.id));
+            const qByEmail = query(quotesRef, where('email', '==', user.email));
+            const qByEmailLower = query(quotesRef, where('email', '==', user.email.toLowerCase()));
+
+            const [snapshotById, snapshotByEmail, snapshotByEmailLower] = await Promise.all([
+                getDocs(qById),
+                getDocs(qByEmail),
+                getDocs(qByEmailLower)
+            ]);
+
+            const quoteMap = new Map<string, Quote>();
+
+            const processSnapshot = (snapshot: any) => {
+                snapshot.forEach((doc: any) => {
+                    const data = doc.data();
+                    quoteMap.set(doc.id, {
+                        id: doc.id,
+                        serviceType: data.projectTitle || data.domain || data.subDomain || 'General Query',
+                        projectTitle: data.projectTitle || data.domain || '',
+                        description: data.queries || data.description || '',
+                        status: data.status || 'pending',
+                        createdAt: data.timestamp || data.createdAt || new Date(),
+                        amount: data.amount,
+                        email: data.email,
+                    } as Quote);
+                });
+            };
+
+            processSnapshot(snapshotById);
+            processSnapshot(snapshotByEmail);
+            processSnapshot(snapshotByEmailLower);
+
+            const sortedQuotes = Array.from(quoteMap.values()).sort((a, b) => {
+                const getTime = (date: any) => {
+                    if (!date) return 0;
+                    if (typeof date.toMillis === 'function') return date.toMillis();
+                    if (date.seconds) return date.seconds * 1000;
+                    if (date instanceof Date) return date.getTime();
+                    // Handle ISO strings
+                    if (typeof date === 'string') return new Date(date).getTime();
+                    return 0;
                 };
+                return getTime(b.createdAt) - getTime(a.createdAt);
             });
 
-            setQuotes(fetchedQuotes);
+            setQuotes(sortedQuotes);
         } catch (error) {
             console.error('Error fetching quotes:', error);
         } finally {

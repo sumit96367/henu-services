@@ -192,6 +192,7 @@ export default function RequestQuotePage() {
             const quotesRef = collection(db, 'queries');
 
             await addDoc(quotesRef, {
+                userId: user.id,
                 email: user.email,
                 fullName: user.name || '',
                 domain: formData.projectTitle,
