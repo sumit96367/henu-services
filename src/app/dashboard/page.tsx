@@ -26,6 +26,7 @@ import {
     Clock,
     AlertCircle,
     ArrowLeft,
+    ArrowRight,
     Upload,
     Plus,
     Edit,
@@ -689,124 +690,179 @@ export default function DashboardPage() {
                 );
             case 'account':
                 return (
-                    <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="space-y-8">
+                    <div className="space-y-8">
                         {/* Header */}
-                        <div className="mb-6">
+                        <div className="mb-10 pt-4 md:pt-0 text-center md:text-left">
                             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
                                 Welcome back, {user?.name || 'User'}
                             </h1>
-                            <div className="h-1.5 w-24 bg-gradient-to-r from-purple-600 to-indigo-500 rounded-full shadow-[0_0_15px_rgba(109,40,217,0.4)]" />
+                            <div className="h-1.5 w-24 bg-gradient-to-r from-purple-600 to-indigo-500 rounded-full shadow-[0_0_15px_rgba(109,40,217,0.4)] mx-auto md:mx-0" />
                         </div>
 
-                        {/* Account Statistics */}
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <motion.div variants={fadeInUp} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.03] transition-all">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" style={{ marginBottom: '60px' }}>
+                            <div
+                                className="bg-white/[0.03] border border-white/10 rounded-[24px] hover:bg-white/[0.05] transition-all group flex flex-col items-center justify-center text-center"
+                                style={{ padding: '24px', boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.5)' }}
+                            >
+                                <div className="flex flex-col items-center gap-2 mb-3">
+                                    <div className="w-10 h-10 rounded-[12px] bg-cyan-500/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
                                         <Package size={20} className="text-cyan-400" />
                                     </div>
-                                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Total Orders</h3>
+                                    <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Total Orders</h3>
                                 </div>
-                                <p className="text-3xl font-black text-white">{orders.length}</p>
-                            </motion.div>
+                                <p className="text-4xl font-black text-white tracking-tighter" style={{ lineHeight: 1 }}>{orders.length}</p>
+                            </div>
 
-                            <motion.div variants={fadeInUp} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.03] transition-all">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <div
+                                className="bg-white/[0.03] border border-white/10 rounded-[24px] hover:bg-white/[0.05] transition-all group flex flex-col items-center justify-center text-center"
+                                style={{ padding: '24px', boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.5)' }}
+                            >
+                                <div className="flex flex-col items-center gap-2 mb-3">
+                                    <div className="w-10 h-10 rounded-[12px] bg-amber-500/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
                                         <FileText size={20} className="text-amber-400" />
                                     </div>
-                                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Active Quotes</h3>
+                                    <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Active Quotes</h3>
                                 </div>
-                                <p className="text-3xl font-black text-white">{quotes.filter(q => q.status === 'pending').length}</p>
-                            </motion.div>
+                                <p className="text-4xl font-black text-white tracking-tighter" style={{ lineHeight: 1 }}>{quotes.filter(q => q.status === 'pending').length}</p>
+                            </div>
 
-                            <motion.div variants={fadeInUp} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.03] transition-all">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center">
+                            <div
+                                className="bg-white/[0.03] border border-white/10 rounded-[24px] hover:bg-white/[0.05] transition-all group flex flex-col items-center justify-center text-center"
+                                style={{ padding: '24px', boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.5)' }}
+                            >
+                                <div className="flex flex-col items-center gap-2 mb-3">
+                                    <div className="w-10 h-10 rounded-[12px] bg-rose-500/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
                                         <MapPin size={20} className="text-rose-400" />
                                     </div>
-                                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Addresses</h3>
+                                    <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Address</h3>
                                 </div>
-                                <p className="text-3xl font-black text-white">{addresses.length}</p>
-                            </motion.div>
+                                {addresses.length > 0 ? (
+                                    <div className="flex flex-col items-center">
+                                        <p className="text-xs font-bold text-white mb-1">
+                                            {(addresses.find(a => a.isDefault) || addresses[0]).addressLine1}
+                                        </p>
+                                        <p className="text-[10px] text-gray-400 font-medium">
+                                            {(addresses.find(a => a.isDefault) || addresses[0]).city}, {(addresses.find(a => a.isDefault) || addresses[0]).state}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <p className="text-xs font-bold text-gray-500">No address added</p>
+                                )}
+                            </div>
 
-                            <motion.div variants={fadeInUp} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.03] transition-all">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center">
+                            <div
+                                className="bg-white/[0.03] border border-white/10 rounded-[24px] hover:bg-white/[0.05] transition-all group flex flex-col items-center justify-center text-center"
+                                style={{ padding: '24px', boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.5)' }}
+                            >
+                                <div className="flex flex-col items-center gap-2 mb-3">
+                                    <div className="w-10 h-10 rounded-[12px] bg-green-500/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
                                         <User size={20} className="text-green-400" />
                                     </div>
-                                    <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Member Since</h3>
+                                    <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Member Since</h3>
                                 </div>
-                                <p className="text-xl font-black text-white">{new Date(user?.createdAt || Date.now()).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</p>
-                            </motion.div>
+                                <p className="text-xl font-black text-white tracking-tight uppercase" style={{ lineHeight: 1.2 }}>
+                                    {(() => {
+                                        try {
+                                            const d = user?.createdAt ? new Date(user.createdAt) : new Date();
+                                            return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                                        } catch {
+                                            return 'Recently';
+                                        }
+                                    })()}
+                                </p>
+                            </div>
                         </div>
 
                         {/* Quick Access Cards */}
-                        <div>
-                            <h2 className="text-2xl font-bold text-white mb-4">Quick Access</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="space-y-20">
+                            <div className="flex items-center gap-8 mb-16">
+                                <h2 className="text-6xl font-black text-white uppercase tracking-[0.3em] opacity-95">Quick Access</h2>
+                                <div className="h-1 flex-1 bg-gradient-to-r from-white/20 to-transparent rounded-full" />
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {quickAccessCards.map((card) => {
                                     const Icon = card.icon;
                                     const colorClasses = {
-                                        cyan: 'bg-cyan-500/10 border-cyan-500/20 hover:bg-cyan-500/20 text-cyan-400',
-                                        amber: 'bg-amber-500/10 border-amber-500/20 hover:bg-amber-500/20 text-amber-400',
-                                        rose: 'bg-rose-500/10 border-rose-500/20 hover:bg-rose-500/20 text-rose-400',
-                                        indigo: 'bg-indigo-500/10 border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400'
+                                        cyan: 'bg-cyan-500/10 border-cyan-500/20 hover:bg-cyan-500/20 text-cyan-400 shadow-[0_0_60px_rgba(6,182,212,0.1)]',
+                                        amber: 'bg-amber-500/10 border-amber-500/20 hover:bg-amber-500/20 text-amber-400 shadow-[0_0_60px_rgba(245,158,11,0.1)]',
+                                        rose: 'bg-rose-500/10 border-rose-500/20 hover:bg-rose-500/20 text-rose-400 shadow-[0_0_60px_rgba(244,63,94,0.1)]',
+                                        indigo: 'bg-indigo-500/10 border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 shadow-[0_0_60px_rgba(99,102,241,0.1)]'
                                     };
                                     return (
-                                        <motion.button
+                                        <button
                                             key={card.id}
-                                            variants={fadeInUp}
                                             onClick={() => card.id === 'quotes' ? router.push('/dashboard/quotes') : setActiveSection(card.id)}
-                                            className={`${colorClasses[card.color as keyof typeof colorClasses]} border rounded-2xl p-6 text-left hover:scale-105 transition-all cursor-pointer group`}
+                                            className={`${colorClasses[card.color as keyof typeof colorClasses]} border rounded-[32px] text-left hover:scale-[1.05] transition-all cursor-pointer group flex flex-col items-start min-h-[280px] hover:shadow-[0_40px_100px_rgba(0,0,0,0.9)]`}
+                                            style={{ padding: '40px' }}
                                         >
-                                            <div className="flex items-start justify-between mb-3">
-                                                <div className={`w-12 h-12 rounded-xl ${colorClasses[card.color as keyof typeof colorClasses]} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                                                    <Icon size={24} />
+                                            <div className="flex items-start justify-between w-full mb-8">
+                                                <div className={`w-14 h-14 rounded-[16px] ${colorClasses[card.color as keyof typeof colorClasses]} flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl`}>
+                                                    <Icon size={28} />
                                                 </div>
-                                                <ChevronRight size={20} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                                                <ChevronRight size={20} className="opacity-20 group-hover:opacity-100 group-hover:translate-x-4 transition-all" />
                                             </div>
-                                            <h3 className="text-white font-bold text-lg mb-2">{card.title}</h3>
-                                            <p className="text-gray-400 text-sm leading-relaxed">{card.description}</p>
-                                        </motion.button>
+                                            <h3 className="text-white font-black text-2xl mb-3 tracking-tighter leading-none italic">{card.title}</h3>
+                                            <p className="text-gray-400/80 text-base font-bold leading-relaxed">{card.description}</p>
+                                        </button>
                                     );
                                 })}
                             </div>
                         </div>
 
                         {/* Recent Activity */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12" style={{ marginTop: '80px' }}>
                             {/* Recent Orders */}
-                            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-lg font-bold text-white">Recent Orders</h3>
+                            <div className="bg-white/[0.04] border border-white/10 rounded-[32px]" style={{ padding: '40px', boxShadow: '0 40px 100px -20px rgba(0, 0, 0, 0.8)' }}>
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-2xl font-black text-white uppercase tracking-[0.3em] opacity-80">Recent Orders</h3>
                                     <button
                                         onClick={() => setActiveSection('orders')}
-                                        className="text-sm text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-1"
+                                        className="text-sm font-black text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2 uppercase tracking-[0.2em]"
                                     >
-                                        View All <ChevronRight size={14} />
+                                        <span className="hidden md:inline">View All</span> <ChevronRight size={18} />
                                     </button>
                                 </div>
-                                <div className="space-y-3">
+                                <div className="space-y-8">
                                     {isDataLoading ? (
                                         <div className="p-8 flex justify-center">
                                             <Loader2 className="w-6 h-6 text-cyan-500/50 animate-spin" />
                                         </div>
                                     ) : orders.length > 0 ? (
                                         orders.slice(0, 3).map((order) => (
-                                            <div key={order.id} className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl hover:bg-white/[0.04] transition-all">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                                                        <Package size={18} className="text-purple-400" />
+                                            <div key={order.id}
+                                                className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
+                                                style={{ padding: '15px' }}
+                                            >
+                                                <div className="flex gap-6 items-start">
+                                                    <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                        <Package className="text-cyan-400" size={18} />
                                                     </div>
-                                                    <div>
-                                                        <p className="text-sm font-bold text-white">{order.id.slice(0, 8)}...</p>
-                                                        <p className="text-xs text-gray-500">{order.orderDate}</p>
+                                                    <div className="flex flex-col">
+                                                        <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
+                                                            Order #{order.id.slice(0, 8).toUpperCase()}
+                                                        </div>
+                                                        <div className="text-xs text-gray-500 font-medium tracking-wide transition-all" style={{ marginTop: '4px' }}>
+                                                            {order.orderDate} • {order.plan || 'Standard'} Plan
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="text-right">
-                                                    <p className="text-sm font-bold text-white">{order.amount}</p>
-                                                    <p className="text-xs text-gray-400 capitalize">{order.status}</p>
+                                                <div className="flex items-center justify-start md:justify-end">
+                                                    <div className="text-left md:text-right flex flex-col items-start md:items-end">
+                                                        <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>{order.amount}</div>
+                                                        {(() => {
+                                                            const colors: Record<string, string> = {
+                                                                green: "text-green-400",
+                                                                emerald: "text-emerald-400",
+                                                                cyan: "text-cyan-400",
+                                                                amber: "text-amber-400"
+                                                            };
+                                                            return (
+                                                                <span className={`text-[10px] font-bold uppercase tracking-[0.2em] leading-none ${colors[order.statusColor] || colors.amber}`} style={{ marginTop: '4px' }}>
+                                                                    {order.status}
+                                                                </span>
+                                                            );
+                                                        })()}
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))
@@ -820,33 +876,38 @@ export default function DashboardPage() {
                             </div>
 
                             {/* Recent Quotes */}
-                            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-lg font-bold text-white">Recent Quotes</h3>
+                            <div className="bg-white/[0.04] border border-white/10 rounded-[32px]" style={{ padding: '40px', boxShadow: '0 40px 100px -20px rgba(0, 0, 0, 0.8)' }}>
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-2xl font-black text-white uppercase tracking-[0.3em] opacity-80">Recent Quotes</h3>
                                     <button
                                         onClick={() => router.push('/dashboard/quotes')}
-                                        className="text-sm text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1"
+                                        className="text-sm font-bold text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-2 uppercase tracking-[0.2em]"
                                     >
-                                        View All <ChevronRight size={14} />
+                                        <span className="hidden md:inline">View All</span> <ChevronRight size={18} />
                                     </button>
                                 </div>
-                                <div className="space-y-3">
+                                <div className="space-y-8">
                                     {quotes.length > 0 ? (
                                         quotes.slice(0, 3).map((quote) => (
-                                            <div key={quote.id} className="flex items-center justify-between p-4 bg-white/[0.02] rounded-xl hover:bg-white/[0.04] transition-all">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                                                        <FileText size={18} className="text-amber-400" />
+                                            <div key={quote.id} className="flex items-center justify-between p-10 bg-white/[0.03] border border-white/5 rounded-2xl hover:bg-white/[0.06] transition-all group">
+                                                <div className="flex items-center gap-5">
+                                                    <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                                                        <FileText size={24} className="text-amber-400" />
                                                     </div>
-                                                    <div>
-                                                        <p className="text-sm font-bold text-white">{quote.serviceType}</p>
-                                                        <p className="text-xs text-gray-500">{quote.description.slice(0, 30)}...</p>
+                                                    <div className="flex flex-col items-start justify-center">
+                                                        <div className="text-base font-black text-white" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
+                                                            {quote.serviceType}
+                                                        </div>
+                                                        <div className="text-[10px] text-gray-500 font-medium line-clamp-1 max-w-[220px]" style={{ marginTop: '2px' }}>
+                                                            {quote.description}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <span className={`px-2 py-1 rounded-full text-xs font-bold ${quote.status === 'approved' ? 'bg-green-500/20 text-green-400' :
-                                                        quote.status === 'rejected' ? 'bg-red-500/20 text-red-400' :
-                                                            'bg-amber-500/20 text-amber-400'
+
+                                                <div className="flex flex-col items-end">
+                                                    <span className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-[0.2em] border shadow-sm ${quote.status === 'approved' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
+                                                        quote.status === 'rejected' ? 'bg-red-500/20 text-red-400 border border-red-500/20' :
+                                                            'bg-amber-500/10 text-amber-400 border border-amber-500/20'
                                                         }`}>
                                                         {quote.status}
                                                     </span>
@@ -862,24 +923,29 @@ export default function DashboardPage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                    </motion.div>
                 );
 
             case 'orders':
                 return (
-                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-                        <div className="mb-8 flex items-center justify-between">
-                            <div>
-                                <h1 className="text-3xl font-bold text-white mb-2">My Orders</h1>
-                                <p className="text-gray-500">Track and manage your order history</p>
+                    <div className="w-full">
+                        <div className="mb-12">
+                            <div className="flex justify-end w-full mb-8">
+                                <button
+                                    onClick={() => setActiveSection('account')}
+                                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
+                                >
+                                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                                    <span className="font-black tracking-[0.2em] uppercase text-[10px]">Back</span>
+                                </button>
                             </div>
-                            <button
-                                onClick={() => setActiveSection('account')}
-                                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
-                            >
-                                <ArrowLeft size={16} /> Back
-                            </button>
+
+                            <div className="flex flex-col items-center md:items-start gap-2">
+                                <h1 className="text-4xl font-black text-white uppercase tracking-tighter">My Orders</h1>
+                                <p className="text-gray-500 font-medium text-[13px] text-center md:text-left">Track and manage your order history and fulfillment status</p>
+                                <div className="h-1 w-16 bg-cyan-500/40 rounded-full mt-1" />
+                            </div>
                         </div>
 
                         <div
@@ -889,21 +955,28 @@ export default function DashboardPage() {
                             {isDataLoading ? (
                                 <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
                             ) : orders.length > 0 ? (
-                                <div className="divide-y divide-white/5">
+                                <div className="space-y-10">
                                     {orders.map((order) => (
-                                        <div key={order.id} className="p-10 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-white/[0.01]">
-                                            <div className="flex gap-4 items-start">
-                                                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
-                                                    <Package className="text-cyan-400" size={20} />
+                                        <div key={order.id}
+                                            className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
+                                            style={{ padding: '15px' }}
+                                        >
+                                            <div className="flex gap-6 items-start">
+                                                <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                    <Package className="text-cyan-400" size={18} />
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <h4 className="text-white font-bold leading-none">Order #{order.id.slice(0, 8).toUpperCase()}</h4>
-                                                    <p className="text-[11px] text-gray-500 font-medium tracking-wide leading-none transition-all" style={{ marginTop: '-4px' }}>{order.orderDate} • {order.plan || 'Standard'} Plan</p>
+                                                    <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
+                                                        Order #{order.id.slice(0, 8).toUpperCase()}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500 font-medium tracking-wide transition-all" style={{ marginTop: '4px' }}>
+                                                        {order.orderDate} • {order.plan || 'Standard'} Plan
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-8 justify-between md:justify-end">
-                                                <div className="text-right flex flex-col items-end">
-                                                    <p className="text-white font-bold leading-none">{order.amount}</p>
+                                            <div className="flex items-center justify-start md:justify-end">
+                                                <div className="text-left md:text-right flex flex-col items-start md:items-end">
+                                                    <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>{order.amount}</div>
                                                     {(() => {
                                                         const colors: Record<string, string> = {
                                                             green: "text-green-400",
@@ -912,15 +985,12 @@ export default function DashboardPage() {
                                                             amber: "text-amber-400"
                                                         };
                                                         return (
-                                                            <span className={`text-[10px] font-bold uppercase tracking-widest leading-none ${colors[order.statusColor] || colors.amber}`} style={{ marginTop: '-4px' }}>
+                                                            <span className={`text-[10px] font-bold uppercase tracking-[0.2em] leading-none ${colors[order.statusColor] || colors.amber}`} style={{ marginTop: '4px' }}>
                                                                 {order.status}
                                                             </span>
                                                         );
                                                     })()}
                                                 </div>
-                                                <button className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors border border-white/5">
-                                                    <Eye size={18} />
-                                                </button>
                                             </div>
                                         </div>
                                     ))}
@@ -933,7 +1003,7 @@ export default function DashboardPage() {
                                 </div>
                             )}
                         </div>
-                    </motion.div>
+                    </div>
                 );
 
             case 'profile':
@@ -1532,8 +1602,8 @@ export default function DashboardPage() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
                     position: 'absolute',
-                    top: '140px',
-                    left: '20px',
+                    top: '70px',
+                    left: '15px',
                     zIndex: 50,
                     display: isMobileMenuOpen ? 'none' : 'flex',
                     padding: '10px',
@@ -1717,7 +1787,7 @@ export default function DashboardPage() {
                 style={{
                     marginLeft: '300px',
                     minHeight: '100vh',
-                    padding: '240px max(24px, 5%) 100px max(24px, 5%)',
+                    padding: '120px max(24px, 5%) 100px max(24px, 5%)',
                     flex: 1,
                     maxWidth: '1400px',
                     marginRight: 'auto',
@@ -1757,7 +1827,7 @@ export default function DashboardPage() {
 
                     .dashboard-main-content {
                         margin-left: 0 !important;
-                        padding: 300px 20px 40px 20px !important;
+                        padding: 140px 20px 40px 20px !important;
                     }
 
                     .mobile-overlay {
