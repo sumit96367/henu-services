@@ -978,958 +978,957 @@ export default function DashboardPage() {
                                                         {quote.status}
                                                     </span>
                                                 </div>
-                                                ))
-                                                ) : (
-                                                <div className="p-8 text-center">
-                                                    <FileText size={32} className="mx-auto text-gray-600 mb-2 opacity-20" />
-                                                    <p className="text-sm text-gray-500">No quotes yet</p>
-                                                </div>
-                                    )}
                                             </div>
-                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="p-8 text-center">
+                                            <FileText size={32} className="mx-auto text-gray-600 mb-2 opacity-20" />
+                                            <p className="text-sm text-gray-500">No quotes yet</p>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                    </div >
-                    </div >
                 );
 
             case 'orders':
-    return (
-        <div className="w-full">
-            <div className="mb-12">
-                <div className="flex justify-end w-full mb-8">
-                    <button
-                        onClick={() => setActiveSection('account')}
-                        className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
-                    >
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                        <span className="font-black tracking-[0.2em] uppercase text-[10px]">Back</span>
-                    </button>
-                </div>
-
-                <div className="flex flex-col items-center md:items-start gap-2">
-                    <h1 className="text-4xl font-black text-white uppercase tracking-tighter">My Orders</h1>
-                    <p className="text-gray-500 font-medium text-[13px] text-center md:text-left">Track and manage your order history and fulfillment status</p>
-                    <div className="h-1 w-16 bg-cyan-500/40 rounded-full mt-1" />
-                </div>
-            </div>
-
-            <div
-                className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
-                style={{ padding: 'max(20px, 4%)' }}
-            >
-                {isDataLoading ? (
-                    <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
-                ) : orders.length > 0 ? (
-                    <div className="space-y-12">
-                        {orders.map((order) => (
-                            <div key={order.id}
-                                className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
-                                style={{ padding: '60px' }}
-                            >
-                                <div className="flex gap-6 items-start">
-                                    <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
-                                        <Package className="text-cyan-400" size={18} />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
-                                            Order #{order.id.slice(0, 8).toUpperCase()}
-                                        </div>
-                                        <div className="text-xs text-gray-500 font-medium tracking-wide transition-all" style={{ marginTop: '4px' }}>
-                                            {order.orderDate} • {order.plan || 'Standard'} Plan
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex items-center justify-start md:justify-end">
-                                    <div className="text-left md:text-right flex flex-col items-start md:items-end">
-                                        <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>{order.amount}</div>
-                                        {(() => {
-                                            const colors: Record<string, string> = {
-                                                green: "text-green-400",
-                                                emerald: "text-emerald-400",
-                                                cyan: "text-cyan-400",
-                                                amber: "text-amber-400"
-                                            };
-                                            return (
-                                                <span className={`text-[10px] font-bold uppercase tracking-[0.2em] leading-none ${colors[order.statusColor] || colors.amber}`} style={{ marginTop: '4px' }}>
-                                                    {order.status}
-                                                </span>
-                                            );
-                                        })()}
-                                    </div>
-                                </div>
+                return (
+                    <div className="w-full">
+                        <div className="mb-12">
+                            <div className="flex justify-end w-full mb-8">
+                                <button
+                                    onClick={() => setActiveSection('account')}
+                                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
+                                >
+                                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                                    <span className="font-black tracking-[0.2em] uppercase text-[10px]">Back</span>
+                                </button>
                             </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center p-8 md:p-[60px]">
-                        <div className="w-24 h-24 mx-auto mb-8 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shadow-2xl">
-                            <Package size={40} className="text-cyan-400 opacity-60" strokeWidth={1} />
+
+                            <div className="flex flex-col items-center md:items-start gap-2">
+                                <h1 className="text-4xl font-black text-white uppercase tracking-tighter">My Orders</h1>
+                                <p className="text-gray-500 font-medium text-[13px] text-center md:text-left">Track and manage your order history and fulfillment status</p>
+                                <div className="h-1 w-16 bg-cyan-500/40 rounded-full mt-1" />
+                            </div>
                         </div>
-                        <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No orders found</h3>
-                        <p className="text-gray-500 text-lg font-medium">You haven&apos;t placed any orders with us yet.</p>
+
+                        <div
+                            className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
+                            style={{ padding: 'max(20px, 4%)' }}
+                        >
+                            {isDataLoading ? (
+                                <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-cyan-500" /></div>
+                            ) : orders.length > 0 ? (
+                                <div className="space-y-12">
+                                    {orders.map((order) => (
+                                        <div key={order.id}
+                                            className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group"
+                                            style={{ padding: '60px' }}
+                                        >
+                                            <div className="flex gap-6 items-start">
+                                                <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                    <Package className="text-cyan-400" size={18} />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
+                                                        Order #{order.id.slice(0, 8).toUpperCase()}
+                                                    </div>
+                                                    <div className="text-xs text-gray-500 font-medium tracking-wide transition-all" style={{ marginTop: '4px' }}>
+                                                        {order.orderDate} • {order.plan || 'Standard'} Plan
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center justify-start md:justify-end">
+                                                <div className="text-left md:text-right flex flex-col items-start md:items-end">
+                                                    <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>{order.amount}</div>
+                                                    {(() => {
+                                                        const colors: Record<string, string> = {
+                                                            green: "text-green-400",
+                                                            emerald: "text-emerald-400",
+                                                            cyan: "text-cyan-400",
+                                                            amber: "text-amber-400"
+                                                        };
+                                                        return (
+                                                            <span className={`text-[10px] font-bold uppercase tracking-[0.2em] leading-none ${colors[order.statusColor] || colors.amber}`} style={{ marginTop: '4px' }}>
+                                                                {order.status}
+                                                            </span>
+                                                        );
+                                                    })()}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center p-8 md:p-[60px]">
+                                    <div className="w-24 h-24 mx-auto mb-8 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shadow-2xl">
+                                        <Package size={40} className="text-cyan-400 opacity-60" strokeWidth={1} />
+                                    </div>
+                                    <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No orders found</h3>
+                                    <p className="text-gray-500 text-lg font-medium">You haven&apos;t placed any orders with us yet.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                )}
-            </div>
-        </div>
-    );
+                );
 
             case 'profile':
-    return (
-        <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
-            <h1 className="text-3xl font-bold text-white mb-8 text-center md:text-left">Edit Profile</h1>
+                return (
+                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <h1 className="text-3xl font-bold text-white mb-8 text-center md:text-left">Edit Profile</h1>
 
-            <div className="flex flex-col md:flex-row" style={{ gap: '0.4cm' }}>
-                {/* Profile Picture Upload Box */}
-                <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col items-center justify-center" style={{ flex: 1, minHeight: '600px', padding: '120px 80px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
-                    {/* Background glowing orbs */}
-                    <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
-                    <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
+                        <div className="flex flex-col md:flex-row" style={{ gap: '0.4cm' }}>
+                            {/* Profile Picture Upload Box */}
+                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col items-center justify-center" style={{ flex: 1, minHeight: '600px', padding: '120px 80px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
+                                {/* Background glowing orbs */}
+                                <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
+                                <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
 
-                    {/* Tech lines decoration */}
-                    <div className="absolute top-0 left-0 w-full h-full opacity-20">
-                        <div className="absolute top-1/4 left-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-                        <div className="absolute top-3/4 right-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
-                    </div>
+                                {/* Tech lines decoration */}
+                                <div className="absolute top-0 left-0 w-full h-full opacity-20">
+                                    <div className="absolute top-1/4 left-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+                                    <div className="absolute top-3/4 right-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
+                                </div>
 
-                    <div className="relative flex flex-col items-center justify-center gap-6 w-full h-full">
-                        {/* Title */}
-                        <h3 className="text-xl font-bold tracking-[0.3em] text-white/90 mb-2" style={{ fontFamily: 'monospace', letterSpacing: '0.3em' }}>PROFILE IDENTITY</h3>
+                                <div className="relative flex flex-col items-center justify-center gap-6 w-full h-full">
+                                    {/* Title */}
+                                    <h3 className="text-xl font-bold tracking-[0.3em] text-white/90 mb-2" style={{ fontFamily: 'monospace', letterSpacing: '0.3em' }}>PROFILE IDENTITY</h3>
 
-                        {/* Hidden file input */}
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                        />
-
-                        {/* Circular Avatar Display */}
-                        <div className="relative flex items-center justify-center mb-4">
-                            <div
-                                className="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden relative"
-                                style={{
-                                    boxShadow: '0 0 30px rgba(6, 182, 212, 0.4), 0 0 60px rgba(168, 85, 247, 0.3)',
-                                    background: 'rgba(0, 0, 0, 0.6)'
-                                }}
-                            >
-                                {/* Profile Picture or Animated Wave Shader */}
-                                {profilePicture ? (
-                                    <img
-                                        src={profilePicture}
-                                        alt="Profile"
-                                        className="w-full h-full object-cover"
+                                    {/* Hidden file input */}
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        className="hidden"
                                     />
-                                ) : (
-                                    <CircularWaveShader />
-                                )}
-                            </div>
-                        </div>
 
-                        {/* Button(s) */}
-                        {!profilePicture ? (
-                            <button
-                                type="button"
-                                onClick={() => fileInputRef.current?.click()}
-                                className="px-12 py-3 border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                style={{ background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
-                            >
-                                UPLOAD IMAGE
-                            </button>
-                        ) : (
-                            <div className="flex gap-4">
-                                <button
-                                    type="button"
-                                    onClick={() => fileInputRef.current?.click()}
-                                    className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                    style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
-                                >
-                                    REPLACE
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setProfilePicture(null)}
-                                    className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-red-400/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
-                                    style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
-                                >
-                                    REMOVE
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Profile Form */}
-                <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden" style={{ flex: 1.3, minHeight: '600px', padding: '120px 90px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
-                    {/* Background glowing orbs */}
-                    <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
-                    <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
-
-                    {/* Tech lines decoration */}
-                    <div className="absolute top-0 left-0 w-full h-full opacity-20">
-                        <div className="absolute top-1/4 left-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-                        <div className="absolute top-3/4 right-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
-                    </div>
-
-                    <form onSubmit={handleUpdateProfile} className="relative flex flex-col h-full">
-                        <div className="flex flex-col gap-8">
-                            <div>
-                                <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Full Name</label>
-                                <input
-                                    type="text"
-                                    value={editName}
-                                    onChange={(e) => setEditName(e.target.value)}
-                                    className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                    style={{ padding: '24px 32px' }}
-                                    placeholder="Your Name"
-                                    disabled={isUpdating}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Company Name</label>
-                                <input
-                                    type="text"
-                                    value={editCompany}
-                                    onChange={(e) => setEditCompany(e.target.value)}
-                                    className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                    style={{ padding: '24px 32px' }}
-                                    placeholder="Company (Optional)"
-                                    disabled={isUpdating}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Email Address</label>
-                                <input
-                                    type="email"
-                                    value={user?.email || ''}
-                                    disabled
-                                    className="w-full bg-white/[0.02] border border-white/5 rounded-xl text-gray-500 text-lg cursor-not-allowed italic"
-                                    style={{ padding: '24px 32px' }}
-                                />
-                                <p className="text-xs text-gray-600 mt-3 px-1">Email cannot be changed for security reasons.</p>
-                            </div>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={isUpdating}
-                            className="w-full py-5 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-8"
-                        >
-                            {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
-                            {isUpdating ? 'Saving Changes...' : 'Save Profile'}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </motion.div>
-    );
-
-            case 'quotes':
-    return (
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-            <div className="mb-12">
-                <div className="flex justify-end w-full mb-8">
-                    <button
-                        onClick={() => setActiveSection('account')}
-                        className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
-                    >
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                        <span className="font-black tracking-[0.2em] uppercase text-[10px]">Back</span>
-                    </button>
-                </div>
-
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <div className="flex flex-col items-center md:items-start gap-2">
-                        <h1 className="text-4xl font-black text-white uppercase tracking-tighter">My Quotes</h1>
-                        <p className="text-gray-500 font-medium text-[13px] text-center md:text-left">Track and manage your bespoke quote requests and project valuations</p>
-                        <div className="h-1 w-16 bg-purple-500/40 rounded-full mt-1" />
-                    </div>
-                    <button
-                        onClick={() => router.push('/dashboard/request-quote')}
-                        className="btn-primary mt-4 md:mt-0"
-                    >
-                        <span>New Quote Request</span>
-                        <Plus size={18} />
-                    </button>
-                </div>
-            </div>
-
-            <div
-                className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
-                style={{ padding: 'max(20px, 4%)' }}
-            >
-                {isDataLoading ? (
-                    <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-purple-500" /></div>
-                ) : quotes.length > 0 ? (
-                    <div className="space-y-12">
-                        {quotes.map((quote) => (
-                            <div key={quote.id}
-                                className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group p-10 md:p-14"
-                            >
-                                <div className="flex gap-6 items-start">
-                                    <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
-                                        <FileText className="text-purple-400" size={18} />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
-                                            {quote.serviceType}
-                                        </div>
-                                        <div className="flex items-center gap-2" style={{ marginTop: '8px' }}>
-                                            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider bg-white/5 px-1.5 py-0.5 rounded-md">#{quote.id.slice(0, 8).toUpperCase()}</span>
-                                            <span className="w-1 h-1 rounded-full bg-gray-700" />
-                                            <span className="text-[10px] text-gray-500 font-medium">
-                                                {(() => {
-                                                    const date = quote.createdAt;
-                                                    if (!date) return 'Recently';
-                                                    if (date instanceof Date) return date.toLocaleDateString();
-                                                    if (date && typeof date.toDate === 'function') return date.toDate().toLocaleDateString();
-                                                    if (date && typeof date.seconds === 'number') return new Date(date.seconds * 1000).toLocaleDateString();
-                                                    return 'Recently';
-                                                })()}
-                                            </span>
+                                    {/* Circular Avatar Display */}
+                                    <div className="relative flex items-center justify-center mb-4">
+                                        <div
+                                            className="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden relative"
+                                            style={{
+                                                boxShadow: '0 0 30px rgba(6, 182, 212, 0.4), 0 0 60px rgba(168, 85, 247, 0.3)',
+                                                background: 'rgba(0, 0, 0, 0.6)'
+                                            }}
+                                        >
+                                            {/* Profile Picture or Animated Wave Shader */}
+                                            {profilePicture ? (
+                                                <img
+                                                    src={profilePicture}
+                                                    alt="Profile"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <CircularWaveShader />
+                                            )}
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 justify-between md:justify-end">
-                                    <div className="text-left md:text-right flex flex-col items-start md:items-end">
-                                        <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${(() => {
-                                            const s = quote.status.toLowerCase();
-                                            if (s.includes('pending') || s === 'quotation') return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-                                            if (s.includes('approved') || s.includes('completed')) return 'bg-green-500/10 text-green-400 border-green-500/20';
-                                            if (s.includes('rejected')) return 'bg-red-500/10 text-red-400 border-red-500/20';
-                                            if (s.includes('cancelled')) return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
-                                            if (s.includes('review')) return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
-                                            return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-                                        })()}`}>
-                                            {quote.status}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center p-8 md:p-[60px]">
-                        <div className="w-24 h-24 mx-auto mb-8 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-2xl">
-                            <FileText size={40} className="text-purple-400 opacity-60" strokeWidth={1} />
-                        </div>
-                        <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No quotes found</h3>
-                        <p className="text-gray-500 text-lg font-medium">You haven&apos;t submitted any quote requests yet.</p>
-                    </div>
-                )}
-            </div>
-        </motion.div>
-    );
 
-            case 'addresses':
-    return (
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-            <div className="mb-8 flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">My Addresses</h1>
-                    <p className="text-gray-500">Manage your shipping addresses</p>
-                </div>
-                <div className="flex gap-3">
-                    {!isAddingAddress && !editingAddress && (
-                        <button
-                            onClick={() => setIsAddingAddress(true)}
-                            className="flex items-center gap-2 px-4 py-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors"
-                        >
-                            <Plus size={16} /> Add Address
-                        </button>
-                    )}
-                    <button
-                        onClick={() => setActiveSection('account')}
-                        className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
-                    >
-                        <ArrowLeft size={16} /> Back
-                    </button>
-                </div>
-            </div>
-
-            {(isAddingAddress || editingAddress) && (
-                <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-12 mb-8">
-                    <h3 className="text-xl font-bold text-white mb-6">{editingAddress ? 'Edit Address' : 'Add New Address'}</h3>
-                    <form onSubmit={editingAddress ? handleUpdateAddress : handleAddAddress} className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-bold text-gray-400 mb-2">Full Name</label>
-                            <input
-                                type="text"
-                                required
-                                value={editingAddress ? editingAddress.name : newAddress.name}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, name: e.target.value })
-                                    : setNewAddress({ ...newAddress, name: e.target.value })
-                                }
-                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                style={{ padding: '20px 32px' }}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-400 mb-2">Phone</label>
-                            <input
-                                type="tel"
-                                required
-                                value={editingAddress ? editingAddress.phone : newAddress.phone}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, phone: e.target.value })
-                                    : setNewAddress({ ...newAddress, phone: e.target.value })
-                                }
-                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                style={{ padding: '20px 32px' }}
-                            />
-                        </div>
-                        <div className="col-span-2">
-                            <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 1</label>
-                            <input
-                                type="text"
-                                required
-                                value={editingAddress ? editingAddress.addressLine1 : newAddress.addressLine1}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, addressLine1: e.target.value })
-                                    : setNewAddress({ ...newAddress, addressLine1: e.target.value })
-                                }
-                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                style={{ padding: '20px 32px' }}
-                            />
-                        </div>
-                        <div className="col-span-2">
-                            <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 2 (Optional)</label>
-                            <input
-                                type="text"
-                                value={editingAddress ? (editingAddress.addressLine2 || '') : newAddress.addressLine2}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, addressLine2: e.target.value })
-                                    : setNewAddress({ ...newAddress, addressLine2: e.target.value })
-                                }
-                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                style={{ padding: '20px 32px' }}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-400 mb-2">City</label>
-                            <input
-                                type="text"
-                                required
-                                value={editingAddress ? editingAddress.city : newAddress.city}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, city: e.target.value })
-                                    : setNewAddress({ ...newAddress, city: e.target.value })
-                                }
-                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                style={{ padding: '20px 32px' }}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-400 mb-2">State</label>
-                            <input
-                                type="text"
-                                required
-                                value={editingAddress ? editingAddress.state : newAddress.state}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, state: e.target.value })
-                                    : setNewAddress({ ...newAddress, state: e.target.value })
-                                }
-                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all placeholder:text-gray-700"
-                                style={{ padding: '20px 32px' }}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-400 mb-2">Pincode</label>
-                            <input
-                                type="text"
-                                required
-                                value={editingAddress ? editingAddress.pincode : newAddress.pincode}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, pincode: e.target.value })
-                                    : setNewAddress({ ...newAddress, pincode: e.target.value })
-                                }
-                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
-                                style={{ padding: '20px 32px' }}
-                            />
-                        </div>
-                        <div className="flex items-center">
-                            <input
-                                type="checkbox"
-                                id="isDefault"
-                                checked={editingAddress ? editingAddress.isDefault : newAddress.isDefault}
-                                onChange={(e) => editingAddress
-                                    ? setEditingAddress({ ...editingAddress, isDefault: e.target.checked })
-                                    : setNewAddress({ ...newAddress, isDefault: e.target.checked })
-                                }
-                                className="mr-2"
-                            />
-                            <label htmlFor="isDefault" className="text-sm text-gray-400">Set as default address</label>
-                        </div>
-                        <div className="col-span-2 flex gap-4 mt-2">
-                            <button
-                                type="submit"
-                                disabled={isUpdating}
-                                className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-cyan-500 text-black font-bold rounded-2xl hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {isUpdating ? (
-                                    <Loader2 className="animate-spin" size={20} />
-                                ) : (
-                                    <>
-                                        <CheckCircle2 size={20} />
-                                        {editingAddress ? 'Update Address' : 'Save Address'}
-                                    </>
-                                )}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setIsAddingAddress(false);
-                                    setEditingAddress(null);
-                                }}
-                                className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-gray-300 font-bold rounded-2xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:text-white transition-all"
-                            >
-                                <CloseIcon size={20} />
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            )}
-
-            <div className="grid gap-4">
-                {addresses.length > 0 ? addresses.map((address) => (
-                    <div key={address.id} className="bg-white/[0.02] border border-white/5 rounded-3xl p-10 hover:bg-white/[0.01] transition-all">
-                        <div className="flex justify-between items-start">
-                            <div className="flex-1">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <h4 className="text-white font-bold">{address.name}</h4>
-                                    {address.isDefault && (
-                                        <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 text-xs rounded-full font-bold">DEFAULT</span>
+                                    {/* Button(s) */}
+                                    {!profilePicture ? (
+                                        <button
+                                            type="button"
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="px-12 py-3 border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                            style={{ background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                        >
+                                            UPLOAD IMAGE
+                                        </button>
+                                    ) : (
+                                        <div className="flex gap-4">
+                                            <button
+                                                type="button"
+                                                onClick={() => fileInputRef.current?.click()}
+                                                className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                                                style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                            >
+                                                REPLACE
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setProfilePicture(null)}
+                                                className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-red-400/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
+                                                style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                            >
+                                                REMOVE
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
-                                <p className="text-sm text-gray-400 mb-1">{address.phone}</p>
-                                <p className="text-sm text-gray-400">
-                                    {address.addressLine1}{address.addressLine2 && `, ${address.addressLine2}`}<br />
-                                    {address.city}, {address.state} - {address.pincode}
-                                </p>
                             </div>
-                            <div className="flex gap-2">
-                                {!address.isDefault && (
+
+                            {/* Profile Form */}
+                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden" style={{ flex: 1.3, minHeight: '600px', padding: '120px 90px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
+                                {/* Background glowing orbs */}
+                                <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
+                                <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
+
+                                {/* Tech lines decoration */}
+                                <div className="absolute top-0 left-0 w-full h-full opacity-20">
+                                    <div className="absolute top-1/4 left-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+                                    <div className="absolute top-3/4 right-0 w-16 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent" />
+                                </div>
+
+                                <form onSubmit={handleUpdateProfile} className="relative flex flex-col h-full">
+                                    <div className="flex flex-col gap-8">
+                                        <div>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Full Name</label>
+                                            <input
+                                                type="text"
+                                                value={editName}
+                                                onChange={(e) => setEditName(e.target.value)}
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                style={{ padding: '24px 32px' }}
+                                                placeholder="Your Name"
+                                                disabled={isUpdating}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Company Name</label>
+                                            <input
+                                                type="text"
+                                                value={editCompany}
+                                                onChange={(e) => setEditCompany(e.target.value)}
+                                                className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                                style={{ padding: '24px 32px' }}
+                                                placeholder="Company (Optional)"
+                                                disabled={isUpdating}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Email Address</label>
+                                            <input
+                                                type="email"
+                                                value={user?.email || ''}
+                                                disabled
+                                                className="w-full bg-white/[0.02] border border-white/5 rounded-xl text-gray-500 text-lg cursor-not-allowed italic"
+                                                style={{ padding: '24px 32px' }}
+                                            />
+                                            <p className="text-xs text-gray-600 mt-3 px-1">Email cannot be changed for security reasons.</p>
+                                        </div>
+                                    </div>
+
                                     <button
-                                        onClick={() => handleSetDefaultAddress(address.id)}
-                                        className="p-2 text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors"
-                                        title="Set as default"
+                                        type="submit"
+                                        disabled={isUpdating}
+                                        className="w-full py-5 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-xl hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-8"
                                     >
-                                        <Home size={18} />
+                                        {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
+                                        {isUpdating ? 'Saving Changes...' : 'Save Profile'}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </motion.div>
+                );
+
+            case 'quotes':
+                return (
+                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                        <div className="mb-12">
+                            <div className="flex justify-end w-full mb-8">
+                                <button
+                                    onClick={() => setActiveSection('account')}
+                                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
+                                >
+                                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                                    <span className="font-black tracking-[0.2em] uppercase text-[10px]">Back</span>
+                                </button>
+                            </div>
+
+                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                                <div className="flex flex-col items-center md:items-start gap-2">
+                                    <h1 className="text-4xl font-black text-white uppercase tracking-tighter">My Quotes</h1>
+                                    <p className="text-gray-500 font-medium text-[13px] text-center md:text-left">Track and manage your bespoke quote requests and project valuations</p>
+                                    <div className="h-1 w-16 bg-purple-500/40 rounded-full mt-1" />
+                                </div>
+                                <button
+                                    onClick={() => router.push('/dashboard/request-quote')}
+                                    className="btn-primary mt-4 md:mt-0"
+                                >
+                                    <span>New Quote Request</span>
+                                    <Plus size={18} />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div
+                            className="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden"
+                            style={{ padding: 'max(20px, 4%)' }}
+                        >
+                            {isDataLoading ? (
+                                <div className="p-20 flex justify-center"><Loader2 className="animate-spin text-purple-500" /></div>
+                            ) : quotes.length > 0 ? (
+                                <div className="space-y-12">
+                                    {quotes.map((quote) => (
+                                        <div key={quote.id}
+                                            className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/[0.03] border border-white/5 rounded-3xl hover:bg-white/[0.06] transition-all group p-10 md:p-14"
+                                        >
+                                            <div className="flex gap-6 items-start">
+                                                <div className="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-lg">
+                                                    <FileText className="text-purple-400" size={18} />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <div className="text-white font-black text-lg" style={{ margin: 0, padding: 0, lineHeight: 1 }}>
+                                                        {quote.serviceType}
+                                                    </div>
+                                                    <div className="flex items-center gap-2" style={{ marginTop: '8px' }}>
+                                                        <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider bg-white/5 px-1.5 py-0.5 rounded-md">#{quote.id.slice(0, 8).toUpperCase()}</span>
+                                                        <span className="w-1 h-1 rounded-full bg-gray-700" />
+                                                        <span className="text-[10px] text-gray-500 font-medium">
+                                                            {(() => {
+                                                                const date = quote.createdAt;
+                                                                if (!date) return 'Recently';
+                                                                if (date instanceof Date) return date.toLocaleDateString();
+                                                                if (date && typeof date.toDate === 'function') return date.toDate().toLocaleDateString();
+                                                                if (date && typeof date.seconds === 'number') return new Date(date.seconds * 1000).toLocaleDateString();
+                                                                return 'Recently';
+                                                            })()}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 justify-between md:justify-end">
+                                                <div className="text-left md:text-right flex flex-col items-start md:items-end">
+                                                    <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${(() => {
+                                                        const s = quote.status.toLowerCase();
+                                                        if (s.includes('pending') || s === 'quotation') return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                                                        if (s.includes('approved') || s.includes('completed')) return 'bg-green-500/10 text-green-400 border-green-500/20';
+                                                        if (s.includes('rejected')) return 'bg-red-500/10 text-red-400 border-red-500/20';
+                                                        if (s.includes('cancelled')) return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+                                                        if (s.includes('review')) return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+                                                        return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+                                                    })()}`}>
+                                                        {quote.status}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center p-8 md:p-[60px]">
+                                    <div className="w-24 h-24 mx-auto mb-8 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shadow-2xl">
+                                        <FileText size={40} className="text-purple-400 opacity-60" strokeWidth={1} />
+                                    </div>
+                                    <h3 className="text-3xl font-black text-white mb-2 uppercase tracking-tighter">No quotes found</h3>
+                                    <p className="text-gray-500 text-lg font-medium">You haven&apos;t submitted any quote requests yet.</p>
+                                </div>
+                            )}
+                        </div>
+                    </motion.div>
+                );
+
+            case 'addresses':
+                return (
+                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
+                        <div className="mb-8 flex items-center justify-between">
+                            <div>
+                                <h1 className="text-3xl font-bold text-white mb-2">My Addresses</h1>
+                                <p className="text-gray-500">Manage your shipping addresses</p>
+                            </div>
+                            <div className="flex gap-3">
+                                {!isAddingAddress && !editingAddress && (
+                                    <button
+                                        onClick={() => setIsAddingAddress(true)}
+                                        className="flex items-center gap-2 px-4 py-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors"
+                                    >
+                                        <Plus size={16} /> Add Address
                                     </button>
                                 )}
                                 <button
-                                    onClick={() => setEditingAddress(address)}
-                                    className="p-2 text-gray-400 hover:bg-white/10 rounded-lg transition-colors"
+                                    onClick={() => setActiveSection('account')}
+                                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
                                 >
-                                    <Edit size={18} />
-                                </button>
-                                <button
-                                    onClick={() => handleDeleteAddress(address.id)}
-                                    className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
-                                >
-                                    <Trash2 size={18} />
+                                    <ArrowLeft size={16} /> Back
                                 </button>
                             </div>
                         </div>
-                    </div>
-                )) : (
-                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-20 text-center">
-                        <MapPin size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
-                        <h3 className="text-white font-bold">No addresses found</h3>
-                        <p className="text-gray-500 text-sm mt-1">Add your first shipping address</p>
-                    </div>
-                )}
-            </div>
-        </motion.div>
-    );
+
+                        {(isAddingAddress || editingAddress) && (
+                            <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-12 mb-8">
+                                <h3 className="text-xl font-bold text-white mb-6">{editingAddress ? 'Edit Address' : 'Add New Address'}</h3>
+                                <form onSubmit={editingAddress ? handleUpdateAddress : handleAddAddress} className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Full Name</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.name : newAddress.name}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, name: e.target.value })
+                                                : setNewAddress({ ...newAddress, name: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Phone</label>
+                                        <input
+                                            type="tel"
+                                            required
+                                            value={editingAddress ? editingAddress.phone : newAddress.phone}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, phone: e.target.value })
+                                                : setNewAddress({ ...newAddress, phone: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
+                                        />
+                                    </div>
+                                    <div className="col-span-2">
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 1</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.addressLine1 : newAddress.addressLine1}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, addressLine1: e.target.value })
+                                                : setNewAddress({ ...newAddress, addressLine1: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
+                                        />
+                                    </div>
+                                    <div className="col-span-2">
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Address Line 2 (Optional)</label>
+                                        <input
+                                            type="text"
+                                            value={editingAddress ? (editingAddress.addressLine2 || '') : newAddress.addressLine2}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, addressLine2: e.target.value })
+                                                : setNewAddress({ ...newAddress, addressLine2: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">City</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.city : newAddress.city}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, city: e.target.value })
+                                                : setNewAddress({ ...newAddress, city: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">State</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.state : newAddress.state}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, state: e.target.value })
+                                                : setNewAddress({ ...newAddress, state: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all placeholder:text-gray-700"
+                                            style={{ padding: '20px 32px' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-400 mb-2">Pincode</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={editingAddress ? editingAddress.pincode : newAddress.pincode}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, pincode: e.target.value })
+                                                : setNewAddress({ ...newAddress, pincode: e.target.value })
+                                            }
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl text-white outline-none focus:border-cyan-500/50 transition-all"
+                                            style={{ padding: '20px 32px' }}
+                                        />
+                                    </div>
+                                    <div className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id="isDefault"
+                                            checked={editingAddress ? editingAddress.isDefault : newAddress.isDefault}
+                                            onChange={(e) => editingAddress
+                                                ? setEditingAddress({ ...editingAddress, isDefault: e.target.checked })
+                                                : setNewAddress({ ...newAddress, isDefault: e.target.checked })
+                                            }
+                                            className="mr-2"
+                                        />
+                                        <label htmlFor="isDefault" className="text-sm text-gray-400">Set as default address</label>
+                                    </div>
+                                    <div className="col-span-2 flex gap-4 mt-2">
+                                        <button
+                                            type="submit"
+                                            disabled={isUpdating}
+                                            className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-cyan-500 text-black font-bold rounded-2xl hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            {isUpdating ? (
+                                                <Loader2 className="animate-spin" size={20} />
+                                            ) : (
+                                                <>
+                                                    <CheckCircle2 size={20} />
+                                                    {editingAddress ? 'Update Address' : 'Save Address'}
+                                                </>
+                                            )}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setIsAddingAddress(false);
+                                                setEditingAddress(null);
+                                            }}
+                                            className="flex-1 flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-gray-300 font-bold rounded-2xl border border-white/10 hover:bg-white/10 hover:border-white/20 hover:text-white transition-all"
+                                        >
+                                            <CloseIcon size={20} />
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        )}
+
+                        <div className="grid gap-4">
+                            {addresses.length > 0 ? addresses.map((address) => (
+                                <div key={address.id} className="bg-white/[0.02] border border-white/5 rounded-3xl p-10 hover:bg-white/[0.01] transition-all">
+                                    <div className="flex justify-between items-start">
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <h4 className="text-white font-bold">{address.name}</h4>
+                                                {address.isDefault && (
+                                                    <span className="px-2 py-0.5 bg-cyan-500/20 text-cyan-400 text-xs rounded-full font-bold">DEFAULT</span>
+                                                )}
+                                            </div>
+                                            <p className="text-sm text-gray-400 mb-1">{address.phone}</p>
+                                            <p className="text-sm text-gray-400">
+                                                {address.addressLine1}{address.addressLine2 && `, ${address.addressLine2}`}<br />
+                                                {address.city}, {address.state} - {address.pincode}
+                                            </p>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            {!address.isDefault && (
+                                                <button
+                                                    onClick={() => handleSetDefaultAddress(address.id)}
+                                                    className="p-2 text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-colors"
+                                                    title="Set as default"
+                                                >
+                                                    <Home size={18} />
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={() => setEditingAddress(address)}
+                                                className="p-2 text-gray-400 hover:bg-white/10 rounded-lg transition-colors"
+                                            >
+                                                <Edit size={18} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteAddress(address.id)}
+                                                className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )) : (
+                                <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-20 text-center">
+                                    <MapPin size={48} className="mx-auto text-gray-700 mb-4 opacity-20" />
+                                    <h3 className="text-white font-bold">No addresses found</h3>
+                                    <p className="text-gray-500 text-sm mt-1">Add your first shipping address</p>
+                                </div>
+                            )}
+                        </div>
+                    </motion.div>
+                );
 
             case 'password':
-    return (
-        <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Change Password</h1>
-                <p className="text-gray-500">Update your account password</p>
-            </div>
-
-            <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl p-16 shadow-2xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)' }}>
-                {/* Background glowing orbs */}
-                <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl opacity-50" />
-                <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl opacity-50" />
-
-                <form onSubmit={handleChangePassword} style={{ display: 'flex', flexDirection: 'column', gap: '0.6cm', position: 'relative' }}>
-                    <div>
-                        <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Current Password</label>
-                        <input
-                            type="password"
-                            required
-                            value={passwordForm.currentPassword}
-                            onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
-                            className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                            style={{ padding: '24px 32px' }}
-                            placeholder="••••••••"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">New Password</label>
-                        <input
-                            type="password"
-                            required
-                            value={passwordForm.newPassword}
-                            onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                            className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                            style={{ padding: '24px 32px' }}
-                            placeholder="••••••••"
-                        />
-                        <p className="text-[10px] text-gray-600 uppercase tracking-widest mt-3 px-1">Min. 8 characters required</p>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Confirm New Password</label>
-                        <input
-                            type="password"
-                            required
-                            value={passwordForm.confirmPassword}
-                            onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                            className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                            style={{ padding: '24px 32px' }}
-                            placeholder="••••••••"
-                        />
-                    </div>
-
-                    {passwordError && (
-                        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
-                            {passwordError}
+                return (
+                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold text-white mb-2">Change Password</h1>
+                            <p className="text-gray-500">Update your account password</p>
                         </div>
-                    )}
 
-                    {passwordSuccess && (
-                        <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
-                            Password changed successfully! Logging out...
+                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl p-16 shadow-2xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)' }}>
+                            {/* Background glowing orbs */}
+                            <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl opacity-50" />
+                            <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl opacity-50" />
+
+                            <form onSubmit={handleChangePassword} style={{ display: 'flex', flexDirection: 'column', gap: '0.6cm', position: 'relative' }}>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Current Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordForm.currentPassword}
+                                        onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
+                                        className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        style={{ padding: '24px 32px' }}
+                                        placeholder="••••••••"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">New Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordForm.newPassword}
+                                        onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+                                        className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        style={{ padding: '24px 32px' }}
+                                        placeholder="••••••••"
+                                    />
+                                    <p className="text-[10px] text-gray-600 uppercase tracking-widest mt-3 px-1">Min. 8 characters required</p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Confirm New Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        value={passwordForm.confirmPassword}
+                                        onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+                                        className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
+                                        style={{ padding: '24px 32px' }}
+                                        placeholder="••••••••"
+                                    />
+                                </div>
+
+                                {passwordError && (
+                                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                                        {passwordError}
+                                    </div>
+                                )}
+
+                                {passwordSuccess && (
+                                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg text-green-400 text-sm">
+                                        Password changed successfully! Logging out...
+                                    </div>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    disabled={isUpdating || passwordSuccess}
+                                    className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-none hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
+                                    style={{ padding: '20px 48px' }}
+                                >
+                                    {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
+                                    {isUpdating ? 'Updating Password...' : 'Save Password'}
+                                </button>
+                            </form>
                         </div>
-                    )}
-
-                    <button
-                        type="submit"
-                        disabled={isUpdating || passwordSuccess}
-                        className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-none hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
-                        style={{ padding: '20px 48px' }}
-                    >
-                        {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
-                        {isUpdating ? 'Updating Password...' : 'Save Password'}
-                    </button>
-                </form>
-            </div>
-        </motion.div>
-    );
+                    </motion.div>
+                );
 
             case 'deactivate':
-    return (
-        <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Deactivate Account</h1>
-                <p className="text-gray-500">Temporarily deactivate your account</p>
-            </div>
+                return (
+                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold text-white mb-2">Deactivate Account</h1>
+                            <p className="text-gray-500">Temporarily deactivate your account</p>
+                        </div>
 
-            <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl p-8">
-                {!showDeactivateConfirm ? (
-                    <div className="text-center">
-                        <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
-                            <AlertTriangle className="w-8 h-8 text-red-400" />
+                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl p-8">
+                            {!showDeactivateConfirm ? (
+                                <div className="text-center">
+                                    <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-6">
+                                        <AlertTriangle className="w-8 h-8 text-red-400" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-3">Deactivate Your Account?</h3>
+                                    <p className="text-gray-400 mb-6 leading-relaxed">
+                                        This will temporarily deactivate your account. You can reactivate it anytime by logging in again.
+                                    </p>
+                                    <div className="space-y-3">
+                                        <button
+                                            onClick={() => setShowDeactivateConfirm(true)}
+                                            className="w-full py-3 bg-red-500/20 text-red-400 font-bold rounded-lg hover:bg-red-500/30 transition-colors border border-red-500/30"
+                                        >
+                                            Continue to Deactivation
+                                        </button>
+                                        <button
+                                            onClick={() => setActiveSection('account')}
+                                            className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="text-center">
+                                    <h3 className="text-xl font-bold text-white mb-3">Are you absolutely sure?</h3>
+                                    <p className="text-gray-400 mb-6">
+                                        This action will deactivate your account and log you out immediately.
+                                    </p>
+                                    <div className="space-y-3">
+                                        <button
+                                            onClick={handleDeactivateAccount}
+                                            disabled={isUpdating}
+                                            className="w-full py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                        >
+                                            {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <UserX size={20} />}
+                                            {isUpdating ? 'Deactivating...' : 'Yes, Deactivate Account'}
+                                        </button>
+                                        <button
+                                            onClick={() => setShowDeactivateConfirm(false)}
+                                            className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                        >
+                                            No, Keep Account Active
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-3">Deactivate Your Account?</h3>
-                        <p className="text-gray-400 mb-6 leading-relaxed">
-                            This will temporarily deactivate your account. You can reactivate it anytime by logging in again.
-                        </p>
-                        <div className="space-y-3">
-                            <button
-                                onClick={() => setShowDeactivateConfirm(true)}
-                                className="w-full py-3 bg-red-500/20 text-red-400 font-bold rounded-lg hover:bg-red-500/30 transition-colors border border-red-500/30"
-                            >
-                                Continue to Deactivation
-                            </button>
-                            <button
-                                onClick={() => setActiveSection('account')}
-                                className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="text-center">
-                        <h3 className="text-xl font-bold text-white mb-3">Are you absolutely sure?</h3>
-                        <p className="text-gray-400 mb-6">
-                            This action will deactivate your account and log you out immediately.
-                        </p>
-                        <div className="space-y-3">
-                            <button
-                                onClick={handleDeactivateAccount}
-                                disabled={isUpdating}
-                                className="w-full py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-                            >
-                                {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <UserX size={20} />}
-                                {isUpdating ? 'Deactivating...' : 'Yes, Deactivate Account'}
-                            </button>
-                            <button
-                                onClick={() => setShowDeactivateConfirm(false)}
-                                className="w-full py-3 bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
-                            >
-                                No, Keep Account Active
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
-        </motion.div>
-    );
+                    </motion.div>
+                );
 
             default:
-    return (
-        <div className="p-20 text-center bg-white/[0.01] border border-dashed border-white/5 rounded-3xl">
-            <AlertCircle size={40} className="mx-auto text-gray-800 mb-4" />
-            <h2 className="text-xl font-bold text-white mb-2">Under Construction</h2>
-            <p className="text-gray-500">The <strong>{activeSection}</strong> module is currently being improved.</p>
-            <button
-                onClick={() => setActiveSection('account')}
-                className="mt-6 px-6 py-2 bg-white/5 rounded-full text-sm text-gray-400 hover:text-white transition-colors"
-            >
-                Return to Overview
-            </button>
-        </div>
-    );
-}
+                return (
+                    <div className="p-20 text-center bg-white/[0.01] border border-dashed border-white/5 rounded-3xl">
+                        <AlertCircle size={40} className="mx-auto text-gray-800 mb-4" />
+                        <h2 className="text-xl font-bold text-white mb-2">Under Construction</h2>
+                        <p className="text-gray-500">The <strong>{activeSection}</strong> module is currently being improved.</p>
+                        <button
+                            onClick={() => setActiveSection('account')}
+                            className="mt-6 px-6 py-2 bg-white/5 rounded-full text-sm text-gray-400 hover:text-white transition-colors"
+                        >
+                            Return to Overview
+                        </button>
+                    </div>
+                );
+        }
     };
 
 
-return (
-    <div className="min-h-screen bg-transparent flex flex-col md:flex-row dashboard-layout relative overflow-hidden">
-        {/* Background elements to match home page */}
-        <div className="absolute inset-0 pointer-events-none -z-10">
-            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
-            <div className="horizon-grid opacity-30" />
-            <div className="grid-background opacity-20" />
-        </div>
-        {/* Mobile Menu Toggle */}
-        <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            style={{
-                position: 'absolute',
-                top: '70px',
-                left: '15px',
-                zIndex: 50,
-                display: isMobileMenuOpen ? 'none' : 'flex',
-                padding: '10px',
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '12px',
-                color: '#fff',
-                cursor: 'pointer',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-                transition: 'all 0.3s ease',
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}
-            className={cn(
-                "mobile-menu-toggle hover:bg-white/10 active:scale-95",
-                isMobileMenuOpen ? "hidden" : "flex md:hidden"
-            )}
-        >
-            <MenuIcon size={24} />
-        </button>
-
-        {/* Sidebar */}
-        <aside
-            data-lenis-prevent
-            style={{
-                position: 'fixed',
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: 'min(300px, 80vw)',
-                backgroundColor: 'rgba(2, 2, 5, 0.95)',
-                backdropFilter: 'blur(20px)',
-                borderRight: '1px solid rgba(255, 255, 255, 0.05)',
-                display: 'flex',
-                flexDirection: 'column',
-                zIndex: 999,
-                transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                overflowX: 'hidden',
-            }}
-            className="dashboard-sidebar shadow-2xl"
-        >
-            {/* User Profile Header */}
-            <div
-                style={{
-                    padding: '40px 28px',
-                    borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                    position: 'relative',
-                }}
-            >
-                {/* Mobile Close Button inside Sidebar */}
-                <button
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="md:hidden absolute top-6 right-6 p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-xl transition-all"
-                >
-                    <CloseIcon size={24} />
-                </button>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                    <div
-                        style={{
-                            width: '48px',
-                            height: '48px',
-                            borderRadius: '50%',
-                            background: (profilePicture || user?.profilePicture) ? 'transparent' : 'linear-gradient(to bottom right, #06b6d4, #3b82f6)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '20px',
-                            fontWeight: 'bold',
-                            color: '#fff',
-                            overflow: 'hidden',
-                        }}
-                    >
-                        {(profilePicture || user?.profilePicture) ? (
-                            <img
-                                src={profilePicture || user?.profilePicture}
-                                alt="Profile"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            />
-                        ) : (
-                            user?.name?.charAt(0).toUpperCase()
-                        )}
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                        <h3
-                            style={{
-                                fontSize: '1rem',
-                                fontWeight: '600',
-                                color: '#fff',
-                                margin: 0,
-                                marginBottom: '2px',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                            }}
-                        >
-                            {user?.name}
-                        </h3>
-                        <p
-                            style={{
-                                fontSize: '0.75rem',
-                                color: '#888',
-                                margin: 0,
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                            }}
-                        >
-                            {user?.email}
-                        </p>
-                    </div>
-                </div>
+    return (
+        <div className="min-h-screen bg-transparent flex flex-col md:flex-row dashboard-layout relative overflow-hidden">
+            {/* Background elements to match home page */}
+            <div className="absolute inset-0 pointer-events-none -z-10">
+                <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+                <div className="horizon-grid opacity-30" />
+                <div className="grid-background opacity-20" />
             </div>
-
-            {/* Navigation */}
-            <nav
+            {/* Mobile Menu Toggle */}
+            <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
-                    flex: 1,
-                    padding: '24px 0',
-                    overflowY: 'auto',
+                    position: 'absolute',
+                    top: '70px',
+                    left: '15px',
+                    zIndex: 50,
+                    display: isMobileMenuOpen ? 'none' : 'flex',
+                    padding: '10px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    backdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '12px',
+                    color: '#fff',
+                    cursor: 'pointer',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+                    transition: 'all 0.3s ease',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}
-                className="custom-scrollbar"
+                className={cn(
+                    "mobile-menu-toggle hover:bg-white/10 active:scale-95",
+                    isMobileMenuOpen ? "hidden" : "flex md:hidden"
+                )}
             >
-                {sidebarItems.map((item) => {
-                    const active = activeSection === item.id;
-                    return (
-                        <button
-                            key={item.id}
-                            onClick={() => {
-                                handleSidebarClick(item.id);
-                                setIsMobileMenuOpen(false);
-                            }}
+                <MenuIcon size={24} />
+            </button>
+
+            {/* Sidebar */}
+            <aside
+                data-lenis-prevent
+                style={{
+                    position: 'fixed',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: 'min(300px, 80vw)',
+                    backgroundColor: 'rgba(2, 2, 5, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRight: '1px solid rgba(255, 255, 255, 0.05)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    zIndex: 999,
+                    transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    overflowX: 'hidden',
+                }}
+                className="dashboard-sidebar shadow-2xl"
+            >
+                {/* User Profile Header */}
+                <div
+                    style={{
+                        padding: '40px 28px',
+                        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                        position: 'relative',
+                    }}
+                >
+                    {/* Mobile Close Button inside Sidebar */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="md:hidden absolute top-6 right-6 p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                    >
+                        <CloseIcon size={24} />
+                    </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                        <div
                             style={{
-                                width: 'calc(100% - 32px)',
+                                width: '48px',
+                                height: '48px',
+                                borderRadius: '50%',
+                                background: (profilePicture || user?.profilePicture) ? 'transparent' : 'linear-gradient(to bottom right, #06b6d4, #3b82f6)',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '18px',
-                                padding: '22px 32px',
-                                margin: '8px 16px',
-                                borderRadius: '20px',
-                                textDecoration: 'none',
-                                color: active ? '#fff' : '#888',
-                                backgroundColor: active
-                                    ? 'rgba(109, 40, 217, 0.15)'
-                                    : 'transparent',
-                                borderLeft: active ? '4px solid #6D28D9' : '4px solid transparent',
-                                borderTop: 'none',
-                                borderRight: 'none',
-                                borderBottom: 'none',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                fontWeight: active ? '700' : '500',
-                                fontSize: '0.95rem',
-                                cursor: 'pointer',
-                                fontFamily: 'inherit',
-                                whiteSpace: 'nowrap',
+                                justifyContent: 'center',
+                                fontSize: '20px',
+                                fontWeight: 'bold',
+                                color: '#fff',
                                 overflow: 'hidden',
-                                boxShadow: active ? '0 4px 12px rgba(109, 40, 217, 0.15)' : 'none'
-                            }}
-                            onMouseEnter={(e) => {
-                                if (!active) {
-                                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
-                                    e.currentTarget.style.color = '#fff';
-                                }
-                            }}
-                            onMouseLeave={(e) => {
-                                if (!active) {
-                                    e.currentTarget.style.backgroundColor = 'transparent';
-                                    e.currentTarget.style.color = '#888';
-                                }
                             }}
                         >
-                            <item.icon size={20} />
-                            <span>{item.label}</span>
-                        </button>
-                    );
-                })}
-            </nav>
-        </aside>
+                            {(profilePicture || user?.profilePicture) ? (
+                                <img
+                                    src={profilePicture || user?.profilePicture}
+                                    alt="Profile"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                            ) : (
+                                user?.name?.charAt(0).toUpperCase()
+                            )}
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                            <h3
+                                style={{
+                                    fontSize: '1rem',
+                                    fontWeight: '600',
+                                    color: '#fff',
+                                    margin: 0,
+                                    marginBottom: '2px',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}
+                            >
+                                {user?.name}
+                            </h3>
+                            <p
+                                style={{
+                                    fontSize: '0.75rem',
+                                    color: '#888',
+                                    margin: 0,
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}
+                            >
+                                {user?.email}
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-        <main
-            style={{
-                marginLeft: '300px',
-                minHeight: '100vh',
-                padding: '120px max(24px, 5%) 100px max(24px, 5%)',
-                flex: 1,
-                maxWidth: '1400px',
-                marginRight: 'auto',
-            }}
-            className="dashboard-main-content"
-        >
-            {renderSection()}
-        </main>
-
-        {/* Mobile Overlay */}
-        {
-            isMobileMenuOpen && (
-                <div
-                    onClick={() => setIsMobileMenuOpen(false)}
+                {/* Navigation */}
+                <nav
                     style={{
-                        position: 'fixed',
-                        inset: 0,
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        zIndex: 998,
-                        display: 'none',
+                        flex: 1,
+                        padding: '24px 0',
+                        overflowY: 'auto',
                     }}
-                    className="mobile-overlay"
-                />
-            )
-        }
+                    className="custom-scrollbar"
+                >
+                    {sidebarItems.map((item) => {
+                        const active = activeSection === item.id;
+                        return (
+                            <button
+                                key={item.id}
+                                onClick={() => {
+                                    handleSidebarClick(item.id);
+                                    setIsMobileMenuOpen(false);
+                                }}
+                                style={{
+                                    width: 'calc(100% - 32px)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '18px',
+                                    padding: '22px 32px',
+                                    margin: '8px 16px',
+                                    borderRadius: '20px',
+                                    textDecoration: 'none',
+                                    color: active ? '#fff' : '#888',
+                                    backgroundColor: active
+                                        ? 'rgba(109, 40, 217, 0.15)'
+                                        : 'transparent',
+                                    borderLeft: active ? '4px solid #6D28D9' : '4px solid transparent',
+                                    borderTop: 'none',
+                                    borderRight: 'none',
+                                    borderBottom: 'none',
+                                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    fontWeight: active ? '700' : '500',
+                                    fontSize: '0.95rem',
+                                    cursor: 'pointer',
+                                    fontFamily: 'inherit',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    boxShadow: active ? '0 4px 12px rgba(109, 40, 217, 0.15)' : 'none'
+                                }}
+                                onMouseEnter={(e) => {
+                                    if (!active) {
+                                        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
+                                        e.currentTarget.style.color = '#fff';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (!active) {
+                                        e.currentTarget.style.backgroundColor = 'transparent';
+                                        e.currentTarget.style.color = '#888';
+                                    }
+                                }}
+                            >
+                                <item.icon size={20} />
+                                <span>{item.label}</span>
+                            </button>
+                        );
+                    })}
+                </nav>
+            </aside>
 
-        <style jsx>{`
+            <main
+                style={{
+                    marginLeft: '300px',
+                    minHeight: '100vh',
+                    padding: '120px max(24px, 5%) 100px max(24px, 5%)',
+                    flex: 1,
+                    maxWidth: '1400px',
+                    marginRight: 'auto',
+                }}
+                className="dashboard-main-content"
+            >
+                {renderSection()}
+            </main>
+
+            {/* Mobile Overlay */}
+            {
+                isMobileMenuOpen && (
+                    <div
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        style={{
+                            position: 'fixed',
+                            inset: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            zIndex: 998,
+                            display: 'none',
+                        }}
+                        className="mobile-overlay"
+                    />
+                )
+            }
+
+            <style jsx>{`
                 @media (max-width: 768px) {
                     .mobile-menu-toggle {
                         display: block !important;
@@ -1950,6 +1949,6 @@ return (
                     }
                 }
             `}</style>
-    </div >
-);
+        </div >
+    );
 }
