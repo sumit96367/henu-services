@@ -142,7 +142,7 @@ export default function SettingsInterface({
 
     return (
         <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">Settings</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-6" style={{ marginTop: isMobile ? '80px' : '0' }}>Settings</h1>
 
             {/* Tabs Navigation */}
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide border-b border-white/10">
@@ -170,7 +170,7 @@ export default function SettingsInterface({
             {/* Settings Content */}
             <div
                 className="bg-white/[0.02] border border-white/5 rounded-2xl"
-                style={{ padding: isMobile ? '24px' : '40px' }}
+                style={{ padding: isMobile ? '16px' : '40px' }}
             >
 
 
@@ -190,17 +190,17 @@ export default function SettingsInterface({
                                 { key: 'smsNotifications', label: 'SMS Notifications', icon: Smartphone, description: 'Receive notifications via SMS' },
                                 { key: 'marketing', label: 'Marketing Emails', icon: Mail, description: 'Promotional offers and product updates' }
                             ].map((item, index) => (
-                                <div key={item.key} className={`flex items-center justify-between bg-white/[0.02] hover:bg-white/[0.04] transition-all ${index !== 4 ? 'border-b border-white/5' : ''}`} style={{ padding: '15px 24px', margin: 0 }}>
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-lg bg-purple-600/10 flex items-center justify-center">
-                                            <item.icon size={20} className="text-purple-400" />
+                                <div key={item.key} className={`flex items-center justify-between bg-white/[0.04] hover:bg-white/[0.06] transition-all border border-white/5 rounded-2xl mb-3`} style={{ padding: isMobile ? '16px' : '20px 24px' }}>
+                                    <div className="flex items-center gap-4 pr-3 flex-1 min-w-0">
+                                        <div className={`rounded-xl bg-purple-600/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(147,51,234,0.15)] ${isMobile ? 'w-10 h-10' : 'w-12 h-12'}`}>
+                                            <item.icon size={isMobile ? 18 : 22} className="text-purple-400" />
                                         </div>
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                                            <p className="font-semibold text-white" style={{ margin: 0, lineHeight: '1.2' }}>{item.label}</p>
-                                            <p className="text-sm text-gray-400" style={{ margin: 0, lineHeight: '1.2' }}>{item.description}</p>
+                                        <div className="flex flex-col gap-0.5">
+                                            <p className="font-bold text-white text-sm md:text-lg tracking-wide leading-tight truncate">{item.label}</p>
+                                            <p className="text-xs md:text-sm text-gray-400 font-medium leading-normal line-clamp-2">{item.description}</p>
                                         </div>
                                     </div>
-                                    <label className="relative inline-block w-12 h-6 cursor-pointer">
+                                    <label className="relative inline-flex items-center cursor-pointer flex-shrink-0">
                                         <input
                                             type="checkbox"
                                             checked={notificationSettings[item.key as keyof typeof notificationSettings]}
@@ -210,8 +210,7 @@ export default function SettingsInterface({
                                             })}
                                             className="sr-only peer"
                                         />
-                                        <div className="w-full h-full bg-gray-700 peer-checked:bg-purple-600 rounded-full transition-all"></div>
-                                        <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-all peer-checked:translate-x-6"></div>
+                                        <div className="w-11 h-6 bg-gray-700/50 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-purple-600 peer-checked:to-indigo-600 shadow-inner"></div>
                                     </label>
                                 </div>
                             ))}

@@ -1081,7 +1081,7 @@ export default function DashboardPage() {
 
                         <div className="flex flex-col md:flex-row" style={{ gap: '0.4cm' }}>
                             {/* Profile Picture Upload Box */}
-                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col items-center justify-center" style={{ flex: 1, minHeight: '600px', padding: '120px 80px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
+                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col items-center justify-center" style={{ flex: 1, minHeight: '400px', padding: '60px 40px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
                                 {/* Background glowing orbs */}
                                 <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
                                 <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
@@ -1108,7 +1108,7 @@ export default function DashboardPage() {
                                     {/* Circular Avatar Display */}
                                     <div className="relative flex items-center justify-center mb-4">
                                         <div
-                                            className="w-48 h-48 rounded-full flex items-center justify-center overflow-hidden relative"
+                                            className="w-40 h-40 rounded-full flex items-center justify-center overflow-hidden relative"
                                             style={{
                                                 boxShadow: '0 0 30px rgba(6, 182, 212, 0.4), 0 0 60px rgba(168, 85, 247, 0.3)',
                                                 background: 'rgba(0, 0, 0, 0.6)'
@@ -1143,7 +1143,7 @@ export default function DashboardPage() {
                                                 type="button"
                                                 onClick={() => fileInputRef.current?.click()}
                                                 className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-                                                style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                                style={{ padding: '12px 32px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
                                             >
                                                 REPLACE
                                             </button>
@@ -1151,7 +1151,7 @@ export default function DashboardPage() {
                                                 type="button"
                                                 onClick={() => setProfilePicture(null)}
                                                 className="border border-white/20 rounded-xl font-semibold tracking-wider transition-all hover:bg-white/5 hover:border-red-400/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
-                                                style={{ padding: '20px 48px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
+                                                style={{ padding: '12px 32px', background: 'rgba(255, 255, 255, 0.02)', color: '#d1d5db' }}
                                             >
                                                 REMOVE
                                             </button>
@@ -1161,7 +1161,7 @@ export default function DashboardPage() {
                             </div>
 
                             {/* Profile Form */}
-                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden" style={{ flex: 1.3, minHeight: '600px', padding: '120px 90px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
+                            <div className="border border-cyan-500/30 rounded-[40px] shadow-2xl relative overflow-hidden" style={{ flex: 1.3, minHeight: '400px', padding: '60px 60px', background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)', backdropFilter: 'blur(16px)', boxShadow: '0 0 50px rgba(6, 182, 212, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 12px 48px rgba(0, 0, 0, 0.5)' }}>
                                 {/* Background glowing orbs */}
                                 <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl" />
                                 <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
@@ -1173,50 +1173,50 @@ export default function DashboardPage() {
                                 </div>
 
                                 <form onSubmit={handleUpdateProfile} className="relative flex flex-col h-full">
-                                    <div className="flex flex-col gap-8">
+                                    <div className="flex flex-col gap-6">
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Full Name</label>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Full Name</label>
                                             <input
                                                 type="text"
                                                 value={editName}
                                                 onChange={(e) => setEditName(e.target.value)}
                                                 className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                                style={{ padding: '24px 32px' }}
+                                                style={{ padding: '16px 24px' }}
                                                 placeholder="Your Name"
                                                 disabled={isUpdating}
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Company Name</label>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Company Name</label>
                                             <input
                                                 type="text"
                                                 value={editCompany}
                                                 onChange={(e) => setEditCompany(e.target.value)}
                                                 className="w-full bg-black/40 border border-white/10 rounded-xl text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                                style={{ padding: '24px 32px' }}
+                                                style={{ padding: '16px 24px' }}
                                                 placeholder="Company (Optional)"
                                                 disabled={isUpdating}
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 ml-1">Email Address</label>
+                                            <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Email Address</label>
                                             <input
                                                 type="email"
                                                 value={user?.email || ''}
                                                 disabled
                                                 className="w-full bg-white/[0.02] border border-white/5 rounded-xl text-gray-500 text-lg cursor-not-allowed italic"
-                                                style={{ padding: '24px 32px' }}
+                                                style={{ padding: '16px 24px' }}
                                             />
-                                            <p className="text-xs text-gray-600 mt-3 px-1">Email cannot be changed for security reasons.</p>
+                                            <p className="text-xs text-gray-600 mt-2 px-1">Email cannot be changed for security reasons.</p>
                                         </div>
                                     </div>
 
                                     <button
                                         type="submit"
                                         disabled={isUpdating}
-                                        className="w-full py-5 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-none hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-8"
+                                        className="w-full py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-none hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-8"
                                     >
-                                        {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
+                                        {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <CheckCircle2 size={20} />}
                                         {isUpdating ? 'Saving Changes...' : 'Save Profile'}
                                     </button>
                                 </form>
@@ -1571,11 +1571,11 @@ export default function DashboardPage() {
                 return (
                     <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
                         <div className="mb-8">
-                            <h1 className="text-3xl font-bold text-white mb-2">Change Password</h1>
+                            <h1 className="text-3xl font-bold text-white mb-2" style={{ marginTop: isMobile ? '80px' : '0' }}>Change Password</h1>
                             <p className="text-gray-500">Update your account password</p>
                         </div>
 
-                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)', padding: isMobile ? '32px' : '64px' }}>
+                        <div className="max-w-2xl bg-white/[0.02] border border-white/5 rounded-3xl shadow-2xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.03) 0%, rgba(168, 85, 247, 0.03) 100%)', backdropFilter: 'blur(16px)', padding: isMobile ? '24px' : '64px' }}>
                             {/* Background glowing orbs */}
                             <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl opacity-50" />
                             <div className="absolute bottom-10 right-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl opacity-50" />
@@ -1589,7 +1589,7 @@ export default function DashboardPage() {
                                         value={passwordForm.currentPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
                                         className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                        style={{ padding: isMobile ? '18px 24px' : '24px 32px' }}
+                                        style={{ padding: isMobile ? '16px 20px' : '24px 32px' }}
                                         placeholder="••••••••"
                                     />
                                 </div>
@@ -1601,7 +1601,7 @@ export default function DashboardPage() {
                                         value={passwordForm.newPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
                                         className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                        style={{ padding: isMobile ? '18px 24px' : '24px 32px' }}
+                                        style={{ padding: isMobile ? '16px 20px' : '24px 32px' }}
                                         placeholder="••••••••"
                                     />
                                     <p className="text-[10px] text-gray-600 uppercase tracking-widest mt-3 px-1">Min. 8 characters required</p>
@@ -1614,7 +1614,7 @@ export default function DashboardPage() {
                                         value={passwordForm.confirmPassword}
                                         onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
                                         className="w-full bg-black/40 border border-white/10 rounded-none text-white text-lg focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
-                                        style={{ padding: isMobile ? '18px 24px' : '24px 32px' }}
+                                        style={{ padding: isMobile ? '16px 20px' : '24px 32px' }}
                                         placeholder="••••••••"
                                     />
                                 </div>
@@ -1635,7 +1635,7 @@ export default function DashboardPage() {
                                     type="submit"
                                     disabled={isUpdating || passwordSuccess}
                                     className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-black font-extrabold text-lg rounded-none hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 mt-4"
-                                    style={{ padding: isMobile ? '16px 32px' : '20px 48px' }}
+                                    style={{ padding: isMobile ? '16px 20px' : '20px 48px' }}
                                 >
                                     {isUpdating ? <Loader2 className="animate-spin" size={22} /> : <CheckCircle2 size={22} />}
                                     {isUpdating ? 'Updating Password...' : 'Save Password'}
@@ -1649,11 +1649,11 @@ export default function DashboardPage() {
                 return (
                     <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
                         <div className="mb-8">
-                            <h1 className="text-3xl font-bold text-white mb-2">Deactivate Account</h1>
+                            <h1 className="text-3xl font-bold text-white mb-2" style={{ marginTop: isMobile ? '80px' : '0' }}>Deactivate Account</h1>
                             <p className="text-gray-500">Temporarily deactivate your account</p>
                         </div>
 
-                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl" style={{ padding: isMobile ? '32px' : '48px' }}>
+                        <div className="max-w-xl bg-white/[0.02] border border-white/5 rounded-2xl" style={{ padding: isMobile ? '24px' : '48px' }}>
                             {!showDeactivateConfirm ? (
                                 <div className="text-center">
                                     <div className="rounded-full bg-red-500/10 flex items-center justify-center" style={{ width: '64px', height: '64px', margin: '0 auto 24px auto' }}>
@@ -1669,11 +1669,11 @@ export default function DashboardPage() {
                                             className="w-full bg-red-500/20 text-red-400 font-bold rounded-lg hover:bg-red-500/30 transition-colors border border-red-500/30"
                                             style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
-                                            Continue to Deactivation
+                                            Deactivate Account
                                         </button>
                                         <button
                                             onClick={() => setActiveSection('account')}
-                                            className="w-full bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                            className="w-full bg-white/[0.05] text-gray-400 font-bold rounded-lg hover:bg-white/[0.1] hover:text-white transition-colors"
                                             style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
                                             Cancel
@@ -1682,26 +1682,30 @@ export default function DashboardPage() {
                                 </div>
                             ) : (
                                 <div className="text-center">
+                                    <div className="rounded-full bg-red-500/10 flex items-center justify-center animate-pulse" style={{ width: '64px', height: '64px', margin: '0 auto 24px auto' }}>
+                                        <UserX className="text-red-400" style={{ width: '32px', height: '32px' }} />
+                                    </div>
                                     <h3 className="text-xl font-bold text-white mb-3">Are you absolutely sure?</h3>
-                                    <p className="text-gray-400 mb-6">
-                                        This action will deactivate your account and log you out immediately.
+                                    <p className="text-gray-400 mb-6 leading-relaxed">
+                                        This action cannot be undone immediately. Please confirm your decision.
                                     </p>
                                     <div className="space-y-3">
                                         <button
                                             onClick={handleDeactivateAccount}
                                             disabled={isUpdating}
-                                            className="w-full bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                            className="w-full bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors shadow-[0_0_20px_rgba(220,38,38,0.4)] flex items-center justify-center gap-2"
                                             style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
-                                            {isUpdating ? <Loader2 className="animate-spin" size={20} /> : <UserX size={20} />}
-                                            {isUpdating ? 'Deactivating...' : 'Yes, Deactivate Account'}
+                                            {isUpdating ? <Loader2 className="animate-spin" /> : <UserX size={20} />}
+                                            {isUpdating ? 'Deactivating...' : 'Confirm Deactivation'}
                                         </button>
                                         <button
                                             onClick={() => setShowDeactivateConfirm(false)}
-                                            className="w-full bg-white/5 text-gray-400 rounded-lg hover:bg-white/10 transition-colors"
+                                            disabled={isUpdating}
+                                            className="w-full bg-white/[0.05] text-gray-400 font-bold rounded-lg hover:bg-white/[0.1] hover:text-white transition-colors"
                                             style={{ padding: isMobile ? '16px' : '20px' }}
                                         >
-                                            No, Keep Account Active
+                                            Cancel
                                         </button>
                                     </div>
                                 </div>

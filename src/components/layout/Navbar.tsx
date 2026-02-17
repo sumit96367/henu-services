@@ -78,7 +78,7 @@ export const Navbar = () => {
                         "md:static md:translate-x-0",
                         isMobileMenuOpen ? "md:hidden absolute left-1/2 -translate-x-1/2" : ""
                     )}>
-                        <Link href="/" className="flex items-center gap-3 group transition-all">
+                        <Link href="/" className="flex items-center gap-4 group transition-all">
                             <div className="relative w-12 h-12 flex items-center justify-center overflow-visible">
                                 <div className="relative w-12 h-12 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(1.8)' }}>
                                     <Image
@@ -89,7 +89,7 @@ export const Navbar = () => {
                                     />
                                 </div>
                             </div>
-                            <span className="text-xl font-bold text-white tracking-tight whitespace-nowrap">Henu OS</span>
+                            <span className="text-3xl font-bold text-white tracking-tight whitespace-nowrap">Henu OS</span>
                         </Link>
                     </div>
 
@@ -244,29 +244,59 @@ export const Navbar = () => {
                     >
                         {/* Mobile Header inside Overlay - Centered HENUOS */}
                         <div className="flex items-center justify-center p-6 border-b border-white/5 sticky top-0 bg-black/50 backdrop-blur-xl z-20 relative">
-                            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 group">
+                            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-4 group">
                                 <div className="relative w-12 h-12 flex items-center justify-center overflow-visible">
-                                    <div className="relative w-12 h-12 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(2.5)' }}>
-                                        <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+                                    <div className="relative w-12 h-12 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_20px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(1.8)' }}>
+                                        <Image src="/logo.png" alt="Henu OS Logo" fill className="object-contain" />
                                     </div>
                                 </div>
-                                <span className="text-xl font-bold text-white tracking-tight">Henu OS</span>
+                                <span className="text-3xl font-bold text-white tracking-tight">Henu OS</span>
                             </Link>
                             <button
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="p-2 text-white hover:bg-white/10 rounded-lg transition-colors absolute right-6"
+                                className="p-2 text-white hover:bg-white/10 rounded-lg transition-colors absolute right-6 top-1/2 -translate-y-1/2"
                             >
-                                <X size={28} />
+                                <X size={32} />
                             </button>
                         </div>
 
-                        <nav className="flex flex-col p-8 space-y-4">
+                        <nav className="flex flex-col p-8 space-y-2">
+
+                            {/* Dashboard Card (if authenticated) - Moved to top */}
+                            {isAuthenticated && (
+                                <div className="!pt-8 !pb-8 !mt-2 w-full">
+                                    <Link
+                                        href="/dashboard"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="relative group overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all !p-6 block !w-full"
+                                    >
+                                        <div className="flex items-center gap-4 relative z-10">
+                                            <div className="!w-14 !h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                                                <svg className="!w-7 !h-7 text-purple-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                                </svg>
+                                            </div>
+                                            <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                                <h3 className="!text-lg font-black text-white uppercase tracking-wide truncate !leading-tight !m-0 !p-0">My Dashboard</h3>
+                                                <p className="!text-sm text-purple-300 font-medium truncate !leading-tight !m-0 !p-0">View your account & orders</p>
+                                            </div>
+                                            <div className="flex-shrink-0">
+                                                <svg className="!w-6 !h-6 text-purple-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        {/* Subtle glow effect */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                </div>
+                            )}
 
                             {/* Services Mobile Accordion */}
                             <div className="flex flex-col">
                                 <button
                                     onClick={() => setActive(active === 'Services' ? null : 'Services')}
-                                    className="flex items-center justify-between w-full text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5"
+                                    className="flex items-center justify-between w-full text-2xl font-black text-white uppercase tracking-widest !pt-2 !pb-0 !px-2 border-b border-white/5"
                                 >
                                     Services
                                     <ChevronDown
@@ -285,7 +315,7 @@ export const Navbar = () => {
                                             exit={{ height: 0, opacity: 0 }}
                                             className="overflow-hidden bg-white/[0.02] rounded-2xl mt-2"
                                         >
-                                            <div className="grid grid-cols-1 gap-2 p-4">
+                                            <div className="grid grid-cols-1 gap-1 p-4">
                                                 {[
                                                     { title: "Website Development", href: "/services/web-development" },
                                                     { title: "Backend Development", href: "/services/backend-development" },
@@ -300,7 +330,7 @@ export const Navbar = () => {
                                                         key={subService.href}
                                                         href={subService.href}
                                                         onClick={() => setIsMobileMenuOpen(false)}
-                                                        className="text-lg text-gray-400 hover:text-purple-400 py-3 px-4 rounded-xl hover:bg-white/5 transition-colors font-bold"
+                                                        className="text-lg text-gray-400 hover:text-purple-400 !pt-3 !pb-0 !px-2 rounded-xl hover:bg-white/5 transition-colors font-bold"
                                                     >
                                                         {subService.title}
                                                     </Link>
@@ -316,39 +346,11 @@ export const Navbar = () => {
                                     key={link.name}
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5 hover:text-purple-400 transition-colors"
+                                    className="text-2xl font-black text-white uppercase tracking-widest !pt-3 !pb-0 !px-2 border-b border-white/5 hover:text-purple-400 transition-colors"
                                 >
                                     {link.name}
                                 </Link>
                             ))}
-
-                            {/* Dashboard Card (if authenticated) - After Contact with gap */}
-                            {isAuthenticated && (
-                                <div className="pt-8">
-                                    <Link
-                                        href="/dashboard"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="relative group overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all p-6 block"
-                                    >
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                <svg className="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                </svg>
-                                            </div>
-                                            <div className="flex-1">
-                                                <h3 className="text-xl font-black text-white uppercase tracking-wide">My Dashboard</h3>
-                                                <p className="text-sm text-purple-300 font-medium">View your account & orders</p>
-                                            </div>
-                                            <svg className="w-6 h-6 text-purple-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </div>
-                                        {/* Subtle glow effect */}
-                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    </Link>
-                                </div>
-                            )}
 
                             {/* Mobile Auth Buttons */}
                             {!isAuthenticated && (
