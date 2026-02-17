@@ -260,102 +260,133 @@ export const Navbar = () => {
                             </button>
                         </div>
 
-                        <nav className="flex flex-col p-8 space-y-4">
+                        <nav className="flex flex-col flex-1 overflow-y-auto">
+                            {/* Navigation Links */}
+                            <div className="flex flex-col w-full px-8 py-4">
+                                {/* Services Accordion */}
+                                <div className="flex flex-col border-b border-white/10">
+                                    <button
+                                        onClick={() => setActive(active === 'Services' ? null : 'Services')}
+                                        className="flex items-center justify-between w-full text-lg font-medium text-gray-300 py-6 pl-4 hover:text-white transition-colors"
+                                    >
+                                        Services
+                                        <ChevronDown
+                                            className={cn(
+                                                "transition-transform duration-300 text-gray-500",
+                                                active === 'Services' ? "rotate-180" : ""
+                                            )}
+                                        />
+                                    </button>
 
-                            {/* Services Mobile Accordion */}
-                            <div className="flex flex-col">
-                                <button
-                                    onClick={() => setActive(active === 'Services' ? null : 'Services')}
-                                    className="flex items-center justify-between w-full text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5"
-                                >
-                                    Services
-                                    <ChevronDown
-                                        className={cn(
-                                            "transition-transform duration-300 text-purple-400",
-                                            active === 'Services' ? "rotate-180" : ""
+                                    <AnimatePresence>
+                                        {active === 'Services' && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: "auto", opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                className="overflow-hidden bg-white/[0.02]"
+                                            >
+                                                <div className="flex flex-col pl-4 pb-2">
+                                                    {[
+                                                        { title: "Website Development", href: "/services/web-development" },
+                                                        { title: "Backend Development", href: "/services/backend-development" },
+                                                        { title: "Mobile App Development", href: "/services/mobile-app-development" },
+                                                        { title: "AI Automations", href: "/services/ai-automations" },
+                                                        { title: "Graphic Design", href: "/services/graphic-design" },
+                                                        { title: "Digital & Ads", href: "/services/digital-marketing" },
+                                                        { title: "Legal Services", href: "/services/legal-services" },
+                                                        { title: "Funding Solutions", href: "/services/funding-solutions" },
+                                                    ].map((subService) => (
+                                                        <Link
+                                                            key={subService.href}
+                                                            href={subService.href}
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                            className="text-base text-gray-400 hover:text-white py-4 px-4 border-l border-white/10 hover:border-purple-500 transition-all font-medium"
+                                                        >
+                                                            {subService.title}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </motion.div>
                                         )}
-                                    />
-                                </button>
+                                    </AnimatePresence>
+                                </div>
 
-                                <AnimatePresence>
-                                    {active === 'Services' && (
-                                        <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            className="overflow-hidden bg-white/[0.02] rounded-2xl mt-2"
-                                        >
-                                            <div className="grid grid-cols-1 gap-2 p-4">
-                                                {[
-                                                    { title: "Website Development", href: "/services/web-development" },
-                                                    { title: "Backend Development", href: "/services/backend-development" },
-                                                    { title: "Mobile App Development", href: "/services/mobile-app-development" },
-                                                    { title: "AI Automations", href: "/services/ai-automations" },
-                                                    { title: "Graphic Design", href: "/services/graphic-design" },
-                                                    { title: "Digital & Ads", href: "/services/digital-marketing" },
-                                                    { title: "Legal Services", href: "/services/legal-services" },
-                                                    { title: "Funding Solutions", href: "/services/funding-solutions" },
-                                                ].map((subService) => (
-                                                    <Link
-                                                        key={subService.href}
-                                                        href={subService.href}
-                                                        onClick={() => setIsMobileMenuOpen(false)}
-                                                        className="text-lg text-gray-400 hover:text-purple-400 py-3 px-4 rounded-xl hover:bg-white/5 transition-colors font-bold"
-                                                    >
-                                                        {subService.title}
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                <Link
+                                    href="/portfolio"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-lg font-medium text-gray-300 py-6 pl-4 border-b border-white/10 hover:text-white transition-colors"
+                                >
+                                    Ecosystem
+                                </Link>
+
+                                <Link
+                                    href="/about"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-lg font-medium text-gray-300 py-6 pl-4 border-b border-white/10 hover:text-white transition-colors"
+                                >
+                                    About
+                                </Link>
+
+                                {userType !== 'personal' && (
+                                    <Link
+                                        href="/pricing"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-lg font-medium text-gray-300 py-6 pl-4 border-b border-white/10 hover:text-white transition-colors"
+                                    >
+                                        Realm
+                                    </Link>
+                                )}
+
+                                {userType !== 'company' && (
+                                    <Link
+                                        href="/careers"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-lg font-medium text-gray-300 py-6 pl-4 border-b border-white/10 hover:text-white transition-colors"
+                                    >
+                                        Careers
+                                    </Link>
+                                )}
+
+                                <Link
+                                    href="/contact"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-lg font-medium text-gray-300 py-6 pl-4 border-b border-white/10 hover:text-white transition-colors"
+                                >
+                                    Contact
+                                </Link>
                             </div>
 
-                            {navLinks.filter(l => l.name !== 'Services' && l.name !== 'Dashboard').map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-2xl font-black text-white uppercase tracking-widest py-4 border-b border-white/5 hover:text-purple-400 transition-colors"
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
+                            {/* Contact Info */}
+                            <div className="flex flex-col px-8 py-6 gap-3">
+                                <a href="tel:+918094100513" className="text-gray-400 text-base font-medium hover:text-white transition-colors">
+                                    +91 8094100513
+                                </a>
+                                <a href="mailto:henuosr@gmail.com" className="text-gray-400 text-base font-medium hover:text-white transition-colors">
+                                    henuosr@gmail.com
+                                </a>
 
-                            {/* Dashboard Card (if authenticated) - After Contact with gap */}
-                            {isAuthenticated && (
-                                <div className="pt-8">
+                                {/* Get Started Button - approx 1cm (40px) below email */}
+                                <div className="mt-10 flex justify-center w-full">
                                     <Link
                                         href="/dashboard"
                                         onClick={() => setIsMobileMenuOpen(false)}
-                                        className="relative group overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border-2 border-purple-500/30 hover:border-purple-400/50 transition-all p-6 block"
+                                        className="px-8 py-3 rounded-lg bg-gradient-to-r from-purple-400 to-violet-300 text-white font-semibold hover:from-purple-300 hover:to-violet-200 transition-all shadow-lg shadow-purple-400/20"
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                <svg className="w-7 h-7 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                                </svg>
-                                            </div>
-                                            <div className="flex-1">
-                                                <h3 className="text-xl font-black text-white uppercase tracking-wide">My Dashboard</h3>
-                                                <p className="text-sm text-purple-300 font-medium">View your account & orders</p>
-                                            </div>
-                                            <svg className="w-6 h-6 text-purple-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </div>
-                                        {/* Subtle glow effect */}
-                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        GET STARTED
                                     </Link>
                                 </div>
-                            )}
+                            </div>
 
-                            {/* Mobile Auth Buttons */}
-                            {!isAuthenticated && (
-                                <div className="pt-8 border-t border-white/10" style={{ marginTop: '2cm' }}>
-                                    <UserMenu className="w-full py-4 px-6 bg-white/[0.03] hover:bg-white/[0.08] justify-center" />
-                                </div>
-                            )}
+                            {/* Footer Tagline */}
+                            <div className="mt-10 pb-8 text-center flex flex-col gap-0.5 leading-tight">
+                                <p className="text-[10px] text-gray-600 font-bold tracking-widest uppercase">
+                                    POWERED BY
+                                </p>
+                                <p className="text-[10px] text-violet-500 font-bold tracking-widest uppercase">
+                                    HENU OS PVT. LTD.
+                                </p>
+                            </div>
                         </nav>
                     </motion.div>
                 )}
