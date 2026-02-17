@@ -218,7 +218,7 @@ export const Navbar = () => {
 
                         {/* User Menu (Desktop) */}
                         <div className="hidden md:block">
-                            <UserMenu />
+                            <UserMenu className="-mr-8" />
                         </div>
 
                         {/* Mobile Toggle */}
@@ -246,7 +246,7 @@ export const Navbar = () => {
                         <div className="flex items-center justify-center p-6 border-b border-white/5 sticky top-0 bg-black/50 backdrop-blur-xl z-20 relative">
                             <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 group">
                                 <div className="relative w-12 h-12 flex items-center justify-center overflow-visible">
-                                    <div className="relative w-12 h-12 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(1.5)' }}>
+                                    <div className="relative w-12 h-12 group-hover:scale-110 transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(109, 40, 217, 0.7)]" style={{ transform: 'scale(2.5)' }}>
                                         <Image src="/logo.png" alt="Logo" fill className="object-contain" />
                                     </div>
                                 </div>
@@ -352,8 +352,8 @@ export const Navbar = () => {
 
                             {/* Mobile Auth Buttons */}
                             {!isAuthenticated && (
-                                <div className="pt-8 mt-4 border-t border-white/10">
-                                    <UserMenu className="w-full py-4 px-6 bg-white/[0.03] hover:bg-white/[0.08]" />
+                                <div className="pt-8 border-t border-white/10" style={{ marginTop: '2cm' }}>
+                                    <UserMenu className="w-full py-4 px-6 bg-white/[0.03] hover:bg-white/[0.08] justify-center" />
                                 </div>
                             )}
                         </nav>

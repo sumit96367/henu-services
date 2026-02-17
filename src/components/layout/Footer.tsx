@@ -255,7 +255,7 @@ export const Footer = () => {
 
                     {/* Copyright - centered */}
                     <p className="text-gray-500 text-xs text-center pt-4 border-t border-white/5">
-                        © {new Date().getFullYear()} Henu OS Private Limited. All rights reserved.
+                        © 2025 Henu OS Private Limited. All rights reserved.
                     </p>
                 </div>
 
@@ -402,7 +402,7 @@ export const Footer = () => {
 
                         {/* Copyright */}
                         <p className="text-gray-500 text-base font-medium">
-                            © {new Date().getFullYear()} Henu OS Private Limited. All rights reserved.
+                            © 2025 Henu OS Private Limited. All rights reserved.
                         </p>
                     </div>
                 </div>
