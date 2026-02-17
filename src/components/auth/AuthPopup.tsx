@@ -83,7 +83,7 @@ export const AuthPopup = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.8, y: 50 }}
                         transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-                        className="relative w-full max-w-sm"
+                        className="relative w-[85%] sm:w-full max-w-[320px] sm:max-w-sm"
                     >
                         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0a0a0a] to-[#151515] border border-white/10 shadow-2xl">
                             {/* Animated gradient background */}
@@ -101,9 +101,9 @@ export const AuthPopup = () => {
                                 <X size={18} />
                             </button>
 
-                            <div className="relative flex flex-col items-center text-center" style={{ padding: '32px 32px 32px 32px' }}>
+                            <div className="relative flex flex-col items-center text-center p-6 sm:p-8">
                                 {/* Logo */}
-                                <div className="w-56 h-40 -mb-4 relative flex items-center justify-center group">
+                                <div className="w-40 h-32 sm:w-56 sm:h-40 -mb-4 relative flex items-center justify-center group">
                                     {/* Logo Glow */}
                                     <div className="absolute inset-0 bg-purple-500/10 blur-[80px] rounded-full" />
 
@@ -116,7 +116,7 @@ export const AuthPopup = () => {
                                             repeat: Infinity,
                                             ease: "easeInOut"
                                         }}
-                                        className="relative w-48 h-48 z-10 transition-all duration-500 group-hover:drop-shadow-[0_0_30px_rgba(109, 40, 217, 0.7)]"
+                                        className="relative w-32 h-32 sm:w-48 sm:h-48 z-10 transition-all duration-500 group-hover:drop-shadow-[0_0_30px_rgba(109, 40, 217, 0.7)]"
                                     >
                                         <Image
                                             src="/logo.png"
@@ -140,7 +140,11 @@ export const AuthPopup = () => {
                                 <div className="flex flex-col gap-3 w-full items-center">
                                     <button
                                         onClick={handleSignIn}
+<<<<<<< HEAD
                                         className="!w-[180px] md:!w-64 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-base flex items-center justify-center gap-2.5 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
+=======
+                                        className="w-full sm:w-64 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-base flex items-center justify-center gap-2.5 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
+>>>>>>> c8f535d9f2ab04aa960db8b02690298dc0316d8d
                                     >
                                         <LogIn size={18} />
                                         Sign In
@@ -148,7 +152,11 @@ export const AuthPopup = () => {
 
                                     <button
                                         onClick={handleSignUp}
+<<<<<<< HEAD
                                         className="!w-[180px] md:!w-64 py-3 rounded-full bg-white/[0.04] border border-purple-500/20 text-white/90 font-bold text-base flex items-center justify-center gap-2.5 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-white transition-all duration-300"
+=======
+                                        className="w-full sm:w-64 py-3 rounded-full bg-white/[0.04] border border-purple-500/20 text-white/90 font-bold text-base flex items-center justify-center gap-2.5 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-white transition-all duration-300"
+>>>>>>> c8f535d9f2ab04aa960db8b02690298dc0316d8d
                                     >
                                         <UserPlus size={18} />
                                         Create Account

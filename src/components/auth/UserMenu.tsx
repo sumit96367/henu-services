@@ -19,10 +19,10 @@ export const UserMenu = ({ className }: { className?: string }) => {
 
     if (!isAuthenticated) {
         return (
-            <div className={cn("flex items-center gap-2 mr-2", className)}>
+            <div className={cn("flex items-center gap-2", className)}>
                 <button
                     onClick={handleSignup}
-                    className="px-4 py-2.5 bg-gradient-to-r from-purple-400 to-violet-300 text-white font-semibold rounded-full hover:from-purple-300 hover:to-violet-200 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-400/25"
+                    className="bg-gradient-to-r from-purple-400 to-violet-300 text-white font-semibold rounded-lg hover:from-purple-300 hover:to-violet-200 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-400/25"
                     style={{ padding: '0.2cm' }}
                 >
                     Get Started
