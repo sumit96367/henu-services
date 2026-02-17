@@ -48,7 +48,7 @@ export const UserMenu = ({ className }: { className?: string }) => {
         >
             {/* Avatar */}
             <div className={cn(
-                "w-8 h-8 rounded-full flex items-center justify-center overflow-hidden shrink-0",
+                "w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden shrink-0",
                 !user?.profilePicture ? (user?.userType === 'company'
                     ? 'bg-gradient-to-br from-purple-600 to-indigo-600'
                     : 'bg-gradient-to-br from-purple-600 to-indigo-600') : ''

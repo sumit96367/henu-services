@@ -306,40 +306,40 @@ export const Navbar = () => {
                                         )}
                                     />
                                 </button>
-
-                                <AnimatePresence>
-                                    {active === 'Services' && (
-                                        <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            className="overflow-hidden bg-white/[0.02] rounded-2xl mt-2"
-                                        >
-                                            <div className="grid grid-cols-1 gap-1 p-4">
-                                                {[
-                                                    { title: "Website Development", href: "/services/web-development" },
-                                                    { title: "Backend Development", href: "/services/backend-development" },
-                                                    { title: "Mobile App Development", href: "/services/mobile-app-development" },
-                                                    { title: "AI Automations", href: "/services/ai-automations" },
-                                                    { title: "Graphic Design", href: "/services/graphic-design" },
-                                                    { title: "Digital & Ads", href: "/services/digital-marketing" },
-                                                    { title: "Legal Services", href: "/services/legal-services" },
-                                                    { title: "Funding Solutions", href: "/services/funding-solutions" },
-                                                ].map((subService) => (
-                                                    <Link
-                                                        key={subService.href}
-                                                        href={subService.href}
-                                                        onClick={() => setIsMobileMenuOpen(false)}
-                                                        className="text-lg text-gray-400 hover:text-purple-400 !pt-3 !pb-0 !px-2 rounded-xl hover:bg-white/5 transition-colors font-bold"
-                                                    >
-                                                        {subService.title}
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
                             </div>
+
+                            <AnimatePresence>
+                                {active === 'Services' && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="overflow-hidden bg-white/[0.02] rounded-2xl mt-2"
+                                    >
+                                        <div className="grid grid-cols-1 gap-1 p-4">
+                                            {[
+                                                { title: "Website Development", href: "/services/web-development" },
+                                                { title: "Backend Development", href: "/services/backend-development" },
+                                                { title: "Mobile App Development", href: "/services/mobile-app-development" },
+                                                { title: "AI Automations", href: "/services/ai-automations" },
+                                                { title: "Graphic Design", href: "/services/graphic-design" },
+                                                { title: "Digital & Ads", href: "/services/digital-marketing" },
+                                                { title: "Legal Services", href: "/services/legal-services" },
+                                                { title: "Funding Solutions", href: "/services/funding-solutions" },
+                                            ].map((subService) => (
+                                                <Link
+                                                    key={subService.href}
+                                                    href={subService.href}
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                    className="text-lg text-gray-400 hover:text-purple-400 !pt-3 !pb-0 !px-2 rounded-xl hover:bg-white/5 transition-colors font-bold"
+                                                >
+                                                    {subService.title}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             {navLinks.filter(l => l.name !== 'Services' && l.name !== 'Dashboard').map((link) => (
                                 <Link

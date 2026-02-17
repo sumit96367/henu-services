@@ -49,17 +49,6 @@ export const AuthModal = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        if (showAuthModal) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [showAuthModal]);
-
     const handleBack = () => {
         if (verificationStep === 'otp') {
             setVerificationStep('input');
@@ -224,9 +213,10 @@ export const AuthModal = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[500] overflow-y-scroll bg-[#0a0a0f] [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50"
+                data-lenis-prevent
+                className="fixed inset-0 z-[500] overflow-y-auto overscroll-contain bg-[#0a0a0f] [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50"
             >
-                <div className="relative min-h-full flex flex-col items-center justify-start p-4 pb-24">
+                <div className="relative min-h-screen flex flex-col items-center justify-center p-4 py-12">
                     {/* Background decorations */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px]" />

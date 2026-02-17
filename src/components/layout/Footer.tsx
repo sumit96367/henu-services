@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Globe, Send, Users, Facebook, Youtube } from 'lucide-react';
+import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Globe, Send, Users, Facebook, Share2, Youtube } from 'lucide-react';
 import { IconBrandWhatsapp, IconBrandDiscord, IconBrandTelegram } from '@tabler/icons-react';
 import { TextHoverEffect } from '@/components/ui/hover-footer';
 import { useState } from 'react';
@@ -46,6 +46,11 @@ const contactInfo = [
         icon: <MapPin size={18} className="text-purple-400" />,
         text: "India",
     },
+    {
+        icon: <Share2 size={18} className="text-purple-400" />,
+        text: "Socials",
+        href: "/socials",
+    },
 ];
 
 const socialLinks = [
@@ -59,8 +64,9 @@ const socialLinks = [
     { icon: <Twitter size={20} />, label: "Twitter", href: "https://x.com/HenuOs13178" },
     { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/henuos/" },
     { icon: <Facebook size={20} />, label: "Facebook", href: "https://www.facebook.com/share/1ZCPYkVQSF/" },
-    { icon: <Users size={20} />, label: "Community", href: "https://siddsingh.mystrikingly.com/" },
     { icon: <Youtube size={20} />, label: "YouTube", href: "https://www.youtube.com/@HenuOS" },
+    { icon: <Users size={20} />, label: "Community", href: "https://siddsingh.mystrikingly.com/" },
+
 ];
 
 const policyLinks = [
