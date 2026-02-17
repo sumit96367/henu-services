@@ -22,7 +22,7 @@ export const UserMenu = ({ className }: { className?: string }) => {
             <div className={cn("flex items-center gap-2", className)}>
                 <button
                     onClick={handleSignup}
-                    className="bg-gradient-to-r from-purple-400 to-violet-300 text-white font-semibold rounded-lg hover:from-purple-300 hover:to-violet-200 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-400/25"
+                    className="bg-white text-black font-semibold rounded-lg hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)]"
                     style={{ padding: '0.2cm' }}
                 >
                     Get Started
@@ -35,16 +35,23 @@ export const UserMenu = ({ className }: { className?: string }) => {
         <Link
             href="/dashboard"
             className={cn(
-                "flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300",
+                "flex items-center rounded-full transition-all duration-300 hover:shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:scale-[1.02]",
                 className
             )}
+            style={{
+                padding: '6px 22px 6px 6px',
+                gap: '12px',
+                background: '#ffffff',
+                border: 'none',
+                boxShadow: '0 0 20px rgba(255, 255, 255, 0.4)'
+            }}
         >
             {/* Avatar */}
             <div className={cn(
                 "w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden shrink-0",
                 !user?.profilePicture ? (user?.userType === 'company'
-                    ? 'bg-gradient-to-br from-purple-500 to-purple-600'
-                    : 'bg-gradient-to-br from-indigo-500 to-indigo-600') : ''
+                    ? 'bg-gradient-to-br from-purple-600 to-indigo-600'
+                    : 'bg-gradient-to-br from-purple-600 to-indigo-600') : ''
             )}>
                 {user?.profilePicture ? (
                     <img src={user.profilePicture} alt={user.name} className="w-full h-full object-cover" />
@@ -56,7 +63,7 @@ export const UserMenu = ({ className }: { className?: string }) => {
             </div>
 
             {/* Name */}
-            <span className="hidden md:block text-white font-medium text-sm whitespace-nowrap">
+            <span className="hidden md:block text-black font-bold text-sm max-w-[200px] truncate">
                 {user?.name}
             </span>
         </Link>

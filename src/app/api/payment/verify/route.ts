@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateEnrollmentStatusByInternalId, updatePaymentStatusByInternalId } from '@/lib/data-store';
+import {
+    updateEnrollmentStatusByInternalId,
+    updatePaymentStatusByInternalId,
+    addInvoiceData
+} from '@/lib/data-store';
 import { db } from '@/lib/firebase';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { generateInvoicePDF } from '@/lib/invoice-generator';
@@ -18,7 +22,9 @@ export async function POST(req: NextRequest) {
             subDomain,
             plan,
             amount,
-            billingAddress
+            billingAddress,
+            enrollmentId,
+            domainCategory
         } = body;
 
         // Verify Razorpay payment signature
@@ -37,11 +43,14 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // Generate invoice data
+        // Generate invoice data for PDF and Email
+        const invoiceNumber = `INV-${Date.now()}`;
+        const timestamp = new Date().toISOString();
+
         const invoiceData = {
-            invoiceNumber: `INV-${Date.now()}`,
-            date: new Date().toLocaleDateString('en-IN'),
-            time: new Date().toLocaleTimeString('en-IN'),
+            invoiceNumber,
+            date: new Date(timestamp).toLocaleDateString('en-IN'),
+            time: new Date(timestamp).toLocaleTimeString('en-IN'),
             fullName,
             email,
             domain,
@@ -66,12 +75,35 @@ export async function POST(req: NextRequest) {
             }
 
             // 2. Update enrollments and payments
-            if (body.enrollmentId) {
-                await updateEnrollmentStatusByInternalId(body.enrollmentId, 'completed');
+            if (enrollmentId) {
+                await updateEnrollmentStatusByInternalId(enrollmentId, 'completed');
             }
             if (orderId) {
                 await updatePaymentStatusByInternalId(orderId, 'paid');
             }
+
+            // 3. Save Invoice to Firestore for Admin Panel
+            const fullInvoiceRecord = {
+                id: invoiceNumber,
+                invoiceNumber,
+                timestamp,
+                enrollmentId: enrollmentId || '',
+                paymentId: paymentId,
+                fullName,
+                email,
+                domain,
+                domainCategory: domainCategory || domain,
+                subDomain,
+                plan: plan.toLowerCase(),
+                amount,
+                billingAddress,
+                paymentMethod: 'card', // Razorpay default in this flow
+                status: 'sent',
+                pdfGenerated: true
+            };
+
+            await addInvoiceData(fullInvoiceRecord);
+
         } catch (dbError) {
             console.error('Database update error:', dbError);
             // Continue even if DB update fails, as payment is verified
@@ -81,17 +113,22 @@ export async function POST(req: NextRequest) {
         const pdfBuffer = await generateInvoicePDF(invoiceData);
 
         // Send invoice via email
-        await sendInvoiceEmail({
-            to: email,
-            fullName,
-            invoiceData,
-            pdfBuffer
-        });
+        try {
+            await sendInvoiceEmail({
+                to: email,
+                fullName,
+                invoiceData,
+                pdfBuffer
+            });
+        } catch (emailError) {
+            console.error('Email sending error:', emailError);
+            // Non-blocking for the API response
+        }
 
         return NextResponse.json({
             success: true,
-            message: 'Payment verified and invoice sent',
-            invoiceNumber: invoiceData.invoiceNumber
+            message: 'Payment verified, invoice saved and sent',
+            invoiceNumber
         });
 
     } catch (error) {

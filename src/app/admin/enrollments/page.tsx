@@ -127,23 +127,24 @@ export default function EnrollmentsPage() {
     };
 
     return (
-        <div>
+        <div className="admin-page-container">
             {/* Page Header */}
-            <div style={{ marginBottom: "32px" }}>
+            <div className="page-header" style={{ marginBottom: "32px" }}>
                 <h1
                     style={{
-                        fontSize: "2.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "8px",
+                        fontWeight: "900",
+                        marginBottom: "12px",
                         background: "linear-gradient(to right, #06b6d4, #3b82f6)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                         backgroundClip: "text",
+                        letterSpacing: "-0.03em"
                     }}
+                    className="page-title"
                 >
                     Internship Enrollments
                 </h1>
-                <p style={{ fontSize: "1.125rem", color: "#888" }}>
+                <p className="page-subtitle" style={{ color: "#888", fontWeight: "500" }}>
                     {loading
                         ? "Loading enrollments..."
                         : `${filteredEnrollments.length} of ${enrollments.length} enrollments`}
@@ -152,26 +153,30 @@ export default function EnrollmentsPage() {
 
             {/* Filters Section */}
             <div
+                className="filters-grid"
                 style={{
                     backgroundColor: "rgba(255, 255, 255, 0.03)",
                     border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
-                    padding: "24px",
-                    marginBottom: "24px",
+                    borderRadius: "24px",
+                    padding: "32px",
+                    marginBottom: "32px",
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "16px",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                    gap: "24px",
+                    backdropFilter: "blur(20px)"
                 }}
             >
                 {/* Domain Filter */}
-                <div>
+                <div className="filter-item">
                     <label
                         style={{
                             display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
+                            fontSize: "0.75rem",
+                            fontWeight: "800",
+                            color: "#555",
+                            marginBottom: "10px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em"
                         }}
                     >
                         Domain
@@ -182,14 +187,15 @@ export default function EnrollmentsPage() {
                         className="admin-select"
                         style={{
                             width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            padding: "14px 16px",
+                            backgroundColor: "rgba(255, 255, 255, 0.04)",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
+                            borderRadius: "12px",
                             color: "#fff",
-                            fontSize: "0.95rem",
+                            fontSize: "1rem",
                             outline: "none",
                             cursor: "pointer",
+                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                         }}
                     >
                         <option value="">All Domains</option>
@@ -202,14 +208,16 @@ export default function EnrollmentsPage() {
                 </div>
 
                 {/* Status Filter */}
-                <div>
+                <div className="filter-item">
                     <label
                         style={{
                             display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
+                            fontSize: "0.75rem",
+                            fontWeight: "800",
+                            color: "#555",
+                            marginBottom: "10px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em"
                         }}
                     >
                         Payment Status
@@ -220,14 +228,15 @@ export default function EnrollmentsPage() {
                         className="admin-select"
                         style={{
                             width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            padding: "14px 16px",
+                            backgroundColor: "rgba(255, 255, 255, 0.04)",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
+                            borderRadius: "12px",
                             color: "#fff",
-                            fontSize: "0.95rem",
+                            fontSize: "1rem",
                             outline: "none",
                             cursor: "pointer",
+                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                         }}
                     >
                         <option value="">All Status</option>
@@ -238,60 +247,58 @@ export default function EnrollmentsPage() {
                 </div>
 
                 {/* Search */}
-                <div>
+                <div className="filter-item">
                     <label
                         style={{
                             display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
+                            fontSize: "0.75rem",
+                            fontWeight: "800",
+                            color: "#555",
+                            marginBottom: "10px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em"
                         }}
                     >
                         Search
                     </label>
                     <input
                         type="text"
-                        placeholder="Search by name or email..."
+                        placeholder="Name or email..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         style={{
                             width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            padding: "14px 16px",
+                            backgroundColor: "rgba(255, 255, 255, 0.04)",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
+                            borderRadius: "12px",
                             color: "#fff",
-                            fontSize: "0.95rem",
+                            fontSize: "1rem",
                             outline: "none",
+                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                         }}
                     />
                 </div>
 
                 {/* Clear Filters */}
-                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                <div className="filter-item clear-btn-row" style={{ display: "flex", alignItems: "flex-end" }}>
                     <button
                         onClick={clearFilters}
                         style={{
                             width: "100%",
-                            padding: "10px 16px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            padding: "14px 20px",
+                            backgroundColor: "rgba(255, 255, 255, 0.04)",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
+                            borderRadius: "12px",
                             color: "#06b6d4",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
+                            fontSize: "0.85rem",
+                            fontWeight: "900",
                             cursor: "pointer",
-                            transition: "all 0.2s",
+                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.1em"
                         }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(6, 182, 212, 0.1)";
-                            e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.3)";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-                            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                        }}
+                        className="hover:bg-cyan-500/10 hover:border-cyan-500/30 active:scale-95"
                     >
                         Clear Filters
                     </button>
@@ -302,42 +309,47 @@ export default function EnrollmentsPage() {
             {error && (
                 <div
                     style={{
-                        backgroundColor: "rgba(239, 68, 68, 0.1)",
-                        border: "1px solid rgba(239, 68, 68, 0.3)",
-                        borderRadius: "12px",
-                        padding: "16px",
-                        marginBottom: "24px",
+                        backgroundColor: "rgba(239, 68, 68, 0.05)",
+                        border: "1px solid rgba(239, 68, 68, 0.2)",
+                        borderRadius: "16px",
+                        padding: "20px 24px",
+                        marginBottom: "32px",
                         color: "#ef4444",
+                        fontSize: "0.95rem",
+                        fontWeight: "600",
+                        backdropFilter: "blur(10px)"
                     }}
                 >
-                    {error}
+                    ✕ {error}
                 </div>
             )}
 
-            {/* Table */}
+            {/* Table wrapper for scrolling */}
             <div
+                className="table-container"
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "24px",
                     overflow: "hidden",
+                    backdropFilter: "blur(20px)"
                 }}
             >
-                <div style={{ overflowX: "auto" }}>
+                <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
                     <table
                         style={{
                             width: "100%",
-                            borderCollapse: "collapse",
+                            borderCollapse: "separate",
+                            borderSpacing: "0",
                             fontSize: "0.95rem",
                         }}
                     >
                         <thead>
                             <tr
                                 style={{
-                                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                    backgroundColor: "rgba(255, 255, 255, 0.04)",
                                     position: "sticky",
                                     top: 0,
-                                    backdropFilter: "blur(10px)",
                                     zIndex: 10,
                                 }}
                             >
@@ -359,10 +371,11 @@ export default function EnrollmentsPage() {
                                             <td key={j} style={tableCellStyle}>
                                                 <div
                                                     style={{
-                                                        height: "20px",
+                                                        height: "18px",
                                                         backgroundColor: "rgba(255, 255, 255, 0.05)",
                                                         borderRadius: "4px",
                                                         animation: "pulse 1.5s ease-in-out infinite",
+                                                        width: i % 2 === 0 ? "80%" : "60%"
                                                     }}
                                                 />
                                             </td>
@@ -372,11 +385,11 @@ export default function EnrollmentsPage() {
                             ) : filteredEnrollments.length === 0 ? (
                                 // Empty State
                                 <tr>
-                                    <td colSpan={7} style={{ ...tableCellStyle, textAlign: "center", padding: "48px" }}>
-                                        <div style={{ fontSize: "48px", marginBottom: "16px", opacity: 0.5 }}>
+                                    <td colSpan={7} style={{ ...tableCellStyle, textAlign: "center", padding: "80px 24px" }}>
+                                        <div style={{ fontSize: "64px", marginBottom: "20px", opacity: 0.3 }}>
                                             📋
                                         </div>
-                                        <p style={{ color: "#888", fontSize: "1.125rem" }}>
+                                        <p style={{ color: "#555", fontSize: "1.25rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                                             No enrollments found
                                         </p>
                                     </td>
@@ -391,40 +404,45 @@ export default function EnrollmentsPage() {
                                             onClick={() => openModal(enrollment)}
                                             style={{
                                                 cursor: "pointer",
-                                                backgroundColor: index % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.02)",
-                                                transition: "all 0.2s",
+                                                backgroundColor: index % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.01)",
+                                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                                             }}
-                                            onMouseEnter={(e) => {
-                                                e.currentTarget.style.backgroundColor = "rgba(6, 182, 212, 0.05)";
-                                                e.currentTarget.style.transform = "scale(1.01)";
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.currentTarget.style.backgroundColor = index % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.02)";
-                                                e.currentTarget.style.transform = "scale(1)";
-                                            }}
+                                            className="hover:bg-cyan-500/5 active:scale-[0.995]"
                                         >
-                                            <td style={tableCellStyle}>{enrollment.fullName}</td>
+                                            <td style={{ ...tableCellStyle, fontWeight: "700" }}>{enrollment.fullName}</td>
                                             <td style={tableCellStyle}>{enrollment.email}</td>
-                                            <td style={tableCellStyle}>{enrollment.domainCategory}</td>
+                                            <td style={tableCellStyle}>
+                                                <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: "600", textTransform: "uppercase" }}>
+                                                    {enrollment.domainCategory}
+                                                </span>
+                                            </td>
                                             <td style={tableCellStyle}>{enrollment.subDomain}</td>
-                                            <td style={tableCellStyle}>{formatPlan(enrollment.plan)}</td>
+                                            <td style={tableCellStyle}>
+                                                <span style={{ fontWeight: "700", color: "#06b6d4" }}>
+                                                    {formatPlan(enrollment.plan)}
+                                                </span>
+                                            </td>
                                             <td style={tableCellStyle}>
                                                 <span
                                                     style={{
                                                         display: "inline-block",
-                                                        padding: "4px 12px",
-                                                        borderRadius: "12px",
-                                                        fontSize: "0.875rem",
-                                                        fontWeight: "600",
+                                                        padding: "6px 14px",
+                                                        borderRadius: "10px",
+                                                        fontSize: "0.75rem",
+                                                        fontWeight: "800",
                                                         backgroundColor: statusColors.bg,
                                                         color: statusColors.text,
                                                         border: `1px solid ${statusColors.border}`,
+                                                        textTransform: "uppercase",
+                                                        letterSpacing: "0.05em"
                                                     }}
                                                 >
                                                     {formatPlan(enrollment.status)}
                                                 </span>
                                             </td>
-                                            <td style={tableCellStyle}>{formatDate(enrollment.timestamp)}</td>
+                                            <td style={{ ...tableCellStyle, color: "#888", fontSize: "0.85rem" }}>
+                                                {formatDate(enrollment.timestamp)}
+                                            </td>
                                         </tr>
                                     );
                                 })
@@ -437,85 +455,90 @@ export default function EnrollmentsPage() {
             {/* Details Modal */}
             {isModalOpen && selectedEnrollment && (
                 <div
+                    className="modal-overlay"
                     onClick={closeModal}
                     style={{
                         position: "fixed",
                         inset: 0,
-                        backgroundColor: "rgba(0, 0, 0, 0.7)",
-                        backdropFilter: "blur(8px)",
+                        backgroundColor: "rgba(0, 0, 0, 0.8)",
+                        backdropFilter: "blur(12px)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         zIndex: 1000,
                         padding: "20px",
-                        animation: "fadeIn 0.2s ease-out",
                     }}
                 >
                     <div
+                        className="modal-card"
                         onClick={(e) => e.stopPropagation()}
                         style={{
-                            backgroundColor: "rgba(10, 10, 10, 0.95)",
+                            backgroundColor: "rgba(10, 10, 20, 0.95)",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "20px",
-                            padding: "32px",
-                            maxWidth: "600px",
+                            borderRadius: "32px",
+                            padding: "48px",
+                            maxWidth: "700px",
                             width: "100%",
-                            maxHeight: "80vh",
+                            maxHeight: "85vh",
                             overflowY: "auto",
-                            animation: "slideUp 0.3s ease-out",
+                            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
                         }}
                     >
                         {/* Modal Header */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px" }}>
-                            <h2
-                                style={{
-                                    fontSize: "1.75rem",
-                                    fontWeight: "bold",
-                                    background: "linear-gradient(to right, #06b6d4, #3b82f6)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    backgroundClip: "text",
-                                }}
-                            >
-                                Enrollment Details
-                            </h2>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "40px" }}>
+                            <div>
+                                <h2
+                                    style={{
+                                        fontSize: "2rem",
+                                        fontWeight: "900",
+                                        background: "linear-gradient(to right, #06b6d4, #3b82f6)",
+                                        WebkitBackgroundClip: "text",
+                                        WebkitTextFillColor: "transparent",
+                                        backgroundClip: "text",
+                                        letterSpacing: "-0.02em",
+                                        marginBottom: "8px"
+                                    }}
+                                >
+                                    Enrollment Logic
+                                </h2>
+                                <p style={{ color: "#555", fontSize: "0.9rem", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                                    Full Transaction Details
+                                </p>
+                            </div>
                             <button
                                 onClick={closeModal}
                                 style={{
                                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                                     border: "1px solid rgba(255, 255, 255, 0.1)",
-                                    borderRadius: "8px",
-                                    padding: "8px 12px",
+                                    borderRadius: "16px",
+                                    width: "48px",
+                                    height: "48px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
                                     color: "#fff",
                                     fontSize: "1.25rem",
                                     cursor: "pointer",
-                                    transition: "all 0.2s",
+                                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                                 }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
-                                    e.currentTarget.style.borderColor = "rgba(239, 68, 68, 0.3)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-                                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                                }}
+                                className="hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-400"
                             >
                                 ✕
                             </button>
                         </div>
 
                         {/* Modal Content */}
-                        <div style={{ display: "grid", gap: "20px" }}>
+                        <div style={{ display: "grid", gap: "16px" }}>
                             <DetailRow label="ID" value={selectedEnrollment.id} />
                             <DetailRow label="Full Name" value={selectedEnrollment.fullName} />
                             <DetailRow label="Email" value={selectedEnrollment.email} />
                             <DetailRow label="Domain" value={selectedEnrollment.domain} />
-                            <DetailRow label="Domain Category" value={selectedEnrollment.domainCategory} />
+                            <DetailRow label="Category" value={selectedEnrollment.domainCategory} />
                             <DetailRow label="Sub-Domain" value={selectedEnrollment.subDomain} />
-                            <DetailRow label="Pricing Plan" value={formatPlan(selectedEnrollment.plan)} />
-                            <DetailRow label="Amount" value={`₹${selectedEnrollment.amount.toLocaleString()}`} />
+                            <DetailRow label="Pricing Plan" value={<span style={{ fontWeight: "800", color: "#06b6d4" }}>{formatPlan(selectedEnrollment.plan)}</span>} />
+                            <DetailRow label="Amount" value={<span style={{ fontWeight: "800", color: "#10b981" }}>₹{selectedEnrollment.amount.toLocaleString()}</span>} />
                             <DetailRow label="Billing Address" value={selectedEnrollment.billingAddress} />
-                            <DetailRow label="Payment Method" value={selectedEnrollment.paymentMethod.toUpperCase()} />
+                            <DetailRow label="Payment Method" value={<span style={{ textTransform: "uppercase", fontWeight: "700" }}>{selectedEnrollment.paymentMethod}</span>} />
                             <DetailRow label="Order ID" value={selectedEnrollment.orderId} />
                             <DetailRow
                                 label="Status"
@@ -523,62 +546,115 @@ export default function EnrollmentsPage() {
                                     <span
                                         style={{
                                             display: "inline-block",
-                                            padding: "6px 16px",
-                                            borderRadius: "12px",
-                                            fontSize: "0.875rem",
-                                            fontWeight: "600",
+                                            padding: "6px 20px",
+                                            borderRadius: "10px",
+                                            fontSize: "0.8rem",
+                                            fontWeight: "800",
                                             backgroundColor: getStatusColor(selectedEnrollment.status).bg,
                                             color: getStatusColor(selectedEnrollment.status).text,
                                             border: `1px solid ${getStatusColor(selectedEnrollment.status).border}`,
+                                            textTransform: "uppercase"
                                         }}
                                     >
                                         {formatPlan(selectedEnrollment.status)}
                                     </span>
                                 }
                             />
-                            <DetailRow label="Enrollment Date" value={formatDate(selectedEnrollment.timestamp)} />
+                            <DetailRow label="Enrolled On" value={formatDate(selectedEnrollment.timestamp)} />
+                        </div>
+
+                        <div style={{ marginTop: "40px" }}>
+                            <button
+                                onClick={closeModal}
+                                style={{
+                                    width: "100%",
+                                    padding: "20px",
+                                    background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
+                                    border: "none",
+                                    borderRadius: "16px",
+                                    color: "#fff",
+                                    fontSize: "1rem",
+                                    fontWeight: "900",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.1em",
+                                    cursor: "pointer",
+                                    boxShadow: "0 10px 30px rgba(6, 182, 212, 0.3)",
+                                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                                }}
+                                className="hover:scale-[1.02] active:scale-95"
+                            >
+                                Close Details
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
 
             <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
+                .admin-page-container {
+                    padding: 0;
+                    animation: fadeIn 0.8s ease-out;
+                }
 
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
 
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 0.5;
-          }
-          50% {
-            opacity: 1;
-          }
-        }
+                .page-title {
+                    font-size: 3.5rem;
+                }
+                .page-subtitle {
+                    font-size: 1.25rem;
+                }
 
-        /* Dark background for select dropdown options */
-        :global(.admin-select option) {
-          background-color: #1a1a1a;
-          color: #fff;
-          padding: 8px;
-        }
-      `}</style>
+                .modal-overlay {
+                    animation: fadeInModal 0.3s ease-out;
+                }
+                .modal-card {
+                    animation: slideUpModal 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+
+                @keyframes fadeInModal {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUpModal {
+                    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+                    to { opacity: 1; transform: translateY(0) scale(1); }
+                }
+
+                @keyframes pulse {
+                    0%, 100% { opacity: 0.4; }
+                    50% { opacity: 0.8; }
+                }
+
+                /* Dark background for select dropdown options */
+                :global(.admin-select option) {
+                    background-color: #0a0a0a;
+                    color: #fff;
+                    padding: 12px;
+                }
+
+                @media (max-width: 1024px) {
+                    .page-title { font-size: 2.75rem; }
+                    .filters-grid { padding: 24px !important; }
+                }
+
+                @media (max-width: 768px) {
+                    .page-title { font-size: 2.25rem; }
+                    .filters-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+                    .clear-btn-row { margin-top: 8px; }
+                    .modal-card { padding: 32px 24px !important; borderRadius: 24px !important; }
+                }
+
+                @media (max-width: 480px) {
+                    .page-title { font-size: 2rem; }
+                    .page-subtitle { font-size: 1rem; }
+                    .filters-grid { padding: 20px !important; }
+                    .modal-card { padding: 24px 16px !important; }
+                }
+            `}</style>
         </div>
     );
 }
@@ -586,20 +662,22 @@ export default function EnrollmentsPage() {
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
     return (
         <div
+            className="detail-row"
             style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                padding: "12px 16px",
-                backgroundColor: "rgba(255, 255, 255, 0.03)",
-                borderRadius: "8px",
-                border: "1px solid rgba(255, 255, 255, 0.05)",
+                padding: "16px 20px",
+                backgroundColor: "rgba(255, 255, 255, 0.02)",
+                borderRadius: "14px",
+                border: "1px solid rgba(255, 255, 255, 0.04)",
+                transition: "all 0.3s ease"
             }}
         >
-            <span style={{ color: "#888", fontSize: "0.95rem", fontWeight: "600" }}>
+            <span style={{ color: "#555", fontSize: "0.7rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: "2px" }}>
                 {label}
             </span>
-            <span style={{ color: "#fff", fontSize: "0.95rem", textAlign: "right", maxWidth: "60%" }}>
+            <span style={{ color: "#fff", fontSize: "0.95rem", textAlign: "right", maxWidth: "65%", fontWeight: "500", lineHeight: "1.4" }}>
                 {value}
             </span>
         </div>
@@ -607,18 +685,19 @@ function DetailRow({ label, value }: { label: string; value: React.ReactNode }) 
 }
 
 const tableHeaderStyle: React.CSSProperties = {
-    padding: "16px",
+    padding: "20px 24px",
     textAlign: "left",
-    color: "#ccc",
-    fontWeight: "600",
-    fontSize: "0.875rem",
+    color: "#555",
+    fontWeight: "800",
+    fontSize: "0.75rem",
     textTransform: "uppercase",
-    letterSpacing: "0.05em",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    letterSpacing: "0.1em",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
 };
 
 const tableCellStyle: React.CSSProperties = {
-    padding: "16px",
+    padding: "20px 24px",
     color: "#fff",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.04)",
+    whiteSpace: "nowrap"
 };

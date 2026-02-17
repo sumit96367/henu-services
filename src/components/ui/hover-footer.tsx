@@ -86,8 +86,8 @@ export const TextHoverEffect = ({
                 y="50%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                strokeWidth="0.3"
-                className="fill-transparent stroke-neutral-200 font-[helvetica] text-7xl font-bold dark:stroke-neutral-800"
+                strokeWidth="0.2"
+                className="fill-transparent stroke-white/[0.03] font-sans text-5xl lg:text-7xl font-bold"
                 style={{ opacity: hovered ? 0.7 : 0 }}
             >
                 {text}
@@ -97,9 +97,8 @@ export const TextHoverEffect = ({
                 y="50%"
                 textAnchor="middle"
                 dominantBaseline="middle"
-                strokeWidth="0.3"
-                className="fill-transparent stroke-rose-400 lg:stroke-[#6D28D9] font-[helvetica] text-7xl font-bold 
-        dark:stroke-rose-400 dark:lg:stroke-[#6D28D999]"
+                strokeWidth="0.4"
+                className="fill-transparent stroke-purple-500/30 lg:stroke-purple-500 font-sans text-5xl lg:text-7xl font-bold"
                 initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
                 whileInView={{
                     strokeDashoffset: 0,
@@ -119,9 +118,9 @@ export const TextHoverEffect = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 stroke="url(#textGradient)"
-                strokeWidth="0.3"
+                strokeWidth="0.5"
                 mask="url(#textMask)"
-                className="fill-transparent font-[helvetica] text-7xl font-bold"
+                className="fill-transparent font-sans text-5xl lg:text-7xl font-bold"
             >
                 {text}
             </text>

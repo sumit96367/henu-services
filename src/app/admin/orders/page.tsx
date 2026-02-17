@@ -17,9 +17,12 @@ import {
     Clock,
     AlertCircle,
     Loader2,
-    Save
+    Save,
+    ArrowRight,
+    ExternalLink
 } from "lucide-react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Order {
     id: string;
@@ -118,143 +121,252 @@ function AdminOrdersContent() {
         return matchesSearch && matchesFilter;
     });
 
-    return (
-        <div className="min-h-screen bg-[#050505] text-white p-8">
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-                    <div>
-                        <Link href="/admin/dashboard" className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors mb-4 text-sm font-bold uppercase tracking-wider">
-                            <ChevronLeft size={16} /> Dashboard
-                        </Link>
-                        <h1 className="text-4xl font-black text-white italic tracking-tight uppercase">
-                            {filterType === 'internship_enrollment' ? 'Internship ' : filterType === 'service_inquiry' ? 'Service ' : 'Order '}
-                            <span className="text-cyan-500">{filterType ? 'Enrollments' : 'Management'}</span>
-                        </h1>
-                        <p className="text-gray-500 mt-1 uppercase text-xs font-bold tracking-[0.2em]">
-                            {filterType === 'internship_enrollment' ? 'Manage career development applications' : 'Track and manage all user orders and inquiries'}
-                        </p>
-                    </div>
+    const getStatusStyle = (statusColor: string) => {
+        switch (statusColor) {
+            case "green":
+            case "emerald":
+                return { bg: "rgba(16, 185, 129, 0.1)", text: "#10b981", border: "rgba(16, 185, 129, 0.3)" };
+            case "cyan":
+                return { bg: "rgba(6, 182, 212, 0.1)", text: "#06b6d4", border: "rgba(6, 182, 212, 0.3)" };
+            case "rose":
+                return { bg: "rgba(244, 63, 94, 0.1)", text: "#f43f5e", border: "rgba(244, 63, 94, 0.3)" };
+            default:
+                return { bg: "rgba(245, 158, 11, 0.1)", text: "#f59e0b", border: "rgba(245, 158, 11, 0.3)" };
+        }
+    };
 
-                    <div className="flex gap-4">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+    return (
+        <div className="admin-page-container">
+            <div className="max-w-full mx-auto">
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="page-header"
+                    style={{ marginBottom: "40px" }}
+                >
+                    <div className="header-top" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8px" }}>
+                        <div>
+                            <Link href="/admin/dashboard" className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors mb-4 text-sm font-bold uppercase tracking-wider">
+                                <ChevronLeft size={16} /> Dashboard
+                            </Link>
+                            <h1 className="page-title" style={{ fontWeight: "900", background: "linear-gradient(to right, #06b6d4, #3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", letterSpacing: "-0.03em", textTransform: "uppercase", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>
+                                {filterType === 'internship_enrollment' ? 'Internship ' : filterType === 'service_inquiry' ? 'Service ' : 'Order '}
+                                <span className="text-white">Management</span>
+                            </h1>
+                            <p className="page-subtitle" style={{ color: "#555", fontWeight: "700", textTransform: "uppercase", fontSize: "0.75rem", letterSpacing: "0.2em", marginTop: "8px" }}>
+                                {filterType === 'internship_enrollment' ? 'Career Development Applications' : 'Full Transaction Lifecycle Control'}
+                            </p>
+                        </div>
+
+                        <div className="search-container" style={{ position: "relative", marginBottom: "8px" }}>
+                            <Search className="search-icon" style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)", color: "#444" }} size={18} />
                             <input
                                 type="text"
-                                placeholder="Search orders..."
+                                placeholder="Universal Search..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-cyan-500/50 transition-all w-full md:w-80"
+                                className="search-input"
+                                style={{
+                                    backgroundColor: "rgba(255, 255, 255, 0.03)",
+                                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                                    borderRadius: "16px",
+                                    padding: "14px 20px 14px 48px",
+                                    color: "#fff",
+                                    fontSize: "0.9rem",
+                                    fontWeight: "600",
+                                    outline: "none",
+                                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                    width: "320px"
+                                }}
                             />
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Orders List */}
-                <div className="bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
+                <div
+                    className="table-card"
+                    style={{
+                        backgroundColor: "rgba(255, 255, 255, 0.01)",
+                        border: "1px solid rgba(255, 255, 255, 0.05)",
+                        borderRadius: "32px",
+                        overflow: "hidden",
+                        backdropFilter: "blur(20px)"
+                    }}
+                >
                     {isLoading ? (
-                        <div className="p-20 flex flex-col items-center justify-center gap-4">
-                            <Loader2 className="w-10 h-10 text-cyan-500 animate-spin" />
-                            <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Loading Orders...</p>
+                        <div className="loading-state" style={{ padding: "100px 24px", textAlign: "center" }}>
+                            <Loader2 className="w-12 h-12 text-cyan-500 animate-spin mx-auto mb-6" />
+                            <p className="text-gray-500 font-black uppercase tracking-widest text-xs">Accessing Orders...</p>
                         </div>
                     ) : filteredOrders.length > 0 ? (
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left">
+                        <div className="table-wrapper" style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+                            <table className="w-full text-left" style={{ borderCollapse: "separate", borderSpacing: "0" }}>
                                 <thead>
-                                    <tr className="bg-white/[0.02] border-b border-white/5">
-                                        <th className="px-6 py-5 text-xs font-black uppercase tracking-widest text-gray-500">Order/User</th>
-                                        <th className="px-6 py-5 text-xs font-black uppercase tracking-widest text-gray-500">Details</th>
-                                        <th className="px-6 py-5 text-xs font-black uppercase tracking-widest text-gray-500">Amount/Date</th>
-                                        <th className="px-6 py-5 text-xs font-black uppercase tracking-widest text-gray-500 text-center">Status</th>
-                                        <th className="px-6 py-5 text-xs font-black uppercase tracking-widest text-gray-500 text-right">Actions</th>
+                                    <tr style={{ backgroundColor: "rgba(255, 255, 255, 0.03)" }}>
+                                        <th style={tableHeaderStyle}>Reference / Client</th>
+                                        <th style={tableHeaderStyle}>Transaction Logic</th>
+                                        <th style={tableHeaderStyle}>Capital / Timeline</th>
+                                        <th style={tableHeaderStyle} className="text-center">Lifecycle</th>
+                                        <th style={tableHeaderStyle} className="text-right">Control</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-white/5">
-                                    {filteredOrders.map((order) => (
-                                        <tr key={order.id} className="hover:bg-white/[0.01] transition-colors group">
-                                            <td className="px-6 py-6">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400 font-bold shrink-0">
-                                                        {order.fullName?.charAt(0)}
-                                                    </div>
-                                                    <div>
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors uppercase">{order.fullName}</div>
-                                                            <span className={`px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-widest border ${order.userType === 'company'
-                                                                ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
-                                                                : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                                                                }`}>
-                                                                {order.userType || 'Personal'}
-                                                            </span>
+                                <tbody style={{ borderTop: "1px solid rgba(255, 255, 255, 0.03)" }}>
+                                    {filteredOrders.map((order) => {
+                                        const statusStyle = getStatusStyle(order.statusColor);
+                                        return (
+                                            <tr key={order.id} className="table-row" style={{ transition: "all 0.3s ease", borderBottom: "1px solid rgba(255, 255, 255, 0.03)" }}>
+                                                <td style={tableCellStyle}>
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="avatar" style={{ width: "48px", height: "48px", borderRadius: "14px", backgroundColor: "rgba(6, 182, 212, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#06b6d4", fontWeight: "900", fontSize: "1.2rem", border: "1px solid rgba(6, 182, 212, 0.2)" }}>
+                                                            {order.fullName?.charAt(0)}
                                                         </div>
-                                                        <div className="text-xs text-gray-500 mt-1 font-mono tracking-tighter">
-                                                            {order.orderNumber || order.id}
-                                                        </div>
-                                                        {order.companyName && (
-                                                            <div className="text-[10px] text-cyan-500/80 font-bold uppercase mt-1">
-                                                                🏛️ {order.companyName}
+                                                        <div>
+                                                            <div className="flex items-center gap-2 mb-1">
+                                                                <div className="client-name" style={{ fontWeight: "900", color: "#fff", textTransform: "uppercase", fontSize: "0.9rem", letterSpacing: "0.02em" }}>{order.fullName}</div>
+                                                                <span className="user-type-badge" style={{ padding: "2px 6px", borderRadius: "6px", fontSize: "10px", fontWeight: "900", textTransform: "uppercase", border: "1px solid", ...(order.userType === 'company' ? { backgroundColor: 'rgba(168, 85, 247, 0.1)', color: '#a855f7', borderColor: 'rgba(168, 85, 247, 0.2)' } : { backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.2)' }) }}>
+                                                                    {order.userType || 'Personal'}
+                                                                </span>
                                                             </div>
-                                                        )}
+                                                            <div className="order-id" style={{ fontSize: "10px", color: "#555", fontWeight: "700", fontFamily: "monospace" }}>
+                                                                {order.orderNumber || order.id}
+                                                            </div>
+                                                            {order.companyName && (
+                                                                <div className="company-tag" style={{ fontSize: "9px", color: "#06b6d4", fontWeight: "800", textTransform: "uppercase", marginTop: "4px", backgroundColor: "rgba(6, 182, 212, 0.05)", padding: "2px 6px", borderRadius: "4px", width: "fit-content" }}>
+                                                                    CORPORATE: {order.companyName}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-6 max-w-xs">
-                                                <div className="text-xs font-bold text-gray-300 uppercase">{order.domain}</div>
-                                                <div className="text-[10px] text-gray-500 mt-1 uppercase tracking-wider truncate mb-1">{order.subDomain} • {order.plan}</div>
-                                                {order.message && (
-                                                    <div className="text-[10px] text-cyan-400/60 italic truncate max-w-[200px]" title={order.message}>
-                                                        &quot;{order.message}&quot;
+                                                </td>
+                                                <td style={tableCellStyle}>
+                                                    <div className="domain-text" style={{ fontWeight: "800", color: "#ccc", textTransform: "uppercase", fontSize: "0.8rem", marginBottom: "4px" }}>{order.domain}</div>
+                                                    <div className="sub-details" style={{ fontSize: "10px", color: "#555", fontWeight: "600", textTransform: "uppercase" }}>{order.subDomain} • {order.plan}</div>
+                                                    {order.message && (
+                                                        <div className="order-message" style={{ fontSize: "10px", color: "#06b6d4", fontStyle: "italic", opacity: 0.6, marginTop: "6px", maxWidth: "200px" }} title={order.message}>
+                                                            &quot;{order.message}&quot;
+                                                        </div>
+                                                    )}
+                                                </td>
+                                                <td style={tableCellStyle}>
+                                                    <div className="amount-text" style={{ fontWeight: "900", color: "#fff", fontSize: "1rem" }}>₹{order.amount.toLocaleString()}</div>
+                                                    <div className="date-text" style={{ fontSize: "10px", color: "#555", fontWeight: "700", textTransform: "uppercase", marginTop: "4px" }}>{order.createdAt.toLocaleDateString('en-GB')}</div>
+                                                </td>
+                                                <td style={tableCellStyle} className="text-center">
+                                                    <span className="status-badge" style={{
+                                                        padding: "6px 14px",
+                                                        borderRadius: "10px",
+                                                        fontSize: "9px",
+                                                        fontWeight: "900",
+                                                        textTransform: "uppercase",
+                                                        letterSpacing: "0.1em",
+                                                        border: "1px solid",
+                                                        backgroundColor: statusStyle.bg,
+                                                        color: statusStyle.text,
+                                                        borderColor: statusStyle.border
+                                                    }}>
+                                                        {order.status}
+                                                    </span>
+                                                </td>
+                                                <td style={tableCellStyle} className="text-right">
+                                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "10px" }}>
+                                                        <select
+                                                            disabled={updatingId === order.id}
+                                                            onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
+                                                            value={order.status}
+                                                            className="status-select"
+                                                            style={{
+                                                                backgroundColor: "rgba(0, 0, 0, 0.3)",
+                                                                border: "1px solid rgba(255, 255, 255, 0.1)",
+                                                                borderRadius: "10px",
+                                                                padding: "8px 12px",
+                                                                fontSize: "10px",
+                                                                fontWeight: "800",
+                                                                textTransform: "uppercase",
+                                                                color: "#888",
+                                                                outline: "none",
+                                                                cursor: "pointer",
+                                                                transition: "all 0.3s ease"
+                                                            }}
+                                                        >
+                                                            <option value="New Inquiry">New Inquiry</option>
+                                                            <option value="Processing">Processing</option>
+                                                            <option value="Shipped">Shipped</option>
+                                                            <option value="Completed">Completed</option>
+                                                            <option value="Cancelled">Cancelled</option>
+                                                            <option value="Failed">Failed</option>
+                                                        </select>
+                                                        {updatingId === order.id && <Loader2 className="w-4 h-4 text-cyan-500 animate-spin" />}
                                                     </div>
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-6 font-mono">
-                                                <div className="text-sm font-bold text-white">₹{order.amount}</div>
-                                                <div className="text-[10px] text-gray-500 mt-1 uppercase">{order.createdAt.toLocaleDateString()}</div>
-                                            </td>
-                                            <td className="px-6 py-6 text-center">
-                                                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all
-                                                    ${order.statusColor === 'green' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
-                                                        order.statusColor === 'emerald' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                                                            order.statusColor === 'cyan' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' :
-                                                                order.statusColor === 'rose' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' :
-                                                                    'bg-amber-500/10 text-amber-400 border-amber-500/20'}
-                                                `}>
-                                                    {order.status}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-6 text-right">
-                                                <select
-                                                    disabled={updatingId === order.id}
-                                                    onChange={(e) => handleUpdateStatus(order.id, e.target.value)}
-                                                    value={order.status}
-                                                    className="bg-black/50 border border-white/10 rounded-lg px-2 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-400 focus:border-cyan-500 outline-none transition-all cursor-pointer hover:bg-black/80"
-                                                >
-                                                    <option value="New Inquiry">New Inquiry</option>
-                                                    <option value="Processing">Processing</option>
-                                                    <option value="Shipped">Shipped</option>
-                                                    <option value="Completed">Completed</option>
-                                                    <option value="Cancelled">Cancelled</option>
-                                                    <option value="Failed">Failed</option>
-                                                </select>
-                                                {updatingId === order.id && <Loader2 className="inline-block ml-2 w-3 h-3 text-cyan-500 animate-spin" />}
-                                            </td>
-                                        </tr>
-                                    ))}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
                     ) : (
-                        <div className="p-20 text-center">
-                            <Package className="w-12 h-12 text-gray-700 mx-auto mb-4 opacity-30" />
-                            <h3 className="text-lg font-bold text-white mb-1">No orders found</h3>
-                            <p className="text-gray-500 text-sm italic">No matching results for &quot;{searchTerm}&quot;</p>
+                        <div className="empty-state" style={{ padding: "120px 24px", textAlign: "center" }}>
+                            <Package className="w-16 h-16 text-gray-800 mx-auto mb-6 opacity-20" />
+                            <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Zero Records Found</h3>
+                            <p className="text-gray-600 text-sm font-bold uppercase tracking-widest italic">No matches for &quot;{searchTerm}&quot;</p>
                         </div>
                     )}
                 </div>
             </div>
+
+            <style jsx>{`
+                .admin-page-container {
+                    padding: 0;
+                    animation: fadeIn 0.8s ease-out;
+                }
+
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+
+                .status-select:hover {
+                    background-color: rgba(255, 255, 255, 0.05) !important;
+                    border-color: rgba(6, 182, 212, 0.3) !important;
+                    color: #fff !important;
+                }
+
+                .table-row:hover {
+                    background-color: rgba(6, 182, 212, 0.02) !important;
+                }
+
+                @media (max-width: 1024px) {
+                    .search-input { width: 280px !important; }
+                }
+
+                @media (max-width: 768px) {
+                    .header-top { flex-direction: column !important; align-items: stretch !important; }
+                    .search-container { margin-top: 32px; width: 100%; }
+                    .search-input { width: 100% !important; }
+                    .table-card { borderRadius: 24px !important; }
+                }
+            `}</style>
         </div>
     );
 }
+
+const tableHeaderStyle: React.CSSProperties = {
+    padding: "24px 32px",
+    fontSize: "10px",
+    fontWeight: "900",
+    textTransform: "uppercase",
+    color: "#444",
+    letterSpacing: "0.15em",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.05)"
+};
+
+const tableCellStyle: React.CSSProperties = {
+    padding: "32px",
+    whiteSpace: "nowrap",
+    verticalAlign: "middle"
+};
 
 export default function AdminOrdersPage() {
     return (
@@ -267,3 +379,4 @@ export default function AdminOrdersPage() {
         </Suspense>
     );
 }
+

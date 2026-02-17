@@ -7,6 +7,7 @@ import {
     orderBy,
     updateDoc,
     doc,
+    deleteDoc,
     Timestamp
 } from 'firebase/firestore';
 import { db } from './firebase';
@@ -361,6 +362,143 @@ export async function updatePaymentStatusByInternalId(
         }
     } catch (error) {
         console.error('Error updating payment status by internal ID:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get all projects from Firestore
+ */
+export async function getSoftwareData(): Promise<any[]> {
+    try {
+        const softwareRef = collection(db, 'software');
+        const q = query(softwareRef, orderBy('id', 'asc'));
+        const querySnapshot = await getDocs(q);
+
+        return querySnapshot.docs.map(doc => ({
+            firestoreId: doc.id,
+            ...doc.data()
+        }));
+    } catch (error) {
+        console.error('Error getting software:', error);
+        throw error;
+    }
+}
+
+/**
+ * Add a new software entry to Firestore
+ */
+export async function addSoftwareData(software: any): Promise<any> {
+    try {
+        const docRef = await addDoc(collection(db, 'software'), {
+            ...software,
+            createdAt: new Date().toISOString()
+        });
+        return { firestoreId: docRef.id, ...software };
+    } catch (error) {
+        console.error('Error adding software:', error);
+        throw error;
+    }
+}
+
+/**
+ * Update an existing software entry in Firestore
+ */
+export async function updateSoftwareData(id: number, softwareUpdate: any): Promise<void> {
+    try {
+        // Find the doc by our internal 'id' field
+        const softwareRef = collection(db, 'software');
+        const q = query(softwareRef, where('id', '==', id));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const docRef = doc(db, 'software', querySnapshot.docs[0].id);
+            await updateDoc(docRef, softwareUpdate);
+        } else {
+            throw new Error(`Software with id ${id} not found`);
+        }
+    } catch (error) {
+        console.error('Error updating software:', error);
+        throw error;
+    }
+}
+
+/**
+ * Delete a software entry from Firestore
+ */
+export async function deleteSoftwareData(id: number): Promise<void> {
+    try {
+        const softwareRef = collection(db, 'software');
+        const q = query(softwareRef, where('id', '==', id));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const docRef = doc(db, 'software', querySnapshot.docs[0].id);
+            await deleteDoc(docRef);
+        } else {
+            throw new Error(`Software with id ${id} not found`);
+        }
+    } catch (error) {
+        console.error('Error deleting software:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get all invoices from Firestore
+ */
+export async function getInvoicesData(): Promise<any[]> {
+    try {
+        const invoicesRef = collection(db, 'invoices');
+        const q = query(invoicesRef, orderBy('timestamp', 'desc'));
+        const querySnapshot = await getDocs(q);
+
+        return querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+    } catch (error) {
+        console.error('Error getting invoices:', error);
+        throw error;
+    }
+}
+
+/**
+ * Add a new invoice to Firestore
+ */
+export async function addInvoiceData(invoice: any): Promise<void> {
+    try {
+        await addDoc(collection(db, 'invoices'), {
+            ...invoice,
+            timestamp: invoice.timestamp || new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('Error adding invoice:', error);
+        throw error;
+    }
+}
+
+/**
+ * Update invoice status in Firestore
+ */
+export async function updateInvoiceStatus(invoiceId: string, status: string, pdfGenerated: boolean = true): Promise<void> {
+    try {
+        // Find doc by custom id field or firestore id
+        const invoicesRef = collection(db, 'invoices');
+        // First try to find by 'id' field if it exists
+        const q = query(invoicesRef, where('id', '==', invoiceId));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            const docRef = doc(db, 'invoices', querySnapshot.docs[0].id);
+            await updateDoc(docRef, { status, pdfGenerated });
+        } else {
+            // Try by Firestore doc ID directly
+            const docRef = doc(db, 'invoices', invoiceId);
+            await updateDoc(docRef, { status, pdfGenerated });
+        }
+    } catch (error) {
+        console.error('Error updating invoice status:', error);
         throw error;
     }
 }

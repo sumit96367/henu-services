@@ -1,34 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
-import fs from 'fs';
-import path from 'path';
+import { getInvoicesData, updateInvoiceStatus } from '@/lib/data-store';
 import type { InvoiceRecord } from '@/types/invoice';
-
-const INVOICES_FILE = path.join(process.cwd(), 'data', 'invoices.json');
-
-// Read invoices from file
-function getInvoices(): InvoiceRecord[] {
-    try {
-        if (!fs.existsSync(INVOICES_FILE)) {
-            return [];
-        }
-        const data = fs.readFileSync(INVOICES_FILE, 'utf-8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error('Error reading invoices:', error);
-        return [];
-    }
-}
-
-// Write invoices to file
-function saveInvoices(invoices: InvoiceRecord[]) {
-    try {
-        fs.writeFileSync(INVOICES_FILE, JSON.stringify(invoices, null, 2), 'utf-8');
-    } catch (error) {
-        console.error('Error saving invoices:', error);
-        throw error;
-    }
-}
 
 export async function POST(
     request: NextRequest,
@@ -56,25 +29,21 @@ export async function POST(
 
         // Await params in Next.js 15+
         const { id: invoiceId } = await params;
-        const invoices = getInvoices();
-        const invoiceIndex = invoices.findIndex(inv => inv.id === invoiceId);
+        const invoices = await getInvoicesData();
+        const invoice = invoices.find(inv => inv.id === invoiceId || inv.invoiceNumber === invoiceId);
 
-        if (invoiceIndex === -1) {
+        if (!invoice) {
             return NextResponse.json(
                 { error: 'Invoice not found' },
                 { status: 404 }
             );
         }
 
-        const invoice = invoices[invoiceIndex];
-
         // TODO: In production, integrate with actual email service
         console.log(`Resending invoice ${invoice.invoiceNumber} to ${invoice.email}`);
 
-        // Update invoice status to sent
-        invoices[invoiceIndex].status = 'sent';
-        invoices[invoiceIndex].pdfGenerated = true;
-        saveInvoices(invoices);
+        // Update invoice status to sent in Firestore
+        await updateInvoiceStatus(invoice.id, 'sent', true);
 
         return NextResponse.json({
             success: true,

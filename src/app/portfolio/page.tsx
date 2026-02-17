@@ -37,6 +37,7 @@ const projects = [
         tags: ['Healthcare', 'Management', 'Digital'],
         color: 'from-purple-600 to-indigo-600',
         formLink: '',
+        buyLink: 'https://pages.razorpay.com/henuos-hospital-management',
         stats: { metric: 'HMS', label: 'Solution' }
     },
     {
@@ -48,6 +49,7 @@ const projects = [
         tags: ['Finance', 'GST', 'Invoicing'],
         color: 'from-indigo-600 to-violet-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Accounting', label: 'Software' }
     },
     {
@@ -59,6 +61,7 @@ const projects = [
         tags: ['Hospitality', 'Booking', 'POS'],
         color: 'from-violet-600 to-purple-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Hotel', label: 'System' }
     },
     {
@@ -70,6 +73,7 @@ const projects = [
         tags: ['Education', 'Fees', 'Management'],
         color: 'from-purple-600 to-pink-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Education', label: 'Platform' }
     },
     {
@@ -81,6 +85,7 @@ const projects = [
         tags: ['Restaurant', 'POS', 'Kitchen'],
         color: 'from-pink-600 to-indigo-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Restaurant', label: 'Solution' }
     },
     {
@@ -92,6 +97,7 @@ const projects = [
         tags: ['Travel', 'Booking', 'CRM'],
         color: 'from-indigo-600 to-purple-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Travel', label: 'Platform' }
     },
     {
@@ -103,6 +109,7 @@ const projects = [
         tags: ['Pharmacy', 'Inventory', 'Billing'],
         color: 'from-purple-600 to-violet-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Pharmacy', label: 'Software' }
     },
     {
@@ -114,6 +121,7 @@ const projects = [
         tags: ['E-commerce', 'Online Store', 'Payment'],
         color: 'from-violet-600 to-pink-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'E-commerce', label: 'Platform' }
     },
     {
@@ -125,6 +133,7 @@ const projects = [
         tags: ['HR', 'Payroll', 'Attendance'],
         color: 'from-pink-600 to-purple-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'HRMS', label: 'Solution' }
     },
     {
@@ -136,6 +145,7 @@ const projects = [
         tags: ['Invoicing', 'Billing', 'Finance'],
         color: 'from-purple-600 to-indigo-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Invoicing', label: 'System' }
     },
     {
@@ -147,6 +157,7 @@ const projects = [
         tags: ['Inventory', 'Warehouse', 'Stock'],
         color: 'from-indigo-600 to-pink-600',
         formLink: '',
+        buyLink: '',
         stats: { metric: 'Inventory', label: 'System' }
     },
 ];
@@ -159,15 +170,6 @@ const projects = [
 
 export default function PortfolioPage() {
     const [selectedProduct, setSelectedProduct] = useState<typeof projects[0] | null>(null);
-    const [showPaymentDialog, setShowPaymentDialog] = useState(false);
-    const [paymentForm, setPaymentForm] = useState({
-        productName: '',
-        name: '',
-        email: '',
-        contact: '',
-        paymentMethod: '',
-        requirements: ''
-    });
     // State for merged projects (hardcoded + custom from API)
     const [allProjects, setAllProjects] = useState(projects);
     // Dynamic categories extracted from all projects
@@ -256,12 +258,10 @@ export default function PortfolioPage() {
 
     const openModal = (product: typeof projects[0]) => {
         setSelectedProduct(product);
-        setPaymentForm(prev => ({ ...prev, productName: product.title }));
     };
 
     const closeModal = () => {
         setSelectedProduct(null);
-        setShowPaymentDialog(false);
     };
 
     const handleGetItNow = () => {
@@ -275,14 +275,12 @@ export default function PortfolioPage() {
     };
 
     const handleBuyNow = () => {
-        setShowPaymentDialog(true);
-    };
-
-    const handlePaymentSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        alert(`Payment request submitted for ${paymentForm.productName}!\n\nCustomer Details:\nName: ${paymentForm.name}\nEmail: ${paymentForm.email}\nContact: ${paymentForm.contact}\nPayment Method: ${paymentForm.paymentMethod}\n\nAdditional Requirements:\n${paymentForm.requirements || 'None'}`);
-        setShowPaymentDialog(false);
-        closeModal();
+        if (selectedProduct?.buyLink) {
+            window.open(selectedProduct.buyLink, '_blank');
+        } else {
+            // Fallback to default platform if no specific buy link
+            window.location.href = 'https://henuos.netlify.app/';
+        }
     };
 
     return (
@@ -390,18 +388,18 @@ export default function PortfolioPage() {
 
                     {/* Mobile Category Filter - Horizontal Scroll */}
                     <div className="lg:hidden mb-8 -mx-4 px-4">
-                        <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+                        <div className="flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide">
                             {filterCategories.map((category) => (
                                 <button
                                     key={category}
                                     onClick={() => setSelectedCategory(category)}
-                                    style={{ padding: '0.1cm 0.4cm' }}
+                                    style={{ padding: '12px 24px' }}
                                     className={`
-                                        rounded-full text-sm font-semibold whitespace-nowrap snap-start
+                                        rounded-xl text-base font-bold whitespace-nowrap snap-start
                                         transition-all duration-300 border-2
                                         ${selectedCategory === category
-                                            ? 'text-purple-400 border-purple-400 bg-transparent'
-                                            : 'text-gray-400 border-transparent hover:text-white'
+                                            ? 'text-purple-400 border-purple-400 bg-white/5 shadow-[0_0_15px_rgba(168,85,247,0.2)]'
+                                            : 'text-gray-400 border-white/5 bg-white/2 hover:text-white hover:border-white/10'
                                         }
                                     `}
                                 >
@@ -415,20 +413,20 @@ export default function PortfolioPage() {
                     <div className="flex gap-8 items-start">
 
                         {/* Sticky Category Sidebar - Desktop Only */}
-                        <aside className="hidden lg:block w-64 shrink-0">
+                        <aside className="hidden lg:block w-72 shrink-0">
                             <div className="sticky top-24">
-                                <h3 className="text-white font-bold text-lg mb-4 px-2">Category</h3>
-                                <nav className="space-y-2">
+                                <h3 className="text-white font-black text-2xl mb-8 px-2 tracking-tight">Category</h3>
+                                <nav className="space-y-3">
                                     {filterCategories.map((category) => (
                                         <button
                                             key={category}
                                             onClick={() => setSelectedCategory(category)}
                                             className={`
-                                                w-full text-left px-4 py-3 rounded-xl text-base font-medium
-                                                transition-all duration-300 border-l-2
+                                                w-full text-left px-6 py-4 rounded-xl text-lg font-medium
+                                                transition-all duration-300 border-l-4
                                                 ${selectedCategory === category
-                                                    ? 'border-purple-400 text-purple-400 pl-4 bg-white/[0.02]'
-                                                    : 'border-transparent text-gray-400 hover:text-white'
+                                                    ? 'border-purple-400 text-purple-400 pl-8 bg-white/[0.05] shadow-[0_0_20px_rgba(168,85,247,0.15)]'
+                                                    : 'border-transparent text-gray-400 hover:text-white hover:bg-white/5'
                                                 }
                                             `}
                                         >
@@ -712,164 +710,35 @@ export default function PortfolioPage() {
                                         transition={{ delay: 0.4 }}
                                         className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full mt-6 md:mt-8"
                                     >
-                                        {/* Primary: Get-it-Now */}
+                                        {/* Primary: View Details */}
                                         <button
                                             onClick={handleGetItNow}
-                                            className="group relative bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white font-bold text-lg md:text-xl rounded-full transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/60 w-full sm:w-auto px-10 md:px-14 py-5 md:py-7 flex items-center justify-center gap-3"
+                                            className="group relative bg-gradient-to-r from-[#6D28D9] via-[#4F46E5] to-[#6D28D9] bg-[length:200%_auto] hover:bg-right text-white font-black text-base md:text-lg rounded-full transition-all duration-500 shadow-[0_0_30px_rgba(109,40,217,0.4)] hover:shadow-[0_0_60px_rgba(109,40,217,0.7)] flex items-center justify-center flex-shrink-0 hover:scale-[1.05] active:scale-95 whitespace-nowrap overflow-hidden"
+                                            style={{
+                                                padding: '20px 50px',
+                                                minWidth: 'max-content'
+                                            }}
                                         >
-                                            {/* Glow effect on hover */}
-                                            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
-                                            <span className="relative flex items-center justify-center gap-2">
-                                                <span className="text-xl md:text-2xl">⭐</span>
-                                                Get-it-Now
-                                            </span>
+                                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none" />
+                                            <span className="relative tracking-widest uppercase">View Details</span>
                                         </button>
 
                                         {/* Secondary: Buy Now */}
                                         <button
                                             onClick={handleBuyNow}
-                                            className="group relative bg-transparent hover:bg-purple-500/10 text-purple-400 font-bold text-lg md:text-xl rounded-full border-2 md:border-4 border-purple-500 hover:border-purple-400 transition-all duration-300 overflow-hidden shadow-2xl hover:shadow-purple-500/40 w-full sm:w-auto px-10 md:px-14 py-5 md:py-7 flex items-center justify-center gap-3"
+                                            className="group relative bg-white/5 hover:bg-white/10 text-white font-black text-base md:text-lg rounded-full border-2 md:border-4 border-[#6D28D9]/50 hover:border-[#6D28D9] transition-all duration-300 shadow-[0_0_20px_rgba(109,40,217,0.1)] hover:shadow-[0_0_40px_rgba(109,40,217,0.3)] flex items-center justify-center gap-6 flex-shrink-0 backdrop-blur-md hover:scale-[1.02] active:scale-95 whitespace-nowrap overflow-hidden"
+                                            style={{
+                                                padding: '20px 50px',
+                                                minWidth: 'max-content'
+                                            }}
                                         >
-                                            {/* Glow effect on hover */}
-                                            <div className="absolute inset-0 bg-purple-500/20 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
-                                            <span className="relative flex items-center justify-center gap-2">
-                                                <ShoppingCart className="w-6 h-6 md:w-8 md:h-8" />
-                                                Buy Now
+                                            <span className="relative flex items-center justify-center gap-4">
+                                                <ShoppingCart className="w-6 h-6 md:w-8 md:h-8 text-purple-400 group-hover:text-white transition-colors" />
+                                                <span className="tracking-widest uppercase">Buy Now</span>
                                             </span>
                                         </button>
                                     </motion.div>
                                 </div>
-                            </motion.div>
-                        </motion.div>
-                    )
-                }
-            </AnimatePresence >
-
-            {/* Payment Requirements Dialog */}
-            <AnimatePresence>
-                {
-                    showPaymentDialog && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-                            onClick={() => setShowPaymentDialog(false)}
-                        >
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                onClick={(e) => e.stopPropagation()}
-                                className="relative w-full max-w-2xl bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/10 max-h-[90vh] overflow-y-auto p-8 md:p-12"
-                            >
-                                <button
-                                    onClick={() => setShowPaymentDialog(false)}
-                                    className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                                >
-                                    <X className="w-5 h-5 text-white" />
-                                </button>
-
-                                <h3 className="text-3xl font-bold text-white mb-8">Payment Requirements</h3>
-
-                                <form onSubmit={handlePaymentSubmit} className="flex flex-col gap-6">
-                                    <div>
-                                        <label className="block text-base font-medium text-purple-300 mb-2">Product</label>
-                                        <input
-                                            type="text"
-                                            value={paymentForm.productName}
-                                            readOnly
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
-                                            style={{ padding: '16px 20px', fontSize: '16px' }}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Full Name</label>
-                                        <input
-                                            type="text"
-                                            required
-                                            value={paymentForm.name}
-                                            onChange={(e) => setPaymentForm({ ...paymentForm, name: e.target.value })}
-                                            placeholder="John Doe"
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 p-4 text-base"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Email Address</label>
-                                        <input
-                                            type="email"
-                                            required
-                                            value={paymentForm.email}
-                                            onChange={(e) => setPaymentForm({ ...paymentForm, email: e.target.value })}
-                                            placeholder="your@email.com"
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                                            style={{ padding: '16px 20px', fontSize: '16px' }}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Contact Number</label>
-                                        <input
-                                            type="tel"
-                                            required
-                                            value={paymentForm.contact}
-                                            onChange={(e) => setPaymentForm({ ...paymentForm, contact: e.target.value })}
-                                            placeholder="+1 234 567 8900"
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
-                                            style={{ padding: '16px 20px', fontSize: '16px' }}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Payment Method</label>
-                                        <select
-                                            required
-                                            value={paymentForm.paymentMethod}
-                                            onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
-                                            style={{ padding: '16px 20px', fontSize: '16px' }}
-                                        >
-                                            <option value="" className="bg-gray-900">Select payment method</option>
-                                            <option value="credit-card" className="bg-gray-900">Credit Card</option>
-                                            <option value="debit-card" className="bg-gray-900">Debit Card</option>
-                                            <option value="upi" className="bg-gray-900">UPI</option>
-                                            <option value="net-banking" className="bg-gray-900">Net Banking</option>
-                                            <option value="wallet" className="bg-gray-900">Digital Wallet</option>
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-base font-medium text-purple-300" style={{ marginBottom: '10px' }}>Additional Requirements</label>
-                                        <textarea
-                                            value={paymentForm.requirements}
-                                            onChange={(e) => setPaymentForm({ ...paymentForm, requirements: e.target.value })}
-                                            placeholder="Any specific requirements or notes..."
-                                            rows={4}
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 resize-none"
-                                            style={{ padding: '16px 20px', fontSize: '16px' }}
-                                        />
-                                    </div>
-
-                                    <div className="flex gap-5" style={{ paddingTop: '20px' }}>
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPaymentDialog(false)}
-                                            className="flex-1 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors border border-white/10 font-bold text-lg"
-                                            style={{ padding: '20px' }}
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button
-                                            type="submit"
-                                            className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold text-lg rounded-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50"
-                                            style={{ padding: '20px' }}
-                                        >
-                                            Proceed
-                                        </button>
-                                    </div>
-                                </form>
                             </motion.div>
                         </motion.div>
                     )

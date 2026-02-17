@@ -165,45 +165,46 @@ export default function ServiceRequestsPage() {
     };
 
     return (
-        <div className="admin-page">
+        <div className="admin-page-container">
             {/* Header */}
-            <div style={{ marginBottom: "32px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8px" }}>
-                    <div>
+            <div className="page-header" style={{ marginBottom: "32px" }}>
+                <div className="header-content" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8px" }}>
+                    <div className="header-left">
                         <Link href="/admin/dashboard" className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors mb-4 text-sm font-bold uppercase tracking-wider">
                             <ChevronLeft size={16} /> Dashboard
                         </Link>
                         <h1
                             style={{
-                                fontSize: "2.5rem",
-                                fontWeight: "bold",
+                                fontWeight: "900",
                                 background: "linear-gradient(to right, #06b6d4, #3b82f6)",
                                 WebkitBackgroundClip: "text",
                                 WebkitTextFillColor: "transparent",
                                 backgroundClip: "text",
+                                letterSpacing: "-0.02em"
                             }}
+                            className="page-title"
                         >
                             Service Requests
                         </h1>
                     </div>
-                    <div style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
+                    <div className="header-right" style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "10px" }}>
                         {requests.filter(r => r.status === "New Inquiry").length > 0 && (
-                            <div style={{
+                            <div className="new-badge" style={{
                                 backgroundColor: "rgba(6, 182, 212, 0.1)",
                                 border: "1px solid rgba(6, 182, 212, 0.3)",
-                                padding: "4px 12px",
-                                borderRadius: "8px",
+                                padding: "6px 14px",
+                                borderRadius: "10px",
                                 display: "flex",
                                 alignItems: "center",
                                 gap: "8px"
                             }}>
-                                <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#06b6d4", boxShadow: "0 0 10px #06b6d4" }}></span>
-                                <span style={{ color: "#06b6d4", fontSize: "0.875rem", fontWeight: "700" }}>
+                                <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#06b6d4", boxShadow: "0 0 12px #06b6d4" }}></span>
+                                <span style={{ color: "#06b6d4", fontSize: "0.85rem", fontWeight: "800", textTransform: "uppercase" }}>
                                     {requests.filter(r => r.status === "New Inquiry").length} New
                                 </span>
                             </div>
                         )}
-                        <p style={{ fontSize: "1.125rem", color: "#888", margin: 0 }}>
+                        <p className="request-count" style={{ color: "#888", margin: 0, fontWeight: "500" }}>
                             {isLoading ? "Loading requests..." : `${filteredRequests.length} total inquiries`}
                         </p>
                     </div>
@@ -212,21 +213,22 @@ export default function ServiceRequestsPage() {
 
             {/* Filters */}
             <div
+                className="filters-grid"
                 style={{
                     backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "24px",
                     padding: "24px",
-                    marginBottom: "24px",
+                    marginBottom: "32px",
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                    gap: "16px",
+                    gap: "20px",
+                    backdropFilter: "blur(20px)"
                 }}
             >
-                <div className="relative">
-                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: "600", color: "#ccc", marginBottom: "8px" }}>Search</label>
+                <div className="filter-item">
+                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: "800", color: "#555", marginBottom: "10px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Search</label>
                     <div style={{ position: "relative" }}>
-                        <Search style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", color: "#666" }} size={18} />
+                        <Search style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "#444" }} size={18} />
                         <input
                             type="text"
                             placeholder="Name, Email or ID..."
@@ -234,59 +236,70 @@ export default function ServiceRequestsPage() {
                             onChange={(e) => setSearchTerm(e.target.value)}
                             style={{
                                 width: "100%",
-                                padding: "10px 12px 10px 40px",
-                                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                padding: "14px 16px 14px 44px",
+                                backgroundColor: "rgba(255, 255, 255, 0.04)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "8px",
+                                borderRadius: "14px",
                                 color: "#fff",
-                                fontSize: "0.95rem",
+                                fontSize: "1rem",
                                 outline: "none",
+                                transition: "all 0.3s ease"
                             }}
+                            className="focus:border-cyan-500/50 focus:bg-white/[0.06]"
                         />
                     </div>
                 </div>
 
-                <div>
-                    <label style={{ display: "block", fontSize: "0.875rem", fontWeight: "600", color: "#ccc", marginBottom: "8px" }}>Status</label>
+                <div className="filter-item">
+                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: "800", color: "#555", marginBottom: "10px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Status Filter</label>
                     <select
                         value={selectedStatus}
                         onChange={(e) => setSelectedStatus(e.target.value)}
                         style={{
                             width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
+                            padding: "14px 16px",
+                            backgroundColor: "rgba(255, 255, 255, 0.04)",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
+                            borderRadius: "14px",
                             color: "#fff",
-                            fontSize: "0.95rem",
+                            fontSize: "1rem",
                             outline: "none",
                             cursor: "pointer",
+                            appearance: "none",
+                            backgroundImage: "url(\"data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e\")",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "right 16px center",
+                            backgroundSize: "16px"
                         }}
                     >
-                        <option value="" style={{ backgroundColor: "#1a1a1a" }}>All Statuses</option>
-                        <option value="New Inquiry" style={{ backgroundColor: "#1a1a1a" }}>New Inquiry</option>
-                        <option value="Processing" style={{ backgroundColor: "#1a1a1a" }}>Processing</option>
-                        <option value="Completed" style={{ backgroundColor: "#1a1a1a" }}>Completed</option>
-                        <option value="Cancelled" style={{ backgroundColor: "#1a1a1a" }}>Cancelled</option>
+                        <option value="" style={{ backgroundColor: "#0a0a0a" }}>All Statuses</option>
+                        <option value="New Inquiry" style={{ backgroundColor: "#0a0a0a" }}>New Inquiry</option>
+                        <option value="Processing" style={{ backgroundColor: "#0a0a0a" }}>Processing</option>
+                        <option value="Completed" style={{ backgroundColor: "#0a0a0a" }}>Completed</option>
+                        <option value="Cancelled" style={{ backgroundColor: "#0a0a0a" }}>Cancelled</option>
                     </select>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                <div className="filter-item" style={{ display: "flex", alignItems: "flex-end" }}>
                     <button
                         onClick={() => { setSearchTerm(""); setSelectedStatus(""); }}
                         style={{
                             width: "100%",
-                            padding: "10px 16px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
+                            padding: "14px 16px",
+                            backgroundColor: "rgba(6, 182, 212, 0.08)",
+                            border: "1px solid rgba(6, 182, 212, 0.2)",
+                            borderRadius: "14px",
                             color: "#06b6d4",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
+                            fontSize: "1rem",
+                            fontWeight: "800",
                             cursor: "pointer",
+                            transition: "all 0.3s ease",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em"
                         }}
+                        className="hover:bg-cyan-500/20 active:scale-95"
                     >
-                        Reset Filters
+                        Reset All
                     </button>
                 </div>
             </div>
@@ -294,32 +307,33 @@ export default function ServiceRequestsPage() {
             {/* Table */}
             <div
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "24px",
                     overflow: "hidden",
+                    backdropFilter: "blur(20px)"
                 }}
             >
-                <div style={{ overflowX: "auto" }}>
-                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <div style={{ overflowX: "auto" }} className="scrollbar-hide">
+                    <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "800px" }}>
                         <thead>
-                            <tr style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
-                                <th style={thStyle}>Date</th>
-                                <th style={thStyle}>User</th>
-                                <th style={thStyle}>Type</th>
-                                <th style={thStyle}>Services</th>
+                            <tr style={{ backgroundColor: "rgba(255, 255, 255, 0.04)" }}>
+                                <th style={thStyle}>Inquiry Date</th>
+                                <th style={thStyle}>Lead Details</th>
+                                <th style={thStyle}>Client Type</th>
+                                <th style={thStyle}>Requested Services</th>
                                 <th style={thStyle}>Budget</th>
-                                <th style={thStyle}>Status</th>
+                                <th style={thStyle}>Process Status</th>
                                 <th style={thStyle}>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {isLoading ? (
                                 Array.from({ length: 5 }).map((_, i) => (
-                                    <tr key={i}><td colSpan={7} style={{ padding: "20px", textAlign: "center" }}><Loader2 className="animate-spin inline mr-2" /> Loading...</td></tr>
+                                    <tr key={i}><td colSpan={7} style={{ padding: "40px", textAlign: "center" }}><Loader2 className="animate-spin inline mr-3 text-cyan-500" /> <span style={{ color: "#444", fontWeight: "700" }}>Fetching data...</span></td></tr>
                                 ))
                             ) : filteredRequests.length === 0 ? (
-                                <tr><td colSpan={7} style={{ padding: "40px", textAlign: "center", color: "#666" }}>No service requests found.</td></tr>
+                                <tr><td colSpan={7} style={{ padding: "60px", textAlign: "center", color: "#555", fontWeight: "600" }}>No service requests found matching your filters.</td></tr>
                             ) : (
                                 filteredRequests.map((request, idx) => {
                                     const status = getStatusColor(request.status, request.statusColor);
@@ -329,45 +343,48 @@ export default function ServiceRequestsPage() {
                                             onClick={() => openModal(request)}
                                             style={{
                                                 cursor: "pointer",
-                                                borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
-                                                backgroundColor: idx % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.01)"
+                                                borderBottom: "1px solid rgba(255, 255, 255, 0.04)",
+                                                transition: "all 0.2s ease"
                                             }}
-                                            className="hover:bg-white/[0.03] transition-colors"
+                                            className="hover:bg-white/[0.04]"
                                         >
                                             <td style={tdStyle}>{formatDate(request.createdAt).split(",")[0]}</td>
                                             <td style={tdStyle}>
-                                                <div style={{ fontWeight: "700" }}>{request.fullName}</div>
-                                                <div style={{ fontSize: "0.75rem", color: "#666" }}>{request.email}</div>
+                                                <div style={{ fontWeight: "800", color: "#fff", fontSize: "1rem" }}>{request.fullName}</div>
+                                                <div style={{ fontSize: "0.8rem", color: "#555", fontWeight: "600" }}>{request.email}</div>
                                             </td>
                                             <td style={tdStyle}>
                                                 <span style={{
                                                     fontSize: "10px",
                                                     fontWeight: "900",
                                                     textTransform: "uppercase",
-                                                    padding: "2px 6px",
-                                                    borderRadius: "4px",
+                                                    padding: "4px 8px",
+                                                    borderRadius: "6px",
                                                     backgroundColor: request.userType === 'company' ? 'rgba(168, 85, 247, 0.1)' : 'rgba(59, 130, 246, 0.1)',
                                                     color: request.userType === 'company' ? '#a855f7' : '#3b82f6',
-                                                    border: `1px solid ${request.userType === 'company' ? 'rgba(168, 85, 247, 0.2)' : 'rgba(59, 130, 246, 0.2)'}`
+                                                    border: `1px solid ${request.userType === 'company' ? 'rgba(168, 85, 247, 0.2)' : 'rgba(59, 130, 246, 0.2)'}`,
+                                                    letterSpacing: "0.05em"
                                                 }}>
                                                     {request.userType || 'Personal'}
                                                 </span>
                                             </td>
                                             <td style={tdStyle}>
-                                                <div style={{ fontSize: "0.875rem", maxWidth: "200px" }} className="truncate" title={request.subDomain}>
+                                                <div style={{ fontSize: "0.9rem", maxWidth: "220px", color: "#888", fontWeight: "500" }} className="truncate" title={request.subDomain}>
                                                     {request.subDomain}
                                                 </div>
                                             </td>
-                                            <td style={tdStyle}>{request.plan}</td>
+                                            <td style={tdStyle}><span style={{ fontWeight: "700", color: "#ccc" }}>{request.plan}</span></td>
                                             <td style={tdStyle}>
                                                 <span style={{
-                                                    padding: "4px 10px",
-                                                    borderRadius: "20px",
+                                                    padding: "6px 14px",
+                                                    borderRadius: "12px",
                                                     fontSize: "0.75rem",
-                                                    fontWeight: "bold",
+                                                    fontWeight: "800",
                                                     backgroundColor: status.bg,
                                                     color: status.text,
-                                                    border: `1px solid ${status.border}`
+                                                    border: `1px solid ${status.border}`,
+                                                    textTransform: "uppercase",
+                                                    letterSpacing: "0.05em"
                                                 }}>
                                                     {request.status}
                                                 </span>
@@ -375,9 +392,10 @@ export default function ServiceRequestsPage() {
                                             <td style={tdStyle}>
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); openModal(request); }}
-                                                    style={{ color: "#06b6d4", fontSize: "0.875rem", fontWeight: "700" }}
+                                                    style={{ color: "#06b6d4", fontSize: "0.85rem", fontWeight: "900", textTransform: "uppercase", letterSpacing: "0.05em" }}
+                                                    className="hover:underline"
                                                 >
-                                                    View
+                                                    View Details
                                                 </button>
                                             </td>
                                         </tr>
@@ -393,61 +411,66 @@ export default function ServiceRequestsPage() {
             {isModalOpen && selectedRequest && (
                 <div
                     onClick={closeModal}
+                    className="modal-overlay"
                     style={{
                         position: "fixed",
                         inset: 0,
-                        backgroundColor: "rgba(0, 0, 0, 0.85)",
-                        backdropFilter: "blur(10px)",
+                        backgroundColor: "rgba(0, 0, 0, 0.9)",
+                        backdropFilter: "blur(15px)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        zIndex: 1000,
+                        zIndex: 2000,
                         padding: "20px",
-                        animation: "fadeIn 0.2s ease-out",
                     }}
                 >
                     <div
                         onClick={(e) => e.stopPropagation()}
+                        className="modal-container"
                         style={{
-                            backgroundColor: "#0a0a0a",
+                            backgroundColor: "#050505",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "24px",
+                            borderRadius: "32px",
                             padding: "40px",
-                            maxWidth: "800px",
+                            maxWidth: "900px",
                             width: "100%",
                             maxHeight: "90vh",
                             overflowY: "auto",
-                            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-                            animation: "slideUp 0.3s ease-out",
+                            boxShadow: "0 40px 100px rgba(0, 0, 0, 0.8)",
+                            position: "relative"
                         }}
                     >
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "32px" }}>
+                        <div className="modal-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "40px" }}>
                             <div>
-                                <h2 style={{ fontSize: "2rem", fontWeight: "900", color: "#fff", marginBottom: "4px" }}>Request Details</h2>
-                                <p style={{ color: "#666", fontSize: "0.875rem", fontFamily: "monospace" }}>ID: {selectedRequest.id}</p>
+                                <h2 style={{ fontWeight: "900", color: "#fff", marginBottom: "8px", letterSpacing: "-0.03em" }} className="modal-title">Request Intelligence</h2>
+                                <p style={{ color: "#444", fontSize: "0.8rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.1em" }}>Tracking ID: {selectedRequest.id}</p>
                             </div>
-                            <button onClick={closeModal} style={{ fontSize: "24px", color: "#444" }}>✕</button>
+                            <button onClick={closeModal} style={{ width: "44px", height: "44px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "14px", backgroundColor: "rgba(255, 255, 255, 0.05)", color: "#fff", fontSize: "20px" }} className="hover:bg-red-500/20 hover:text-red-500 transition-all">✕</button>
                         </div>
 
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "32px" }}>
-                            <Card label="Full Name" value={selectedRequest.fullName} icon={<User size={18} />} />
-                            <Card label="Email Address" value={selectedRequest.email} icon={<Mail size={18} />} />
-                            <Card label="Organization" value={selectedRequest.companyName || "N/A"} icon={<Building2 size={18} />} />
-                            <Card label="Budget Range" value={selectedRequest.plan} icon={<IndianRupee size={18} />} />
-                            <Card label="Inquiry Date" value={formatDate(selectedRequest.createdAt)} icon={<Calendar size={18} />} />
-                            <Card label="Status" value={
+                        <div className="modal-grid" style={{ display: "grid", gap: "20px", marginBottom: "40px" }}>
+                            <Card label="Full Name" value={selectedRequest.fullName} icon={<User size={20} />} />
+                            <Card label="Email Point" value={selectedRequest.email} icon={<Mail size={20} />} />
+                            <Card label="Entity Name" value={selectedRequest.companyName || "N/A"} icon={<Building2 size={20} />} />
+                            <Card label="Budget Scale" value={selectedRequest.plan} icon={<IndianRupee size={20} />} />
+                            <Card label="Engagement Date" value={formatDate(selectedRequest.createdAt)} icon={<Calendar size={20} />} />
+                            <Card label="Lifecycle Status" value={
                                 <select
                                     disabled={updatingId === selectedRequest.id}
                                     value={selectedRequest.status}
                                     onChange={(e) => handleUpdateStatus(selectedRequest.id, e.target.value)}
                                     style={{
-                                        backgroundColor: "transparent",
-                                        border: "none",
+                                        backgroundColor: "rgba(6, 182, 212, 0.1)",
+                                        border: "1px solid rgba(6, 182, 212, 0.2)",
+                                        borderRadius: "10px",
+                                        padding: "6px 12px",
                                         color: "#06b6d4",
-                                        fontWeight: "700",
+                                        fontWeight: "800",
                                         outline: "none",
                                         cursor: "pointer",
-                                        fontSize: "1rem"
+                                        fontSize: "0.95rem",
+                                        appearance: "none",
+                                        textAlign: "center"
                                     }}
                                 >
                                     <option value="New Inquiry">New Inquiry</option>
@@ -455,16 +478,16 @@ export default function ServiceRequestsPage() {
                                     <option value="Completed">Completed</option>
                                     <option value="Cancelled">Cancelled</option>
                                 </select>
-                            } icon={<Clock size={18} />} />
+                            } icon={<Clock size={20} />} />
                         </div>
 
-                        <div style={{ marginBottom: "32px" }}>
-                            <label style={{ display: "block", color: "#888", fontWeight: "700", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
-                                Selected Services
+                        <div style={{ marginBottom: "40px" }}>
+                            <label style={{ display: "block", color: "#444", fontWeight: "900", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "16px" }}>
+                                Identified Solutions
                             </label>
-                            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
                                 {selectedRequest.subDomain.split(",").map((s, i) => (
-                                    <span key={i} style={{ padding: "6px 12px", borderRadius: "8px", backgroundColor: "rgba(255, 255, 255, 0.05)", border: "1px solid rgba(255, 255, 255, 0.1)", color: "#fff", fontSize: "0.875rem" }}>
+                                    <span key={i} style={{ padding: "10px 20px", borderRadius: "14px", backgroundColor: "rgba(6, 182, 212, 0.05)", border: "1px solid rgba(6, 182, 212, 0.15)", color: "#06b6d4", fontSize: "0.9rem", fontWeight: "700" }}>
                                         {s.trim()}
                                     </span>
                                 ))}
@@ -472,17 +495,19 @@ export default function ServiceRequestsPage() {
                         </div>
 
                         <div>
-                            <label style={{ display: "block", color: "#888", fontWeight: "700", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
-                                Project Brief
+                            <label style={{ display: "block", color: "#444", fontWeight: "900", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "16px" }}>
+                                Strategic Intent
                             </label>
                             <div style={{
-                                padding: "24px",
+                                padding: "28px",
                                 backgroundColor: "rgba(255, 255, 255, 0.02)",
-                                border: "1px solid rgba(255, 255, 255, 0.05)",
-                                borderRadius: "16px",
-                                color: "#ccc",
-                                lineHeight: "1.6",
-                                whiteSpace: "pre-wrap"
+                                border: "1px solid rgba(255, 255, 255, 0.06)",
+                                borderRadius: "20px",
+                                color: "#999",
+                                fontSize: "1.05rem",
+                                lineHeight: "1.7",
+                                whiteSpace: "pre-wrap",
+                                fontWeight: "500"
                             }}>
                                 {selectedRequest.message || "No project brief provided."}
                             </div>
@@ -492,8 +517,56 @@ export default function ServiceRequestsPage() {
             )}
 
             <style jsx>{`
-                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-                @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+                .admin-page-container {
+                    padding: 0;
+                    max-width: 100%;
+                }
+                .page-title {
+                    font-size: 3.5rem;
+                }
+                .filters-grid {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+                .modal-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .modal-title {
+                    font-size: 2.5rem;
+                }
+
+                @media (max-width: 1280px) {
+                    .page-title { font-size: 2.75rem; }
+                    .filters-grid { grid-template-columns: 1fr 1fr; }
+                }
+
+                @media (max-width: 1024px) {
+                    .header-content {
+                        flex-direction: column;
+                        align-items: flex-start !important;
+                        gap: 20px;
+                    }
+                    .header-right {
+                        align-items: flex-start !important;
+                        text-align: left !important;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .page-title { font-size: 2.25rem; }
+                    .filters-grid { grid-template-columns: 1fr; }
+                    .modal-grid { grid-template-columns: 1fr; }
+                    .modal-title { font-size: 1.75rem; }
+                    .modal-container { padding: 30px !important; }
+                }
+
+                @media (max-width: 480px) {
+                    .page-title { font-size: 1.75rem; }
+                    .modal-container { padding: 20px !important; borderRadius: 24px !important; }
+                    .modal-title { font-size: 1.5rem; }
+                }
+
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
             `}</style>
         </div>
     );
@@ -502,34 +575,47 @@ export default function ServiceRequestsPage() {
 function Card({ label, value, icon }: { label: string, value: any, icon: any }) {
     return (
         <div style={{
-            padding: "20px",
+            padding: "24px",
             backgroundColor: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: "16px",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+            borderRadius: "20px",
             display: "flex",
-            gap: "16px"
+            gap: "20px",
+            alignItems: "center"
         }}>
-            <div style={{ color: "#555" }}>{icon}</div>
+            <div style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "14px",
+                backgroundColor: "rgba(255, 255, 255, 0.04)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#444"
+            }}>{icon}</div>
             <div>
-                <div style={{ fontSize: "0.7rem", fontWeight: "800", color: "#555", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "4px" }}>{label}</div>
-                <div style={{ fontWeight: "600", color: "#fff" }}>{value}</div>
+                <div style={{ fontSize: "0.7rem", fontWeight: "900", color: "#444", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>{label}</div>
+                <div style={{ fontWeight: "700", color: "#fff", fontSize: "1.05rem" }}>{value}</div>
             </div>
         </div>
     );
 }
 
 const thStyle: React.CSSProperties = {
-    padding: "16px 20px",
+    padding: "20px 24px",
     fontSize: "0.7rem",
     fontWeight: "900",
     textTransform: "uppercase",
-    letterSpacing: "0.1em",
-    color: "#555",
-    textAlign: "left"
+    letterSpacing: "0.15em",
+    color: "#444",
+    textAlign: "left",
+    whiteSpace: "nowrap"
 };
 
 const tdStyle: React.CSSProperties = {
-    padding: "20px",
-    fontSize: "0.9rem",
-    color: "#ccc"
+    padding: "24px",
+    fontSize: "0.95rem",
+    color: "#ccc",
+    verticalAlign: "middle"
 };
+

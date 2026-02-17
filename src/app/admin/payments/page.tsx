@@ -1,7 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import type { PaymentRecord } from "@/types/admin";
+import {
+    ChevronLeft,
+    Search,
+    Filter,
+    CreditCard,
+    User,
+    Mail,
+    Calendar,
+    CheckCircle2,
+    Clock,
+    AlertCircle,
+    Loader2,
+    IndianRupee,
+    ArrowRight,
+    ExternalLink
+} from "lucide-react";
+import Link from "next/link";
 
 export default function PaymentsPage() {
     const [payments, setPayments] = useState<PaymentRecord[]>([]);
@@ -64,7 +81,8 @@ export default function PaymentsPage() {
                 (p) =>
                     p.razorpayPaymentId?.toLowerCase().includes(query) ||
                     p.orderId.toLowerCase().includes(query) ||
-                    p.email.toLowerCase().includes(query)
+                    p.email.toLowerCase().includes(query) ||
+                    p.fullName.toLowerCase().includes(query)
             );
         }
 
@@ -102,7 +120,7 @@ export default function PaymentsPage() {
     };
 
     const getStatusColor = (status: string) => {
-        switch (status) {
+        switch (status.toLowerCase()) {
             case "paid":
                 return { bg: "rgba(16, 185, 129, 0.1)", text: "#10b981", border: "rgba(16, 185, 129, 0.3)" };
             case "pending":
@@ -115,70 +133,87 @@ export default function PaymentsPage() {
     };
 
     return (
-        <div>
-            {/* Page Header */}
-            <div style={{ marginBottom: "32px" }}>
-                <h1
-                    style={{
-                        fontSize: "2.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "8px",
-                        background: "linear-gradient(to right, #10b981, #34d399)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                    }}
-                >
-                    Payment Transactions
-                </h1>
-                <p style={{ fontSize: "1.125rem", color: "#888" }}>
-                    {loading
-                        ? "Loading payments..."
-                        : `${filteredPayments.length} of ${payments.length} transactions`}
-                </p>
+        <div className="admin-page-container">
+            {/* Header */}
+            <div className="page-header" style={{ marginBottom: "40px" }}>
+                <div className="header-top" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8px" }}>
+                    <div className="header-left">
+                        <Link href="/admin/dashboard" className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors mb-4 text-sm font-bold uppercase tracking-wider">
+                            <ChevronLeft size={16} /> Dashboard
+                        </Link>
+                        <h1
+                            style={{
+                                fontWeight: "900",
+                                background: "linear-gradient(to right, #10b981, #34d399)",
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                                backgroundClip: "text",
+                                letterSpacing: "-0.02em"
+                            }}
+                            className="page-title"
+                        >
+                            Payment Ledger
+                        </h1>
+                    </div>
+                    <div className="header-right" style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "10px" }}>
+                        <div className="metric-badge" style={{
+                            backgroundColor: "rgba(16, 185, 129, 0.1)",
+                            border: "1px solid rgba(16, 185, 129, 0.3)",
+                            padding: "8px 16px",
+                            borderRadius: "14px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px"
+                        }}>
+                            <IndianRupee size={16} className="text-emerald-500" />
+                            <span style={{ color: "#10b981", fontSize: "0.9rem", fontWeight: "800" }}>
+                                {loading ? "..." : `₹${payments.filter(p => p.status === 'paid').reduce((acc, curr) => acc + curr.amount, 0).toLocaleString()}`}
+                            </span>
+                            <span style={{ color: "rgba(16, 185, 129, 0.6)", fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase" }}>Total Collected</span>
+                        </div>
+                        <p style={{ color: "#555", margin: 0, fontWeight: "700", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                            {loading ? "Syncing..." : `${filteredPayments.length} Transactions Found`}
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            {/* Filters Section */}
+            {/* Filters */}
             <div
+                className="filters-card"
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "24px",
                     padding: "24px",
-                    marginBottom: "24px",
+                    marginBottom: "32px",
                     display: "grid",
                     gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "16px",
+                    gap: "20px",
+                    backdropFilter: "blur(20px)"
                 }}
             >
-                {/* Status Filter */}
-                <div>
-                    <label
-                        style={{
-                            display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
-                        }}
-                    >
-                        Payment Status
-                    </label>
+                <div className="filter-group">
+                    <label className="filter-label">Search Transaction</label>
+                    <div style={{ position: "relative" }}>
+                        <Search style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "#444" }} size={18} />
+                        <input
+                            type="text"
+                            placeholder="ID, Name or Email..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="filter-input"
+                            style={{ paddingLeft: "44px" }}
+                        />
+                    </div>
+                </div>
+
+                <div className="filter-group">
+                    <label className="filter-label">Status</label>
                     <select
                         value={selectedStatus}
                         onChange={(e) => setSelectedStatus(e.target.value)}
-                        className="admin-select"
-                        style={{
-                            width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontSize: "0.95rem",
-                            outline: "none",
-                            cursor: "pointer",
-                        }}
+                        className="filter-select"
                     >
                         <option value="">All Status</option>
                         <option value="paid">Paid</option>
@@ -187,241 +222,137 @@ export default function PaymentsPage() {
                     </select>
                 </div>
 
-                {/* Payment Method Filter */}
-                <div>
-                    <label
-                        style={{
-                            display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
-                        }}
-                    >
-                        Payment Method
-                    </label>
+                <div className="filter-group">
+                    <label className="filter-label">Method</label>
                     <select
                         value={selectedMethod}
                         onChange={(e) => setSelectedMethod(e.target.value)}
-                        className="admin-select"
-                        style={{
-                            width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontSize: "0.95rem",
-                            outline: "none",
-                            cursor: "pointer",
-                        }}
+                        className="filter-select"
                     >
                         <option value="">All Methods</option>
                         <option value="card">Card</option>
                         <option value="upi">UPI</option>
+                        <option value="netbanking">Net Banking</option>
                     </select>
                 </div>
 
-                {/* Search */}
-                <div>
-                    <label
-                        style={{
-                            display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
-                        }}
-                    >
-                        Search
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Transaction ID or email..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        style={{
-                            width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontSize: "0.95rem",
-                            outline: "none",
-                        }}
-                    />
-                </div>
-
-                {/* Clear Filters */}
-                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                <div className="filter-group" style={{ display: "flex", alignItems: "flex-end" }}>
                     <button
                         onClick={clearFilters}
-                        style={{
-                            width: "100%",
-                            padding: "10px 16px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
-                            color: "#10b981",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                            transition: "all 0.2s",
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(16, 185, 129, 0.1)";
-                            e.currentTarget.style.borderColor = "rgba(16, 185, 129, 0.3)";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-                            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                        }}
+                        className="reset-btn"
                     >
-                        Clear Filters
+                        Reset Filters
                     </button>
                 </div>
             </div>
 
-            {/* Error State */}
+            {/* Error */}
             {error && (
-                <div
-                    style={{
-                        backgroundColor: "rgba(239, 68, 68, 0.1)",
-                        border: "1px solid rgba(239, 68, 68, 0.3)",
-                        borderRadius: "12px",
-                        padding: "16px",
-                        marginBottom: "24px",
-                        color: "#ef4444",
-                    }}
-                >
-                    {error}
+                <div style={{ padding: "20px", backgroundColor: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "16px", color: "#ef4444", marginBottom: "32px", display: "flex", alignItems: "center", gap: "12px" }}>
+                    <AlertCircle size={20} />
+                    <span style={{ fontWeight: "600" }}>{error}</span>
                 </div>
             )}
 
             {/* Table */}
             <div
+                className="table-card"
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
+                    backgroundColor: "rgba(255, 255, 255, 0.01)",
+                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                    borderRadius: "32px",
                     overflow: "hidden",
+                    backdropFilter: "blur(20px)"
                 }}
             >
-                <div style={{ overflowX: "auto" }}>
-                    <table
-                        style={{
-                            width: "100%",
-                            borderCollapse: "collapse",
-                            fontSize: "0.95rem",
-                        }}
-                    >
+                <div style={{ overflowX: "auto" }} className="scrollbar-hide">
+                    <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "0" }}>
                         <thead>
-                            <tr
-                                style={{
-                                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                    position: "sticky",
-                                    top: 0,
-                                    backdropFilter: "blur(10px)",
-                                    zIndex: 10,
-                                }}
-                            >
-                                <th style={tableHeaderStyle}>Transaction ID</th>
-                                <th style={tableHeaderStyle}>User Name</th>
-                                <th style={tableHeaderStyle}>Email</th>
-                                <th style={tableHeaderStyle}>Amount</th>
-                                <th style={tableHeaderStyle}>Method</th>
-                                <th style={tableHeaderStyle}>Status</th>
-                                <th style={tableHeaderStyle}>Date</th>
+                            <tr style={{ backgroundColor: "rgba(16, 185, 129, 0.03)" }}>
+                                <th style={thStyle}>Transaction</th>
+                                <th style={thStyle}>Client</th>
+                                <th style={thStyle}>Amount</th>
+                                <th style={thStyle}>Method</th>
+                                <th style={thStyle}>Status</th>
+                                <th style={thStyle}>Timeline</th>
+                                <th style={thStyle}></th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
-                                // Loading Skeleton
-                                Array.from({ length: 5 }).map((_, i) => (
+                                Array.from({ length: 6 }).map((_, i) => (
                                     <tr key={i}>
-                                        {Array.from({ length: 7 }).map((_, j) => (
-                                            <td key={j} style={tableCellStyle}>
-                                                <div
-                                                    style={{
-                                                        height: "20px",
-                                                        backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                                        borderRadius: "4px",
-                                                        animation: "pulse 1.5s ease-in-out infinite",
-                                                    }}
-                                                />
-                                            </td>
-                                        ))}
+                                        <td colSpan={7} style={{ padding: "32px", textAlign: "center" }}>
+                                            <div className="loading-shimmer" style={{ height: "40px", backgroundColor: "rgba(255, 255, 255, 0.02)", borderRadius: "12px" }}></div>
+                                        </td>
                                     </tr>
                                 ))
                             ) : filteredPayments.length === 0 ? (
-                                // Empty State
                                 <tr>
-                                    <td colSpan={7} style={{ ...tableCellStyle, textAlign: "center", padding: "48px" }}>
-                                        <div style={{ fontSize: "48px", marginBottom: "16px", opacity: 0.5 }}>
-                                            💳
-                                        </div>
-                                        <p style={{ color: "#888", fontSize: "1.125rem" }}>
-                                            No payment transactions found
-                                        </p>
+                                    <td colSpan={7} style={{ padding: "80px", textAlign: "center" }}>
+                                        <CreditCard size={48} style={{ margin: "0 auto 16px", color: "#222" }} />
+                                        <p style={{ color: "#555", fontWeight: "700", fontSize: "1.1rem" }}>No transactions found matching your criteria</p>
                                     </td>
                                 </tr>
                             ) : (
-                                // Data Rows
-                                filteredPayments.map((payment, index) => {
-                                    const statusColors = getStatusColor(payment.status);
+                                filteredPayments.map((payment, idx) => {
+                                    const statusStyle = getStatusColor(payment.status);
                                     return (
                                         <tr
                                             key={payment.id}
                                             onClick={() => openModal(payment)}
-                                            style={{
-                                                cursor: "pointer",
-                                                backgroundColor: index % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.02)",
-                                                transition: "all 0.2s",
-                                            }}
-                                            onMouseEnter={(e) => {
-                                                e.currentTarget.style.backgroundColor = "rgba(16, 185, 129, 0.05)";
-                                                e.currentTarget.style.transform = "scale(1.01)";
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.currentTarget.style.backgroundColor = index % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.02)";
-                                                e.currentTarget.style.transform = "scale(1)";
-                                            }}
+                                            className="table-row"
+                                            style={{ cursor: "pointer", transition: "all 0.2s" }}
                                         >
-                                            <td style={tableCellStyle}>
-                                                <code style={{ fontSize: "0.85rem", color: "#06b6d4" }}>
-                                                    {payment.razorpayPaymentId || payment.orderId}
+                                            <td style={tdStyle}>
+                                                <code style={{ color: "#10b981", fontSize: "0.75rem", fontWeight: "900", letterSpacing: "0.05em" }}>
+                                                    {payment.razorpayPaymentId || payment.orderId.substring(0, 12)}
                                                 </code>
                                             </td>
-                                            <td style={tableCellStyle}>{payment.fullName}</td>
-                                            <td style={tableCellStyle}>{payment.email}</td>
-                                            <td style={tableCellStyle}>
-                                                <span style={{ fontWeight: "600", color: "#10b981" }}>
+                                            <td style={tdStyle}>
+                                                <div style={{ fontWeight: "800", color: "#fff" }}>{payment.fullName}</div>
+                                                <div style={{ fontSize: "0.75rem", color: "#555", fontWeight: "600" }}>{payment.email}</div>
+                                            </td>
+                                            <td style={tdStyle}>
+                                                <span style={{ fontWeight: "900", color: "#10b981", fontSize: "1.1rem" }}>
                                                     ₹{payment.amount.toLocaleString()}
                                                 </span>
                                             </td>
-                                            <td style={tableCellStyle}>
-                                                <span style={{ textTransform: "uppercase", fontSize: "0.875rem" }}>
+                                            <td style={tdStyle}>
+                                                <span style={{
+                                                    fontSize: "0.7rem",
+                                                    fontWeight: "900",
+                                                    textTransform: "uppercase",
+                                                    color: "#888",
+                                                    backgroundColor: "rgba(255, 255, 255, 0.04)",
+                                                    padding: "4px 10px",
+                                                    borderRadius: "8px",
+                                                    border: "1px solid rgba(255, 255, 255, 0.05)"
+                                                }}>
                                                     {payment.paymentMethod}
                                                 </span>
                                             </td>
-                                            <td style={tableCellStyle}>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        padding: "4px 12px",
-                                                        borderRadius: "12px",
-                                                        fontSize: "0.875rem",
-                                                        fontWeight: "600",
-                                                        backgroundColor: statusColors.bg,
-                                                        color: statusColors.text,
-                                                        border: `1px solid ${statusColors.border}`,
-                                                    }}
-                                                >
-                                                    {formatStatus(payment.status)}
+                                            <td style={tdStyle}>
+                                                <span style={{
+                                                    padding: "6px 14px",
+                                                    borderRadius: "12px",
+                                                    fontSize: "0.7rem",
+                                                    fontWeight: "900",
+                                                    textTransform: "uppercase",
+                                                    letterSpacing: "0.05em",
+                                                    backgroundColor: statusStyle.bg,
+                                                    color: statusStyle.text,
+                                                    border: `1px solid ${statusStyle.border}`
+                                                }}>
+                                                    {payment.status}
                                                 </span>
                                             </td>
-                                            <td style={tableCellStyle}>{formatDate(payment.timestamp)}</td>
+                                            <td style={tdStyle}>
+                                                <div style={{ fontSize: "0.85rem", color: "#ccc", fontWeight: "600" }}>{formatDate(payment.timestamp)}</div>
+                                            </td>
+                                            <td style={tdStyle}>
+                                                <ArrowRight size={18} className="text-gray-800" />
+                                            </td>
                                         </tr>
                                     );
                                 })
@@ -431,160 +362,181 @@ export default function PaymentsPage() {
                 </div>
             </div>
 
-            {/* Details Modal */}
+            {/* Modal */}
             {isModalOpen && selectedPayment && (
                 <div
                     onClick={closeModal}
+                    className="modal-overlay"
                     style={{
                         position: "fixed",
                         inset: 0,
-                        backgroundColor: "rgba(0, 0, 0, 0.7)",
-                        backdropFilter: "blur(8px)",
+                        backgroundColor: "rgba(0, 0, 0, 0.9)",
+                        backdropFilter: "blur(20px)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        zIndex: 1000,
-                        padding: "20px",
-                        animation: "fadeIn 0.2s ease-out",
+                        zIndex: 2000,
+                        padding: "20px"
                     }}
                 >
                     <div
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={e => e.stopPropagation()}
+                        className="modal-card"
                         style={{
-                            backgroundColor: "rgba(10, 10, 10, 0.95)",
+                            backgroundColor: "#050505",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "20px",
-                            padding: "32px",
-                            maxWidth: "600px",
+                            borderRadius: "40px",
+                            padding: "48px",
+                            maxWidth: "700px",
                             width: "100%",
-                            maxHeight: "80vh",
+                            maxHeight: "90vh",
                             overflowY: "auto",
-                            animation: "slideUp 0.3s ease-out",
+                            boxShadow: "0 40px 100px rgba(0, 0, 0, 0.8)"
                         }}
                     >
-                        {/* Modal Header */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px" }}>
-                            <h2
-                                style={{
-                                    fontSize: "1.75rem",
-                                    fontWeight: "bold",
-                                    background: "linear-gradient(to right, #10b981, #34d399)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    backgroundClip: "text",
-                                }}
-                            >
-                                Payment Details
-                            </h2>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "40px" }}>
+                            <div>
+                                <h2 style={{ fontSize: "2.5rem", fontWeight: "900", color: "#fff", marginBottom: "8px", letterSpacing: "-0.03em" }}>Detail Analysis</h2>
+                                <p style={{ color: "#555", fontSize: "0.75rem", fontWeight: "900", textTransform: "uppercase", letterSpacing: "0.15em" }}>REF: {selectedPayment.id}</p>
+                            </div>
+                            <button onClick={closeModal} style={{ width: "48px", height: "48px", borderRadius: "16px", backgroundColor: "rgba(255, 255, 255, 0.05)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }} className="hover:bg-red-500/20 hover:text-red-500 transition-all">✕</button>
+                        </div>
+
+                        <div style={{ display: "grid", gap: "16px" }}>
+                            <DetailRow label="Client Name" value={selectedPayment.fullName} />
+                            <DetailRow label="Email Identity" value={selectedPayment.email} />
+                            <DetailRow label="Invoice Hash" value={selectedPayment.invoiceNumber} />
+                            <DetailRow label="Settlement Amount" value={<span style={{ color: "#10b981", fontWeight: "900" }}>₹{selectedPayment.amount.toLocaleString()}</span>} />
+                            <DetailRow label="Payment Gateway" value={selectedPayment.paymentMethod.toUpperCase()} />
+                            <DetailRow label="Provider Record" value={<code style={{ color: "#10b981" }}>{selectedPayment.razorpayPaymentId || "DIRECT_BANK"}</code>} />
+                            <DetailRow label="Transaction Cluster" value={selectedPayment.orderId} />
+                            <DetailRow label="Linked Enrollment" value={selectedPayment.enrollmentId} />
+                            <DetailRow label="Current Lifecycle" value={
+                                <span style={{
+                                    padding: "6px 16px",
+                                    borderRadius: "10px",
+                                    fontSize: "0.75rem",
+                                    fontWeight: "900",
+                                    textTransform: "uppercase",
+                                    backgroundColor: getStatusColor(selectedPayment.status).bg,
+                                    color: getStatusColor(selectedPayment.status).text,
+                                    border: `1px solid ${getStatusColor(selectedPayment.status).border}`
+                                }}>
+                                    {selectedPayment.status}
+                                </span>
+                            } />
+                            <DetailRow label="Confirmation Timestamp" value={formatDate(selectedPayment.timestamp)} />
+                        </div>
+
+                        <div style={{ marginTop: "40px", paddingTop: "40px", borderTop: "1px solid rgba(255, 255, 255, 0.05)" }}>
                             <button
                                 onClick={closeModal}
                                 style={{
-                                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                                    borderRadius: "8px",
-                                    padding: "8px 12px",
-                                    color: "#fff",
-                                    fontSize: "1.25rem",
-                                    cursor: "pointer",
-                                    transition: "all 0.2s",
+                                    width: "100%",
+                                    padding: "20px",
+                                    backgroundColor: "#10b981",
+                                    color: "#000",
+                                    borderRadius: "20px",
+                                    fontWeight: "900",
+                                    fontSize: "1rem",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.1em",
+                                    transition: "all 0.3s ease",
+                                    boxShadow: "0 15px 40px rgba(16, 185, 129, 0.3)"
                                 }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
-                                    e.currentTarget.style.borderColor = "rgba(239, 68, 68, 0.3)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-                                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                                }}
+                                className="hover:scale-[1.02] active:scale-95"
                             >
-                                ✕
+                                Close Analysis
                             </button>
-                        </div>
-
-                        {/* Modal Content */}
-                        <div style={{ display: "grid", gap: "20px" }}>
-                            <DetailRow label="Payment ID" value={selectedPayment.id} />
-                            <DetailRow label="Invoice Number" value={selectedPayment.invoiceNumber} />
-                            <DetailRow label="Full Name" value={selectedPayment.fullName} />
-                            <DetailRow label="Email" value={selectedPayment.email} />
-                            <DetailRow label="Amount" value={`₹${selectedPayment.amount.toLocaleString()}`} />
-                            <DetailRow label="Payment Method" value={selectedPayment.paymentMethod.toUpperCase()} />
-                            <DetailRow label="Order ID" value={selectedPayment.orderId} />
-                            {selectedPayment.razorpayPaymentId && (
-                                <DetailRow
-                                    label="Razorpay Payment ID"
-                                    value={<code style={{ fontSize: "0.85rem", color: "#06b6d4" }}>{selectedPayment.razorpayPaymentId}</code>}
-                                />
-                            )}
-                            {selectedPayment.razorpaySignature && (
-                                <DetailRow
-                                    label="Razorpay Signature"
-                                    value={<code style={{ fontSize: "0.75rem", color: "#888", wordBreak: "break-all" }}>{selectedPayment.razorpaySignature}</code>}
-                                />
-                            )}
-                            <DetailRow label="Enrollment ID" value={selectedPayment.enrollmentId} />
-                            <DetailRow
-                                label="Status"
-                                value={
-                                    <span
-                                        style={{
-                                            display: "inline-block",
-                                            padding: "6px 16px",
-                                            borderRadius: "12px",
-                                            fontSize: "0.875rem",
-                                            fontWeight: "600",
-                                            backgroundColor: getStatusColor(selectedPayment.status).bg,
-                                            color: getStatusColor(selectedPayment.status).text,
-                                            border: `1px solid ${getStatusColor(selectedPayment.status).border}`,
-                                        }}
-                                    >
-                                        {formatStatus(selectedPayment.status)}
-                                    </span>
-                                }
-                            />
-                            <DetailRow label="Payment Date" value={formatDate(selectedPayment.timestamp)} />
                         </div>
                     </div>
                 </div>
             )}
 
             <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
+                .admin-page-container {
+                    padding: 0;
+                    animation: fadeIn 0.8s ease-out;
+                }
 
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
 
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 0.5;
-          }
-          50% {
-            opacity: 1;
-          }
-        }
+                .page-title {
+                    font-size: 3.5rem;
+                }
 
-        /* Dark background for select dropdown options */
-        :global(.admin-select option) {
-          background-color: #1a1a1a;
-          color: #fff;
-          padding: 8px;
-        }
-      `}</style>
+                .filter-label {
+                    display: block;
+                    font-size: 0.75rem;
+                    fontWeight: 900;
+                    color: #444;
+                    marginBottom: 10px;
+                    textTransform: uppercase;
+                    letterSpacing: 0.1em;
+                }
+
+                .filter-input, .filter-select {
+                    width: 100%;
+                    padding: 14px 16px;
+                    background-color: rgba(255, 255, 255, 0.04);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 14px;
+                    color: #fff;
+                    font-size: 0.95rem;
+                    outline: none;
+                    transition: all 0.3s ease;
+                }
+
+                .filter-input:focus, .filter-select:focus {
+                    border-color: rgba(16, 185, 129, 0.4);
+                    background-color: rgba(255, 255, 255, 0.06);
+                }
+
+                .reset-btn {
+                    width: 100%;
+                    padding: 14px 16px;
+                    background-color: rgba(16, 185, 129, 0.08);
+                    border: 1px solid rgba(16, 185, 129, 0.2);
+                    border-radius: 14px;
+                    color: #10b981;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                .reset-btn:hover {
+                    background-color: rgba(16, 185, 129, 0.15);
+                }
+
+                .table-row:hover {
+                    background-color: rgba(16, 185, 129, 0.03) !important;
+                }
+
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+                @media (max-width: 1024px) {
+                    .page-title { font-size: 2.75rem; }
+                    .header-top { flex-direction: column !important; align-items: flex-start !important; gap: 20px; }
+                    .header-right { align-items: flex-start !important; text-align: left !important; }
+                }
+
+                @media (max-width: 768px) {
+                    .page-title { font-size: 2.25rem; }
+                    .filters-card { grid-template-columns: 1fr !important; }
+                    .modal-card { padding: 32px 24px !important; border-radius: 32px !important; }
+                    .modal-card h2 { font-size: 2rem !important; }
+                }
+
+                @media (max-width: 480px) {
+                    .page-title { font-size: 1.75rem; }
+                }
+            `}</style>
         </div>
     );
 }
@@ -596,35 +548,36 @@ function DetailRow({ label, value }: { label: string; value: React.ReactNode }) 
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
-                padding: "12px 16px",
-                backgroundColor: "rgba(255, 255, 255, 0.03)",
-                borderRadius: "8px",
+                padding: "16px 24px",
+                backgroundColor: "rgba(255, 255, 255, 0.02)",
+                borderRadius: "16px",
                 border: "1px solid rgba(255, 255, 255, 0.05)",
             }}
         >
-            <span style={{ color: "#888", fontSize: "0.95rem", fontWeight: "600" }}>
+            <span style={{ color: "#555", fontSize: "0.75rem", fontWeight: "900", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {label}
             </span>
-            <span style={{ color: "#fff", fontSize: "0.95rem", textAlign: "right", maxWidth: "60%" }}>
+            <span style={{ color: "#fff", fontSize: "0.9rem", textAlign: "right", maxWidth: "60%", fontWeight: "700" }}>
                 {value}
             </span>
         </div>
     );
 }
 
-const tableHeaderStyle: React.CSSProperties = {
-    padding: "16px",
-    textAlign: "left",
-    color: "#ccc",
-    fontWeight: "600",
-    fontSize: "0.875rem",
+const thStyle: React.CSSProperties = {
+    padding: "20px 24px",
+    fontSize: "0.7rem",
+    fontWeight: "900",
     textTransform: "uppercase",
-    letterSpacing: "0.05em",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    letterSpacing: "0.15em",
+    color: "#555",
+    textAlign: "left",
+    whiteSpace: "nowrap"
 };
 
-const tableCellStyle: React.CSSProperties = {
-    padding: "16px",
-    color: "#fff",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+const tdStyle: React.CSSProperties = {
+    padding: "24px",
+    fontSize: "0.95rem",
+    color: "#ccc",
+    verticalAlign: "middle"
 };
