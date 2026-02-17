@@ -153,11 +153,12 @@ export default function SettingsInterface({
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={cn(
-                                "flex items-center gap-2 px-4 py-3 rounded-lg font-semibold whitespace-nowrap transition-all",
+                                "flex items-center gap-2 rounded-lg font-semibold whitespace-nowrap transition-all",
                                 activeTab === tab.id
                                     ? "bg-purple-600 text-white shadow-lg shadow-purple-600/20"
                                     : "bg-white/[0.02] text-gray-400 hover:bg-white/[0.05] hover:text-white"
                             )}
+                            style={{ padding: '0.1cm' }}
                         >
                             <Icon size={18} />
                             <span className="hidden md:inline">{tab.label}</span>

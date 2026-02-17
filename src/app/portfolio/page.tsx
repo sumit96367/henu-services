@@ -395,12 +395,13 @@ export default function PortfolioPage() {
                                 <button
                                     key={category}
                                     onClick={() => setSelectedCategory(category)}
+                                    style={{ padding: '0.1cm 0.4cm' }}
                                     className={`
-                                        px-6 py-3 rounded-full text-sm font-semibold whitespace-nowrap snap-start
+                                        rounded-full text-sm font-semibold whitespace-nowrap snap-start
                                         transition-all duration-300 border-2
                                         ${selectedCategory === category
-                                            ? 'bg-purple-500 text-white border-purple-500 shadow-lg shadow-purple-500/30'
-                                            : 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white'
+                                            ? 'text-purple-400 border-purple-400 bg-transparent'
+                                            : 'text-gray-400 border-transparent hover:text-white'
                                         }
                                     `}
                                 >
@@ -424,10 +425,10 @@ export default function PortfolioPage() {
                                             onClick={() => setSelectedCategory(category)}
                                             className={`
                                                 w-full text-left px-4 py-3 rounded-xl text-base font-medium
-                                                transition-all duration-300
+                                                transition-all duration-300 border-l-2
                                                 ${selectedCategory === category
-                                                    ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20'
-                                                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                                    ? 'border-purple-400 text-purple-400 pl-4 bg-white/[0.02]'
+                                                    : 'border-transparent text-gray-400 hover:text-white'
                                                 }
                                             `}
                                         >
