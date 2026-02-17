@@ -21,7 +21,9 @@ import {
     Scale,
     Coins,
     ArrowRight,
-    ChevronDown
+    ChevronDown,
+    Phone,
+    Mail
 } from 'lucide-react';
 
 export const Navbar = () => {
@@ -342,14 +344,27 @@ export const Navbar = () => {
                             </AnimatePresence>
 
                             {navLinks.filter(l => l.name !== 'Services' && l.name !== 'Dashboard').map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-2xl font-black text-white uppercase tracking-widest !pt-3 !pb-0 !px-2 border-b border-white/5 hover:text-purple-400 transition-colors"
-                                >
-                                    {link.name}
-                                </Link>
+                                <div key={link.name} className="flex flex-col">
+                                    <Link
+                                        href={link.href}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-2xl font-black text-white uppercase tracking-widest !pt-3 !pb-0 !px-2 border-b border-white/5 hover:text-purple-400 transition-colors"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                    {link.name === 'Contact' && (
+                                        <div className="flex flex-col gap-4 mt-6 px-2 pb-2">
+                                            <a href="tel:+91 8094100513" className="flex items-center gap-4 text-gray-400 hover:text-white transition-colors group/item">
+                                                <Phone size={20} className="text-gray-500 group-hover/item:text-purple-400 transition-colors" />
+                                                <span className="text-lg font-medium tracking-wide">+91 8094100513</span>
+                                            </a>
+                                            <a href="mailto:henuosr@gmail.com" className="flex items-center gap-4 text-gray-400 hover:text-white transition-colors group/item">
+                                                <Mail size={20} className="text-gray-500 group-hover/item:text-purple-400 transition-colors" />
+                                                <span className="text-lg font-medium tracking-wide">henuosr@gmail.com</span>
+                                            </a>
+                                        </div>
+                                    )}
+                                </div>
                             ))}
 
                             {/* Mobile Auth Buttons */}
@@ -358,6 +373,12 @@ export const Navbar = () => {
                                     <UserMenu className="w-full py-4 px-6 bg-white/[0.03] hover:bg-white/[0.08] justify-center" />
                                 </div>
                             )}
+
+                            {/* Mobile Menu Footer Branding */}
+                            <div className="pb-6 flex flex-col items-center justify-center opacity-80" style={{ marginTop: '2cm' }}>
+                                <span className="text-xs font-medium text-gray-500 tracking-[0.2em] uppercase mb-2">Powered by</span>
+                                <h4 className="text-xl font-black text-violet-500 tracking-wide">HENU OS PVT. LTD.</h4>
+                            </div>
                         </nav>
                     </motion.div>
                 )}
