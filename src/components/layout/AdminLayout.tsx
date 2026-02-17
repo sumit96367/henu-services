@@ -16,6 +16,7 @@ interface NavItem {
 const navItems: NavItem[] = [
     { name: "Dashboard", path: "/admin/dashboard", icon: "📊" },
     { name: "Service Requests", path: "/admin/service-requests", icon: "🛠️" },
+    { name: "Orders", path: "/admin/orders", icon: "🛍️" },
     { name: "Internship Enrollments", path: "/admin/enrollments", icon: "👥" },
     { name: "Payments", path: "/admin/payments", icon: "💳" },
     { name: "Invoices", path: "/admin/invoices", icon: "📄" },
@@ -83,19 +84,19 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 style={{
-                    position: "absolute",
-                    top: "140px",
+                    position: "fixed",
+                    top: "100px",
                     left: "20px",
                     zIndex: 50,
                     display: isMobileMenuOpen ? "none" : "flex",
-                    padding: "10px",
-                    backgroundColor: "rgba(255, 255, 255, 0.08)",
+                    padding: "12px",
+                    backgroundColor: "rgba(10, 10, 20, 0.9)",
                     backdropFilter: "blur(12px)",
                     border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "12px",
+                    borderRadius: "15px",
                     color: "#fff",
                     cursor: "pointer",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+                    boxShadow: "0 10px 40px rgba(0, 0, 0, 0.6)",
                     transition: "all 0.3s ease",
                     alignItems: "center",
                     justifyContent: "center"
@@ -105,7 +106,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                     isMobileMenuOpen ? "hidden" : "flex md:hidden"
                 )}
             >
-                <MenuIcon size={24} />
+                <MenuIcon size={26} />
             </button>
 
             {/* Sidebar */}
@@ -116,14 +117,14 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                     left: 0,
                     top: 0,
                     bottom: 0,
-                    width: "min(300px, 80vw)",
-                    backgroundColor: "rgba(2, 2, 5, 0.95)",
-                    backdropFilter: "blur(20px)",
-                    borderRight: "1px solid rgba(255, 255, 255, 0.05)",
+                    width: "min(320px, 85vw)",
+                    backgroundColor: "rgba(2, 2, 5, 0.98)",
+                    backdropFilter: "blur(30px)",
+                    borderRight: "1px solid rgba(255, 255, 255, 0.08)",
                     display: "flex",
                     flexDirection: "column",
-                    zIndex: 999,
-                    transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    zIndex: 1000,
+                    transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                     overflowX: "hidden",
                 }}
                 className="admin-sidebar"
@@ -131,7 +132,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                 {/* Logo/Header */}
                 <div
                     style={{
-                        padding: "40px 28px",
+                        padding: "45px 32px",
                         borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
                         position: "relative",
                     }}
@@ -140,33 +141,34 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                     {/* Mobile Close Button inside Sidebar */}
                     <button
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="md:hidden absolute top-6 right-6 p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                        className="md:hidden absolute top-8 right-8 p-3 text-white/50 hover:text-white hover:bg-white/10 rounded-2xl transition-all"
                     >
                         <CloseIcon size={24} />
                     </button>
                     <h1
                         style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
+                            fontSize: "1.75rem",
+                            fontWeight: "900",
                             background: "linear-gradient(to right, #06b6d4, #3b82f6)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                             backgroundClip: "text",
-                            marginBottom: "4px",
+                            marginBottom: "6px",
                             transition: "all 0.3s ease",
+                            letterSpacing: "-0.02em"
                         }}
-                        className="group-hover:[text-shadow:0_0_12px_rgba(109,40,217,0.8)]"
+                        className="group-hover:[text-shadow:0_0_15px_rgba(6,182,212,0.8)]"
                     >
                         Henu OS
                     </h1>
-                    <p style={{ fontSize: "0.875rem", color: "#888" }} className="group-hover:text-gray-300 transition-colors">Admin Portal</p>
+                    <p style={{ fontSize: "0.9rem", color: "#666", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.1em" }} className="group-hover:text-gray-400 transition-colors">Admin Portal</p>
                 </div>
 
                 {/* Navigation */}
                 <nav
                     style={{
                         flex: 1,
-                        padding: "24px 0",
+                        padding: "32px 0",
                         overflowY: "auto",
                     }}
                 >
@@ -181,45 +183,45 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                                     width: "calc(100% - 32px)",
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: "18px",
-                                    padding: "22px 32px",
-                                    margin: "8px 16px",
-                                    borderRadius: "20px",
+                                    gap: "20px",
+                                    padding: "24px 32px",
+                                    margin: "10px 16px",
+                                    borderRadius: "24px",
                                     cursor: "pointer",
                                     backgroundColor: active
-                                        ? "rgba(109, 40, 217, 0.15)"
+                                        ? "rgba(109, 40, 217, 0.2)"
                                         : "transparent",
-                                    color: active ? "#fff" : "#888",
-                                    borderLeft: active ? "4px solid #6D28D9" : "4px solid transparent",
+                                    color: active ? "#fff" : "#777",
+                                    borderLeft: active ? "6px solid #6D28D9" : "6px solid transparent",
                                     borderTop: "none",
                                     borderRight: "none",
                                     borderBottom: "none",
-                                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                                    fontWeight: active ? "700" : "500",
-                                    fontSize: "0.95rem",
+                                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                                    fontWeight: active ? "800" : "600",
+                                    fontSize: "1rem",
                                 }}
                                 onMouseEnter={(e) => {
                                     if (!active) {
                                         e.currentTarget.style.backgroundColor =
-                                            "rgba(255, 255, 255, 0.03)";
+                                            "rgba(255, 255, 255, 0.04)";
                                         e.currentTarget.style.color = "#fff";
                                     }
                                 }}
                                 onMouseLeave={(e) => {
                                     if (!active) {
                                         e.currentTarget.style.backgroundColor = "transparent";
-                                        e.currentTarget.style.color = "#888";
+                                        e.currentTarget.style.color = "#777";
                                     }
                                 }}
                             >
-                                <span style={{ fontSize: "20px" }}>{item.icon}</span>
+                                <span style={{ fontSize: "22px", filter: active ? "drop-shadow(0 0 8px #6D28D9)" : "none" }}>{item.icon}</span>
                                 <span>{item.name}</span>
                             </Link>
                         );
                     })}
 
                     {/* Logout Button moved inside nav area to be closer */}
-                    <div className="mt-4 pt-4 border-t border-white/5">
+                    <div className="mt-8 pt-8 border-t border-white/5">
                         <button
                             onClick={handleLogout}
                             disabled={isLoggingOut}
@@ -227,33 +229,35 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                                 width: "calc(100% - 32px)",
                                 display: "flex",
                                 alignItems: "center",
-                                gap: "18px",
-                                padding: "20px 32px",
-                                margin: "4px 16px",
-                                borderRadius: "20px",
+                                gap: "20px",
+                                padding: "24px 32px",
+                                margin: "6px 16px",
+                                borderRadius: "24px",
                                 cursor: isLoggingOut ? "not-allowed" : "pointer",
-                                backgroundColor: "rgba(239, 68, 68, 0.05)",
+                                backgroundColor: "rgba(239, 68, 68, 0.08)",
                                 color: "#ef4444",
-                                border: "1px solid rgba(239, 68, 68, 0.1)",
+                                border: "1px solid rgba(239, 68, 68, 0.15)",
                                 transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                                fontWeight: "600",
-                                fontSize: "0.95rem",
+                                fontWeight: "700",
+                                fontSize: "1rem",
                                 opacity: isLoggingOut ? 0.6 : 1,
                             }}
                             onMouseEnter={(e) => {
                                 if (!isLoggingOut) {
                                     e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.15)";
                                     e.currentTarget.style.color = "#ff5f5f";
+                                    e.currentTarget.style.boxShadow = "0 8px 24px rgba(239, 68, 68, 0.2)";
                                 }
                             }}
                             onMouseLeave={(e) => {
                                 if (!isLoggingOut) {
-                                    e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.05)";
+                                    e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.08)";
                                     e.currentTarget.style.color = "#ef4444";
+                                    e.currentTarget.style.boxShadow = "none";
                                 }
                             }}
                         >
-                            <LogOut size={20} />
+                            <LogOut size={22} />
                             <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
                         </button>
                     </div>
@@ -265,10 +269,11 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                 style={{
                     marginLeft: "300px",
                     minHeight: "100vh",
-                    padding: "240px max(24px, 5%) 40px max(24px, 5%)",
+                    padding: "180px 40px 60px 40px",
                     flex: 1,
                     maxWidth: "1400px",
                     marginRight: "auto",
+                    zIndex: 10
                 }}
                 className="admin-main-content"
             >
@@ -283,8 +288,9 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                         style={{
                             position: "fixed",
                             inset: 0,
-                            backgroundColor: "rgba(0, 0, 0, 0.5)",
-                            zIndex: 998,
+                            backgroundColor: "rgba(0, 0, 0, 0.7)",
+                            backdropFilter: "blur(10px)",
+                            zIndex: 999,
                             display: "none",
                         }}
                         className="mobile-overlay"
@@ -293,23 +299,29 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             }
 
             <style jsx>{`
-                @media (max-width: 768px) {
-                  .mobile-menu-toggle {
-                    display: block !important;
-                  }
-
+                @media (max-width: 1024px) {
                   .admin-sidebar {
                     transform: ${isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)"} !important;
-                    transition: transform 0.3s ease;
+                    transition: transform 0.4s ease;
                   }
 
                   .admin-main-content {
                     margin-left: 0 !important;
-                    padding: 300px 20px 40px 20px !important;
+                    padding: 180px 24px 60px 24px !important;
                   }
 
                   .mobile-overlay {
                     display: block !important;
+                  }
+                  
+                  .mobile-menu-toggle {
+                    display: flex !important;
+                  }
+                }
+
+                @media (max-width: 640px) {
+                  .admin-main-content {
+                    padding: 120px 20px 60px 20px !important;
                   }
                 }
               `}</style>

@@ -2,6 +2,24 @@
 
 import { useState, useEffect } from "react";
 import type { InvoiceRecord } from "@/types/invoice";
+import {
+    ChevronLeft,
+    Search,
+    Filter,
+    FileText,
+    User,
+    Mail,
+    Calendar,
+    CheckCircle2,
+    Clock,
+    AlertCircle,
+    Loader2,
+    IndianRupee,
+    Eye,
+    Send,
+    ArrowRight
+} from "lucide-react";
+import Link from "next/link";
 
 export default function InvoicesPage() {
     const [invoices, setInvoices] = useState<InvoiceRecord[]>([]);
@@ -59,7 +77,8 @@ export default function InvoicesPage() {
             filtered = filtered.filter(
                 (inv) =>
                     inv.invoiceNumber.toLowerCase().includes(query) ||
-                    inv.email.toLowerCase().includes(query)
+                    inv.email.toLowerCase().includes(query) ||
+                    inv.fullName.toLowerCase().includes(query)
             );
         }
 
@@ -116,9 +135,9 @@ export default function InvoicesPage() {
     };
 
     const getStatusColor = (status: string) => {
-        switch (status) {
+        switch (status.toLowerCase()) {
             case "sent":
-                return { bg: "rgba(16, 185, 129, 0.1)", text: "#10b981", border: "rgba(16, 185, 129, 0.3)" };
+                return { bg: "rgba(139, 92, 246, 0.1)", text: "#8b5cf6", border: "rgba(139, 92, 246, 0.3)" };
             case "failed":
                 return { bg: "rgba(239, 68, 68, 0.1)", text: "#ef4444", border: "rgba(239, 68, 68, 0.3)" };
             default:
@@ -127,330 +146,214 @@ export default function InvoicesPage() {
     };
 
     return (
-        <div>
-            {/* Page Header */}
-            <div style={{ marginBottom: "32px" }}>
-                <h1
-                    style={{
-                        fontSize: "2.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "8px",
-                        background: "linear-gradient(to right, #8b5cf6, #a78bfa)",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                    }}
-                >
-                    Invoice Management
-                </h1>
-                <p style={{ fontSize: "1.125rem", color: "#888" }}>
-                    {loading
-                        ? "Loading invoices..."
-                        : `${filteredInvoices.length} of ${invoices.length} invoices`}
-                </p>
+        <div className="admin-page-container">
+            {/* Header */}
+            <div className="page-header" style={{ marginBottom: "40px" }}>
+                <div className="header-top" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "8px" }}>
+                    <div className="header-left">
+                        <Link href="/admin/dashboard" className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors mb-4 text-sm font-bold uppercase tracking-wider">
+                            <ChevronLeft size={16} /> Dashboard
+                        </Link>
+                        <h1
+                            style={{
+                                fontWeight: "900",
+                                background: "linear-gradient(to right, #8b5cf6, #a78bfa)",
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                                backgroundClip: "text",
+                                letterSpacing: "-0.02em"
+                            }}
+                            className="page-title"
+                        >
+                            Invoice Repository
+                        </h1>
+                    </div>
+                    <div className="header-right" style={{ textAlign: "right", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "10px" }}>
+                        <div className="metric-badge" style={{
+                            backgroundColor: "rgba(139, 92, 246, 0.1)",
+                            border: "1px solid rgba(139, 92, 246, 0.3)",
+                            padding: "8px 16px",
+                            borderRadius: "14px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px"
+                        }}>
+                            <FileText size={16} className="text-purple-500" />
+                            <span style={{ color: "#8b5cf6", fontSize: "0.9rem", fontWeight: "800" }}>
+                                {loading ? "..." : invoices.length}
+                            </span>
+                            <span style={{ color: "rgba(139, 92, 246, 0.6)", fontSize: "0.7rem", fontWeight: "700", textTransform: "uppercase" }}>Total Documents</span>
+                        </div>
+                        <p style={{ color: "#555", margin: 0, fontWeight: "700", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                            {loading ? "Syncing..." : `${filteredInvoices.length} Documents Found`}
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            {/* Filters Section */}
+            {/* Filters */}
             <div
+                className="filters-card"
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "24px",
                     padding: "24px",
-                    marginBottom: "24px",
+                    marginBottom: "32px",
                     display: "grid",
                     gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "16px",
+                    gap: "20px",
+                    backdropFilter: "blur(20px)"
                 }}
             >
-                {/* Status Filter */}
-                <div>
-                    <label
-                        style={{
-                            display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
-                        }}
-                    >
-                        Invoice Status
-                    </label>
+                <div className="filter-group">
+                    <label className="filter-label">Search Repository</label>
+                    <div style={{ position: "relative" }}>
+                        <Search style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "#444" }} size={18} />
+                        <input
+                            type="text"
+                            placeholder="Invoice #, Name or Email..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="filter-input"
+                            style={{ paddingLeft: "44px" }}
+                        />
+                    </div>
+                </div>
+
+                <div className="filter-group">
+                    <label className="filter-label">Status Flow</label>
                     <select
                         value={selectedStatus}
                         onChange={(e) => setSelectedStatus(e.target.value)}
-                        className="admin-select"
-                        style={{
-                            width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontSize: "0.95rem",
-                            outline: "none",
-                            cursor: "pointer",
-                        }}
+                        className="filter-select"
                     >
-                        <option value="">All Status</option>
-                        <option value="sent">Sent</option>
-                        <option value="failed">Failed</option>
+                        <option value="">All Statuses</option>
+                        <option value="sent">Sent Successfully</option>
+                        <option value="failed">Delivery Failed</option>
                     </select>
                 </div>
 
-                {/* Search */}
-                <div>
-                    <label
-                        style={{
-                            display: "block",
-                            fontSize: "0.875rem",
-                            fontWeight: "600",
-                            color: "#ccc",
-                            marginBottom: "8px",
-                        }}
-                    >
-                        Search
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Invoice ID or email..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        style={{
-                            width: "100%",
-                            padding: "10px 12px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
-                            color: "#fff",
-                            fontSize: "0.95rem",
-                            outline: "none",
-                        }}
-                    />
-                </div>
-
-                {/* Clear Filters */}
-                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                <div className="filter-group" style={{ display: "flex", alignItems: "flex-end" }}>
                     <button
                         onClick={clearFilters}
-                        style={{
-                            width: "100%",
-                            padding: "10px 16px",
-                            backgroundColor: "rgba(255, 255, 255, 0.05)",
-                            border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "8px",
-                            color: "#8b5cf6",
-                            fontSize: "0.95rem",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                            transition: "all 0.2s",
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(139, 92, 246, 0.1)";
-                            e.currentTarget.style.borderColor = "rgba(139, 92, 246, 0.3)";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-                            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                        }}
+                        className="reset-btn"
                     >
-                        Clear Filters
+                        Reset Archive
                     </button>
                 </div>
             </div>
 
-            {/* Error State */}
+            {/* Error */}
             {error && (
-                <div
-                    style={{
-                        backgroundColor: "rgba(239, 68, 68, 0.1)",
-                        border: "1px solid rgba(239, 68, 68, 0.3)",
-                        borderRadius: "12px",
-                        padding: "16px",
-                        marginBottom: "24px",
-                        color: "#ef4444",
-                    }}
-                >
-                    {error}
+                <div style={{ padding: "20px", backgroundColor: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "16px", color: "#ef4444", marginBottom: "32px", display: "flex", alignItems: "center", gap: "12px" }}>
+                    <AlertCircle size={20} />
+                    <span style={{ fontWeight: "600" }}>{error}</span>
                 </div>
             )}
 
             {/* Table */}
             <div
+                className="table-card"
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "16px",
+                    backgroundColor: "rgba(255, 255, 255, 0.01)",
+                    border: "1px solid rgba(255, 255, 255, 0.05)",
+                    borderRadius: "32px",
                     overflow: "hidden",
+                    backdropFilter: "blur(20px)"
                 }}
             >
-                <div style={{ overflowX: "auto" }}>
-                    <table
-                        style={{
-                            width: "100%",
-                            borderCollapse: "collapse",
-                            fontSize: "0.95rem",
-                        }}
-                    >
+                <div style={{ overflowX: "auto" }} className="scrollbar-hide">
+                    <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "0" }}>
                         <thead>
-                            <tr
-                                style={{
-                                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                    position: "sticky",
-                                    top: 0,
-                                    backdropFilter: "blur(10px)",
-                                    zIndex: 10,
-                                }}
-                            >
-                                <th style={tableHeaderStyle}>Invoice ID</th>
-                                <th style={tableHeaderStyle}>User Name</th>
-                                <th style={tableHeaderStyle}>Email</th>
-                                <th style={tableHeaderStyle}>Domain</th>
-                                <th style={tableHeaderStyle}>Amount</th>
-                                <th style={tableHeaderStyle}>Method</th>
-                                <th style={tableHeaderStyle}>Status</th>
-                                <th style={tableHeaderStyle}>Date</th>
-                                <th style={tableHeaderStyle}>Actions</th>
+                            <tr style={{ backgroundColor: "rgba(139, 92, 246, 0.03)" }}>
+                                <th style={thStyle}>Document #</th>
+                                <th style={thStyle}>Recipient</th>
+                                <th style={thStyle}>Domain</th>
+                                <th style={thStyle}>Value</th>
+                                <th style={thStyle}>Status</th>
+                                <th style={thStyle}>Generated</th>
+                                <th style={thStyle}></th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
-                                // Loading Skeleton
-                                Array.from({ length: 5 }).map((_, i) => (
+                                Array.from({ length: 6 }).map((_, i) => (
                                     <tr key={i}>
-                                        {Array.from({ length: 9 }).map((_, j) => (
-                                            <td key={j} style={tableCellStyle}>
-                                                <div
-                                                    style={{
-                                                        height: "20px",
-                                                        backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                                        borderRadius: "4px",
-                                                        animation: "pulse 1.5s ease-in-out infinite",
-                                                    }}
-                                                />
-                                            </td>
-                                        ))}
+                                        <td colSpan={7} style={{ padding: "32px", textAlign: "center" }}>
+                                            <div className="loading-shimmer" style={{ height: "40px", backgroundColor: "rgba(255, 255, 255, 0.02)", borderRadius: "12px" }}></div>
+                                        </td>
                                     </tr>
                                 ))
                             ) : filteredInvoices.length === 0 ? (
-                                // Empty State
                                 <tr>
-                                    <td colSpan={9} style={{ ...tableCellStyle, textAlign: "center", padding: "48px" }}>
-                                        <div style={{ fontSize: "48px", marginBottom: "16px", opacity: 0.5 }}>
-                                            📄
-                                        </div>
-                                        <p style={{ color: "#888", fontSize: "1.125rem" }}>
-                                            No invoices found
-                                        </p>
+                                    <td colSpan={7} style={{ padding: "80px", textAlign: "center" }}>
+                                        <FileText size={48} style={{ margin: "0 auto 16px", color: "#222" }} />
+                                        <p style={{ color: "#555", fontWeight: "700", fontSize: "1.1rem" }}>No invoices found in archive</p>
                                     </td>
                                 </tr>
                             ) : (
-                                // Data Rows
-                                filteredInvoices.map((invoice, index) => {
-                                    const statusColors = getStatusColor(invoice.status);
+                                filteredInvoices.map((invoice, idx) => {
+                                    const statusStyle = getStatusColor(invoice.status);
                                     return (
                                         <tr
                                             key={invoice.id}
-                                            style={{
-                                                backgroundColor: index % 2 === 0 ? "transparent" : "rgba(255, 255, 255, 0.02)",
-                                            }}
+                                            className="table-row"
+                                            style={{ transition: "all 0.2s" }}
                                         >
-                                            <td style={tableCellStyle}>
-                                                <code style={{ fontSize: "0.85rem", color: "#8b5cf6" }}>
+                                            <td style={tdStyle}>
+                                                <code style={{ color: "#8b5cf6", fontSize: "0.75rem", fontWeight: "900", letterSpacing: "0.05em" }}>
                                                     {invoice.invoiceNumber}
                                                 </code>
                                             </td>
-                                            <td style={tableCellStyle}>{invoice.fullName}</td>
-                                            <td style={tableCellStyle}>{invoice.email}</td>
-                                            <td style={tableCellStyle}>{invoice.domainCategory}</td>
-                                            <td style={tableCellStyle}>
-                                                <span style={{ fontWeight: "600", color: "#8b5cf6" }}>
+                                            <td style={tdStyle}>
+                                                <div style={{ fontWeight: "800", color: "#fff" }}>{invoice.fullName}</div>
+                                                <div style={{ fontSize: "0.75rem", color: "#555", fontWeight: "600" }}>{invoice.email}</div>
+                                            </td>
+                                            <td style={tdStyle}>
+                                                <span style={{ color: "#ccc", fontWeight: "600", fontSize: "0.85rem" }}>{invoice.domainCategory}</span>
+                                            </td>
+                                            <td style={tdStyle}>
+                                                <span style={{ fontWeight: "900", color: "#8b5cf6", fontSize: "1.05rem" }}>
                                                     ₹{invoice.amount.toLocaleString()}
                                                 </span>
                                             </td>
-                                            <td style={tableCellStyle}>
-                                                <span style={{ textTransform: "uppercase", fontSize: "0.875rem" }}>
-                                                    {invoice.paymentMethod}
-                                                </span>
-                                            </td>
-                                            <td style={tableCellStyle}>
-                                                <span
-                                                    style={{
-                                                        display: "inline-block",
-                                                        padding: "4px 12px",
-                                                        borderRadius: "12px",
-                                                        fontSize: "0.875rem",
-                                                        fontWeight: "600",
-                                                        backgroundColor: statusColors.bg,
-                                                        color: statusColors.text,
-                                                        border: `1px solid ${statusColors.border}`,
-                                                        textTransform: "capitalize",
-                                                    }}
-                                                >
+                                            <td style={tdStyle}>
+                                                <span style={{
+                                                    padding: "6px 14px",
+                                                    borderRadius: "12px",
+                                                    fontSize: "0.7rem",
+                                                    fontWeight: "900",
+                                                    textTransform: "uppercase",
+                                                    letterSpacing: "0.05em",
+                                                    backgroundColor: statusStyle.bg,
+                                                    color: statusStyle.text,
+                                                    border: `1px solid ${statusStyle.border}`
+                                                }}>
                                                     {invoice.status}
                                                 </span>
                                             </td>
-                                            <td style={tableCellStyle}>{formatDate(invoice.timestamp)}</td>
-                                            <td style={tableCellStyle}>
-                                                <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                                                    {/* View PDF Button */}
+                                            <td style={tdStyle}>
+                                                <div style={{ fontSize: "0.85rem", color: "#ccc", fontWeight: "600" }}>{formatDate(invoice.timestamp)}</div>
+                                            </td>
+                                            <td style={tdStyle}>
+                                                <div style={{ display: "flex", gap: "10px" }}>
                                                     <button
                                                         onClick={() => handleViewPDF(invoice)}
-                                                        style={{
-                                                            padding: "6px 10px",
-                                                            backgroundColor: "rgba(139, 92, 246, 0.1)",
-                                                            border: "1px solid rgba(139, 92, 246, 0.3)",
-                                                            borderRadius: "8px",
-                                                            color: "#8b5cf6",
-                                                            fontSize: "1rem",
-                                                            cursor: "pointer",
-                                                            transition: "all 0.2s",
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                            justifyContent: "center",
-                                                        }}
-                                                        title="View PDF"
-                                                        onMouseEnter={(e) => {
-                                                            e.currentTarget.style.backgroundColor = "rgba(139, 92, 246, 0.2)";
-                                                        }}
-                                                        onMouseLeave={(e) => {
-                                                            e.currentTarget.style.backgroundColor = "rgba(139, 92, 246, 0.1)";
-                                                        }}
+                                                        className="action-btn"
+                                                        title="Preview PDF"
+                                                        style={{ color: "#8b5cf6" }}
                                                     >
-                                                        👁️
+                                                        <Eye size={18} />
                                                     </button>
-
-                                                    {/* Resend Button */}
                                                     <button
                                                         onClick={() => handleResend(invoice)}
+                                                        className="action-btn"
+                                                        title="Resend Archive"
+                                                        style={{ color: "#10b981" }}
                                                         disabled={isResending === invoice.id}
-                                                        style={{
-                                                            padding: "6px 10px",
-                                                            backgroundColor: "rgba(16, 185, 129, 0.1)",
-                                                            border: "1px solid rgba(16, 185, 129, 0.3)",
-                                                            borderRadius: "8px",
-                                                            color: "#10b981",
-                                                            fontSize: "1rem",
-                                                            cursor: isResending === invoice.id ? "not-allowed" : "pointer",
-                                                            transition: "all 0.2s",
-                                                            display: "flex",
-                                                            alignItems: "center",
-                                                            justifyContent: "center",
-                                                            opacity: isResending === invoice.id ? 0.5 : 1,
-                                                        }}
-                                                        title="Resend Invoice"
-                                                        onMouseEnter={(e) => {
-                                                            if (isResending !== invoice.id) {
-                                                                e.currentTarget.style.backgroundColor = "rgba(16, 185, 129, 0.2)";
-                                                            }
-                                                        }}
-                                                        onMouseLeave={(e) => {
-                                                            if (isResending !== invoice.id) {
-                                                                e.currentTarget.style.backgroundColor = "rgba(16, 185, 129, 0.1)";
-                                                            }
-                                                        }}
                                                     >
-                                                        {isResending === invoice.id ? "⏳" : "📧"}
+                                                        {isResending === invoice.id ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
                                                     </button>
                                                 </div>
                                             </td>
@@ -467,91 +370,48 @@ export default function InvoicesPage() {
             {isPreviewModalOpen && selectedInvoice && (
                 <div
                     onClick={closePDFModal}
+                    className="modal-overlay"
                     style={{
                         position: "fixed",
                         inset: 0,
-                        backgroundColor: "rgba(0, 0, 0, 0.8)",
-                        backdropFilter: "blur(8px)",
+                        backgroundColor: "rgba(0, 0, 0, 0.9)",
+                        backdropFilter: "blur(20px)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        zIndex: 1000,
-                        padding: "20px",
-                        animation: "fadeIn 0.2s ease-out",
+                        zIndex: 2000,
+                        padding: "20px"
                     }}
                 >
                     <div
                         onClick={(e) => e.stopPropagation()}
+                        className="modal-card"
                         style={{
-                            backgroundColor: "rgba(10, 10, 10, 0.95)",
+                            backgroundColor: "#050505",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
-                            borderRadius: "20px",
-                            padding: "24px",
-                            maxWidth: "900px",
+                            borderRadius: "40px",
+                            padding: "32px",
+                            maxWidth: "1000px",
                             width: "100%",
-                            maxHeight: "90vh",
+                            maxHeight: "95vh",
                             display: "flex",
                             flexDirection: "column",
-                            animation: "slideUp 0.3s ease-out",
+                            boxShadow: "0 40px 100px rgba(0, 0, 0, 0.8)"
                         }}
                     >
-                        {/* Modal Header */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-                            <h2
-                                style={{
-                                    fontSize: "1.5rem",
-                                    fontWeight: "bold",
-                                    background: "linear-gradient(to right, #8b5cf6, #a78bfa)",
-                                    WebkitBackgroundClip: "text",
-                                    WebkitTextFillColor: "transparent",
-                                    backgroundClip: "text",
-                                }}
-                            >
-                                Invoice Preview - {selectedInvoice.invoiceNumber}
-                            </h2>
-                            <button
-                                onClick={closePDFModal}
-                                style={{
-                                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                                    borderRadius: "8px",
-                                    padding: "8px 12px",
-                                    color: "#fff",
-                                    fontSize: "1.25rem",
-                                    cursor: "pointer",
-                                    transition: "all 0.2s",
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
-                                    e.currentTarget.style.borderColor = "rgba(239, 68, 68, 0.3)";
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)";
-                                    e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                                }}
-                            >
-                                ✕
-                            </button>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+                            <div>
+                                <h2 style={{ fontSize: "2rem", fontWeight: "900", color: "#fff", marginBottom: "4px", letterSpacing: "-0.02em" }}>Document Intelligence</h2>
+                                <p style={{ color: "#555", fontSize: "0.75rem", fontWeight: "900", textTransform: "uppercase", letterSpacing: "0.15em" }}>Archive: {selectedInvoice.invoiceNumber}</p>
+                            </div>
+                            <button onClick={closePDFModal} style={{ width: "48px", height: "48px", borderRadius: "16px", backgroundColor: "rgba(255, 255, 255, 0.05)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }} className="hover:bg-red-500/20 hover:text-red-500 transition-all">✕</button>
                         </div>
 
-                        {/* PDF Viewer */}
-                        <div
-                            style={{
-                                flex: 1,
-                                backgroundColor: "#fff",
-                                borderRadius: "12px",
-                                overflow: "hidden",
-                            }}
-                        >
+                        <div style={{ flex: 1, backgroundColor: "#fff", borderRadius: "24px", overflow: "hidden", minHeight: "500px" }}>
                             <iframe
                                 src={pdfUrl}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    minHeight: "600px",
-                                    border: "none",
-                                }}
-                                title="Invoice PDF Preview"
+                                style={{ width: "100%", height: "100%", border: "none" }}
+                                title="Invoice PDF Archive"
                             />
                         </div>
                     </div>
@@ -559,59 +419,123 @@ export default function InvoicesPage() {
             )}
 
             <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
+                .admin-page-container {
+                    padding: 0;
+                    animation: fadeIn 0.8s ease-out;
+                }
 
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
 
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 0.5;
-          }
-          50% {
-            opacity: 1;
-          }
-        }
+                .page-title {
+                    font-size: 3.5rem;
+                }
 
-        /* Dark background for select dropdown options */
-        :global(.admin-select option) {
-          background-color: #1a1a1a;
-          color: #fff;
-          padding: 8px;
-        }
-      `}</style>
+                .filter-label {
+                    display: block;
+                    font-size: 0.75rem;
+                    fontWeight: 900;
+                    color: #444;
+                    marginBottom: 10px;
+                    textTransform: uppercase;
+                    letterSpacing: 0.1em;
+                }
+
+                .filter-input, .filter-select {
+                    width: 100%;
+                    padding: 14px 16px;
+                    background-color: rgba(255, 255, 255, 0.04);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 14px;
+                    color: #fff;
+                    font-size: 0.95rem;
+                    outline: none;
+                    transition: all 0.3s ease;
+                }
+
+                .filter-input:focus, .filter-select:focus {
+                    border-color: rgba(139, 92, 246, 0.4);
+                    background-color: rgba(255, 255, 255, 0.06);
+                }
+
+                .reset-btn {
+                    width: 100%;
+                    padding: 14px 16px;
+                    background-color: rgba(139, 92, 246, 0.08);
+                    border: 1px solid rgba(139, 92, 246, 0.2);
+                    border-radius: 14px;
+                    color: #8b5cf6;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                .reset-btn:hover {
+                    background-color: rgba(139, 92, 246, 0.15);
+                }
+
+                .table-row:hover {
+                    background-color: rgba(139, 92, 246, 0.02) !important;
+                }
+
+                .action-btn {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 12px;
+                    background-color: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s ease;
+                }
+
+                .action-btn:hover {
+                    background-color: rgba(255, 255, 255, 0.08);
+                    transform: translateY(-2px);
+                }
+
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+                @media (max-width: 1024px) {
+                    .page-title { font-size: 2.75rem; }
+                    .header-top { flex-direction: column !important; align-items: flex-start !important; gap: 20px; }
+                    .header-right { align-items: flex-start !important; text-align: left !important; }
+                }
+
+                @media (max-width: 768px) {
+                    .page-title { font-size: 2.25rem; }
+                    .filters-card { grid-template-columns: 1fr !important; }
+                    .modal-card { padding: 32px 24px !important; border-radius: 32px !important; }
+                }
+
+                @media (max-width: 480px) {
+                    .page-title { font-size: 1.75rem; }
+                }
+            `}</style>
         </div>
     );
 }
 
-const tableHeaderStyle: React.CSSProperties = {
-    padding: "16px",
-    textAlign: "left",
-    color: "#ccc",
-    fontWeight: "600",
-    fontSize: "0.875rem",
+const thStyle: React.CSSProperties = {
+    padding: "20px 24px",
+    fontSize: "0.7rem",
+    fontWeight: "900",
     textTransform: "uppercase",
-    letterSpacing: "0.05em",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    letterSpacing: "0.15em",
+    color: "#555",
+    textAlign: "left",
+    whiteSpace: "nowrap"
 };
 
-const tableCellStyle: React.CSSProperties = {
-    padding: "16px",
-    color: "#fff",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+const tdStyle: React.CSSProperties = {
+    padding: "24px",
+    fontSize: "0.95rem",
+    color: "#ccc",
+    verticalAlign: "middle"
 };

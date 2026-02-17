@@ -1,25 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 import { generateInvoicePDF } from '@/lib/invoice-generator';
-import fs from 'fs';
-import path from 'path';
+import { getInvoicesData } from '@/lib/data-store';
 import type { InvoiceRecord } from '@/types/invoice';
-
-const INVOICES_FILE = path.join(process.cwd(), 'data', 'invoices.json');
-
-// Read invoices from file
-function getInvoices(): InvoiceRecord[] {
-    try {
-        if (!fs.existsSync(INVOICES_FILE)) {
-            return [];
-        }
-        const data = fs.readFileSync(INVOICES_FILE, 'utf-8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error('Error reading invoices:', error);
-        return [];
-    }
-}
 
 export async function GET(
     request: NextRequest,
@@ -47,22 +30,15 @@ export async function GET(
 
         // Await params in Next.js 15+
         const { id: invoiceId } = await params;
-        console.log('Looking for invoice ID:', invoiceId);
-
-        const invoices = getInvoices();
-        console.log('Available invoice IDs:', invoices.map(i => i.id));
-
-        const invoice = invoices.find(inv => inv.id === invoiceId);
+        const invoices = await getInvoicesData();
+        const invoice = invoices.find(inv => inv.id === invoiceId || inv.invoiceNumber === invoiceId);
 
         if (!invoice) {
-            console.error('Invoice not found:', invoiceId);
             return NextResponse.json(
                 { error: 'Invoice not found' },
                 { status: 404 }
             );
         }
-
-        console.log('Found invoice:', invoice.invoiceNumber);
 
         // Generate PDF
         const pdfBuffer = await generateInvoicePDF({

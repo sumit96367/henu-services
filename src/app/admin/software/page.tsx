@@ -91,23 +91,24 @@ export default function AddSoftwarePage() {
     };
 
     return (
-        <div>
+        <div className="add-software-container">
             {/* Page Header */}
-            <div style={{ marginBottom: "48px" }}>
+            <div className="page-header" style={{ marginBottom: "48px" }}>
                 <h1
                     style={{
-                        fontSize: "2.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "8px",
+                        fontWeight: "900",
+                        marginBottom: "12px",
                         background: "linear-gradient(to right, #06b6d4, #3b82f6)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                         backgroundClip: "text",
+                        letterSpacing: "-0.03em"
                     }}
+                    className="page-title"
                 >
                     Add Software
                 </h1>
-                <p style={{ fontSize: "1.125rem", color: "#888" }}>
+                <p className="page-subtitle" style={{ color: "#888", fontWeight: "500" }}>
                     Manage and add new software entries for the portfolio
                 </p>
             </div>
@@ -117,13 +118,14 @@ export default function AddSoftwarePage() {
                 <div
                     style={{
                         marginBottom: "24px",
-                        padding: "16px 24px",
-                        backgroundColor: "rgba(34, 197, 94, 0.1)",
-                        border: "1px solid rgba(34, 197, 94, 0.3)",
-                        borderRadius: "12px",
+                        padding: "20px 24px",
+                        backgroundColor: "rgba(34, 197, 94, 0.08)",
+                        border: "1px solid rgba(34, 197, 94, 0.2)",
+                        borderRadius: "16px",
                         color: "#22c55e",
                         fontSize: "0.95rem",
-                        fontWeight: "500",
+                        fontWeight: "600",
+                        backdropFilter: "blur(10px)"
                     }}
                 >
                     ✓ Software added successfully! It will appear in the portfolio.
@@ -135,13 +137,14 @@ export default function AddSoftwarePage() {
                 <div
                     style={{
                         marginBottom: "24px",
-                        padding: "16px 24px",
-                        backgroundColor: "rgba(239, 68, 68, 0.1)",
-                        border: "1px solid rgba(239, 68, 68, 0.3)",
-                        borderRadius: "12px",
+                        padding: "20px 24px",
+                        backgroundColor: "rgba(239, 68, 68, 0.08)",
+                        border: "1px solid rgba(239, 68, 68, 0.2)",
+                        borderRadius: "16px",
                         color: "#ef4444",
                         fontSize: "0.95rem",
-                        fontWeight: "500",
+                        fontWeight: "600",
+                        backdropFilter: "blur(10px)"
                     }}
                 >
                     ✕ {showError}
@@ -150,25 +153,28 @@ export default function AddSoftwarePage() {
 
             {/* Form Container */}
             <div
+                className="form-card"
                 style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.03)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    borderRadius: "20px",
-                    padding: "40px",
-                    maxWidth: "800px",
-                    backdropFilter: "blur(10px)",
+                    backgroundColor: "rgba(255, 255, 255, 0.02)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "32px",
+                    padding: "48px",
+                    maxWidth: "850px",
+                    backdropFilter: "blur(20px)",
                 }}
             >
                 <form onSubmit={handleSubmit}>
                     {/* Software Name */}
-                    <div style={{ marginBottom: "24px" }}>
+                    <div className="input-field" style={{ marginBottom: "32px" }}>
                         <label
                             style={{
                                 display: "block",
-                                marginBottom: "12px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                color: "#fff",
+                                marginBottom: "14px",
+                                fontSize: "0.75rem",
+                                fontWeight: "800",
+                                color: "#555",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.1em"
                             }}
                         >
                             Software Name <span style={{ color: "#ef4444" }}>*</span>
@@ -183,38 +189,30 @@ export default function AddSoftwarePage() {
                             required
                             style={{
                                 width: "100%",
-                                padding: "14px 18px",
+                                padding: "16px 20px",
                                 backgroundColor: "rgba(255, 255, 255, 0.03)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#fff",
-                                fontSize: "1rem",
+                                fontSize: "1.05rem",
                                 outline: "none",
-                                transition: "all 0.2s ease",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                             }}
-                            onFocus={(e) => {
-                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.05)";
-                            }}
-                            onBlur={(e) => {
-                                e.currentTarget.style.borderColor =
-                                    "rgba(255, 255, 255, 0.1)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.03)";
-                            }}
+                            className="focus:border-cyan-500/50 focus:bg-white/5"
                         />
                     </div>
 
                     {/* Software Description */}
-                    <div style={{ marginBottom: "24px" }}>
+                    <div className="input-field" style={{ marginBottom: "32px" }}>
                         <label
                             style={{
                                 display: "block",
-                                marginBottom: "12px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                color: "#fff",
+                                marginBottom: "14px",
+                                fontSize: "0.75rem",
+                                fontWeight: "800",
+                                color: "#555",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.1em"
                             }}
                         >
                             Software Description <span style={{ color: "#ef4444" }}>*</span>
@@ -229,41 +227,33 @@ export default function AddSoftwarePage() {
                             rows={5}
                             style={{
                                 width: "100%",
-                                padding: "14px 18px",
+                                padding: "16px 20px",
                                 backgroundColor: "rgba(255, 255, 255, 0.03)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#fff",
-                                fontSize: "1rem",
+                                fontSize: "1.05rem",
                                 outline: "none",
                                 resize: "vertical",
                                 fontFamily: "inherit",
-                                lineHeight: "1.6",
-                                transition: "all 0.2s ease",
+                                lineHeight: "1.7",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                             }}
-                            onFocus={(e) => {
-                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.05)";
-                            }}
-                            onBlur={(e) => {
-                                e.currentTarget.style.borderColor =
-                                    "rgba(255, 255, 255, 0.1)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.03)";
-                            }}
+                            className="focus:border-cyan-500/50 focus:bg-white/5"
                         />
                     </div>
 
                     {/* Category */}
-                    <div style={{ marginBottom: "24px" }}>
+                    <div className="input-field" style={{ marginBottom: "32px" }}>
                         <label
                             style={{
                                 display: "block",
-                                marginBottom: "12px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                color: "#fff",
+                                marginBottom: "14px",
+                                fontSize: "0.75rem",
+                                fontWeight: "800",
+                                color: "#555",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.1em"
                             }}
                         >
                             Category <span style={{ color: "#ef4444" }}>*</span>
@@ -278,41 +268,33 @@ export default function AddSoftwarePage() {
                             required
                             style={{
                                 width: "100%",
-                                padding: "14px 18px",
+                                padding: "16px 20px",
                                 backgroundColor: "rgba(255, 255, 255, 0.03)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#fff",
-                                fontSize: "1rem",
+                                fontSize: "1.05rem",
                                 outline: "none",
-                                transition: "all 0.2s ease",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                             }}
-                            onFocus={(e) => {
-                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.05)";
-                            }}
-                            onBlur={(e) => {
-                                e.currentTarget.style.borderColor =
-                                    "rgba(255, 255, 255, 0.1)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.03)";
-                            }}
+                            className="focus:border-cyan-500/50 focus:bg-white/5"
                         />
                     </div>
 
                     {/* Tags */}
-                    <div style={{ marginBottom: "24px" }}>
+                    <div className="input-field" style={{ marginBottom: "32px" }}>
                         <label
                             style={{
                                 display: "block",
-                                marginBottom: "12px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                color: "#fff",
+                                marginBottom: "14px",
+                                fontSize: "0.75rem",
+                                fontWeight: "800",
+                                color: "#555",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.1em"
                             }}
                         >
-                            Tags <span style={{ color: "#888", fontWeight: "400", fontSize: "0.875rem" }}>(comma-separated, max 3)</span>
+                            Tags <span style={{ color: "#888", fontWeight: "400", fontSize: "0.75rem", textTransform: "none", letterSpacing: "0" }}>(comma-separated, max 3)</span>
                         </label>
                         <input
                             type="text"
@@ -323,41 +305,33 @@ export default function AddSoftwarePage() {
                             placeholder="e.g., Healthcare, Management, Digital"
                             style={{
                                 width: "100%",
-                                padding: "14px 18px",
+                                padding: "16px 20px",
                                 backgroundColor: "rgba(255, 255, 255, 0.03)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#fff",
-                                fontSize: "1rem",
+                                fontSize: "1.05rem",
                                 outline: "none",
-                                transition: "all 0.2s ease",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                             }}
-                            onFocus={(e) => {
-                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.05)";
-                            }}
-                            onBlur={(e) => {
-                                e.currentTarget.style.borderColor =
-                                    "rgba(255, 255, 255, 0.1)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.03)";
-                            }}
+                            className="focus:border-cyan-500/50 focus:bg-white/5"
                         />
                     </div>
 
                     {/* Google Form Link */}
-                    <div style={{ marginBottom: "40px" }}>
+                    <div className="input-field" style={{ marginBottom: "32px" }}>
                         <label
                             style={{
                                 display: "block",
-                                marginBottom: "12px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                color: "#fff",
+                                marginBottom: "14px",
+                                fontSize: "0.75rem",
+                                fontWeight: "800",
+                                color: "#555",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.1em"
                             }}
                         >
-                            Google Form Link <span style={{ color: "#888", fontWeight: "400", fontSize: "0.875rem" }}>(optional - add later)</span>
+                            Google Form Link <span style={{ color: "#888", fontWeight: "400", fontSize: "0.75rem", textTransform: "none", letterSpacing: "0" }}>(optional)</span>
                         </label>
                         <input
                             type="url"
@@ -368,41 +342,33 @@ export default function AddSoftwarePage() {
                             placeholder="https://forms.google.com/your-form-link"
                             style={{
                                 width: "100%",
-                                padding: "14px 18px",
+                                padding: "16px 20px",
                                 backgroundColor: "rgba(255, 255, 255, 0.03)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#fff",
-                                fontSize: "1rem",
+                                fontSize: "1.05rem",
                                 outline: "none",
-                                transition: "all 0.2s ease",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                             }}
-                            onFocus={(e) => {
-                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.05)";
-                            }}
-                            onBlur={(e) => {
-                                e.currentTarget.style.borderColor =
-                                    "rgba(255, 255, 255, 0.1)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.03)";
-                            }}
+                            className="focus:border-cyan-500/50 focus:bg-white/5"
                         />
                     </div>
 
                     {/* Payment Link */}
-                    <div style={{ marginBottom: "40px" }}>
+                    <div className="input-field" style={{ marginBottom: "48px" }}>
                         <label
                             style={{
                                 display: "block",
-                                marginBottom: "12px",
-                                fontSize: "1rem",
-                                fontWeight: "600",
-                                color: "#fff",
+                                marginBottom: "14px",
+                                fontSize: "0.75rem",
+                                fontWeight: "800",
+                                color: "#555",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.1em"
                             }}
                         >
-                            Payment Link <span style={{ color: "#888", fontWeight: "400", fontSize: "0.875rem" }}>(optional - add later)</span>
+                            Payment Link <span style={{ color: "#888", fontWeight: "400", fontSize: "0.75rem", textTransform: "none", letterSpacing: "0" }}>(optional)</span>
                         </label>
                         <input
                             type="url"
@@ -413,62 +379,41 @@ export default function AddSoftwarePage() {
                             placeholder="https://payment-gateway.com/your-payment-link"
                             style={{
                                 width: "100%",
-                                padding: "14px 18px",
+                                padding: "16px 20px",
                                 backgroundColor: "rgba(255, 255, 255, 0.03)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#fff",
-                                fontSize: "1rem",
+                                fontSize: "1.05rem",
                                 outline: "none",
-                                transition: "all 0.2s ease",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                             }}
-                            onFocus={(e) => {
-                                e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.05)";
-                            }}
-                            onBlur={(e) => {
-                                e.currentTarget.style.borderColor =
-                                    "rgba(255, 255, 255, 0.1)";
-                                e.currentTarget.style.backgroundColor =
-                                    "rgba(255, 255, 255, 0.03)";
-                            }}
+                            className="focus:border-cyan-500/50 focus:bg-white/5"
                         />
                     </div>
 
                     {/* Action Buttons */}
-                    <div style={{ display: "flex", gap: "16px", justifyContent: "flex-end" }}>
+                    <div className="button-group" style={{ display: "flex", gap: "20px", justifyContent: "flex-end" }}>
                         {/* Cancel Button */}
                         <button
                             type="button"
                             onClick={handleCancel}
                             disabled={isSubmitting}
                             style={{
-                                padding: "14px 32px",
-                                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                                padding: "16px 32px",
+                                backgroundColor: "rgba(255, 255, 255, 0.04)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#888",
                                 fontSize: "1rem",
-                                fontWeight: "600",
+                                fontWeight: "800",
                                 cursor: isSubmitting ? "not-allowed" : "pointer",
                                 opacity: isSubmitting ? 0.5 : 1,
-                                transition: "all 0.2s ease",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.05em"
                             }}
-                            onMouseEnter={(e) => {
-                                if (!isSubmitting) {
-                                    e.currentTarget.style.backgroundColor =
-                                        "rgba(255, 255, 255, 0.08)";
-                                    e.currentTarget.style.color = "#fff";
-                                }
-                            }}
-                            onMouseLeave={(e) => {
-                                if (!isSubmitting) {
-                                    e.currentTarget.style.backgroundColor =
-                                        "rgba(255, 255, 255, 0.05)";
-                                    e.currentTarget.style.color = "#888";
-                                }
-                            }}
+                            className="hover:bg-white/10 hover:text-white"
                         >
                             Cancel
                         </button>
@@ -478,41 +423,60 @@ export default function AddSoftwarePage() {
                             type="submit"
                             disabled={isSubmitting}
                             style={{
-                                padding: "14px 32px",
+                                padding: "16px 40px",
                                 background: isSubmitting
                                     ? "rgba(6, 182, 212, 0.5)"
                                     : "linear-gradient(135deg, #06b6d4, #3b82f6)",
                                 border: "none",
-                                borderRadius: "12px",
+                                borderRadius: "16px",
                                 color: "#fff",
                                 fontSize: "1rem",
-                                fontWeight: "600",
+                                fontWeight: "900",
                                 cursor: isSubmitting ? "not-allowed" : "pointer",
-                                transition: "all 0.2s ease",
+                                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.05em",
                                 boxShadow: isSubmitting
                                     ? "none"
-                                    : "0 8px 24px rgba(6, 182, 212, 0.2)",
+                                    : "0 10px 30px rgba(6, 182, 212, 0.3)",
                             }}
-                            onMouseEnter={(e) => {
-                                if (!isSubmitting) {
-                                    e.currentTarget.style.transform = "translateY(-2px)";
-                                    e.currentTarget.style.boxShadow =
-                                        "0 12px 32px rgba(6, 182, 212, 0.3)";
-                                }
-                            }}
-                            onMouseLeave={(e) => {
-                                if (!isSubmitting) {
-                                    e.currentTarget.style.transform = "translateY(0)";
-                                    e.currentTarget.style.boxShadow =
-                                        "0 8px 24px rgba(6, 182, 212, 0.2)";
-                                }
-                            }}
+                            className="hover:scale-[1.02] active:scale-95 hover:shadow-[0_15px_40px_rgba(6,182,212,0.4)]"
                         >
-                            {isSubmitting ? "Adding..." : "Add Software"}
+                            {isSubmitting ? "Deploying..." : "Add Platform"}
                         </button>
                     </div>
                 </form>
             </div>
+
+            <style jsx>{`
+                .add-software-container {
+                    padding: 0;
+                }
+                .page-title {
+                    font-size: 3.5rem;
+                }
+                .page-subtitle {
+                    font-size: 1.25rem;
+                }
+
+                @media (max-width: 1024px) {
+                    .page-title { font-size: 2.75rem; }
+                    .form-card { padding: 40px !important; }
+                }
+
+                @media (max-width: 768px) {
+                    .page-title { font-size: 2.25rem; }
+                    .form-card { padding: 32px !important; borderRadius: 24px !important; }
+                    .button-group { flex-direction: column-reverse; }
+                    .button-group button { width: 100%; }
+                }
+
+                @media (max-width: 480px) {
+                    .page-title { font-size: 2rem; }
+                    .page-subtitle { font-size: 1rem; }
+                    .form-card { padding: 24px !important; }
+                }
+            `}</style>
         </div>
     );
 }

@@ -1,24 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
-import fs from 'fs';
-import path from 'path';
+import { getInvoicesData } from '@/lib/data-store';
 import type { InvoiceRecord } from '@/types/invoice';
-
-const INVOICES_FILE = path.join(process.cwd(), 'data', 'invoices.json');
-
-// Read invoices from file
-function getInvoices(): InvoiceRecord[] {
-    try {
-        if (!fs.existsSync(INVOICES_FILE)) {
-            return [];
-        }
-        const data = fs.readFileSync(INVOICES_FILE, 'utf-8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error('Error reading invoices:', error);
-        return [];
-    }
-}
 
 export async function GET(request: NextRequest) {
     try {
@@ -46,7 +29,7 @@ export async function GET(request: NextRequest) {
         const status = searchParams.get('status');
         const search = searchParams.get('search')?.toLowerCase();
 
-        let invoices = getInvoices();
+        let invoices = await getInvoicesData() as InvoiceRecord[];
 
         // Apply filters
         if (status) {
@@ -59,9 +42,6 @@ export async function GET(request: NextRequest) {
                 inv.email.toLowerCase().includes(search)
             );
         }
-
-        // Sort by timestamp (newest first)
-        invoices.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
         return NextResponse.json({
             success: true,
