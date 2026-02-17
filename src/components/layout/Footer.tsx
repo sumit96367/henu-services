@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Globe, Send, Users, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Twitter, Instagram, Linkedin, Github, ChevronDown, Globe, Send, Users, Facebook, Youtube } from 'lucide-react';
 import { IconBrandWhatsapp, IconBrandDiscord, IconBrandTelegram } from '@tabler/icons-react';
 import { TextHoverEffect } from '@/components/ui/hover-footer';
 import { useState } from 'react';
@@ -60,6 +60,7 @@ const socialLinks = [
     { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/henuos/" },
     { icon: <Facebook size={20} />, label: "Facebook", href: "https://www.facebook.com/share/1ZCPYkVQSF/" },
     { icon: <Users size={20} />, label: "Community", href: "https://siddsingh.mystrikingly.com/" },
+    { icon: <Youtube size={20} />, label: "YouTube", href: "https://www.youtube.com/@HenuOS" },
 ];
 
 const policyLinks = [
@@ -238,7 +239,7 @@ export const Footer = () => {
                     </div>
 
                     {/* Social Links - centered */}
-                    <div className="flex items-center justify-center gap-4 pt-4">
+                    <div className="grid grid-cols-6 place-items-center gap-y-6 gap-x-4 pt-4" style={{ paddingTop: '10px' }}>
                         {socialLinks.map((social) => (
                             <a
                                 key={social.label}
@@ -254,7 +255,7 @@ export const Footer = () => {
                     </div>
 
                     {/* Copyright - centered */}
-                    <p className="text-gray-500 text-xs text-center pt-4 border-t border-white/5">
+                    <p className="text-gray-500 text-xs text-center pt-4 border-t border-white/5" style={{ paddingTop: '10px' }}>
                         © 2025 Henu OS Private Limited. All rights reserved.
                     </p>
                 </div>
@@ -409,7 +410,7 @@ export const Footer = () => {
             </div>
 
             {/* Large decorative text at bottom */}
-            <div className="relative h-[280px] -mt-16 flex items-end justify-center overflow-hidden pointer-events-none">
+            <div className="relative h-[120px] lg:h-[280px] -mt-8 lg:-mt-16 flex items-end justify-center overflow-hidden pointer-events-none">
                 <TextHoverEffect text="HENU OS" className="pointer-events-auto" />
             </div>
         </footer>

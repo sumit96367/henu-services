@@ -218,7 +218,7 @@ export const Navbar = () => {
 
                         {/* User Menu (Desktop) */}
                         <div className="hidden md:block">
-                            <UserMenu className="-mr-8" />
+                            <UserMenu />
                         </div>
 
                         {/* Mobile Toggle */}

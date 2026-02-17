@@ -49,6 +49,17 @@ export const AuthModal = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        if (showAuthModal) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [showAuthModal]);
+
     const handleBack = () => {
         if (verificationStep === 'otp') {
             setVerificationStep('input');
@@ -84,10 +95,38 @@ export const AuthModal = () => {
             }
             resetForm();
         } catch (err: any) {
-            setError(err.message || 'Authentication failed. Please try again.');
+            console.error("Auth error:", err);
+            let msg = 'Authentication failed. Please try again.';
+            if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+                msg = 'Incorrect email or password. Please check your credentials.';
+            } else if (err.code === 'auth/user-not-found') {
+                msg = 'No account found with this email.';
+            } else if (err.code === 'auth/email-already-in-use') {
+                msg = 'This email is already registered. Please login instead.';
+            } else if (err.code === 'auth/weak-password') {
+                msg = 'Password should be at least 6 characters.';
+            } else if (err.code === 'auth/network-request-failed') {
+                msg = 'Network error. Please check your connection.';
+            }
+            setError(msg);
         }
     };
 
+    // ... [handlePhoneRequest logic is unchanged in this block, need to skip it] ...
+    // Wait, the tool replaces a block of lines. I need to check line numbers.
+    // handleEmailSubmit ends at line 89.
+    // handlePhoneRequest starts at 91, ends 107.
+    // handlePhoneVerify starts 109, ends 124.
+
+    // I can't update all catch blocks in one contiguous block easily unless I include the stuff in between.
+    // I will do separate replacements for safety or one big one if they are close.
+    // They are relatively close.
+    // handleEmailSubmit catch is 86-88.
+    // handlePhoneRequest catch is 104-106.
+    // handlePhoneVerify catch is 121-123.
+    // handleSocialAuth catch is 132-134.
+
+    // I will use multi_replace_file_content.
     const handlePhoneRequest = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
@@ -102,7 +141,16 @@ export const AuthModal = () => {
             setConfirmationResult(result);
             setVerificationStep('otp');
         } catch (err: any) {
-            setError(err.message || 'Failed to send code. Please check the number.');
+            console.error("Phone auth error:", err);
+            let msg = 'Failed to send code. Please check the number.';
+            if (err.code === 'auth/invalid-phone-number') {
+                msg = 'Invalid phone number format.';
+            } else if (err.code === 'auth/too-many-requests') {
+                msg = 'Too many requests. Please try again later.';
+            } else if (err.code === 'auth/captcha-check-failed') {
+                msg = 'reCAPTCHA failed. Please try again.';
+            }
+            setError(msg);
         }
     };
 
@@ -119,7 +167,14 @@ export const AuthModal = () => {
             await verifyPhoneOTP(confirmationResult, otp, selectedType);
             resetForm();
         } catch (err: any) {
-            setError(err.message || 'Invalid code. Please try again.');
+            console.error("OTP error:", err);
+            let msg = 'Invalid code. Please try again.';
+            if (err.code === 'auth/invalid-verification-code') {
+                msg = 'Invalid OTP code. Please check and try again.';
+            } else if (err.code === 'auth/code-expired') {
+                msg = 'OTP has expired. Please request a new one.';
+            }
+            setError(msg);
         }
     };
 
@@ -130,7 +185,14 @@ export const AuthModal = () => {
             else await signInWithApple(selectedType);
             resetForm();
         } catch (err: any) {
-            setError(err.message || 'Social sign in failed.');
+            console.error("Social auth error:", err);
+            let msg = 'Social sign in failed.';
+            if (err.code === 'auth/popup-closed-by-user') {
+                msg = 'Sign in cancelled.';
+            } else if (err.code === 'auth/account-exists-with-different-credential') {
+                msg = 'Account exists with a different provider.';
+            }
+            setError(msg);
         }
     };
 
@@ -162,28 +224,28 @@ export const AuthModal = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[500] overflow-y-auto bg-[#0a0a0f]"
+                className="fixed inset-0 z-[500] overflow-y-scroll bg-[#0a0a0f] [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50"
             >
-                {/* Background decorations */}
-                <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px]" />
-                </div>
+                <div className="relative min-h-full flex flex-col items-center justify-start p-4 pb-24">
+                    {/* Background decorations */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px]" />
+                        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px]" />
+                    </div>
 
-                {/* Close button */}
-                <button
-                    onClick={() => setShowAuthModal(false)}
-                    className="fixed top-6 right-6 p-3 text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-colors z-50"
-                >
-                    <X size={24} />
-                </button>
+                    {/* Close button */}
+                    <button
+                        onClick={() => setShowAuthModal(false)}
+                        className="absolute top-6 right-6 p-3 text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-colors z-50"
+                    >
+                        <X size={24} />
+                    </button>
 
-                <div className="flex min-h-screen items-start justify-center p-4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 20 }}
-                        className="relative w-full max-w-2xl my-auto !px-12 !py-8 md:!p-8"
+                        className="relative z-10 w-full max-w-2xl my-12 !px-12 !py-8 md:!p-8"
                     >
                         <div className="flex flex-col items-center text-center">
                             {/* Logo */}
@@ -322,24 +384,24 @@ export const AuthModal = () => {
                                                 {authModalMode === 'signup' && (
                                                     <>
                                                         {selectedType === 'company' && (
-                                                            <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
-                                                                <Building2 size={20} className="text-gray-500" />
-                                                                <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="Company Name" className="flex-1 bg-transparent text-white outline-none text-base" />
+                                                            <div className="flex items-center gap-3 w-full bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px', paddingLeft: '25px', paddingRight: '16px' }}>
+                                                                <div className="p-1"><Building2 size={20} className="text-gray-500" /></div>
+                                                                <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} placeholder="Company Name" className="flex-1 bg-transparent text-white outline-none text-base" style={{ paddingLeft: '12px' }} />
                                                             </div>
                                                         )}
-                                                        <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
-                                                            <User size={20} className="text-gray-500" />
-                                                            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" className="flex-1 bg-transparent text-white outline-none text-base" required />
+                                                        <div className="flex items-center gap-3 w-full bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px', paddingLeft: '25px', paddingRight: '16px' }}>
+                                                            <div className="p-1"><User size={20} className="text-gray-500" /></div>
+                                                            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" className="flex-1 bg-transparent text-white outline-none text-base" style={{ paddingLeft: '12px' }} required />
                                                         </div>
                                                     </>
                                                 )}
-                                                <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
-                                                    <Mail size={20} className="text-gray-500" />
-                                                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="flex-1 bg-transparent text-white outline-none text-base" required />
+                                                <div className="flex items-center gap-3 w-full bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px', paddingLeft: '25px', paddingRight: '16px' }}>
+                                                    <div className="p-1"><Mail size={20} className="text-gray-500" /></div>
+                                                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="flex-1 bg-transparent text-white outline-none text-base" style={{ paddingLeft: '12px' }} required />
                                                 </div>
-                                                <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
-                                                    <Lock size={20} className="text-gray-500" />
-                                                    <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" className="flex-1 bg-transparent text-white outline-none text-base" required />
+                                                <div className="flex items-center gap-3 w-full bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px', paddingLeft: '25px', paddingRight: '16px' }}>
+                                                    <div className="p-1"><Lock size={20} className="text-gray-500" /></div>
+                                                    <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" className="flex-1 bg-transparent text-white outline-none text-base" style={{ paddingLeft: '12px' }} required />
                                                     <button type="button" onClick={() => setShowPassword(!showPassword)} className="text-gray-500 hover:text-white">
                                                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                                     </button>
@@ -352,9 +414,9 @@ export const AuthModal = () => {
                                             <div className="space-y-4">
                                                 {verificationStep === 'input' ? (
                                                     <form onSubmit={handlePhoneRequest} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                                                        <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
-                                                            <Smartphone size={20} className="text-gray-500" />
-                                                            <input type="tel" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} placeholder="+91 99999 99999" className="flex-1 bg-transparent text-white outline-none text-base" required />
+                                                        <div className="flex items-center gap-3 w-full bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px', paddingLeft: '25px', paddingRight: '16px' }}>
+                                                            <div className="p-1"><Smartphone size={20} className="text-gray-500" /></div>
+                                                            <input type="tel" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} placeholder="+91 99999 99999" className="flex-1 bg-transparent text-white outline-none text-base" style={{ paddingLeft: '12px' }} required />
                                                         </div>
                                                         <div id="recaptcha-container"></div>
                                                         <button type="submit" disabled={isLoading} className={`w-full rounded-xl font-bold text-base text-white flex items-center justify-center gap-2 ${selectedType === 'company' ? 'bg-purple-600' : 'bg-indigo-600'} ${isLoading ? 'opacity-50' : ''}`} style={{ padding: '14px', marginTop: '2px' }}>
@@ -363,7 +425,7 @@ export const AuthModal = () => {
                                                     </form>
                                                 ) : (
                                                     <form onSubmit={handlePhoneVerify} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                                                        <div className="flex items-center gap-3 w-full px-4 bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px' }}>
+                                                        <div className="flex items-center gap-3 w-full bg-white/5 border-2 border-white/10 rounded-xl focus-within:border-purple-500/50" style={{ height: '50px', paddingLeft: '25px', paddingRight: '16px' }}>
                                                             <Lock size={20} className="text-gray-500" />
                                                             <input type="text" value={otp} onChange={e => setOtp(e.target.value)} placeholder="6-digit OTP" className="flex-1 bg-transparent text-white outline-none text-center tracking-widest text-base" required maxLength={6} />
                                                         </div>
