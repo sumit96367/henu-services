@@ -95,7 +95,7 @@ const HeroSection = () => {
       {/* Main Content - Split Layout */}
       <div className="container relative z-10 mx-auto px-6">
         {/* PHYSICAL SPACER FOR MOBILE - BRUTE FORCE */}
-        <div className="h-[200px] md:hidden w-full" />
+        <div className="h-[120px] md:hidden w-full" />
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-0 pt-0 lg:pt-0 min-h-[calc(100vh-280px)]">
           {/* Left Content */}
@@ -146,7 +146,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="flex-1 relative h-[350px] sm:h-[450px] lg:h-[600px] w-full"
+            className="flex-1 relative h-[350px] sm:h-[450px] lg:h-[600px] w-full hidden md:block"
           >
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
