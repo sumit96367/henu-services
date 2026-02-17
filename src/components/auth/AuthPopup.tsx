@@ -140,7 +140,7 @@ export const AuthPopup = () => {
                                 <div className="flex flex-col gap-3 w-full items-center">
                                     <button
                                         onClick={handleSignIn}
-                                        className="w-64 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-base flex items-center justify-center gap-2.5 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
+                                        className="!w-[180px] md:!w-64 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-base flex items-center justify-center gap-2.5 hover:from-purple-500 hover:to-indigo-500 transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
                                     >
                                         <LogIn size={18} />
                                         Sign In
@@ -148,7 +148,7 @@ export const AuthPopup = () => {
 
                                     <button
                                         onClick={handleSignUp}
-                                        className="w-64 py-3 rounded-full bg-white/[0.04] border border-purple-500/20 text-white/90 font-bold text-base flex items-center justify-center gap-2.5 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-white transition-all duration-300"
+                                        className="!w-[180px] md:!w-64 py-3 rounded-full bg-white/[0.04] border border-purple-500/20 text-white/90 font-bold text-base flex items-center justify-center gap-2.5 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-white transition-all duration-300"
                                     >
                                         <UserPlus size={18} />
                                         Create Account
