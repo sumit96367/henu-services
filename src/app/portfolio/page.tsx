@@ -164,6 +164,7 @@ const projects = [
 
 
 
+
 // The ProjectCard is now imported from @/components/ui/project-card
 
 
@@ -568,6 +569,7 @@ export default function PortfolioPage() {
                             <div className="text-xs md:text-gray-400">Client Rating</div>
                         </motion.div>
                     </div>
+
                 </div>
             </section >
 

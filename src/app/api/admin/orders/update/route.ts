@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
-import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { saveToSheet } from '@/lib/google-sheets';
 import { verifyToken } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
@@ -18,24 +17,23 @@ export async function POST(request: NextRequest) {
 
         // 2. Parse Request
         const body = await request.json();
-        const { orderId, status, statusColor } = body;
+        const { orderId, status } = body;
 
         if (!orderId || !status) {
             return NextResponse.json({ error: 'Missing orderId or status' }, { status: 400 });
         }
 
-        // 3. Update Firestore
-        const orderRef = doc(db, 'orders', orderId);
-        await updateDoc(orderRef, {
-            status,
-            statusColor: statusColor || 'amber',
-            updatedAt: serverTimestamp()
+        // 3. Update Google Sheets
+        await saveToSheet('update_inquiry', {
+            id: orderId,
+            status
         });
 
-        return NextResponse.json({ success: true, message: 'Order updated successfully' });
+        return NextResponse.json({ success: true, message: 'Inquiry updated successfully' });
 
-    } catch (error) {
-        console.error('Update order error:', error);
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    } catch (error: any) {
+        console.error('Update inquiry error:', error);
+        return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
     }
 }
+

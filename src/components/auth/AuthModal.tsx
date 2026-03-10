@@ -180,6 +180,11 @@ export const AuthModal = () => {
                 msg = 'Sign in cancelled.';
             } else if (err.code === 'auth/account-exists-with-different-credential') {
                 msg = 'Account exists with a different provider.';
+            } else if (err.code === 'auth/unauthorized-domain') {
+                msg = 'Domain not authorized. Please add it to Firebase Console.';
+            } else if (err.message) {
+                // Remove the repeating "Firebase:" prefix if it exists
+                msg = `Sign in failed: ${err.message.replace('Firebase: ', '')}`;
             }
             setError(msg);
         }

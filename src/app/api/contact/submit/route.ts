@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { saveToSheet } from '@/lib/google-sheets';
 
 export async function POST(req: NextRequest) {
     try {
@@ -18,40 +17,34 @@ export async function POST(req: NextRequest) {
         const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
         const orderNumber = `SRV-${Math.floor(100000 + Math.random() * 900000)}`;
 
-        // Save to Firestore 'orders' collection so it appears in Admin Dashboard
-        const orderRef = await addDoc(collection(db, 'orders'), {
-            userId: userId || null,
-            userType: userType || 'company',
-            companyName: companyName || null,
+        // Save to Google Sheets
+        await saveToSheet('inquiry', {
+            id: orderId,
+            orderNumber: orderNumber,
             fullName: name,
             email: email,
-            domain: 'Professional Service',
-            subDomain: service, // The services selected
+            companyName: companyName || null,
+            userType: userType || 'company',
+            subDomain: service,
             plan: budget || 'Not Specified',
-            amount: 0, // Inquiries don't have an upfront amount
-            paymentMethod: 'Inquiry',
-            status: 'New Inquiry',
-            statusColor: 'amber',
-            orderId: orderId,
-            orderNumber: orderNumber,
             message: message,
-            type: 'service_inquiry',
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
+            status: 'New Inquiry'
         });
+
+        // NOTE: Record is no longer saved to Firebase Firestore as per requirement
 
         return NextResponse.json({
             success: true,
             orderId: orderId,
-            orderNumber: orderNumber,
-            firestoreId: orderRef.id
+            orderNumber: orderNumber
         });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Contact form submission error:', error);
         return NextResponse.json(
-            { error: 'Failed to process inquiry' },
+            { error: error.message || 'Failed to process inquiry' },
             { status: 500 }
         );
     }
 }
+

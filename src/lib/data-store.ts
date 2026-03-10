@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { EnrollmentRecord, PaymentRecord, EnrollmentFilters, PaymentFilters } from '@/types/admin';
+import { saveToSheet, getFromSheet } from './google-sheets';
 
 /**
  * Save an enrollment record to Firestore
@@ -44,7 +45,7 @@ export async function savePayment(payment: PaymentRecord): Promise<void> {
 }
 
 /**
- * Save a query to Firestore
+ * Save a query to Google Sheets
  */
 export async function saveQuery(query: {
     enrollmentId: string;
@@ -58,40 +59,54 @@ export async function saveQuery(query: {
     try {
         // Only save if queries is not empty
         if (query.queries && query.queries.trim()) {
-            await addDoc(collection(db, 'queries'), {
-                ...query,
-                timestamp: query.timestamp || new Date().toISOString(),
-                status: 'pending', // pending, replied, resolved
-                adminNotes: ''
+            await saveToSheet('query', {
+                id: query.enrollmentId,
+                fullName: query.fullName,
+                email: query.email,
+                domain: query.domain,
+                subDomain: query.subDomain,
+                queries: query.queries,
+                status: 'pending',
+                adminNotes: '',
+                timestamp: query.timestamp || new Date().toISOString()
             });
         }
     } catch (error) {
-        console.error('Error saving query:', error);
+        console.error('Error saving query to Google Sheets:', error);
         throw error;
     }
 }
 
+
 /**
- * Get all queries from Firestore
+ * Get all queries from Google Sheets
  */
 export async function getQueries(): Promise<any[]> {
     try {
-        const queriesRef = collection(db, 'queries');
-        const q = query(queriesRef, orderBy('timestamp', 'desc'));
-        const querySnapshot = await getDocs(q);
+        const data = await getFromSheet('queries');
 
-        return querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
+        // Map spreadsheet headers:
+        // ID, Full Name, Email, Subject, Category, Query, Status, Admin Notes, Timestamp
+        return data.map((item: any) => ({
+            id: item['ID'],
+            fullName: item['Full Name'],
+            email: item['Email'],
+            domain: item['Subject'], // In sheet we called it Subject
+            subDomain: item['Category'], // In sheet we called it Category
+            queries: item['Query'],
+            status: item['Status'] || 'pending',
+            adminNotes: item['Admin Notes'] || '',
+            timestamp: item['Timestamp']
         }));
     } catch (error) {
-        console.error('Error getting queries:', error);
-        throw error;
+        console.error('Error getting queries from Google Sheets:', error);
+        return [];
     }
 }
 
+
 /**
- * Update query status and admin notes
+ * Update query status and admin notes in Google Sheets
  */
 export async function updateQueryStatus(
     queryId: string,
@@ -99,49 +114,47 @@ export async function updateQueryStatus(
     adminNotes?: string
 ): Promise<void> {
     try {
-        const queryRef = doc(db, 'queries', queryId);
-        const updateData: any = { status };
-
-        if (adminNotes !== undefined) {
-            updateData.adminNotes = adminNotes;
-        }
-
-        await updateDoc(queryRef, updateData);
+        await saveToSheet('update_query', {
+            id: queryId,
+            status,
+            adminNotes
+        });
     } catch (error) {
-        console.error('Error updating query status:', error);
+        console.error('Error updating query status in Google Sheets:', error);
         throw error;
     }
 }
 
+
 /**
- * Get all service requests from Firestore
+ * Get all service requests from Google Sheets
  */
 export async function getServiceRequests(): Promise<any[]> {
     try {
-        const ordersRef = collection(db, 'orders');
-        // Fetch all and filter locally
-        const q = query(ordersRef, orderBy('createdAt', 'desc'));
-        const querySnapshot = await getDocs(q);
+        const data = await getFromSheet('inquiries');
 
-        const requests: any[] = [];
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            // Show everything that is NOT an internship enrollment as a service request
-            // This is safer in case some requests are missing the specific 'service_inquiry' type
-            if (data.type !== 'internship_enrollment') {
-                requests.push({
-                    id: doc.id,
-                    ...data,
-                    createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt
-                });
-            }
-        });
-        return requests;
+        // Map spreadsheet headers:
+        // ID, Order Number, Full Name, Email, Company, User Type, Services, Budget, Message, Status, Timestamp
+        return data.map((item: any) => ({
+            id: item['ID'],
+            orderNumber: item['Order Number'],
+            fullName: item['Full Name'],
+            email: item['Email'],
+            companyName: item['Company'],
+            userType: item['User Type'],
+            subDomain: item['Services'], // Used as subDomain in admin panel
+            plan: item['Budget'],
+            message: item['Message'],
+            status: item['Status'] || 'New Inquiry',
+            statusColor: item['Status'] === 'Completed' ? 'green' : (item['Status'] === 'Processing' ? 'cyan' : 'amber'),
+            createdAt: item['Timestamp']
+        }));
     } catch (error) {
-        console.error('Error getting service requests:', error);
+        console.error('Error getting service requests from Google Sheets:', error);
         return [];
     }
 }
+
 
 /**
  * Get all enrollments with optional filters

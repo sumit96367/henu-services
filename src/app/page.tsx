@@ -30,7 +30,7 @@ import { PremiumTextReveal } from '@/components/ui/premium-text-reveal';
 import { TiltCard } from '@/components/ui/tilt-card';
 import { useInView } from 'framer-motion';
 import { ReviewSection, Review } from '@/components/review-section';
-import { TestimonialsColumn, Testimonial } from '@/components/ui/testimonials-columns';
+import { TestimonialsColumn, Testimonial, TestimonialCard } from '@/components/ui/testimonials-columns';
 import { CharacterV1 } from '@/components/ui/text-scroll-animation';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
@@ -185,6 +185,7 @@ const stats = [
   { label: 'Success Rate', value: '98%', desc: 'Legal & technical excellence.' },
   { label: 'Client Rating', value: '5.0', desc: 'Post-project satisfaction.' },
 ];
+
 
 const CountUp = ({ end, decimals = 0, suffix = "" }: { end: number; decimals?: number; suffix?: string }) => {
   const [count, setCount] = useState(0);
@@ -1073,6 +1074,7 @@ const WhyChooseUsSection = () => {
                 Web, Mobile, AI & Enterprise Solutions
               </p>
 
+
               {/* Bottom Accent Bar */}
               <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </GlowingCard>
@@ -1096,6 +1098,7 @@ const WhyChooseUsSection = () => {
                 500+ Post-Project Performance Reviews
               </p>
 
+
               {/* Bottom Accent Bar */}
               <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </GlowingCard>
@@ -1112,62 +1115,10 @@ const WhyChooseUsSection = () => {
 // TESTIMONIALS SECTION
 // ============================================
 
-const initialTestimonials = [
-  {
-    text: "Henu OS didn't just build our app; they helped us secure a ₹50L government grant to fund it. A complete partner.",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    name: "Rahul Sharma",
-    role: "Founder, TechStart India"
-  },
-  {
-    text: "Their AI agents transformed our customer support. Response time dropped by 80% while satisfaction soared.",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    name: "Priya Patel",
-    role: "CTO, FinServe Pro"
-  },
-  {
-    text: "From company registration to compliance, Henu OS handled everything. We could focus entirely on our product.",
-    image: "https://randomuser.me/api/portraits/men/52.jpg",
-    name: "Amit Kumar",
-    role: "Co-founder, GreenTech Solutions"
-  },
-  {
-    text: "The web platform they built for us increased our conversions by 300%. Their attention to detail is remarkable.",
-    image: "https://randomuser.me/api/portraits/women/28.jpg",
-    name: "Sneha Gupta",
-    role: "CEO, EduLearn Platform"
-  },
-  {
-    text: "Working with Henu OS was seamless. They delivered our mobile app ahead of schedule with exceptional quality.",
-    image: "https://randomuser.me/api/portraits/men/22.jpg",
-    name: "Vikram Singh",
-    role: "Product Manager, HealthMate"
-  },
-  {
-    text: "Their legal documentation service saved us months of work. Everything was professionally prepared.",
-    image: "https://randomuser.me/api/portraits/women/65.jpg",
-    name: "Anita Reddy",
-    role: "Director, MedTech India"
-  },
-  {
-    text: "The digital marketing campaign exceeded all expectations. Our brand visibility increased tenfold.",
-    image: "https://randomuser.me/api/portraits/men/45.jpg",
-    name: "Hassan Ali",
-    role: "Marketing Head, D2C Brand"
-  },
-  {
-    text: "Henu OS helped us navigate complex compliance requirements. Their expertise is unmatched.",
-    image: "https://randomuser.me/api/portraits/women/33.jpg",
-    name: "Kavita Sharma",
-    role: "Compliance Officer, FinCorp"
-  },
-  {
-    text: "The AI agent they developed automated 70% of our repetitive tasks. Game-changing efficiency.",
-    image: "https://randomuser.me/api/portraits/men/67.jpg",
-    name: "Rajesh Kumar",
-    role: "Operations Head, LogiTech"
-  }
-];
+const initialTestimonials: any[] = [];
+
+
+
 
 const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) => {
   const firstColumn = testimonials.slice(0, Math.ceil(testimonials.length / 3));
@@ -1196,11 +1147,24 @@ const TestimonialsSection = ({ testimonials }: { testimonials: Testimonial[] }) 
           </p>
         </motion.div>
 
-        <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[600px] overflow-hidden">
-          <TestimonialsColumn testimonials={firstColumn} duration={15} />
-          <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
-          <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />
-        </div>
+        {testimonials.length > 3 ? (
+          <div className={cn(
+            "flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] max-h-[700px] overflow-hidden transition-all duration-700",
+            testimonials.length === 0 && "opacity-0 h-0"
+          )}>
+            {firstColumn.length > 0 && <TestimonialsColumn testimonials={firstColumn} duration={20} />}
+            {secondColumn.length > 0 && <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={25} />}
+            {thirdColumn.length > 0 && <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={22} />}
+          </div>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-8 mt-12 pb-10">
+            {testimonials.map((testimonial, idx) => (
+              <div key={idx} className="w-full max-w-[400px]">
+                <TestimonialCard testimonial={testimonial} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -1231,7 +1195,7 @@ export default function HomePage() {
       <HenuOSIntroductionSection />
       <ServiceMatrixSection />
       <WhyChooseUsSection />
-      <TestimonialsSection testimonials={allTestimonials} />
+      {allTestimonials.length > 0 && <TestimonialsSection testimonials={allTestimonials} />}
       <ReviewSection onReviewSubmitted={handleReviewSubmitted} />
     </main>
   );

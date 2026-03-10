@@ -174,14 +174,6 @@ export default function AdminDashboardPage() {
                     color="#f59e0b"
                     loading={loading}
                 />
-                <MetricCard
-                    label="Network Velocity"
-                    value="+12.4%"
-                    icon={<TrendingUp className="w-6 h-6" />}
-                    color="#8b5cf6"
-                    loading={loading}
-                    isTrend
-                />
             </div>
 
             {/* Navigation Grid */}
